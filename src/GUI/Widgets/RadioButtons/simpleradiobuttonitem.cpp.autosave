@@ -1,0 +1,16 @@
+#include "simpleradiobuttonitem.h"
+
+SimpleRadioButtonItem::SimpleRadioButtonItem()
+    : AbstactRadioButtonItem()
+    , 
+{
+
+}
+
+void SimpleRadioButtonItem::draw(sf::RenderTarget & target, sf::RenderStates, const sf::FloatRect & bounds) const
+{
+    if(selected)
+        target.draw(drawSelector(bounds));
+    
+    
+}

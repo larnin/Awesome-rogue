@@ -1,0 +1,21 @@
+#include "eventreceiver.h"
+
+EventReceiver::EventReceiver(const EventReceiver & e)
+{
+    
+}
+
+EventReceiver & operator= (const EventReceiver &)
+{
+    
+}
+
+EventReceiver(EventReceiver &&)
+{
+    
+}
+
+EventReceiver & operator= (EventReceiver &&)
+{
+    
+}

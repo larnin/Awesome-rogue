@@ -1,0 +1,56 @@
+#include "textdrawer.h"
+
+TextDrawer::TextDrawer(const std::string & fontName, int charSize, const sf::Vector2u & textureSize)
+    : m_vAlign(VAlign::V_CENTER)
+    , m_hAlign(HAlign::H_CENTER)
+    , m_font(fontName)
+{
+    resize(textureSize);
+}
+
+const sf::Texture & TextDrawer::getTexture() const
+{
+    return m_texture.getTexture();
+}
+
+void TextDrawer::setText(const std::string & text)
+{
+    m_text.setString(text);
+    redraw();
+}
+
+void TextDrawer::setText(const std::string & text, unsigned int size, const sf::Color & c)
+{
+    m_t
+}
+
+void TextDrawer::setTextSize(unsigned int size)
+{
+    m_text.setCharacterSize(size);
+    redraw();
+}
+
+void TextDrawer::setTextColor(const sf::Color & c)
+{
+    m_text.setColor(c);
+    redraw();
+}
+
+void TextDrawer::alignText(VAlign v, HALign h)
+{
+    m_vAlign = v;
+    m_hAlign = h;
+    redraw();
+}
+
+void TextDrawer::resize(const sf::Vector2u & size)
+{
+    m_texture.create(size.x, size.y);
+    redraw();
+}
+
+void TextDrawer::redraw()
+{
+    m_texture.clear(sf::Color(0, 0, 0, 0));
+    m_text.setPosition(m_text.);
+}

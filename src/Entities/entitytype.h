@@ -1,0 +1,14 @@
+#ifndef ENTITYTYPE_H
+#define ENTITYTYPE_H
+
+enum EntityType
+{
+    E_CIRCLE_MOB,
+    E_SMALL_CIRCLE_MOB,
+    E_CROSS_LASER_MOB,
+    E_PUNCHBALL_MOB,
+    E_SQUARE_MOB,
+    E_TRACKER_MOB
+};
+
+#endif // ENTITYTYPE_H

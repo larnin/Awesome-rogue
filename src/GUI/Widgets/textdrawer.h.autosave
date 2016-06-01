@@ -1,0 +1,32 @@
+#ifndef TEXTDRAWER_H
+#define TEXTDRAWER_H
+
+#include <SFML/Graphics/RenderTexture.hpp>
+#include "Utilities/ressource.h"
+#include <SFML/Graphics/Text.hpp>
+#include "widget.h"
+
+class TextDrawer
+{
+public:
+    TextDrawer(const std::string & fontName, int charSize, const sf::Vector2u & textureSize);
+    const sf::Texture & getTexture() const;
+    
+    void setText(const std::string & text);
+    void setText(const std::string & text, unsigned int size, const sf::Color & c);
+    void setTextSize(unsigned int size);
+    void setTextColor(const sf::Color & c);
+    void alignText(VAlign v, HALign h);
+    void resize(const sf::Vector2u & size);
+    
+private:
+    void redraw();
+    
+    VAlign m_vAlign;
+    HAlign m_hAlign;
+    Font m_font;
+    sf::RenderTexture m_texture;
+    sf::Text m_text;
+};
+
+#endif // TEXTDRAWER_H
