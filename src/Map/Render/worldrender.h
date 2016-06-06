@@ -12,7 +12,7 @@
 #include "roomrender.h"
 #include "Utilities/ressource.h"
 #include "Events/eventreceiver.h"
-#include "Events/Datas/eventpreentitychangeroom.h"
+#include "Events/Datas/eventpreplayerchangeroom.h"
 #include "Events/Datas/eventsizeviewchanged.h"
 
 class WorldRender : public sf::Drawable , public EventReceiver
@@ -27,7 +27,7 @@ public:
 private:
     void regenBorder();
     void redrawRooms();
-    void onPlayerChangeRoom(EventPreEntityChangeRoom e);
+    void onPlayerChangeRoom(EventPrePlayerChangeRoom e);
     void onScreenChangeSize(EventSizeViewChanged e);
 
     std::weak_ptr<Map> m_map;

@@ -5,6 +5,9 @@
 #include "Map/blocktype.h"
 #include "Utilities/quadrender.h"
 #include "Entities/entitylist.h"
+#include "Events/eventgetter.h"
+#include "Projectiles/projectilefactory.h"
+#include "Projectiles/Types/delayedpunch.h"
 
 PunchBallMob::PunchBallMob(const Location & pos)
     : Entity(pos)
@@ -55,6 +58,7 @@ void PunchBallMob::update(const sf::Time & elapsedTime)
             if(norm(m_pos.getPos()-target->getPos().getPos()) < distanceTrigFire && m_fireTime > maxFireTime + fireTimeColdown)
             {
                 m_onFire = true;
+                ProjectileFactory::createSend<DelayedPunch>(getPos(), m_team, EventGetter<std::shared_ptr<Entity>, unsigned int>::get(getID()));
                 m_fireTime = 0;
             }
         }
@@ -96,7 +100,7 @@ void PunchBallMob::draw(sf::RenderTarget & target, sf::RenderStates) const
 
 void PunchBallMob::onAwake()
 {
-    connect<EventEntityChangeRoom>(std::bind(&PunchBallMob::onPlayerChangeRoom, this, _1));
+    connect<EventPlayerChangeRoom>(std::bind(&PunchBallMob::onPlayerChangeRoom, this, _1));
 }
 
 void PunchBallMob::onDisable()
@@ -104,11 +108,11 @@ void PunchBallMob::onDisable()
     disconnect();
 }
 
-void PunchBallMob::onPlayerChangeRoom(EventEntityChangeRoom e)
+void PunchBallMob::onPlayerChangeRoom(EventPlayerChangeRoom e)
 {
     std::shared_ptr<Entity> target(m_target.lock());
     if(!target)
-        m_target = EntityList::list().entity(e.entityID);
+        m_target = EventGetter<std::shared_ptr<Entity>, unsigned int>::get(e.entityID);
 }
 
 void PunchBallMob::recreatePath()

@@ -6,8 +6,8 @@
 #include "Utilities/quadrender.h"
 #include "Map/blocktype.h"
 #include "Events/Datas/eventcenterofviewchanged.h"
-#include "Events/Datas/evententitychangeroom.h"
-#include "Events/Datas/eventpreentitychangeroom.h"
+#include "Events/Datas/eventplayerchangeroom.h"
+#include "Events/Datas/eventpreplayerchangeroom.h"
 #include "Events/event.h"
 
 const float PI(3.14159f);
@@ -60,8 +60,8 @@ void Player::update(const sf::Time & elapsedTime)
     std::shared_ptr<Room> rNew(getPos().getRoom().lock());
     if(rOld != rNew)
     {
-        Event<EventPreEntityChangeRoom>::send(EventPreEntityChangeRoom(getID()));
-        Event<EventEntityChangeRoom>::send(EventEntityChangeRoom(getID()));
+        Event<EventPrePlayerChangeRoom>::send(EventPrePlayerChangeRoom(getID()));
+        Event<EventPlayerChangeRoom>::send(EventPlayerChangeRoom(getID()));
     }
 
     Event<EventCenterOfViewChanged>::send(EventCenterOfViewChanged(m_pos.toGlobalPos()*float(BlockType::tileSize)));

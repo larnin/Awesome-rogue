@@ -29,13 +29,14 @@ void DrawableList::del(std::weak_ptr<sf::Drawable> object)
         auto it(std::find_if(list.second.begin(), list.second.end(), [objectLock](std::weak_ptr<sf::Drawable> o){return o.lock() == objectLock;}));
         if(it == list.second.end())
             continue;
-        if(list.second.size() <= 1)
-            m_objects.erase(list.first);
+        //if(list.second.size() <= 1)
+        //    m_objects.erase(list.first);
         else
         {
             std::swap(*it, list.second.back());
             list.second.pop_back();
         }
+        break;
     }
 }
 

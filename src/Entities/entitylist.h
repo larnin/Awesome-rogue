@@ -6,12 +6,17 @@
 #include "Types/entity.h"
 #include "Events/eventreceiver.h"
 #include "Events/Datas/evententitycreated.h"
-#include "Events/Datas/eventpreentitychangeroom.h"
+#include "Events/Datas/eventpreplayerchangeroom.h"
+#include "Events/Datas/evententitychangeroom.h"
 
 class EntityList : public EventReceiver
 {
 public:
-    virtual ~EntityList() = default;
+    EntityList();
+    virtual ~EntityList();
+
+    EntityList(const EntityList &) = delete;
+    EntityList & operator =(const EntityList &) = delete;
 
     void addEntity(std::shared_ptr<Entity> entity);
     void removeEntity(std::shared_ptr<Entity> entity);
@@ -22,21 +27,21 @@ public:
     void clean();
     void clear();
 
-    static EntityList& list();
-
 private:
-    EntityList();
     void activeEntity(std::shared_ptr<Entity> e);
     void disableEntity(std::shared_ptr<Entity> e);
     void cleanActive();
     void clearActive();
 
-    void onPlayerChangeRoom(EventPreEntityChangeRoom e);
+    void onPlayerChangeRoom(EventPrePlayerChangeRoom e);
     void onEntityCreated(EventEntityCreated e);
+    void onEntityChangeRoom(EventEntityChangeRoom e);
+
     std::vector<std::shared_ptr<Entity>> m_entities;
     std::vector<std::shared_ptr<Entity>> m_activeEntities;
+    unsigned int m_currentRoom;
 
-    static EntityList m_instance;
+    static bool m_instanced;
 };
 
 #endif // ENTITYLIST_H

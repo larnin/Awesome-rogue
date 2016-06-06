@@ -7,6 +7,7 @@
 #include "Collisions/pathfinder.h"
 #include "Collisions/collisions.h"
 #include "Entities/entitylist.h"
+#include "Events/eventgetter.h"
 
 TrackerMob::TrackerMob(const Location & pos)
     : Entity(pos)
@@ -80,16 +81,16 @@ void TrackerMob::draw(sf::RenderTarget & target, sf::RenderStates) const
     target.draw(render, sf::RenderStates(m_texture()));
 }
 
-void TrackerMob::onPlayerChangeRoom(EventEntityChangeRoom e)
+void TrackerMob::onPlayerChangeRoom(EventPlayerChangeRoom e)
 {
     std::shared_ptr<Entity> target(m_target.lock());
     if(!target)
-        m_target = EntityList::list().entity(e.entityID);
+        m_target = EventGetter<std::shared_ptr<Entity>,unsigned int>::get(e.entityID);
 }
 
 void TrackerMob::onAwake()
 {
-    connect<EventEntityChangeRoom>(std::bind(&TrackerMob::onPlayerChangeRoom, this, _1));
+    connect<EventPlayerChangeRoom>(std::bind(&TrackerMob::onPlayerChangeRoom, this, _1));
 }
 
 void TrackerMob::onDisable()

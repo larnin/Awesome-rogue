@@ -20,7 +20,7 @@ Minimap::Minimap(std::weak_ptr<Map> map)
     m_texture.setView(v);
 
     redraw();
-    connect<EventEntityChangeRoom>(std::bind(&Minimap::onEntityChangeRoom, this, _1));
+    connect<EventPlayerChangeRoom>(std::bind(&Minimap::onPlayerChangeRoom, this, _1));
 }
 
 void Minimap::draw(sf::RenderTarget & target, sf::RenderStates) const
@@ -41,7 +41,7 @@ void Minimap::draw(sf::RenderTarget & target, sf::RenderStates) const
     target.draw(mapRender);
 }
 
-void Minimap::onEntityChangeRoom(EventEntityChangeRoom)
+void Minimap::onPlayerChangeRoom(EventPlayerChangeRoom)
 {
     redraw();
 }

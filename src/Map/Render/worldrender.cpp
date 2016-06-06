@@ -5,6 +5,7 @@
 #include "Utilities/quadrender.h"
 #include "Map/blocktype.h"
 #include "Entities/entitylist.h"
+#include "Events/eventgetter.h"
 
 const unsigned int height(0);
 
@@ -15,7 +16,7 @@ WorldRender::WorldRender(std::weak_ptr<Map> world, unsigned int centerRoom, cons
     , m_screenSize(screenSize / BlockType::tileSize)
     , m_centerRoom(centerRoom)
 {
-    connect<EventPreEntityChangeRoom>(std::bind(&WorldRender::onPlayerChangeRoom, this, _1));
+    connect<EventPrePlayerChangeRoom>(std::bind(&WorldRender::onPlayerChangeRoom, this, _1));
     connect<EventSizeViewChanged>(std::bind(&WorldRender::onScreenChangeSize, this, _1));
     redrawRooms();
 }
@@ -157,9 +158,10 @@ void WorldRender::onScreenChangeSize(EventSizeViewChanged e)
     changeScreenSize(sf::Vector2u(e.size));
 }
 
-void WorldRender::onPlayerChangeRoom(EventPreEntityChangeRoom e)
+void WorldRender::onPlayerChangeRoom(EventPrePlayerChangeRoom e)
 {
-    std::shared_ptr<Entity>eLock(EntityList::list().entity(e.entityID));
+    std::shared_ptr<Entity>eLock(EventGetter<std::shared_ptr<Entity>,unsigned int>::get(e.entityID));
+    //std::shared_ptr<Entity>eLock(EntityList::list().entity(e.entityID));
     if(!eLock)
         return;
     std::shared_ptr<Room> r(eLock->getPos().getRoom().lock());

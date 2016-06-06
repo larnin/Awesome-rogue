@@ -10,11 +10,16 @@ class ProjectileFactory
 {
 public:
     template<typename T, typename... ARGS>
-    static std::shared_ptr<Projectile> create(ARGS &&... args, , bool sendEvent = true)
+    static std::shared_ptr<Projectile> create(ARGS &&... args)
     {
-        std::shared_ptr<Projectile> p = std::make_shared<T>(std::forward<Args>(args)...);
-        if(sendEvent)
-            Event<EventProjectileCreated>::send(EventProjectileCreated(p));
+        return std::make_shared<T>(std::forward<ARGS>(args)...);
+    }
+
+    template<typename T, typename... ARGS>
+    static std::shared_ptr<Projectile> createSend(ARGS &&... args)
+    {
+        std::shared_ptr<Projectile> p = std::make_shared<T>(std::forward<ARGS>(args)...);
+        Event<EventProjectileCreated>::send(EventProjectileCreated(p));
         return p;
     }
 

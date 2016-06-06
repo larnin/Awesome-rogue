@@ -1,9 +1,9 @@
 #ifndef EVENTPREPLAYERCHANGEROOM_H
 #define EVENTPREPLAYERCHANGEROOM_H
 
-struct EventPreEntityChangeRoom
+struct EventPrePlayerChangeRoom
 {
-    EventPreEntityChangeRoom(unsigned int id)
+    EventPrePlayerChangeRoom(unsigned int id)
         : entityID(id) {}
 
     unsigned int entityID;

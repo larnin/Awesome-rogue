@@ -1,5 +1,7 @@
 #include "projectile.h"
 
+std::default_random_engine Projectile::m_randEngine;
+
 Projectile::Projectile(const Location & pos, Team team)
     : m_team(team)
     , m_pos(pos)

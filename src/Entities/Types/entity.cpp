@@ -2,6 +2,9 @@
 #include "Collisions/collisions.h"
 #include "Utilities/vect2convert.h"
 
+#include "Events/event.h"
+#include "Events/Datas/evententitychangeroom.h"
+
 unsigned int Entity::lastID(0);
 std::default_random_engine Entity::m_randEngine;
 
@@ -138,6 +141,7 @@ void Entity::execMove()
         if(!d.isValid())
             return;
         m_pos = d.dest;
+        Event<EventEntityChangeRoom>::send(EventEntityChangeRoom(getID()));
         //m_speed = sf::Vector2f(0, 0);
     }
 }

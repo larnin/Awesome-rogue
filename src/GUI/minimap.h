@@ -8,7 +8,7 @@
 #include <SFML/Graphics/RenderTexture.hpp>
 #include "Map/map.h"
 #include "Events/eventreceiver.h"
-#include "Events/Datas/evententitychangeroom.h"
+#include "Events/Datas/eventplayerchangeroom.h"
 
 class Minimap : public sf::Drawable, public EventReceiver
 {
@@ -19,7 +19,7 @@ public:
     virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
 
 private:
-    void onEntityChangeRoom(EventEntityChangeRoom);
+    void onPlayerChangeRoom(EventPlayerChangeRoom);
     void redraw();
 
     std::weak_ptr<Map> m_map;

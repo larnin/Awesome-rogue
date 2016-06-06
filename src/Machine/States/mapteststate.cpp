@@ -9,7 +9,7 @@
 #include "Entities/Types/punchballmob.h"
 #include "Entities/Types/circlemob.h"
 #include "Events/event.h"
-#include "Events/Datas/evententitychangeroom.h"
+#include "Events/Datas/eventplayerchangeroom.h"
 #include "Entities/entityfactory.h"
 #include "Entities/entitytype.h"
 #include "Entities/entitylist.h"
@@ -47,9 +47,9 @@ MapTestState::MapTestState(std::weak_ptr<StateMachine> machine)
     DrawableList::add(mapRender, 0);
 
     player = std::make_shared<Player>(Player(Location(sf::Vector2u(5, 5), map->room(0))));
-    EntityList::list().addEntity(player);
-    DrawableList::add(player, 1);
-    Updatable::add(player);
+    entities.addEntity(player);
+    //DrawableList::add(player, 1);
+    //Updatable::add(player);
     Controlable::add(player);
 
    interface = std::make_shared<GameInterface>();
@@ -60,53 +60,24 @@ MapTestState::MapTestState(std::weak_ptr<StateMachine> machine)
    lifeBar = std::make_shared<LifeBar>(player);
    DrawableList::add(lifeBar, 4);
 
-    for(unsigned int i(0) ; i < 10 ; i++)
-    {
-        std::shared_ptr<SquareMob> mob = std::make_shared<SquareMob>(SquareMob(Location(sf::Vector2u(10, 10), map->room(0))));
-        DrawableList::add(mob, 1);
-        Updatable::add(mob);
-        mobs.push_back(mob);
-    }
+    /*for(unsigned int i(0) ; i < 10 ; i++)
+        EntityFactory::create(EntityType::E_SQUARE_MOB, Location(sf::Vector2u(10, 10), map->room(0)));
 
     for(unsigned int i(0) ; i < 10 ; i++)
-    {
-        std::shared_ptr<CrossLaserMob> mob = std::make_shared<CrossLaserMob>(CrossLaserMob(Location(sf::Vector2u(10, 10), map->room(0))));
-        DrawableList::add(mob, 1);
-        Updatable::add(mob);
-        mobs.push_back(mob);
-    }
+        EntityFactory::create(EntityType::E_CROSS_LASER_MOB, Location(sf::Vector2u(10, 10), map->room(0)));
 
     for(unsigned int i(0) ; i < 10 ; i++)
-    {
-        std::shared_ptr<TrackerMob> mob = std::make_shared<TrackerMob>(TrackerMob(Location(sf::Vector2u(10, 10), map->room(0))));
-        DrawableList::add(mob, 1);
-        Updatable::add(mob);
-        mobs.push_back(mob);
-    }
+        EntityFactory::create(EntityType::E_TRACKER_MOB, Location(sf::Vector2u(10, 10), map->room(0)));*/
+
+    for(unsigned int i(0) ; i < 1 ; i++)
+        EntityFactory::create(EntityType::E_PUNCHBALL_MOB, Location(sf::Vector2u(10, 10), map->room(0)));
+
+    /*for(unsigned int i(0) ; i < 10 ; i++)
+        EntityFactory::create(EntityType::E_CIRCLE_MOB, Location(sf::Vector2u(10, 10), map->room(0)));
 
     for(unsigned int i(0) ; i < 10 ; i++)
-    {
-        std::shared_ptr<PunchBallMob> mob2 = std::make_shared<PunchBallMob>(PunchBallMob(Location(sf::Vector2u(10, 10), map->room(0))));
-        DrawableList::add(mob2, 1);
-        Updatable::add(mob2);
-        mobs.push_back(mob2);
-    }
+        EntityFactory::create(EntityType::E_SMALL_CIRCLE_MOB, Location(sf::Vector2u(10, 10), map->room(0)));*/
 
-    for(unsigned int i(0) ; i < 10 ; i++)
-    {
-        std::shared_ptr<CircleMob> mob3 = std::make_shared<CircleMob>(CircleMob(Location(sf::Vector2u(10, 10), map->room(0))));
-        DrawableList::add(mob3, 1);
-        Updatable::add(mob3);
-        mobs.push_back(mob3);
-    }
-
-    for(unsigned int i(0) ; i < 10 ; i++)
-    {
-        std::shared_ptr<CircleMob> mob4 = std::make_shared<CircleMob>(CircleMob(Location(sf::Vector2u(10, 10), map->room(0)), true));
-        DrawableList::add(mob4, 1);
-        Updatable::add(mob4);
-        mobs.push_back(mob4);
-    }
-
-    Event<EventEntityChangeRoom>::send(EventEntityChangeRoom(player->getID()));
+    Event<EventPrePlayerChangeRoom>::send(EventPrePlayerChangeRoom(player->getID()));
+    Event<EventPlayerChangeRoom>::send(EventPlayerChangeRoom(player->getID()));
 }

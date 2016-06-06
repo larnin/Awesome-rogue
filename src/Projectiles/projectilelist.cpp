@@ -3,21 +3,27 @@
 #include "Entities/entitylist.h"
 #include "Map/room.h"
 #include <algorithm>
-
-ProjectileList ProjectileList::m_instance;
+#include "Events/eventgetter.h"
 
 const unsigned int projectileHeight(1);
+
+bool ProjectileList::m_instanced(false);
 
 ProjectileList::ProjectileList()
     : m_playerRoom(0)
 {
-    connect<EventPreEntityChangeRoom>(std::bind(&ProjectileList::onPlayerChangeRoom, this, _1));
+    assert(!m_instanced);
+    m_instanced = true;
+
+    connect<EventPrePlayerChangeRoom>(std::bind(&ProjectileList::onPlayerChangeRoom, this, _1));
     connect<EventProjectileCreated>(std::bind(&ProjectileList::onProjectileCreated, this, _1));
+
+    EventSimpleGetter<std::vector<std::shared_ptr<Projectile>>>::connect(std::bind(&ProjectileList::projectiles, this));
 }
 
-ProjectileList & ProjectileList::list()
+ProjectileList::~ProjectileList()
 {
-    return m_instance;
+    m_instanced = false;
 }
 
 void ProjectileList::addProjectile(std::shared_ptr<Projectile> p)
@@ -30,7 +36,7 @@ void ProjectileList::addProjectile(std::shared_ptr<Projectile> p)
     if(r->getID() != m_playerRoom)
         return;
 
-    if(std::find(m_projectiles.begin(), m_projectiles.end(), p) == m_projectiles.end())
+    if(std::find(m_projectiles.begin(), m_projectiles.end(), p) != m_projectiles.end())
         return;
     m_projectiles.push_back(p);
 
@@ -67,10 +73,10 @@ void ProjectileList::clear()
     m_projectiles.clear();
 }
 
-void ProjectileList::onPlayerChangeRoom(EventPreEntityChangeRoom e)
+void ProjectileList::onPlayerChangeRoom(EventPrePlayerChangeRoom e)
 {
     clear();
-    std::shared_ptr<Entity> entity(EntityList::list().entity(e.entityID));
+    std::shared_ptr<Entity> entity(EventGetter<std::shared_ptr<Entity>, unsigned int>::get(e.entityID));
     if(entity)
     {
         std::shared_ptr<Room> room(entity->getPos().getRoom().lock());

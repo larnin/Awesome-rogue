@@ -5,7 +5,7 @@
 #include "Events/eventreceiver.h"
 #include "Utilities/ressource.h"
 #include "Collisions/path.h"
-#include "Events/Datas/evententitychangeroom.h"
+#include "Events/Datas/eventplayerchangeroom.h"
 
 class PunchBallMob : public Entity, public EventReceiver
 {
@@ -23,7 +23,7 @@ protected:
     virtual void onDisable();
 
 private:
-    void onPlayerChangeRoom(EventEntityChangeRoom e);
+    void onPlayerChangeRoom(EventPlayerChangeRoom e);
     void recreatePath();
 
     Texture m_texture;

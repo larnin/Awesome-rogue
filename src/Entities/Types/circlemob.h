@@ -4,7 +4,7 @@
 #include <memory>
 #include "entity.h"
 #include "Events/eventreceiver.h"
-#include "Events/Datas/evententitychangeroom.h"
+#include "Events/Datas/eventplayerchangeroom.h"
 #include "Collisions/path.h"
 #include "Utilities/ressource.h"
 
@@ -24,7 +24,7 @@ protected:
     virtual void onDisable();
 
 private:
-    void onPlayerChangeRoom(EventEntityChangeRoom e);
+    void onPlayerChangeRoom(EventPlayerChangeRoom e);
     void recreatePath();
 
     Path m_path;

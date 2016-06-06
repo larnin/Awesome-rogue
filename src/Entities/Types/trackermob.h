@@ -4,7 +4,7 @@
 #include "entity.h"
 #include "Utilities/ressource.h"
 #include "Events/eventreceiver.h"
-#include "Events/Datas/evententitychangeroom.h"
+#include "Events/Datas/eventplayerchangeroom.h"
 #include "Collisions/path.h"
 
 class TrackerMob : public Entity, public EventReceiver
@@ -23,7 +23,7 @@ protected:
     virtual void onDisable();
 
 private:
-    void onPlayerChangeRoom(EventEntityChangeRoom e);
+    void onPlayerChangeRoom(EventPlayerChangeRoom e);
     void recreatePath();
 
     Texture m_texture;

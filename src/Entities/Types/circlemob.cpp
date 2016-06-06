@@ -5,6 +5,7 @@
 #include "Utilities/quadrender.h"
 #include "Utilities/vect2convert.h"
 #include "Entities/entitylist.h"
+#include "Events/eventgetter.h"
 
 CircleMob::CircleMob(const Location & pos, bool small)
     : Entity(pos)
@@ -91,7 +92,7 @@ void CircleMob::draw(sf::RenderTarget & target, sf::RenderStates) const
 
 void CircleMob::onAwake()
 {
-    connect<EventEntityChangeRoom>(std::bind(&CircleMob::onPlayerChangeRoom, this, _1));
+    connect<EventPlayerChangeRoom>(std::bind(&CircleMob::onPlayerChangeRoom, this, _1));
 }
 
 void CircleMob::onDisable()
@@ -100,11 +101,11 @@ void CircleMob::onDisable()
 }
 
 
-void CircleMob::onPlayerChangeRoom(EventEntityChangeRoom e)
+void CircleMob::onPlayerChangeRoom(EventPlayerChangeRoom e)
 {
     std::shared_ptr<Entity> target(m_target.lock());
     if(!target)
-        m_target = EntityList::list().entity(e.entityID);
+        m_target = EventGetter<std::shared_ptr<Entity>, unsigned int>::get(e.entityID);
 }
 
 void CircleMob::recreatePath()

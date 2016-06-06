@@ -73,7 +73,8 @@ SOURCES += main.cpp \
     Machine/States/mapteststate.cpp \
     Machine/States/menustate.cpp \
     Projectiles/Types/projectile.cpp \
-    Projectiles/projectilelist.cpp
+    Projectiles/projectilelist.cpp \
+    Projectiles/Types/delayedpunch.cpp
 
 HEADERS  += \
     Controles/commands.h \
@@ -121,8 +122,6 @@ HEADERS  += \
     Entities/entitytype.h \
     Events/Datas/evententitycreated.h \
     Events/Datas/eventcenterofviewchanged.h \
-    Events/Datas/evententitychangeroom.h \
-    Events/Datas/eventpreentitychangeroom.h \
     Events/Datas/eventsizeviewchanged.h \
     GUI/gameinterface.h \
     GUI/minimap.h \
@@ -153,7 +152,12 @@ HEADERS  += \
     Projectiles/Types/projectile.h \
     Projectiles/projectilelist.h \
     Events/Datas/eventprojectilecreated.h \
-    Projectiles/projectilefactory.h
+    Projectiles/projectilefactory.h \
+    Events/eventgetter.h \
+    Events/Datas/eventpreplayerchangeroom.h \
+    Events/Datas/eventplayerchangeroom.h \
+    Events/Datas/evententitychangeroom.h \
+    Projectiles/Types/delayedpunch.h
 
 DEFINES += SFML_STATIC
 
