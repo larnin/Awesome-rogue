@@ -5,12 +5,16 @@
 #include "Collisions/collisions.h"
 #include "Map/blocktype.h"
 #include "Utilities/quadrender.h"
+#include "Projectiles/projectilefactory.h"
+#include "Projectiles/Types/lasermob.h"
+#include "Events/eventgetter.h"
 
 const float speed(1.0f);
 
 CrossLaserMob::CrossLaserMob(const Location & pos)
     : Entity(pos)
     , m_texture("res/img/mobs.png")
+    , m_fireTimer(0)
 {
     m_originalBox.addLine(Line(sf::Vector2f(-0.5f, 0.0f), sf::Vector2f(0.0f, -0.5f)));
     m_originalBox.addLine(Line(sf::Vector2f(0.0f, -0.5f), sf::Vector2f(0.5f, 0.0f)));
@@ -32,6 +36,9 @@ CrossLaserMob::CrossLaserMob(const Location & pos)
     m_orientation = a(m_randEngine);
 
     m_speed = toVect(speed, m_orientation);
+
+    std::uniform_real_distribution<float> distrib(-5, 0);
+    m_fireTimer = distrib(m_randEngine);
 }
 
 void CrossLaserMob::update(const sf::Time & elapsedTime)
@@ -55,9 +62,20 @@ void CrossLaserMob::update(const sf::Time & elapsedTime)
         m_rotationSide = !m_rotationSide;
     }
 
-    const float rotationSpeed(1.0f - 2.0f*(m_rotationSide));
+    const float rotationSpeed(0.5f - 1.0f*(m_rotationSide));
     float newAngle(m_orientation + rotationSpeed*elapsedTime.asSeconds());
     execRotate(newAngle);
+
+    m_fireTimer += elapsedTime.asSeconds();
+    if(m_fireTimer > 6.0f)
+    {
+        m_fireTimer = 0;
+        for(int i(0) ; i < 4 ; i++)
+        {
+            float a(3.14159/2*(i));
+            ProjectileFactory::createSend<LaserMob>(getPos(), m_team, EventGetter<std::shared_ptr<Entity>, unsigned int>::get(getID()), a);
+        }
+    }
 }
 
 void CrossLaserMob::draw(sf::RenderTarget & target, sf::RenderStates) const

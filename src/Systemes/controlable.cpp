@@ -9,6 +9,8 @@ Controlable::Controlable(ControlState state)
 
 void Controlable::update(CommandsValue v)
 {
+    applyModifications();
+
     std::vector<std::shared_ptr<Controlable>> backControleList;
     std::vector<std::shared_ptr<Controlable>> activeControleList;
     for(auto & u : m_objects)

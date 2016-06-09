@@ -74,7 +74,10 @@ SOURCES += main.cpp \
     Machine/States/menustate.cpp \
     Projectiles/Types/projectile.cpp \
     Projectiles/projectilelist.cpp \
-    Projectiles/Types/delayedpunch.cpp
+    Projectiles/Types/delayedpunch.cpp \
+    Projectiles/Types/smallball.cpp \
+    Projectiles/Types/rapidfire.cpp \
+    Projectiles/Types/lasermob.cpp
 
 HEADERS  += \
     Controles/commands.h \
@@ -157,7 +160,10 @@ HEADERS  += \
     Events/Datas/eventpreplayerchangeroom.h \
     Events/Datas/eventplayerchangeroom.h \
     Events/Datas/evententitychangeroom.h \
-    Projectiles/Types/delayedpunch.h
+    Projectiles/Types/delayedpunch.h \
+    Projectiles/Types/smallball.h \
+    Projectiles/Types/rapidfire.h \
+    Projectiles/Types/lasermob.h
 
 DEFINES += SFML_STATIC
 

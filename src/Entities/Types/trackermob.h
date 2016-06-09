@@ -31,7 +31,8 @@ private:
     Location m_targetPos;
     Path m_path;
     bool m_canfire;
-
+    unsigned int m_projectilesToFire;
+    float m_timeToFire;
 };
 
 #endif // TRACKER_H

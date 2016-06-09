@@ -17,6 +17,7 @@ DelayedPunch::DelayedPunch(const Location & pos, Team team, std::weak_ptr<Entity
     if(!m_sender.lock())
         m_killed = true;
 
+    m_destroyable = false;
 }
 
 void DelayedPunch::update(const sf::Time & elapsedTime)

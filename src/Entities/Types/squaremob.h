@@ -20,6 +20,7 @@ private:
     Texture m_texture;
     Path m_path;
     bool m_rotationSide;
+    float m_projectileTime;
 };
 
 #endif // SQUAREMOB_H

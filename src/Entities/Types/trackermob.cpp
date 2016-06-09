@@ -8,11 +8,15 @@
 #include "Collisions/collisions.h"
 #include "Entities/entitylist.h"
 #include "Events/eventgetter.h"
+#include "Projectiles/projectilefactory.h"
+#include "Projectiles/Types/rapidfire.h"
 
 TrackerMob::TrackerMob(const Location & pos)
     : Entity(pos)
     , m_texture("res/img/mobs.png")
     , m_canfire(false)
+    , m_projectilesToFire(3)
+    , m_timeToFire(1)
 {
     m_originalBox.addLine(Line(sf::Vector2f(-0.45f, -0.375f), sf::Vector2f(-0.375f, -0.45f)));
     m_originalBox.addLine(Line(sf::Vector2f(-0.375f, -0.45f), sf::Vector2f(0.375f, -0.45f)));
@@ -52,7 +56,6 @@ void TrackerMob::update(const sf::Time & elapsedTime)
         m_canfire = true;
     else targetPos = m_path.next(m_pos).getPos();
 
-
     const float accelerationNorm(0.2f);
     const float limitMultiplier(0.2f);
     const float limitReductor(0.1f);
@@ -70,6 +73,29 @@ void TrackerMob::update(const sf::Time & elapsedTime)
     m_speed = toVect(n, angle(m_speed));
 
     execMove();
+
+    if(m_canfire)
+    {
+        m_timeToFire-= elapsedTime.asSeconds();
+        if(m_timeToFire < 0)
+        {
+            if(target)
+            {
+                sf::Vector2f dir(normalise(target->getPos().getPos() - getPos().getPos())*10.0f);
+                ProjectileFactory::createSend<RapidFire>(getPos(), m_team, dir);
+            }
+            if(m_projectilesToFire == 1)
+            {
+                m_timeToFire = 2.0f;
+                m_projectilesToFire = 3;
+            }
+            else
+            {
+                m_timeToFire = 0.15f;
+                m_projectilesToFire--;
+            }
+        }
+    }
 }
 
 void TrackerMob::draw(sf::RenderTarget & target, sf::RenderStates) const
@@ -105,6 +131,8 @@ void TrackerMob::recreatePath()
     std::shared_ptr<Entity> target(m_target.lock());
     if(!target)
         return;
+
+    m_targetPos = target->getPos();
 
     sf::Vector2u localPathStart(getPos().getBlockPos());
 

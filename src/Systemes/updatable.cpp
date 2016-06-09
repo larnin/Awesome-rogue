@@ -17,18 +17,13 @@ bool Updatable::isAware()
 
 void Updatable::updateAll(const sf::Time & elapsedTime)
 {
+    applyModifications();
+
     for(auto & object : m_objects)
     {
-        try
-        {
         std::shared_ptr<Updatable> objectLock(object.lock());
         if(objectLock)
             objectLock->update(elapsedTime);
-        }
-        catch (std::exception e)
-        {
-            std::cout << e.what() << std::endl;
-        }
     }
     clean();
 }

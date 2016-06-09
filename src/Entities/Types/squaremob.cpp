@@ -5,10 +5,13 @@
 #include "Collisions/collisions.h"
 #include "Map/blocktype.h"
 #include "Utilities/quadrender.h"
+#include "Projectiles/projectilefactory.h"
+#include "Projectiles/Types/smallball.h"
 
 SquareMob::SquareMob(const Location & pos)
     : Entity(pos)
     , m_texture("res/img/mobs.png")
+    , m_projectileTime(0)
 {
     m_originalBox.addLine(Line(sf::Vector2f(-0.5f, 0.0f), sf::Vector2f(0.0f, -0.5f)));
     m_originalBox.addLine(Line(sf::Vector2f(0.0f, -0.5f), sf::Vector2f(0.5f, 0.0f)));
@@ -68,6 +71,21 @@ void SquareMob::update(const sf::Time & elapsedTime)
 
     float newAngle(m_orientation + rotationSpeed*elapsedTime.asSeconds());
     execRotate(newAngle);
+
+    m_projectileTime += elapsedTime.asSeconds();
+    if(m_projectileTime >= 1.5f)
+    {
+        m_projectileTime = 0;
+        const float projectileSpeed(1.5f);
+        const float offset(0.5f);
+        for(int i(0) ; i < 4 ; i++)
+        {
+            float a(3.14159/2*(i));
+            Location pos(getPos());
+            pos.move(toVect(offset, m_orientation+a));
+            ProjectileFactory::createSend<SmallBall>(pos, m_team, toVect(projectileSpeed, m_orientation+a), 1, 10);
+        }
+    }
 }
 
 void SquareMob::draw(sf::RenderTarget & target, sf::RenderStates) const

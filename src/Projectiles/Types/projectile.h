@@ -6,6 +6,7 @@
 #include "Utilities/noncopiable.h"
 #include "Entities/Types/entity.h"
 #include "Map/location.h"
+#include "Collisions/hitbox.h"
 #include <SFML/Graphics/Drawable.hpp>
 
 class Projectile : public sf::Drawable, public Updatable, public NonCopiable
@@ -23,6 +24,8 @@ public:
 
 
 protected:
+    virtual HitBox getBox() const;
+
     Team m_team;
     Location m_pos;
     bool m_destroyable;

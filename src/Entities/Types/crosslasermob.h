@@ -18,6 +18,7 @@ public:
 private:
     bool m_rotationSide;
     Texture m_texture;
+    float m_fireTimer;
 };
 
 #endif // CROSSLASERMOB_H

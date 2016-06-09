@@ -60,23 +60,23 @@ MapTestState::MapTestState(std::weak_ptr<StateMachine> machine)
    lifeBar = std::make_shared<LifeBar>(player);
    DrawableList::add(lifeBar, 4);
 
-    /*for(unsigned int i(0) ; i < 10 ; i++)
+    for(unsigned int i(0) ; i < 0 ; i++)
         EntityFactory::create(EntityType::E_SQUARE_MOB, Location(sf::Vector2u(10, 10), map->room(0)));
 
-    for(unsigned int i(0) ; i < 10 ; i++)
+    for(unsigned int i(0) ; i < 1 ; i++)
         EntityFactory::create(EntityType::E_CROSS_LASER_MOB, Location(sf::Vector2u(10, 10), map->room(0)));
 
-    for(unsigned int i(0) ; i < 10 ; i++)
-        EntityFactory::create(EntityType::E_TRACKER_MOB, Location(sf::Vector2u(10, 10), map->room(0)));*/
+    for(unsigned int i(0) ; i < 0 ; i++)
+        EntityFactory::create(EntityType::E_TRACKER_MOB, Location(sf::Vector2u(10, 10), map->room(0)));
 
-    for(unsigned int i(0) ; i < 1 ; i++)
+    for(unsigned int i(0) ; i < 0 ; i++)
         EntityFactory::create(EntityType::E_PUNCHBALL_MOB, Location(sf::Vector2u(10, 10), map->room(0)));
 
-    /*for(unsigned int i(0) ; i < 10 ; i++)
+    for(unsigned int i(0) ; i < 0 ; i++)
         EntityFactory::create(EntityType::E_CIRCLE_MOB, Location(sf::Vector2u(10, 10), map->room(0)));
 
-    for(unsigned int i(0) ; i < 10 ; i++)
-        EntityFactory::create(EntityType::E_SMALL_CIRCLE_MOB, Location(sf::Vector2u(10, 10), map->room(0)));*/
+    for(unsigned int i(0) ; i < 0 ; i++)
+        EntityFactory::create(EntityType::E_SMALL_CIRCLE_MOB, Location(sf::Vector2u(10, 10), map->room(0)));
 
     Event<EventPrePlayerChangeRoom>::send(EventPrePlayerChangeRoom(player->getID()));
     Event<EventPlayerChangeRoom>::send(EventPlayerChangeRoom(player->getID()));

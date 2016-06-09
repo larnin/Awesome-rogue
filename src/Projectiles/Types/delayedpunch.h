@@ -13,7 +13,7 @@ public:
     DelayedPunch(const Location & pos, Team team, std::weak_ptr<Entity> sender);
     DelayedPunch(DelayedPunch &&) = default;
     DelayedPunch & operator=(DelayedPunch &&) = default;
-    ~DelayedPunch() = default;
+    virtual ~DelayedPunch() = default;
 
     virtual void update(const sf::Time & elapsedTime);
     virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;

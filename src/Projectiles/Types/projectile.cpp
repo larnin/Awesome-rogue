@@ -30,3 +30,8 @@ Team Projectile::getTeam() const
 {
     return m_team;
 }
+
+HitBox Projectile::getBox() const
+{
+    return HitBox();
+}
