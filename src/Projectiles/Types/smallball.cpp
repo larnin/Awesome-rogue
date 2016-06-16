@@ -6,8 +6,8 @@
 #include "Map/blocktype.h"
 #include "Utilities/vect2convert.h"
 
-SmallBall::SmallBall(const Location & pos, Team team, const sf::Vector2f & speed, unsigned int bounces, float maxTime)
-    : Projectile(pos, team)
+SmallBall::SmallBall(const Location & pos, Team team, const sf::Vector2f & speed, unsigned int bounces, float maxTime, std::weak_ptr<Entity> sender)
+    : Projectile(pos, team, sender)
     , m_texture("res/img/smallball.png")
     , m_speed(speed)
     , m_bounces(bounces)

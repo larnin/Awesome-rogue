@@ -4,15 +4,17 @@
 #include "Map/blocktype.h"
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include "Events/eventgetter.h"
+#include "Utilities/vect2convert.h"
+#include "Map/room.h"
 
 const float totalTime(2.0f);
 const float frameTime(0.05f);
 const float waitTime(totalTime-5*frameTime);
 
 DelayedPunch::DelayedPunch(const Location & pos, Team team, std::weak_ptr<Entity> sender)
-    : Projectile(pos, team)
+    : Projectile(pos, team, sender)
     , m_texture("res/img/punchballAttack.png")
-    , m_sender(sender)
 {
     if(!m_sender.lock())
         m_killed = true;
@@ -36,6 +38,22 @@ void DelayedPunch::update(const sf::Time & elapsedTime)
         return;
     }
     m_pos = e->getPos();
+
+    std::shared_ptr<Room> r(m_pos.getRoom().lock());
+    if(!r)
+        return;
+
+    std::vector<std::shared_ptr<Entity>> entities(EventGetter<std::vector<std::shared_ptr<Entity>>,unsigned int>::get(r->getID()));
+    for(std::shared_ptr<Entity> & entity : entities)
+    {
+        if(!entity)
+            continue;
+        if(entity->getTeam() == m_team)
+            continue;
+        sf::Vector2f vect(entity->getPos().getPos() - m_pos.getPos());
+        if(norm(vect) < 1.5)
+            entity->damage(10, m_sender, normalise(vect));
+    }
 }
 
 void DelayedPunch::draw(sf::RenderTarget & target, sf::RenderStates) const

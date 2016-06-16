@@ -24,16 +24,16 @@ Entity::Entity(const Location & pos)
 
 }
 
-void Entity::damage(float value)
+bool Entity::damage(float value, std::weak_ptr<Entity>, sf::Vector2f)
 {
     if(!m_damageable)
-        return;
+        return false;
 
     if(m_shield > 0)
         m_shield -= value;
 
     if(m_shield >= 0)
-        return;
+        return true;
     value = -m_shield;
     m_shield = 0;
 
@@ -43,6 +43,7 @@ void Entity::damage(float value)
         m_life = 0;
         m_killed = true;
     }
+    return true;
 }
 
 float Entity::getLife() const
@@ -66,6 +67,11 @@ float Entity::getMaxShield() const
 bool Entity::isKilled() const
 {
     return m_killed;
+}
+
+Team Entity::getTeam() const
+{
+    return m_team;
 }
 
 Location Entity::getPos() const

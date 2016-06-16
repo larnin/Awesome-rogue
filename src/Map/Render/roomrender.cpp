@@ -67,6 +67,10 @@ void RoomRender::redraw(bool current)
 void RoomRender::draw(sf::RenderTarget & target, sf::RenderStates) const
 {
     target.draw(m_render, sf::RenderStates(m_texture()));
+
+    std::shared_ptr<Room> r(m_room.lock());
+    if(!r)
+        return;
 }
 
 unsigned int RoomRender::getNbSurfaces() const

@@ -21,7 +21,6 @@ public:
 private:
     Texture m_texture;
     sf::Time m_lifeTime;
-    std::weak_ptr<Entity> m_sender;
 };
 
 #endif // DELAYEDPUNCH_H

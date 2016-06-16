@@ -8,19 +8,17 @@
 #include "Map/blocktype.h"
 #include "Collisions/collisions.h"
 
-#include <iostream>
-
 const float totalTime(2.5f);
 const float preTime(1.0f);
 const float fireTime(totalTime-preTime);
 
 LaserMob::LaserMob(const Location & pos, Team team, std::weak_ptr<Entity> sender, float orientationOffset)
-    : Projectile(pos, team)
+    : Projectile(pos, team, sender)
     , m_texture("res/img/laserMob.png")
     , m_orientationOffset(orientationOffset)
     , m_orientation(orientationOffset)
-    , m_sender(sender)
     , m_totalTime(0)
+    , m_size(0)
 {
     std::shared_ptr<Entity> e(m_sender.lock());
     if(e)
@@ -41,6 +39,19 @@ void LaserMob::update(const sf::Time & elapsedTime)
 
      m_pos = e->getPos();
      m_orientation = e->getOrientation() + m_orientationOffset;
+
+
+     std::shared_ptr<Room> r(m_pos.getRoom().lock());
+     if(!r)
+         return;
+     float size(maxDistInRect(r->getSize()));
+     HitBox box;
+     box.addLine(Line(sf::Vector2f(0, -0.1f), sf::Vector2f(0, 0.1f)));
+     box = box.transform(m_orientation, false, false);
+     auto result(Collisions::interact(m_pos.getPos(), toVect(size, m_orientation), r));
+     if(result.collision)
+         size = norm(result.endPos-m_pos.getPos());
+     m_size = size;
 }
 
 void LaserMob::draw(sf::RenderTarget & target, sf::RenderStates) const
@@ -48,25 +59,15 @@ void LaserMob::draw(sf::RenderTarget & target, sf::RenderStates) const
     if(m_killed)
         return;
 
-    std::cout << m_pos.getPos().x << " " << m_pos.getPos().y << std::endl;
-
-    std::shared_ptr<Room> r(m_pos.getRoom().lock());
-    if(!r)
-        return;
-    float size(maxDistInRect(r->getSize()));
-    auto result(Collisions::interact(m_pos.getPos(), toVect(size, m_orientation), r));
-    if(result.collision)
-        size = norm(result.endPos-m_pos.getPos());
-
     std::uniform_int_distribution<unsigned int> distrib(0, 2);
     const float offset(distrib(m_randEngine)*10);
     sf::VertexArray array(sf::Quads, 8);
     const float width(m_totalTime < preTime ? 0.5f : 2.5f);
     sf::Vector2f startPos(m_pos.toGlobalPos()*float(BlockType::tileSize));
-    drawOrientedQuad(&array[0], sf::FloatRect(startPos.x, startPos.y-width, -size*BlockType::tileSize, 2*width)
+    drawOrientedQuad(&array[0], sf::FloatRect(startPos.x, startPos.y-width, -m_size*BlockType::tileSize, 2*width)
             , sf::FloatRect(offset, 0, 1, 5), false, false, Rotation::ROT_0, m_orientation, startPos);
 
-    sf::Vector2f endPos(result.endPos*float(BlockType::tileSize));
+    sf::Vector2f endPos(startPos+toVect(m_size, m_orientation)*float(BlockType::tileSize));
     const float endRadius(4);
     const float multiplier(m_totalTime < preTime ? 0.3f : 1.0f);
     drawQuad(&array[4], sf::FloatRect(endPos.x-endRadius*multiplier, endPos.y-endRadius*multiplier, endRadius*2*multiplier, endRadius*2*multiplier)

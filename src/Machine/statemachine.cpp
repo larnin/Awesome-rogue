@@ -20,7 +20,8 @@ StateMachine::StateMachine(const KeysConfig & configs)
     m_window.setFramerateLimit(60);
     resizeWindow(m_window.getSize());
 
-    connect<EventCenterOfViewChanged>(std::bind(&onCenterChanged, this, _1));
+    m_camera = std::make_shared<SmoothCamera>(*this);
+    Updatable::add(m_camera);
 }
 
 sf::RenderWindow & StateMachine::getWindow()
@@ -89,9 +90,9 @@ void StateMachine::resizeWindow(sf::Vector2u newSize)
     m_window.setView(v);
 }
 
-void StateMachine::onCenterChanged(EventCenterOfViewChanged e)
+void StateMachine::setWindowCenter(const sf::Vector2f & pos)
 {
     sf::View v(m_window.getView());
-    v.setCenter(sf::Vector2f(sf::Vector2i(e.pos)));
+    v.setCenter(sf::Vector2f(sf::Vector2i(pos)));
     m_window.setView(v);
 }

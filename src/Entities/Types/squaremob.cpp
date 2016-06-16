@@ -7,6 +7,7 @@
 #include "Utilities/quadrender.h"
 #include "Projectiles/projectilefactory.h"
 #include "Projectiles/Types/smallball.h"
+#include "Events/eventgetter.h"
 
 SquareMob::SquareMob(const Location & pos)
     : Entity(pos)
@@ -83,7 +84,8 @@ void SquareMob::update(const sf::Time & elapsedTime)
             float a(3.14159/2*(i));
             Location pos(getPos());
             pos.move(toVect(offset, m_orientation+a));
-            ProjectileFactory::createSend<SmallBall>(pos, m_team, toVect(projectileSpeed, m_orientation+a), 1, 10);
+            ProjectileFactory::createSend<SmallBall>(pos, m_team, toVect(projectileSpeed, m_orientation+a), 1, 10
+                                                     , EventGetter<std::shared_ptr<Entity>, unsigned int>::get(getID()));
         }
     }
 }

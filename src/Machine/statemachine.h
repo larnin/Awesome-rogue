@@ -7,12 +7,11 @@
 #include <SFML/Graphics/Color.hpp>
 #include "Controles/commands.h"
 #include "Utilities/noncopiable.h"
-#include "Events/eventreceiver.h"
-#include "Events/Datas/eventcenterofviewchanged.h"
+#include "smoothcamera.h"
 
 class State;
 
-class StateMachine : private NonCopiable , public EventReceiver
+class StateMachine : private NonCopiable
 {
 public:
     StateMachine(const KeysConfig &configs);
@@ -23,10 +22,10 @@ public:
     void setKeys(const KeysConfig & configs);
     void run();
     void setClearColor(const sf::Color & color);
+    void setWindowCenter(const sf::Vector2f & pos);
 
 private:
     void resizeWindow(sf::Vector2u newSize);
-    void onCenterChanged(EventCenterOfViewChanged e);
 
     std::unique_ptr<State> m_actualState;
     std::unique_ptr<State> m_nextState;
@@ -34,6 +33,7 @@ private:
     Commands m_commands;
     sf::Clock m_clock;
     sf::Color m_clearColor;
+    std::shared_ptr<SmoothCamera> m_camera;
 };
 
 #endif // STATEMACHINE_H

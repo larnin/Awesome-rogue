@@ -9,7 +9,7 @@
 class SmallBall : public Projectile
 {
 public:
-    SmallBall(const Location & pos, Team team, const sf::Vector2f & speed, unsigned int bounces, float maxTime);
+    SmallBall(const Location & pos, Team team, const sf::Vector2f & speed, unsigned int bounces, float maxTime, std::weak_ptr<Entity> sender);
     SmallBall(SmallBall &&) = default;
     SmallBall & operator=(SmallBall &&) = default;
     virtual ~SmallBall() = default;

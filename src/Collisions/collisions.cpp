@@ -67,7 +67,7 @@ Collisions::InteractResult Collisions::interact(const HitBox & box1, const sf::V
 Collisions::InteractResult Collisions::interact(const HitBox & box, const sf::Vector2f & pos, const sf::Vector2f & speed, std::shared_ptr<Room> r)
 {
     if(!r)
-        return Collisions::InteractResult();
+    return Collisions::InteractResult();
 
     sf::FloatRect boxRect(box.globalRect());
     boxRect.left += pos.x;
@@ -134,21 +134,30 @@ Collisions::InteractResult Collisions::interact(const sf::Vector2f & pos, const 
 {
     if(!r)
         return Collisions::InteractResult();
-    sf::FloatRect movedBoxRect(std::min(pos.x, pos.x+speed.x), std::min(pos.y, pos.y+speed.y), std::abs(speed.x), std::abs(speed.y));
+
+    sf::Vector2f posMin(std::min(pos.x, pos.x+speed.x), std::min(pos.y, pos.y+speed.y));
+    sf::Vector2f absSpeed(std::abs(speed.x), std::abs(speed.y));
+
+    sf::Vector2i posMinI(posMin.x -(posMin.x < 0), posMin.y - (posMin.y < 0));
 
     Collisions::InteractResult result;
 
-    for(int i(movedBoxRect.left - (movedBoxRect.left<0)) ; i < movedBoxRect.left+movedBoxRect.width + 1 ; i++)
-        for(int j(movedBoxRect.top - (movedBoxRect.top<0)) ; j < movedBoxRect.top + movedBoxRect.height + 1 ; j++)
+    for(int i(0) ; i < absSpeed.x+1 ; i++)
+        for(int j(0) ; j < absSpeed.y+1 ; j++)
         {
-            HitBox boxBlock(optimizedBox(sf::Vector2i(i, j), r));
-            if(boxBlock.m_lines.empty())
+            HitBox box(optimizedBox(sf::Vector2i(i, j)+posMinI, r));
+            if(box.m_lines.empty())
                 continue;
 
-            Collisions::InteractResult localResult(interact(pos, speed, boxBlock, sf::Vector2f(i, j)));
+            Collisions::InteractResult localResult(Collisions::interact(pos, speed, box, sf::Vector2f(i, j)+sf::Vector2f(posMinI)));
+            if(!localResult.collision)
+                continue;
             if(!result.collision)
+            {
                 result = localResult;
-            else if(norm(pos-result.endPos) > norm(pos - localResult.endPos))
+                continue;
+            }
+            if(norm(pos-result.endPos)>norm(pos-localResult.endPos))
                 result = localResult;
         }
     return result;

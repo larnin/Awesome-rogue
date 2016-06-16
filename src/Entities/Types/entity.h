@@ -22,12 +22,13 @@ public:
     Entity & operator= (Entity &&) = default;
     virtual ~Entity() = default;
 
-    void damage(float value);
+    virtual bool damage(float value, std::weak_ptr<Entity>, sf::Vector2f = sf::Vector2f(0, 0));
     float getLife() const;
     float getMaxLife() const;
     float getShield() const;
     float getMaxShield() const;
     bool isKilled() const;
+    Team getTeam() const;
 
     unsigned int getActiveDistance() const;
     bool canPassDoor() const;

@@ -7,7 +7,7 @@
 class RapidFire : public Projectile
 {
 public:
-    RapidFire(const Location & pos, Team team, const sf::Vector2f & speed);
+    RapidFire(const Location & pos, Team team, const sf::Vector2f & speed, std::weak_ptr<Entity> sender);
     RapidFire(RapidFire &&) = default;
     RapidFire & operator =(RapidFire &&) = default;
     virtual ~RapidFire() = default;

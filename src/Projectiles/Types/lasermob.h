@@ -22,8 +22,8 @@ private:
     Texture m_texture;
     float m_orientationOffset;
     float m_orientation;
-    std::weak_ptr<Entity> m_sender;
     float m_totalTime;
+    float m_size;
 };
 
 #endif // LASERMOB_H

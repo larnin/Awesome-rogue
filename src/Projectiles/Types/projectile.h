@@ -8,11 +8,14 @@
 #include "Map/location.h"
 #include "Collisions/hitbox.h"
 #include <SFML/Graphics/Drawable.hpp>
+#include <memory>
+
+class Entity;
 
 class Projectile : public sf::Drawable, public Updatable, public NonCopiable
 {
 public:
-    Projectile(const Location & pos, Team team);
+    Projectile(const Location & pos, Team team, std::weak_ptr<Entity> sender);
     Projectile(Projectile&&) = default;
     Projectile & operator=(Projectile &&) = default;
     virtual ~Projectile() = default;
@@ -30,6 +33,8 @@ protected:
     Location m_pos;
     bool m_destroyable;
     bool m_killed;
+    std::weak_ptr<Entity> m_sender;
+
     static std::default_random_engine m_randEngine;
 };
 

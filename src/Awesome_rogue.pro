@@ -77,7 +77,9 @@ SOURCES += main.cpp \
     Projectiles/Types/delayedpunch.cpp \
     Projectiles/Types/smallball.cpp \
     Projectiles/Types/rapidfire.cpp \
-    Projectiles/Types/lasermob.cpp
+    Projectiles/Types/lasermob.cpp \
+    Projectiles/Types/cacaura.cpp \
+    Machine/smoothcamera.cpp
 
 HEADERS  += \
     Controles/commands.h \
@@ -163,7 +165,11 @@ HEADERS  += \
     Projectiles/Types/delayedpunch.h \
     Projectiles/Types/smallball.h \
     Projectiles/Types/rapidfire.h \
-    Projectiles/Types/lasermob.h
+    Projectiles/Types/lasermob.h \
+    Projectiles/Types/cacaura.h \
+    Machine/smoothcamera.h \
+    Events/Datas/eventinstantcenterofviewchanged.h \
+    Events/Datas/eventplaycameraeffect.h
 
 DEFINES += SFML_STATIC
 

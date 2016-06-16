@@ -111,8 +111,10 @@ HitBox BlockType::createBox(unsigned char boxCaracts)
         break;
     case Rotation::ROT_180:
         rot = PI;
+        break;
     case Rotation::ROT_270:
         rot = 3*PI/2.0f;
+        break;
     default:
         break;
     }

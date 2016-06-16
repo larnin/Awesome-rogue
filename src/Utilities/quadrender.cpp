@@ -51,3 +51,4 @@ void drawFlatQuad(sf::Vertex* quads, const sf::FloatRect & rect, const sf::Color
     quads[2] = sf::Vertex(sf::Vector2f(rect.left+rect.width, rect.top+rect.height), color);
     quads[3] = sf::Vertex(sf::Vector2f(rect.left, rect.top+rect.height), color);
 }
+

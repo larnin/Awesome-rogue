@@ -7,8 +7,8 @@
 #include "Map/blocktype.h"
 #include "Collisions/collisions.h"
 
-RapidFire::RapidFire(const Location & pos, Team team, const sf::Vector2f & speed)
-    : Projectile(pos, team)
+RapidFire::RapidFire(const Location & pos, Team team, const sf::Vector2f & speed, std::weak_ptr<Entity> sender)
+    : Projectile(pos, team, sender)
     , m_texture("res/img/rapidfire.png")
     , m_speed(speed)
 {

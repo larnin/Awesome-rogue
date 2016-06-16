@@ -2,11 +2,12 @@
 
 std::default_random_engine Projectile::m_randEngine;
 
-Projectile::Projectile(const Location & pos, Team team)
+Projectile::Projectile(const Location & pos, Team team, std::weak_ptr<Entity> sender)
     : m_team(team)
     , m_pos(pos)
     , m_destroyable(false)
     , m_killed(false)
+    , m_sender(sender)
 {
 
 }

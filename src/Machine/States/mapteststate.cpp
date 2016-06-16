@@ -42,6 +42,9 @@ MapTestState::MapTestState(std::weak_ptr<StateMachine> machine)
     (*(map->room(0)))(sf::Vector2u(8, 9)).boxCaracts = createBoxCaracts(Rotation::ROT_0, false, false, BoxType::FULL);
     (*(map->room(0)))(sf::Vector2u(8, 10)).wallID = 64;
     (*(map->room(0)))(sf::Vector2u(8, 10)).boxCaracts = createBoxCaracts(Rotation::ROT_0, false, false, BoxType::FULL);
+    (*(map->room(0)))(sf::Vector2u(9, 9)).wallID = 259;
+    (*(map->room(0)))(sf::Vector2u(9, 9)).boxCaracts = createBoxCaracts(Rotation::ROT_180, false, false, BoxType::TRIANGLE);
+
     if(mLock)
         mapRender = std::make_shared<WorldRender>(map, 0, mLock->getWindow().getSize());
     DrawableList::add(mapRender, 0);
@@ -64,12 +67,12 @@ MapTestState::MapTestState(std::weak_ptr<StateMachine> machine)
         EntityFactory::create(EntityType::E_SQUARE_MOB, Location(sf::Vector2u(10, 10), map->room(0)));
 
     for(unsigned int i(0) ; i < 1 ; i++)
-        EntityFactory::create(EntityType::E_CROSS_LASER_MOB, Location(sf::Vector2u(10, 10), map->room(0)));
+        EntityFactory::create(EntityType::E_CROSS_LASER_MOB, Location(sf::Vector2u(2, 2), map->room(0)));
 
-    for(unsigned int i(0) ; i < 0 ; i++)
+    for(unsigned int i(0) ; i < 1 ; i++)
         EntityFactory::create(EntityType::E_TRACKER_MOB, Location(sf::Vector2u(10, 10), map->room(0)));
 
-    for(unsigned int i(0) ; i < 0 ; i++)
+    for(unsigned int i(0) ; i < 1 ; i++)
         EntityFactory::create(EntityType::E_PUNCHBALL_MOB, Location(sf::Vector2u(10, 10), map->room(0)));
 
     for(unsigned int i(0) ; i < 0 ; i++)
@@ -80,4 +83,5 @@ MapTestState::MapTestState(std::weak_ptr<StateMachine> machine)
 
     Event<EventPrePlayerChangeRoom>::send(EventPrePlayerChangeRoom(player->getID()));
     Event<EventPlayerChangeRoom>::send(EventPlayerChangeRoom(player->getID()));
+    Event<EventInstantCenterOfViewChanged>::send(EventInstantCenterOfViewChanged(player->getPos().toGlobalPos()));
 }

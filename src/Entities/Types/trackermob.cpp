@@ -82,7 +82,7 @@ void TrackerMob::update(const sf::Time & elapsedTime)
             if(target)
             {
                 sf::Vector2f dir(normalise(target->getPos().getPos() - getPos().getPos())*10.0f);
-                ProjectileFactory::createSend<RapidFire>(getPos(), m_team, dir);
+                ProjectileFactory::createSend<RapidFire>(getPos(), m_team, dir, EventGetter<std::shared_ptr<Entity>, unsigned int>::get(getID()));
             }
             if(m_projectilesToFire == 1)
             {
