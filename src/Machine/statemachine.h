@@ -25,8 +25,6 @@ public:
     void setWindowCenter(const sf::Vector2f & pos);
 
 private:
-    void resizeWindow(sf::Vector2u newSize);
-
     std::unique_ptr<State> m_actualState;
     std::unique_ptr<State> m_nextState;
     sf::RenderWindow m_window;

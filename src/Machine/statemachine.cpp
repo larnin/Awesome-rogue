@@ -18,7 +18,6 @@ StateMachine::StateMachine(const KeysConfig & configs)
     , m_clearColor(sf::Color::White)
 {
     m_window.setFramerateLimit(60);
-    resizeWindow(m_window.getSize());
 
     m_camera = std::make_shared<SmoothCamera>(*this);
     Updatable::add(m_camera);
@@ -66,8 +65,6 @@ void StateMachine::run()
         {
             if(e.type == sf::Event::Closed)
                 m_window.close();
-            if(e.type == sf::Event::Resized)
-                resizeWindow(sf::Vector2u(e.size.width, e.size.height));
             m_commands.event(e);
         }
 
@@ -78,16 +75,6 @@ void StateMachine::run()
         DrawableList::drawAll(m_window);
         m_window.display();
     }
-}
-
-void StateMachine::resizeWindow(sf::Vector2u newSize)
-{
-    sf::Vector2f size(newSize);
-    size /= 2.0f;
-    sf::View v(m_window.getView());
-    v.setSize(size);
-    Event<EventSizeViewChanged>::send(EventSizeViewChanged(size));
-    m_window.setView(v);
 }
 
 void StateMachine::setWindowCenter(const sf::Vector2f & pos)

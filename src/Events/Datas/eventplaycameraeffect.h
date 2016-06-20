@@ -3,7 +3,7 @@
 
 enum CameraEffectType
 {
-
+    EFFECT_TEST
 };
 
 struct EventPlayCameraEffect

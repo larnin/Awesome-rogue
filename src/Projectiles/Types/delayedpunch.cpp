@@ -15,6 +15,7 @@ const float waitTime(totalTime-5*frameTime);
 DelayedPunch::DelayedPunch(const Location & pos, Team team, std::weak_ptr<Entity> sender)
     : Projectile(pos, team, sender)
     , m_texture("res/img/punchballAttack.png")
+    , m_fired(false)
 {
     if(!m_sender.lock())
         m_killed = true;
@@ -39,6 +40,13 @@ void DelayedPunch::update(const sf::Time & elapsedTime)
     }
     m_pos = e->getPos();
 
+    if(!m_fired && m_lifeTime.asSeconds() > waitTime + 2*frameTime)
+        fire();
+}
+
+void DelayedPunch::fire()
+{
+    m_fired = true;
     std::shared_ptr<Room> r(m_pos.getRoom().lock());
     if(!r)
         return;
@@ -50,6 +58,7 @@ void DelayedPunch::update(const sf::Time & elapsedTime)
             continue;
         if(entity->getTeam() == m_team)
             continue;
+
         sf::Vector2f vect(entity->getPos().getPos() - m_pos.getPos());
         if(norm(vect) < 1.5)
             entity->damage(10, m_sender, normalise(vect));

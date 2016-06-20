@@ -1,6 +1,7 @@
 #include "menustate.h"
 #include "Events/event.h"
 #include "Events/Datas/eventinstantcenterofviewchanged.h"
+#include "Events/Datas/eventplaycameraeffect.h"
 #include "Systemes/drawablelist.h"
 #include "Machine/statemachine.h"
 #include "GUI/Widgets/Buttons/basicbutton.h"
@@ -11,6 +12,7 @@ MenuState::MenuState(std::weak_ptr<StateMachine> machine)
     , m_titleTexture("res/img/title.png")
 {
     Event<EventInstantCenterOfViewChanged>::send(EventInstantCenterOfViewChanged(sf::Vector2f(0, 0)));
+
     std::shared_ptr<StateMachine> m(machine.lock());
     if(m)
         m->setClearColor(sf::Color::White);

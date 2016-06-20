@@ -19,8 +19,10 @@ public:
     virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
 
 private:
+    void fire();
     Texture m_texture;
     sf::Time m_lifeTime;
+    bool m_fired;
 };
 
 #endif // DELAYEDPUNCH_H

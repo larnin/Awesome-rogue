@@ -30,12 +30,13 @@ bool Entity::damage(float value, std::weak_ptr<Entity>, sf::Vector2f)
         return false;
 
     if(m_shield > 0)
+    {
         m_shield -= value;
-
-    if(m_shield >= 0)
-        return true;
-    value = -m_shield;
-    m_shield = 0;
+        value = -m_shield;
+        if(m_shield > 0)
+            return true;
+        m_shield = 0;
+    }
 
     m_life -= value;
     if(m_life < 0)

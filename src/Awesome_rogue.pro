@@ -79,7 +79,8 @@ SOURCES += main.cpp \
     Projectiles/Types/rapidfire.cpp \
     Projectiles/Types/lasermob.cpp \
     Projectiles/Types/cacaura.cpp \
-    Machine/smoothcamera.cpp
+    Machine/smoothcamera.cpp \
+    Machine/CameraEffects/effecttest.cpp
 
 HEADERS  += \
     Controles/commands.h \
@@ -169,7 +170,10 @@ HEADERS  += \
     Projectiles/Types/cacaura.h \
     Machine/smoothcamera.h \
     Events/Datas/eventinstantcenterofviewchanged.h \
-    Events/Datas/eventplaycameraeffect.h
+    Events/Datas/eventplaycameraeffect.h \
+    Machine/CameraEffects/cameraeffect.h \
+    Machine/CameraEffects/effecttest.h \
+    Events/Datas/eventclearcameraeffects.h
 
 DEFINES += SFML_STATIC
 
