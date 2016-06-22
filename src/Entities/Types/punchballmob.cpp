@@ -31,14 +31,14 @@ PunchBallMob::PunchBallMob(const Location & pos)
     m_canPassDoor = true;
 }
 
-void PunchBallMob::update(const sf::Time & elapsedTime)
+void PunchBallMob::updateComportement(const sf::Time & elapsedTime)
 {
     float maxFireTime(2.0f);
     float fireTimeColdown(1.0f);
     float distanceTrigFire(2.0f);
-    const float accelerationNorm(0.18f);
-    const float limitMultiplier(0.22f);
-    const float limitReductor(0.12f);
+    const float accelerationNorm(10.0f);
+    const float limitMultiplier(1.5f);
+    const float limitReductor(1.0f);
     const float epsilon(0.01f);
 
     std::shared_ptr<Room> r(m_pos.getRoom().lock());
@@ -86,7 +86,7 @@ void PunchBallMob::update(const sf::Time & elapsedTime)
         n = 0;
     m_speed = toVect(n, angle(m_speed));
 
-    execMove();
+    execMove(m_speed*elapsedTime.asSeconds());
 }
 
 void PunchBallMob::draw(sf::RenderTarget & target, sf::RenderStates) const

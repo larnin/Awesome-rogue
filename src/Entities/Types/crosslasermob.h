@@ -12,8 +12,10 @@ public:
     CrossLaserMob & operator= (CrossLaserMob &&) = default;
     virtual ~CrossLaserMob() = default;
 
-    virtual void update(const sf::Time & elapsedTime);
     virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
+
+protected:
+    virtual void updateComportement(const sf::Time & elapsedTime);
 
 private:
     bool m_rotationSide;

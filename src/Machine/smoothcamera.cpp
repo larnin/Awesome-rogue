@@ -83,7 +83,7 @@ void SmoothCamera::onPlayCameraEffect(EventPlayCameraEffect e)
     Updatable::add(m_effects.back().second);
 }
 
-void SmoothCamera::onClearCameraEffects(EventClearCameraEffects e)
+void SmoothCamera::onClearCameraEffects(EventClearCameraEffects)
 {
     m_effects.clear();
 }

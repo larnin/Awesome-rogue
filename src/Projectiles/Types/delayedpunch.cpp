@@ -61,7 +61,7 @@ void DelayedPunch::fire()
 
         sf::Vector2f vect(entity->getPos().getPos() - m_pos.getPos());
         if(norm(vect) < 1.5)
-            entity->damage(10, m_sender, normalise(vect));
+            entity->damage(10, m_sender, normalise(vect)*7.0f);
     }
 }
 

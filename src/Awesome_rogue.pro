@@ -80,7 +80,11 @@ SOURCES += main.cpp \
     Projectiles/Types/lasermob.cpp \
     Projectiles/Types/cacaura.cpp \
     Machine/smoothcamera.cpp \
-    Machine/CameraEffects/effecttest.cpp
+    Machine/CameraEffects/effecttest.cpp \
+    Particules/Types/particule.cpp \
+    Particules/particulelist.cpp \
+    Particules/Types/particulelifebar.cpp \
+    Machine/listholder.cpp
 
 HEADERS  += \
     Controles/commands.h \
@@ -173,7 +177,13 @@ HEADERS  += \
     Events/Datas/eventplaycameraeffect.h \
     Machine/CameraEffects/cameraeffect.h \
     Machine/CameraEffects/effecttest.h \
-    Events/Datas/eventclearcameraeffects.h
+    Events/Datas/eventclearcameraeffects.h \
+    Particules/Types/particule.h \
+    Particules/particulelist.h \
+    Events/Datas/eventparticulecreated.h \
+    Particules/particulefactory.h \
+    Particules/Types/particulelifebar.h \
+    Machine/listholder.h
 
 DEFINES += SFML_STATIC
 

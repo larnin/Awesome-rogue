@@ -8,6 +8,8 @@
 #include "Collisions/path.h"
 #include "Utilities/ressource.h"
 
+class Projectile;
+
 class CircleMob : public Entity, public EventReceiver
 {
 public:
@@ -16,10 +18,10 @@ public:
     CircleMob & operator= (CircleMob &&) = default;
     virtual ~CircleMob() = default;
 
-    virtual void update(const sf::Time & elapsedTime);
     virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
 
 protected:
+    virtual void updateComportement(const sf::Time & elapsedTime);
     virtual void onAwake();
     virtual void onDisable();
 
@@ -30,6 +32,8 @@ private:
     Path m_path;
     Texture m_texture;
     std::weak_ptr<Entity> m_target;
+
+    std::weak_ptr<Projectile> m_projectile;
 
     float m_lastRandDirTime;
     float m_randAngle;

@@ -11,7 +11,7 @@ public:
     CacAura & operator =(CacAura &&) = default;
     virtual ~CacAura() = default;
 
-    virtual void update(const sf::Time);
+    virtual void update(const sf::Time &);
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const;
 
 private:

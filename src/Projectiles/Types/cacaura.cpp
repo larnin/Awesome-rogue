@@ -10,7 +10,7 @@ CacAura::CacAura(const Location & pos, Team team, std::weak_ptr<Entity> sender, 
 
 }
 
-void CacAura::update(const sf::Time)
+void CacAura::update(const sf::Time &)
 {
     if(m_killed)
         return;

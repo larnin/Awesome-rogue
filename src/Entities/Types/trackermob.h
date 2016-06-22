@@ -15,10 +15,10 @@ public:
     TrackerMob & operator= (TrackerMob &&) = default;
     virtual ~TrackerMob() = default;
 
-    virtual void update(const sf::Time & elapsedTime);
     virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
 
 protected:
+    virtual void updateComportement(const sf::Time & elapsedTime);
     virtual void onAwake();
     virtual void onDisable();
 

@@ -25,7 +25,7 @@ private:
     void onCenterChanged(EventCenterOfViewChanged e);
     void onInstantCenterChanged(EventInstantCenterOfViewChanged e);
     void onPlayCameraEffect(EventPlayCameraEffect e);
-    void onClearCameraEffects(EventClearCameraEffects e);
+    void onClearCameraEffects(EventClearCameraEffects);
 
     std::shared_ptr<CameraEffect> createEffect(CameraEffectType type);
 

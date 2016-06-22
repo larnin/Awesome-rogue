@@ -8,15 +8,15 @@
 #include "Events/Datas/evententitycreated.h"
 #include "Events/Datas/eventpreplayerchangeroom.h"
 #include "Events/Datas/evententitychangeroom.h"
+#include "Utilities/noncopiable.h"
 
-class EntityList : public EventReceiver
+class EntityList : public EventReceiver , private NonCopiable
 {
 public:
     EntityList();
+    EntityList(EntityList &&) = default;
+    EntityList & operator =(EntityList &&) = default;
     virtual ~EntityList();
-
-    EntityList(const EntityList &) = delete;
-    EntityList & operator =(const EntityList &) = delete;
 
     void addEntity(std::shared_ptr<Entity> entity);
     void removeEntity(std::shared_ptr<Entity> entity);

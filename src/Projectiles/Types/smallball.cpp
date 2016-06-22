@@ -5,6 +5,7 @@
 #include <Utilities/quadrender.h>
 #include "Map/blocktype.h"
 #include "Utilities/vect2convert.h"
+#include "Events/eventgetter.h"
 
 SmallBall::SmallBall(const Location & pos, Team team, const sf::Vector2f & speed, unsigned int bounces, float maxTime, std::weak_ptr<Entity> sender)
     : Projectile(pos, team, sender)
@@ -45,6 +46,21 @@ void SmallBall::update(const sf::Time & elapsedTime)
         }
     }
     m_pos.move(dir);
+
+    std::vector<std::shared_ptr<Entity>> entities(EventGetter<std::vector<std::shared_ptr<Entity>>,unsigned int>::get(r->getID()));
+    for(std::shared_ptr<Entity> & e : entities)
+    {
+        if(!e)
+            continue;
+        if(e->getTeam() == m_team)
+            continue;
+        if(Collisions::interact(getBox(), m_pos.getPos(), dir, e->getBox(), e->getPos().getPos()).collision)
+            if(e->damage(10, m_sender, normalise(m_speed)))
+            {
+                m_killed = true;
+                break;
+            }
+    }
 }
 
 void SmallBall::draw(sf::RenderTarget & target, sf::RenderStates) const

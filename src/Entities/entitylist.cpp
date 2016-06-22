@@ -28,6 +28,7 @@ EntityList::~EntityList()
 {
     EventGetter<std::shared_ptr<Entity>,unsigned int>::disconnect();
     EventGetter<std::vector<std::shared_ptr<Entity>>,unsigned int>::disconnect();
+    m_instanced = false;
 }
 
 void EntityList::addEntity(std::shared_ptr<Entity> entity)

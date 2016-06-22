@@ -41,7 +41,7 @@ CrossLaserMob::CrossLaserMob(const Location & pos)
     m_fireTimer = distrib(m_randEngine);
 }
 
-void CrossLaserMob::update(const sf::Time & elapsedTime)
+void CrossLaserMob::updateComportement(const sf::Time & elapsedTime)
 {
     std::shared_ptr<Room> r(m_pos.getRoom().lock());
     if(!r)

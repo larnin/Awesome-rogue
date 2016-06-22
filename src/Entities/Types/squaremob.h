@@ -13,8 +13,10 @@ public:
     SquareMob & operator= (SquareMob &&) = default;
     virtual ~SquareMob() = default;
 
-    virtual void update(const sf::Time & elapsedTime);
     virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
+
+protected:
+    virtual void updateComportement(const sf::Time & elapsedTime);
 
 private:
     Texture m_texture;

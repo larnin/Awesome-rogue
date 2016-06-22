@@ -5,15 +5,15 @@
 #include "Events/eventreceiver.h"
 #include "Events/Datas/eventprojectilecreated.h"
 #include "Events/Datas/eventpreplayerchangeroom.h"
+#include "Utilities/noncopiable.h"
 
-class ProjectileList : public EventReceiver
+class ProjectileList : public EventReceiver , private NonCopiable
 {
 public:
     ProjectileList();
+    ProjectileList(ProjectileList &&) = default;
+    ProjectileList & operator =(ProjectileList &&) = default;
     virtual ~ProjectileList();
-
-    ProjectileList(const ProjectileList &) = delete;
-    ProjectileList & operator =(const ProjectileList &) = delete;
 
     void addProjectile(std::shared_ptr<Projectile> p);
     void removeProjectile(std::shared_ptr<Projectile> p);

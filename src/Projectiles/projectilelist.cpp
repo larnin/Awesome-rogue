@@ -23,6 +23,7 @@ ProjectileList::ProjectileList()
 
 ProjectileList::~ProjectileList()
 {
+    EventSimpleGetter<std::vector<std::shared_ptr<Projectile>>>::disconnect();
     m_instanced = false;
 }
 

@@ -36,7 +36,7 @@ TrackerMob::TrackerMob(const Location & pos)
     m_canPassDoor = true;
 }
 
-void TrackerMob::update(const sf::Time & elapsedTime)
+void TrackerMob::updateComportement(const sf::Time & elapsedTime)
 {
     std::shared_ptr<Room> r(m_pos.getRoom().lock());
     if(!r)
@@ -56,9 +56,9 @@ void TrackerMob::update(const sf::Time & elapsedTime)
         m_canfire = true;
     else targetPos = m_path.next(m_pos).getPos();
 
-    const float accelerationNorm(0.2f);
-    const float limitMultiplier(0.2f);
-    const float limitReductor(0.1f);
+    const float accelerationNorm(6.0f);
+    const float limitMultiplier(1.0f);
+    const float limitReductor(0.5f);
     //const float rotationSpeed(1.0f - 2.0f*(m_rotationSide));
     const float epsilon(0.01f);
 
@@ -72,7 +72,7 @@ void TrackerMob::update(const sf::Time & elapsedTime)
         n = 0;
     m_speed = toVect(n, angle(m_speed));
 
-    execMove();
+    execMove(m_speed*elapsedTime.asSeconds());
 
     if(m_canfire)
     {

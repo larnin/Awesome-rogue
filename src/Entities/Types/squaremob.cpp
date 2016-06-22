@@ -34,7 +34,7 @@ SquareMob::SquareMob(const Location & pos)
     m_orientation = a(m_randEngine);
 }
 
-void SquareMob::update(const sf::Time & elapsedTime)
+void SquareMob::updateComportement(const sf::Time & elapsedTime)
 {
     std::shared_ptr<Room> r(m_pos.getRoom().lock());
     if(!r)
@@ -52,9 +52,9 @@ void SquareMob::update(const sf::Time & elapsedTime)
     }
     else targetPos = m_path.next(m_pos).getPos();
 
-    const float accelerationNorm(0.2f);
-    const float limitMultiplier(0.2f);
-    const float limitReductor(0.1f);
+    const float accelerationNorm(8.0f);
+    const float limitMultiplier(1.0f);
+    const float limitReductor(1.0f);
     const float rotationSpeed(1.0f - 2.0f*(m_rotationSide));
     const float epsilon(0.01f);
 
@@ -68,7 +68,7 @@ void SquareMob::update(const sf::Time & elapsedTime)
         n = 0;
     m_speed = toVect(n, angle(m_speed));
 
-    execMove();
+    execMove(m_speed*elapsedTime.asSeconds());
 
     float newAngle(m_orientation + rotationSpeed*elapsedTime.asSeconds());
     execRotate(newAngle);

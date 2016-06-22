@@ -7,6 +7,7 @@
 #include "Map/room.h"
 #include "Map/blocktype.h"
 #include "Collisions/collisions.h"
+#include "Events/eventgetter.h"
 
 const float totalTime(2.5f);
 const float preTime(1.0f);
@@ -45,13 +46,26 @@ void LaserMob::update(const sf::Time & elapsedTime)
      if(!r)
          return;
      float size(maxDistInRect(r->getSize()));
-     HitBox box;
-     box.addLine(Line(sf::Vector2f(0, -0.1f), sf::Vector2f(0, 0.1f)));
-     box = box.transform(m_orientation, false, false);
      auto result(Collisions::interact(m_pos.getPos(), toVect(size, m_orientation), r));
      if(result.collision)
          size = norm(result.endPos-m_pos.getPos());
      m_size = size;
+
+     if(m_totalTime > preTime)
+     {
+        std::vector<std::shared_ptr<Entity>> entities(EventGetter<std::vector<std::shared_ptr<Entity>>,unsigned int>::get(r->getID()));
+        sf::Vector2f laserVect(toVect(size, m_orientation));
+        for(std::shared_ptr<Entity> & e : entities)
+        {
+            if(!e)
+                continue;
+            if(e->getTeam() == m_team)
+                continue;
+
+            if(Collisions::interact(m_pos.getPos(), laserVect, e->getBox(), e->getPos().getPos()).collision)
+                e->damage(elapsedTime.asSeconds()*100.0f, m_sender);
+        }
+     }
 }
 
 void LaserMob::draw(sf::RenderTarget & target, sf::RenderStates) const

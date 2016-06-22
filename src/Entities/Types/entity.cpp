@@ -4,6 +4,9 @@
 
 #include "Events/event.h"
 #include "Events/Datas/evententitychangeroom.h"
+#include "Events/eventgetter.h"
+#include "Particules/particulefactory.h"
+#include "Particules/Types/particulelifebar.h"
 
 unsigned int Entity::lastID(0);
 std::default_random_engine Entity::m_randEngine;
@@ -14,20 +17,59 @@ Entity::Entity(const Location & pos)
     , m_damageable(true)
     , m_maxLife(1.0f)
     , m_life(m_maxLife)
+    , m_lifeRegeneration(1.0f)
     , m_maxShield(0.0f)
     , m_shield(m_maxShield)
+    , m_shieldRegeneration(5.0f)
+    , m_shieldDelay(3.0f)
+    , m_timeFromLastDamage(0.0f)
+    , m_invincibleTime(0.0f)
+    , m_showLifeOnDamage(true)
     , m_killed(false)
     , m_team(Team::MOB_TEAM)
+    , m_activeDistance(0)
     , m_UID(lastID++)
+    , m_canPassDoor(false)
+    , m_knockbackMultiplier(1.0f)
 
 {
 
 }
 
-bool Entity::damage(float value, std::weak_ptr<Entity>, sf::Vector2f)
+void Entity::update(const sf::Time & elapsedTime)
+{
+    float time(elapsedTime.asSeconds());
+    m_timeFromLastDamage += time;
+
+    float lifeRegen(m_lifeRegeneration*time);
+    if(lifeRegen >= m_maxLife-m_life)
+        m_life = m_maxLife;
+    else m_life += lifeRegen;
+
+    if(m_timeFromLastDamage > m_shieldDelay)
+    {
+        float shieldRegen(m_shieldRegeneration*time);
+        if(shieldRegen >= m_maxShield-m_shield)
+            m_shield = m_maxShield;
+        m_shield += shieldRegen;
+    }
+
+    updateComportement(elapsedTime);
+}
+
+bool Entity::damage(float value, std::weak_ptr<Entity>, sf::Vector2f dir)
 {
     if(!m_damageable)
         return false;
+
+    if(m_invincibleTime > m_timeFromLastDamage)
+        return false;
+
+    m_speed += dir*m_knockbackMultiplier;
+    if(m_showLifeOnDamage)
+        ParticuleFactory::createSend<ParticleLifeBar>(m_pos, EventGetter<std::shared_ptr<Entity>, unsigned int>::get(getID()));
+
+    m_timeFromLastDamage = 0;
 
     if(m_shield > 0)
     {
@@ -116,26 +158,26 @@ HitBox Entity::getBox() const
     return m_currentBox;
 }
 
-void Entity::execMove()
+void Entity::execMove(const sf::Vector2f & dir)
 {
-    sf::Vector2f residualSpeed(m_speed);
+    sf::Vector2f residualSpeed(dir);
 
     for(unsigned int i(0) ; i < 2; i++)
     {
-        Collisions::InteractResult result(Collisions::interact(m_currentBox, m_pos.getPos(), m_speed, m_pos.getRoom().lock()));
+        Collisions::InteractResult result(Collisions::interact(m_currentBox, m_pos.getPos(), residualSpeed, m_pos.getRoom().lock()));
         if(!result.collision)
         {
-            m_pos.move(m_speed);
+            m_pos.move(residualSpeed);
             break;
         }
         else
         {
             sf::Vector2f localMove(result.endPos-m_pos.getPos());
             m_pos.move(localMove);
-            float a(result.surfaceAngle - angle(m_speed));
-            m_speed = toVect(norm(m_speed)*std::cos(a), result.surfaceAngle);
+            float speedMultiplier(std::cos(result.surfaceAngle - angle(residualSpeed)));
             residualSpeed -= localMove;
-            residualSpeed = toVect(norm(residualSpeed)*std::cos(a), result.surfaceAngle);
+            residualSpeed = toVect(norm(residualSpeed)*speedMultiplier, result.surfaceAngle);
+            m_speed = toVect(norm(m_speed)*speedMultiplier, result.surfaceAngle);
         }
     }
 
@@ -149,7 +191,6 @@ void Entity::execMove()
             return;
         m_pos = d.dest;
         Event<EventEntityChangeRoom>::send(EventEntityChangeRoom(getID()));
-        //m_speed = sf::Vector2f(0, 0);
     }
 }
 

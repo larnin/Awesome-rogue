@@ -22,7 +22,7 @@ public:
     Entity & operator= (Entity &&) = default;
     virtual ~Entity() = default;
 
-    virtual bool damage(float value, std::weak_ptr<Entity>, sf::Vector2f = sf::Vector2f(0, 0));
+    bool damage(float value, std::weak_ptr<Entity>, sf::Vector2f dir = sf::Vector2f(0, 0));
     float getLife() const;
     float getMaxLife() const;
     float getShield() const;
@@ -41,8 +41,12 @@ public:
 
     HitBox getBox() const;
 
+    void update(const sf::Time & elapsedTime);
+
 protected:
-    void execMove();
+    virtual void updateComportement(const sf::Time & elapsedTime) = 0;
+
+    void execMove(const sf::Vector2f & dir);
     void execRotate(float newAngle);
 
     Location m_pos;
@@ -51,8 +55,14 @@ protected:
     bool m_damageable;
     float m_maxLife;
     float m_life;
+    float m_lifeRegeneration;
     float m_maxShield;
     float m_shield;
+    float m_shieldRegeneration;
+    float m_shieldDelay;
+    float m_timeFromLastDamage;
+    float m_invincibleTime;
+    bool m_showLifeOnDamage;
     bool m_killed;
     HitBox m_originalBox;
     HitBox m_currentBox;
@@ -60,6 +70,8 @@ protected:
     unsigned int m_activeDistance;
     unsigned int m_UID;
     bool m_canPassDoor;
+
+    float m_knockbackMultiplier;
 
     static unsigned int lastID;
     static std::default_random_engine m_randEngine;

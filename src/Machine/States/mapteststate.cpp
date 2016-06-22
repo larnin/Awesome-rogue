@@ -23,6 +23,9 @@ MapTestState::MapTestState(std::weak_ptr<StateMachine> machine)
     rr = std::make_shared<RoomRender>(r);
     DrawableList::add(rr, 2);*/
 
+    listes = std::make_shared<ListHolder>();
+    Updatable::add(listes);
+
     Generator g;
     std::shared_ptr<StateMachine> mLock(m_machine.lock());
     sf::View v(mLock->getWindow().getView());
@@ -50,7 +53,7 @@ MapTestState::MapTestState(std::weak_ptr<StateMachine> machine)
     DrawableList::add(mapRender, 0);
 
     player = std::make_shared<Player>(Player(Location(sf::Vector2u(5, 5), map->room(0))));
-    entities.addEntity(player);
+    listes->entities.addEntity(player);
     //DrawableList::add(player, 1);
     //Updatable::add(player);
     Controlable::add(player);
@@ -66,22 +69,24 @@ MapTestState::MapTestState(std::weak_ptr<StateMachine> machine)
     for(unsigned int i(0) ; i < 0 ; i++)
         EntityFactory::create(EntityType::E_SQUARE_MOB, Location(sf::Vector2u(10, 10), map->room(0)));
 
-    for(unsigned int i(0) ; i < 1 ; i++)
+    for(unsigned int i(0) ; i < 0 ; i++)
         EntityFactory::create(EntityType::E_CROSS_LASER_MOB, Location(sf::Vector2u(2, 2), map->room(0)));
 
-    for(unsigned int i(0) ; i < 1 ; i++)
+    for(unsigned int i(0) ; i < 0 ; i++)
         EntityFactory::create(EntityType::E_TRACKER_MOB, Location(sf::Vector2u(10, 10), map->room(0)));
 
-    for(unsigned int i(0) ; i < 1 ; i++)
+    for(unsigned int i(0) ; i < 0 ; i++)
         EntityFactory::create(EntityType::E_PUNCHBALL_MOB, Location(sf::Vector2u(10, 10), map->room(0)));
 
-    for(unsigned int i(0) ; i < 0 ; i++)
+    for(unsigned int i(0) ; i < 100 ; i++)
         EntityFactory::create(EntityType::E_CIRCLE_MOB, Location(sf::Vector2u(10, 10), map->room(0)));
 
-    for(unsigned int i(0) ; i < 0 ; i++)
+    for(unsigned int i(0) ; i < 100 ; i++)
         EntityFactory::create(EntityType::E_SMALL_CIRCLE_MOB, Location(sf::Vector2u(10, 10), map->room(0)));
 
     Event<EventPrePlayerChangeRoom>::send(EventPrePlayerChangeRoom(player->getID()));
     Event<EventPlayerChangeRoom>::send(EventPlayerChangeRoom(player->getID()));
     Event<EventInstantCenterOfViewChanged>::send(EventInstantCenterOfViewChanged(player->getPos().toGlobalPos()));
+
+    player = std::shared_ptr<Player>();
 }

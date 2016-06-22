@@ -6,6 +6,8 @@
 #include "Utilities/vect2convert.h"
 #include "Entities/entitylist.h"
 #include "Events/eventgetter.h"
+#include "Projectiles/projectilefactory.h"
+#include "Projectiles/Types/cacaura.h"
 
 CircleMob::CircleMob(const Location & pos, bool small)
     : Entity(pos)
@@ -31,11 +33,11 @@ CircleMob::CircleMob(const Location & pos, bool small)
     m_canPassDoor = true;
 }
 
-void CircleMob::update(const sf::Time & elapsedTime)
+void CircleMob::updateComportement(const sf::Time & elapsedTime)
 {
-    const float accelerationNorm(m_isSmall ? 0.45f : 0.3f);
-    const float limitMultiplier(m_isSmall ? 0.45f : 0.3f);
-    const float limitReductor(m_isSmall ? 0.3f : 0.2f);
+    const float accelerationNorm(m_isSmall ? 8.0f : 6.0f);
+    const float limitMultiplier(m_isSmall ? 1.2f : 1.0f);
+    const float limitReductor(m_isSmall ? 0.9f : 0.8f);
     const float epsilon(0.01f);
     const float maxRandDirTime(1.0f);
 
@@ -75,7 +77,15 @@ void CircleMob::update(const sf::Time & elapsedTime)
         n = 0;
     m_speed = toVect(n, angle(m_speed));
 
-    execMove();
+    execMove(m_speed*elapsedTime.asSeconds());
+
+    if(target)
+    {
+        std::shared_ptr<Projectile> p(m_projectile.lock());
+        if(!p)
+            m_projectile = ProjectileFactory::createSend<CacAura>(getPos(), m_team, EventGetter<std::shared_ptr<Entity>, unsigned int>::get(getID())
+                                                       , m_isSmall ? 0.5f : 0.7f);
+    }
 }
 
 void CircleMob::draw(sf::RenderTarget & target, sf::RenderStates) const

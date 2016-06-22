@@ -11,8 +11,7 @@
 #include "Entities/Types/entity.h"
 #include "GUI/minimap.h"
 #include "GUI/lifebar.h"
-#include "Entities/entitylist.h"
-#include "Projectiles/projectilelist.h"
+#include "Machine/listholder.h"
 
 class MapTestState : public State
 {
@@ -29,8 +28,7 @@ private:
     std::shared_ptr<GameInterface> interface;
     std::shared_ptr<Minimap> minimap;
     std::shared_ptr<LifeBar> lifeBar;
-    EntityList entities;
-    ProjectileList projectiles;
+    std::shared_ptr<ListHolder> listes;
 };
 
 #endif // MAPTESTSTATE_H

@@ -28,9 +28,12 @@ Player::Player(const Location & pos)
     m_damageable = true;
     m_maxLife = 100.0f;
     m_life = m_maxLife;
+    m_maxShield = 50.0f;
+    m_shield = m_maxShield;
     m_team = Team::PLAYER_TEAM;
     m_activeDistance = 1.0f;
     m_canPassDoor = true;
+    m_invincibleTime = 0.2f;
 }
 
 void Player::control(CommandsValue & v)
@@ -42,11 +45,11 @@ void Player::control(CommandsValue & v)
         m_controleDirection /= n;
 }
 
-void Player::update(const sf::Time & elapsedTime)
+void Player::updateComportement(const sf::Time & elapsedTime)
 {
-    const float controlMultiplier(0.3f);
-    const float limitMultiplier(0.5f);
-    const float limitReductor(0.1f);
+    const float controlMultiplier(12.0f);
+    const float limitMultiplier(1.5f);
+    const float limitReductor(1.0f);
     const float mincontroleRot(0.1f);
 
     m_speed += m_controleDirection*controlMultiplier*elapsedTime.asSeconds();
@@ -56,7 +59,7 @@ void Player::update(const sf::Time & elapsedTime)
     m_speed = toVect(n, angle(m_speed));
 
     std::shared_ptr<Room> rOld(getPos().getRoom().lock());
-    execMove();
+    execMove(m_speed*elapsedTime.asSeconds());
     std::shared_ptr<Room> rNew(getPos().getRoom().lock());
     if(rOld != rNew)
     {

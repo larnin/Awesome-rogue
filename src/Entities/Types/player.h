@@ -15,8 +15,10 @@ public:
     virtual ~Player() = default;
 
     virtual void control(CommandsValue & v);
-    virtual void update(const sf::Time & elapsedTime);
     virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
+
+protected:
+    virtual void updateComportement(const sf::Time & elapsedTime);
 
 private:
     Texture m_texture;
