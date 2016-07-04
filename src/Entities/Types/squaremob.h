@@ -17,6 +17,7 @@ public:
 
 protected:
     virtual void updateComportement(const sf::Time & elapsedTime);
+    virtual void onKill();
 
 private:
     Texture m_texture;

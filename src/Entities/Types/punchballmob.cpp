@@ -8,6 +8,9 @@
 #include "Events/eventgetter.h"
 #include "Projectiles/projectilefactory.h"
 #include "Projectiles/Types/delayedpunch.h"
+#include "Entities/Types/player.h"
+#include "Particules/particulefactory.h"
+#include "Particules/Types/mobdeath.h"
 
 PunchBallMob::PunchBallMob(const Location & pos)
     : Entity(pos)
@@ -29,6 +32,11 @@ PunchBallMob::PunchBallMob(const Location & pos)
     m_team = Team::MOB_TEAM;
     m_activeDistance = 2;
     m_canPassDoor = true;
+
+    auto p(EventSimpleGetter<std::shared_ptr<Player>>::get());
+    if(p)
+        if(p->getPos().getRoom().lock() == m_pos.getRoom().lock())
+            m_target = p;
 }
 
 void PunchBallMob::updateComportement(const sf::Time & elapsedTime)
@@ -121,4 +129,9 @@ void PunchBallMob::recreatePath()
     if(!target)
         return;
     m_path.newPath(getPos(), target->getPos());
+}
+
+void PunchBallMob::onKill()
+{
+    ParticuleFactory::createSend<MobDeath>(m_pos, m_texture, sf::FloatRect(49, 0, 13, 13), 0, m_speed);
 }

@@ -8,6 +8,8 @@
 #include "Projectiles/projectilefactory.h"
 #include "Projectiles/Types/lasermob.h"
 #include "Events/eventgetter.h"
+#include "Particules/particulefactory.h"
+#include "Particules/Types/mobdeath.h"
 
 const float speed(1.0f);
 
@@ -85,4 +87,9 @@ void CrossLaserMob::draw(sf::RenderTarget & target, sf::RenderStates) const
     sf::FloatRect rect(-0.5f*(BlockType::tileSize-1)+globalPos.x, -0.5f*(BlockType::tileSize-1)+globalPos.y, (BlockType::tileSize-1), (BlockType::tileSize-1));
     drawOrientedQuad(&render[0], rect, sf::FloatRect(33, 0, 15 ,15), true, false, Rotation::ROT_0, m_orientation, globalPos);
     target.draw(render, sf::RenderStates(m_texture()));
+}
+
+void CrossLaserMob::onKill()
+{
+    ParticuleFactory::createSend<MobDeath>(m_pos, m_texture, sf::FloatRect(33, 0, 15, 15), m_orientation, m_speed);
 }

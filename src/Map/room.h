@@ -7,6 +7,7 @@
 #include "block.h"
 #include "door.h"
 #include "Generator/patern.h"
+#include "Entities/entitytype.h"
 
 class Room : private NonCopiable
 {
@@ -29,6 +30,9 @@ public:
     unsigned int getID() const;
     bool isDiscovered() const;
     void uncover();
+    std::vector<EntityType> getAndResetPopulation();
+    void setPopulation(std::vector<EntityType> entities);
+    RoomType type() const;
 
 private:
     void drawDoor(sf::Vector2u pos);
@@ -39,6 +43,8 @@ private:
     sf::Vector2i m_pos;
     unsigned int m_UID;
     bool m_discovered;
+    std::vector<EntityType> m_population;
+    RoomType m_type;
 
     static unsigned int lastID;
 };

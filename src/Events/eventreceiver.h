@@ -4,8 +4,6 @@
 #include <functional>
 #include "event.h"
 
-#include <iostream>
-
 class EventReceiver
 {
 public:

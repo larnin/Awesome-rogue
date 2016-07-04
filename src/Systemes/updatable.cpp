@@ -2,8 +2,6 @@
 #include <memory>
 #include "updatable.h"
 
-#include <iostream>
-
 Updatable::Updatable()
     : m_isAware(false)
 {

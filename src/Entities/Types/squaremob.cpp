@@ -8,6 +8,8 @@
 #include "Projectiles/projectilefactory.h"
 #include "Projectiles/Types/smallball.h"
 #include "Events/eventgetter.h"
+#include "Particules/particulefactory.h"
+#include "Particules/Types/mobdeath.h"
 
 SquareMob::SquareMob(const Location & pos)
     : Entity(pos)
@@ -97,4 +99,9 @@ void SquareMob::draw(sf::RenderTarget & target, sf::RenderStates) const
     sf::FloatRect rect(-0.5f*BlockType::tileSize+globalPos.x, -0.5f*BlockType::tileSize+globalPos.y, BlockType::tileSize, BlockType::tileSize);
     drawOrientedQuad(&render[0], rect, sf::FloatRect(0, 0, 16 ,16), true, false, Rotation::ROT_0, m_orientation, globalPos);
     target.draw(render, sf::RenderStates(m_texture()));
+}
+
+void SquareMob::onKill()
+{
+    ParticuleFactory::createSend<MobDeath>(m_pos, m_texture, sf::FloatRect(0, 0, 16, 16), 0, m_speed);
 }

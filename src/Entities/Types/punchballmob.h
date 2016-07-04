@@ -21,6 +21,7 @@ protected:
     virtual void updateComportement(const sf::Time & elapsedTime);
     virtual void onAwake();
     virtual void onDisable();
+    virtual void onKill();
 
 private:
     void onPlayerChangeRoom(EventPlayerChangeRoom e);

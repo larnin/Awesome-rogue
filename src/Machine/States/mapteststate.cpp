@@ -13,6 +13,8 @@
 #include "Entities/entityfactory.h"
 #include "Entities/entitytype.h"
 #include "Entities/entitylist.h"
+#include "Projectiles/ProjectileLauncher/parallelebulletlauncher.h"
+#include "Events/eventgetter.h"
 
 MapTestState::MapTestState(std::weak_ptr<StateMachine> machine)
     : State(machine)
@@ -52,41 +54,38 @@ MapTestState::MapTestState(std::weak_ptr<StateMachine> machine)
         mapRender = std::make_shared<WorldRender>(map, 0, mLock->getWindow().getSize());
     DrawableList::add(mapRender, 0);
 
-    player = std::make_shared<Player>(Player(Location(sf::Vector2u(5, 5), map->room(0))));
-    listes->entities.addEntity(player);
-    //DrawableList::add(player, 1);
-    //Updatable::add(player);
-    Controlable::add(player);
+    std::shared_ptr<Player> p(std::make_shared<Player>(Player(Location(sf::Vector2u(5, 5), map->room(0)))));
+    player = p;
+    listes->entities.addEntity(p);
+    Controlable::add(p);
+    EventSimpleGetter<std::shared_ptr<Player>>::connect(std::bind(&MapTestState::getPlayer, this));
 
-   interface = std::make_shared<GameInterface>();
-   DrawableList::add(interface, 3);
-   minimap = std::make_shared<Minimap>(map);
-   DrawableList::add(minimap, 2);
+    projectilesLauncher = std::make_shared<ParalleleBulletLauncher>(p, 2, 0.15f);
+    Controlable::add(projectilesLauncher);
+    Updatable::add(projectilesLauncher);
 
-   lifeBar = std::make_shared<LifeBar>(player);
-   DrawableList::add(lifeBar, 4);
+    interface = std::make_shared<GameInterface>();
+    DrawableList::add(interface, 3);
+    minimap = std::make_shared<Minimap>(map);
+    DrawableList::add(minimap, 2);
 
-    for(unsigned int i(0) ; i < 0 ; i++)
-        EntityFactory::create(EntityType::E_SQUARE_MOB, Location(sf::Vector2u(10, 10), map->room(0)));
+    lifeBar = std::make_shared<LifeBar>(p);
+    DrawableList::add(lifeBar, 4);
 
-    for(unsigned int i(0) ; i < 0 ; i++)
-        EntityFactory::create(EntityType::E_CROSS_LASER_MOB, Location(sf::Vector2u(2, 2), map->room(0)));
+    populator = std::make_shared<Populator>();
+    Updatable::add(populator);
 
-    for(unsigned int i(0) ; i < 0 ; i++)
-        EntityFactory::create(EntityType::E_TRACKER_MOB, Location(sf::Vector2u(10, 10), map->room(0)));
+    Event<EventPrePlayerChangeRoom>::send(EventPrePlayerChangeRoom(p->getID()));
+    Event<EventPlayerChangeRoom>::send(EventPlayerChangeRoom(p->getID()));
+    Event<EventInstantCenterOfViewChanged>::send(EventInstantCenterOfViewChanged(p->getPos().toGlobalPos()));
+}
 
-    for(unsigned int i(0) ; i < 0 ; i++)
-        EntityFactory::create(EntityType::E_PUNCHBALL_MOB, Location(sf::Vector2u(10, 10), map->room(0)));
+MapTestState::~MapTestState()
+{
+    EventSimpleGetter<std::shared_ptr<Player>>::disconnect();
+}
 
-    for(unsigned int i(0) ; i < 100 ; i++)
-        EntityFactory::create(EntityType::E_CIRCLE_MOB, Location(sf::Vector2u(10, 10), map->room(0)));
-
-    for(unsigned int i(0) ; i < 100 ; i++)
-        EntityFactory::create(EntityType::E_SMALL_CIRCLE_MOB, Location(sf::Vector2u(10, 10), map->room(0)));
-
-    Event<EventPrePlayerChangeRoom>::send(EventPrePlayerChangeRoom(player->getID()));
-    Event<EventPlayerChangeRoom>::send(EventPlayerChangeRoom(player->getID()));
-    Event<EventInstantCenterOfViewChanged>::send(EventInstantCenterOfViewChanged(player->getPos().toGlobalPos()));
-
-    player = std::shared_ptr<Player>();
+std::shared_ptr<Player> MapTestState::getPlayer()
+{
+    return player.lock();
 }

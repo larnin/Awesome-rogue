@@ -7,6 +7,7 @@
 #include <SFML/Graphics/Rect.hpp>
 #include "Map/map.h"
 #include "patern.h"
+#include "Map/roomtype.h"
 
 struct GenerationEnvironement
 {
@@ -20,6 +21,7 @@ struct GenerationEnvironement
         , maxRoomSize(30, 30)
         , generatePaterns(false)
         , sideRarity(10)
+        , populationDensity(1.0f)
     {
 
     }
@@ -34,6 +36,7 @@ struct GenerationEnvironement
     std::string paternsFileName;
     bool generatePaterns;
     unsigned int sideRarity;
+    float populationDensity;
 };
 
 class Generator
@@ -45,16 +48,17 @@ public:
 
 private:
     void loadPaterns(const std::string & filename, const sf::Vector2u & minSize, const sf::Vector2u & maxSize);
-    void generatePaterns(Patern::RoomType type, const sf::Vector2u & minSize, const sf::Vector2u & maxSize);
+    void generatePaterns(RoomType type, const sf::Vector2u & minSize, const sf::Vector2u & maxSize);
     std::pair<Door, sf::IntRect> findDoorablePos(const Map & m, float doorPos, const sf::Vector2u & minSize, const sf::Vector2u & maxSize);
     sf::IntRect getMaxZone(const Map & m, const sf::Vector2i & startPos, const sf::Vector2u & minSize, const sf::Vector2u & maxSize);
     bool isValidDoorPos(const sf::Vector2u & pos, const std::shared_ptr<Room> & r);
     bool isValidDoorPos(const sf::Vector2u & pos, const Patern & p);
     Room createFirstRoom();
-    const Patern & getPatern(const sf::Vector2u & maxSize, const sf::Vector2u & minSize, Patern::RoomType type);
+    const Patern & getPatern(const sf::Vector2u & maxSize, const sf::Vector2u & minSize, RoomType type);
     Room placeRoom(const Patern & p, sf::IntRect allowedRect, const Door & origineDoor, unsigned int sideRarity);
     void placeDoors(Map & m, unsigned int nbTry);
     Door isOkPlaceDoor(const std::shared_ptr<Room> & r, Map & m, sf::Vector2u pos, Orientation o);
+    void Populate(Map & m, float density);
 
     std::vector<Patern> m_paterns;
     std::vector<Patern> m_paternsBoss;

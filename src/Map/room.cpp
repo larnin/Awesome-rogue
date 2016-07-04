@@ -7,6 +7,7 @@ Room::Room(const Patern & p, sf::Vector2i pos)
     , m_pos(pos)
     , m_UID(lastID++)
     , m_discovered(false)
+    , m_type(p.type)
 {
     for(unsigned int i(0) ; i < p.getSize().x ; i++)
         for(unsigned int j(0) ; j < p.getSize().y ; j++)
@@ -18,6 +19,7 @@ Room::Room(sf::Vector2u size, sf::Vector2i pos, Block def)
     , m_pos(pos)
     , m_UID(lastID++)
     , m_discovered(false)
+    , m_type(NORMAL_ROOM)
 {
 
 }
@@ -100,6 +102,23 @@ void Room::uncover()
             continue;
         (*r)(sf::Vector2u(relative(sf::Vector2i(d.dest.getBlockPos()), d.getOrientation(), -1))).groundID = uncoveredDoorID;
     }
+}
+
+RoomType Room::type() const
+{
+    return m_type;
+}
+
+std::vector<EntityType> Room::getAndResetPopulation()
+{
+    auto e(m_population);
+    m_population.clear();
+    return e;
+}
+
+void Room::setPopulation(std::vector<EntityType> entities)
+{
+    m_population = entities;
 }
 
 void Room::drawDoor(sf::Vector2u pos)

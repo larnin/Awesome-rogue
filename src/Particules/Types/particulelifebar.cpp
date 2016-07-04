@@ -39,7 +39,7 @@ void ParticleLifeBar::draw(sf::RenderTarget & target, sf::RenderStates) const
     if(m_killed)
         return;
 
-    std::shared_ptr<Entity> e(m_entity);
+    std::shared_ptr<Entity> e(m_entity.lock());
     if(!e)
         return;
 

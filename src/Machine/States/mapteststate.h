@@ -12,6 +12,8 @@
 #include "GUI/minimap.h"
 #include "GUI/lifebar.h"
 #include "Machine/listholder.h"
+#include "Projectiles/ProjectileLauncher/projectilelauncher.h"
+#include "Entities/populator.h"
 
 class MapTestState : public State
 {
@@ -19,16 +21,19 @@ public:
     MapTestState(std::weak_ptr<StateMachine> machine);
     MapTestState(MapTestState&&) = default;
     MapTestState & operator= (MapTestState &&) = default;
-    virtual ~MapTestState() = default;
+    virtual ~MapTestState();
 
 private:
+    std::shared_ptr<Player> getPlayer();
     std::shared_ptr<Map> map;
     std::shared_ptr<WorldRender> mapRender;
-    std::shared_ptr<Player> player;
+    std::weak_ptr<Player> player;
     std::shared_ptr<GameInterface> interface;
     std::shared_ptr<Minimap> minimap;
     std::shared_ptr<LifeBar> lifeBar;
     std::shared_ptr<ListHolder> listes;
+    std::shared_ptr<ProjectileLauncher> projectilesLauncher;
+    std::shared_ptr<Populator> populator;
 };
 
 #endif // MAPTESTSTATE_H

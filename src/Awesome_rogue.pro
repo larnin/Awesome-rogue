@@ -84,7 +84,14 @@ SOURCES += main.cpp \
     Particules/Types/particule.cpp \
     Particules/particulelist.cpp \
     Particules/Types/particulelifebar.cpp \
-    Machine/listholder.cpp
+    Machine/listholder.cpp \
+    Projectiles/ProjectileLauncher/projectilelauncher.cpp \
+    Projectiles/Types/playerbullet.cpp \
+    Projectiles/ProjectileLauncher/parallelebulletlauncher.cpp \
+    Particules/Types/mobspawn.cpp \
+    Entities/populator.cpp \
+    Entities/entitytype.cpp \
+    Particules/Types/mobdeath.cpp
 
 HEADERS  += \
     Controles/commands.h \
@@ -183,7 +190,14 @@ HEADERS  += \
     Events/Datas/eventparticulecreated.h \
     Particules/particulefactory.h \
     Particules/Types/particulelifebar.h \
-    Machine/listholder.h
+    Machine/listholder.h \
+    Projectiles/ProjectileLauncher/projectilelauncher.h \
+    Projectiles/Types/playerbullet.h \
+    Projectiles/ProjectileLauncher/parallelebulletlauncher.h \
+    Particules/Types/mobspawn.h \
+    Entities/populator.h \
+    Map/roomtype.h \
+    Particules/Types/mobdeath.h
 
 DEFINES += SFML_STATIC
 

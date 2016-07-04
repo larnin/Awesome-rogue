@@ -5,6 +5,7 @@
 #include "Systemes/controlable.h"
 #include "Utilities/ressource.h"
 #include "Collisions/hitbox.h"
+#include <memory>
 
 class Player : public Entity, public Controlable
 {
@@ -19,6 +20,7 @@ public:
 
 protected:
     virtual void updateComportement(const sf::Time & elapsedTime);
+    virtual void onKill();
 
 private:
     Texture m_texture;

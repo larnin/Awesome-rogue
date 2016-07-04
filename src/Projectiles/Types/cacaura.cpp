@@ -17,7 +17,10 @@ void CacAura::update(const sf::Time &)
 
     std::shared_ptr<Entity> e(m_sender.lock());
     if(!e)
+    {
         m_killed = true;
+        return;
+    }
 
     m_pos = e->getPos();
 

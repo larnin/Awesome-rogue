@@ -5,17 +5,12 @@
 #include <array>
 #include "Utilities/matrix.h"
 #include "Map/block.h"
+#include "Map/roomtype.h"
 
 class Patern
 {
     friend class Room;
 public:
-    enum RoomType
-    {
-        NORMAL_ROOM,
-        BOSS_ROOM,
-        START_ROOM
-    };
 
     Patern(sf::Vector2u size);
     ~Patern() = default;

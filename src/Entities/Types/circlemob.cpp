@@ -8,6 +8,10 @@
 #include "Events/eventgetter.h"
 #include "Projectiles/projectilefactory.h"
 #include "Projectiles/Types/cacaura.h"
+#include "Entities/Types/player.h"
+#include "Entities/entityfactory.h"
+#include "Particules/particulefactory.h"
+#include "Particules/Types/mobdeath.h"
 
 CircleMob::CircleMob(const Location & pos, bool small)
     : Entity(pos)
@@ -31,6 +35,11 @@ CircleMob::CircleMob(const Location & pos, bool small)
     m_team = Team::MOB_TEAM;
     m_activeDistance = 2;
     m_canPassDoor = true;
+
+    auto p(EventSimpleGetter<std::shared_ptr<Player>>::get());
+    if(p)
+        if(p->getPos().getRoom().lock() == m_pos.getRoom().lock())
+            m_target = p;
 }
 
 void CircleMob::updateComportement(const sf::Time & elapsedTime)
@@ -86,6 +95,22 @@ void CircleMob::updateComportement(const sf::Time & elapsedTime)
             m_projectile = ProjectileFactory::createSend<CacAura>(getPos(), m_team, EventGetter<std::shared_ptr<Entity>, unsigned int>::get(getID())
                                                        , m_isSmall ? 0.5f : 0.7f);
     }
+}
+
+void CircleMob::onKill()
+{
+    if(!m_isSmall)
+    {
+        unsigned int nb(std::uniform_int_distribution<unsigned int>(2, 4)(m_randEngine));
+        std::uniform_real_distribution<float> dRandDir(-5.0f, 5.0f);
+        for(unsigned int i(0) ; i < nb ; i++)
+        {
+            auto e(EntityFactory::create(EntityType::E_SMALL_CIRCLE_MOB, m_pos));
+            e->push(sf::Vector2f(dRandDir(m_randEngine), dRandDir(m_randEngine)));
+        }
+        ParticuleFactory::createSend<MobDeath>(m_pos, m_texture, sf::FloatRect(63, 0, 15, 15), 0, m_speed);
+    }
+    else ParticuleFactory::createSend<MobDeath>(m_pos, m_texture, sf::FloatRect(79, 0, 9, 9), 0, m_speed);
 }
 
 void CircleMob::draw(sf::RenderTarget & target, sf::RenderStates) const

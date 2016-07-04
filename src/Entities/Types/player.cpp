@@ -9,6 +9,8 @@
 #include "Events/Datas/eventplayerchangeroom.h"
 #include "Events/Datas/eventpreplayerchangeroom.h"
 #include "Events/event.h"
+#include "Particules/particulefactory.h"
+#include "Particules/Types/mobdeath.h"
 
 const float PI(3.14159f);
 
@@ -84,4 +86,9 @@ void Player::draw(sf::RenderTarget & target, sf::RenderStates) const
     sf::FloatRect rect(-0.5f*BlockType::tileSize+globalPos.x, -0.31f*BlockType::tileSize+globalPos.y, BlockType::tileSize, 0.62f*BlockType::tileSize);
     drawOrientedQuad(&render[0], rect, sf::FloatRect(0, 0, 16 ,10), true, false, Rotation::ROT_0, m_orientation, globalPos);
     target.draw(render, sf::RenderStates(m_texture()));
+}
+
+void Player::onKill()
+{
+    ParticuleFactory::createSend<MobDeath>(m_pos, m_texture, sf::FloatRect(0, 0, 16, 10), m_orientation+3.14159f, m_speed);
 }

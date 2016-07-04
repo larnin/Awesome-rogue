@@ -22,7 +22,8 @@ public:
     Entity & operator= (Entity &&) = default;
     virtual ~Entity() = default;
 
-    bool damage(float value, std::weak_ptr<Entity>, sf::Vector2f dir = sf::Vector2f(0, 0));
+    bool damage(float value, std::weak_ptr<Entity>, const sf::Vector2f & dir = sf::Vector2f(0, 0));
+    void push(const sf::Vector2f & dir);
     float getLife() const;
     float getMaxLife() const;
     float getShield() const;
@@ -45,6 +46,7 @@ public:
 
 protected:
     virtual void updateComportement(const sf::Time & elapsedTime) = 0;
+    virtual void onKill();
 
     void execMove(const sf::Vector2f & dir);
     void execRotate(float newAngle);

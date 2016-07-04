@@ -1,14 +1,19 @@
 #ifndef ENTITYTYPE_H
 #define ENTITYTYPE_H
 
+#include <vector>
+
 enum EntityType
 {
-    E_CIRCLE_MOB,
-    E_SMALL_CIRCLE_MOB,
-    E_CROSS_LASER_MOB,
-    E_PUNCHBALL_MOB,
-    E_SQUARE_MOB,
-    E_TRACKER_MOB
+    E_CIRCLE_MOB = 0,
+    E_SMALL_CIRCLE_MOB = 1,
+    E_CROSS_LASER_MOB = 2,
+    E_PUNCHBALL_MOB = 3,
+    E_SQUARE_MOB = 4,
+    E_TRACKER_MOB = 5,
+    E_MAX = 5
 };
+
+std::vector<float> populationProbability(float dist);
 
 #endif // ENTITYTYPE_H

@@ -3,11 +3,6 @@
 #include "Machine/States/testwidgetsstate.h"
 #include "Machine/States/menustate.h"
 
-#include <cassert>
-
-#include "Map/block.h"
-#include <iostream>
-
 int main()
 {
     KeysConfig config(KeysConfig::keysFilename);

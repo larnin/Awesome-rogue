@@ -6,8 +6,6 @@
 #include <QJsonArray>
 #include "keyconfig.h"
 
-#include <iostream>
-
 const std::string KeysConfig::keysFilename("commands.json");
 
 KeyInfo::KeyInfo(sf::Keyboard::Key _key, unsigned int _button)
@@ -45,8 +43,8 @@ KeysConfig::KeysConfig()
     commands[CommandType::MOVE_DOWN] = KeyInfo(sf::Keyboard::Key::Down, sf::Joystick::Axis::Y, true);
     commands[CommandType::MOVE_LEFT] = KeyInfo(sf::Keyboard::Key::Left, sf::Joystick::Axis::X, false);
     commands[CommandType::MOVE_RIGHT] = KeyInfo(sf::Keyboard::Key::Right, sf::Joystick::Axis::X, true);
-    commands[CommandType::SHOOT_UP] = KeyInfo(sf::Keyboard::Key::Z, sf::Joystick::Axis::V, true);
-    commands[CommandType::SHOOT_DOWN] = KeyInfo(sf::Keyboard::Key::S, sf::Joystick::Axis::V, false);
+    commands[CommandType::SHOOT_UP] = KeyInfo(sf::Keyboard::Key::Z, sf::Joystick::Axis::R, false);
+    commands[CommandType::SHOOT_DOWN] = KeyInfo(sf::Keyboard::Key::S, sf::Joystick::Axis::R, true);
     commands[CommandType::SHOOT_LEFT] = KeyInfo(sf::Keyboard::Key::Q, sf::Joystick::Axis::U, false);
     commands[CommandType::SHOOT_RIGHT] = KeyInfo(sf::Keyboard::Key::D, sf::Joystick::Axis::U, true);
     commands[CommandType::KEY_VALID] = KeyInfo(sf::Keyboard::Key::BackSpace, 1);

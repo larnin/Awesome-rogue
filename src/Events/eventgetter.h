@@ -15,7 +15,6 @@ public:
     static T get(U value)
     {
         assert(m_function);
-
         return m_function(value);
     }
 
@@ -47,29 +46,24 @@ class EventSimpleGetter
 public:
     static T get()
     {
-        if(!m_function)
-            throw std::runtime_error("No function set !");
+        assert(m_function);
         return m_function();
     }
 
-    static bool connect(std::function<T()> f)
+    static void connect(std::function<T()> f)
     {
-        if(m_function)
-            return false;
+        assert(!m_function);
         m_function = f;
-        return true;
     }
 
-    static bool disconnect()
+    static void disconnect()
     {
-        if(!m_function)
-            return false;
+        assert(m_function);
         m_function = std::function<T()>();
-        return true;
     }
 
 private:
-    EventGetter() = delete;
+    EventSimpleGetter() = delete;
 
     static std::function<T()> m_function;
 };

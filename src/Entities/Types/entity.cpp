@@ -57,7 +57,7 @@ void Entity::update(const sf::Time & elapsedTime)
     updateComportement(elapsedTime);
 }
 
-bool Entity::damage(float value, std::weak_ptr<Entity>, sf::Vector2f dir)
+bool Entity::damage(float value, std::weak_ptr<Entity>, const sf::Vector2f & dir)
 {
     if(!m_damageable)
         return false;
@@ -65,7 +65,7 @@ bool Entity::damage(float value, std::weak_ptr<Entity>, sf::Vector2f dir)
     if(m_invincibleTime > m_timeFromLastDamage)
         return false;
 
-    m_speed += dir*m_knockbackMultiplier;
+    push(dir);
     if(m_showLifeOnDamage)
         ParticuleFactory::createSend<ParticleLifeBar>(m_pos, EventGetter<std::shared_ptr<Entity>, unsigned int>::get(getID()));
 
@@ -85,8 +85,14 @@ bool Entity::damage(float value, std::weak_ptr<Entity>, sf::Vector2f dir)
     {
         m_life = 0;
         m_killed = true;
+        onKill();
     }
     return true;
+}
+
+void Entity::push(const sf::Vector2f & dir)
+{
+    m_speed += dir*m_knockbackMultiplier;
 }
 
 float Entity::getLife() const
@@ -201,4 +207,9 @@ void Entity::execRotate(float newAngle)
         m_orientation = newAngle;
         m_currentBox = m_originalBox.transform(m_orientation, false, false);
     }
+}
+
+void Entity::onKill()
+{
+
 }

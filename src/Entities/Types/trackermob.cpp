@@ -10,6 +10,9 @@
 #include "Events/eventgetter.h"
 #include "Projectiles/projectilefactory.h"
 #include "Projectiles/Types/rapidfire.h"
+#include "Entities/Types/player.h"
+#include "Particules/particulefactory.h"
+#include "Particules/Types/mobdeath.h"
 
 TrackerMob::TrackerMob(const Location & pos)
     : Entity(pos)
@@ -34,6 +37,11 @@ TrackerMob::TrackerMob(const Location & pos)
     m_team = Team::MOB_TEAM;
     m_activeDistance = 2;
     m_canPassDoor = true;
+
+    auto p(EventSimpleGetter<std::shared_ptr<Player>>::get());
+    if(p)
+        if(p->getPos().getRoom().lock() == m_pos.getRoom().lock())
+            m_target = p;
 }
 
 void TrackerMob::updateComportement(const sf::Time & elapsedTime)
@@ -171,4 +179,9 @@ void TrackerMob::recreatePath()
     if(it == movePath.end())
         m_path.newPath(getPos(), target->getPos());
     else m_path.newPath(getPos(), Location(*it, r));
+}
+
+void TrackerMob::onKill()
+{
+    ParticuleFactory::createSend<MobDeath>(m_pos, m_texture, sf::FloatRect(17, 0, 15, 15), 0, m_speed);
 }
