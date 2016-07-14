@@ -11,7 +11,8 @@ enum EntityType
     E_PUNCHBALL_MOB = 3,
     E_SQUARE_MOB = 4,
     E_TRACKER_MOB = 5,
-    E_MAX = 5
+    E_BOSS1_PARTS = 6,
+    E_MAX = 6
 };
 
 std::vector<float> populationProbability(float dist);

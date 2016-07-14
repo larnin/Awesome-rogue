@@ -4,6 +4,7 @@
 #include "generator.h"
 #include "Map/orientation.h"
 #include "Entities/entitytype.h"
+#include "Collisions/pathfinder.h"
 
 const unsigned int multiplierStartRoom(2);
 const unsigned int multiplierBossRoom(2);
@@ -72,6 +73,8 @@ Map Generator::generate(const GenerationEnvironement & env)
     }
 
     placeDoors(m, env.nbTryDoors);
+
+    placeChestsPortalsSave(m, env.chestProbability, env.portalProbability, env.saveProbability);
 
     Populate(m, env.populationDensity);
 
@@ -430,6 +433,97 @@ Door Generator::isOkPlaceDoor(const std::shared_ptr<Room> & r, Map & m, sf::Vect
     if(!isValidDoorPos(sf::Vector2u(relative(sf::Vector2i(d.dest.getBlockPos()), o, -1)), rDest))
         return Door();
     return d;
+}
+
+void Generator::placeChestsPortalsSave(Map & m, float chestProbability, float portalProbability, float saveProbability)
+{
+    const unsigned int chestID(6);
+    const unsigned int portalID(8);
+    const unsigned int saveID(9);
+
+    std::uniform_real_distribution<float> d(0, 1);
+
+    for(std::shared_ptr<Room> & r : m)
+    {
+        if(r->type() != NORMAL_ROOM)
+            continue;
+
+        if(d(m_engine) <= chestProbability)
+            placeSolidWallBlockOn(r, chestID);
+        if(d(m_engine) <= portalProbability)
+            placeGroundBlockOn(r, portalID);
+        if(d(m_engine) <= saveProbability)
+            placeGroundBlockOn(r, saveID);
+    }
+}
+
+void Generator::placeSolidWallBlockOn(std::shared_ptr<Room> & r, unsigned int id)
+{
+    if(!r)
+        return;
+
+    std::uniform_int_distribution<unsigned int> dX(1, r->getSize().x-2);
+    std::uniform_int_distribution<unsigned int> dY(1, r->getSize().y-2);
+
+    for(unsigned int i(0) ; i < 10 ; i++)
+    {
+        sf::Vector2u pos(dX(m_engine), dY(m_engine));
+        Block & b((*r)(pos));
+        Block old(b);
+        if(getBoxType(b.boxCaracts) != BoxType::EMPTY)
+            continue;
+
+        b.wallID = id;
+        b.wallOrientation = createOrientation(Rotation::ROT_0, false, false);
+        b.boxCaracts = createBoxCaracts(Rotation::ROT_0, false, false, BoxType::FULL);
+
+        bool canPass(true);
+        for(int a(-1) ; a <= 1 ; a++)
+            for(int b(-1) ; b <= 1 ; b++)
+                for(int c(-1) ; c <= 1 ; c++)
+                    for(int d(-1) ; d <= 1 ; d++)
+                    {
+                        if(!canPass)
+                            break;
+                        if(a == c && b == d)
+                            continue;
+                        if((a == 0 && b == 0) || (c == 0 && d == 0))
+                            continue;
+                        sf::Vector2u startPos(pos.x+a, pos.y+b);
+                        sf::Vector2u endPos(pos.x+c, pos.y+d);
+                        if(PathFinder::path(r, startPos, endPos).size() <= 1)
+                            canPass = false;
+                    }
+        if(!canPass)
+        {
+            b = old;
+            continue;
+        }
+
+        break;
+    }
+}
+
+void Generator::placeGroundBlockOn(std::shared_ptr<Room> & r, unsigned int id)
+{
+    if(!r)
+        return;
+
+    std::uniform_int_distribution<unsigned int> dX(1, r->getSize().x-2);
+    std::uniform_int_distribution<unsigned int> dY(1, r->getSize().y-2);
+
+    for(unsigned int i(0) ; i < 10 ; i++)
+    {
+        sf::Vector2u pos(dX(m_engine), dY(m_engine));
+        Block & b((*r)(pos));
+        if(getBoxType(b.boxCaracts) != BoxType::EMPTY)
+            continue;
+
+        b.wallID = id;
+        b.wallOrientation = createOrientation(Rotation::ROT_0, false, false);
+
+        break;
+    }
 }
 
 void Generator::Populate(Map & m, float density)

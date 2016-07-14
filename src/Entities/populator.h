@@ -15,7 +15,7 @@ public:
     Populator();
     virtual ~Populator() = default;
 
-    void update(const sf::Time & elapsedTime);
+    virtual void update(const sf::Time & elapsedTime);
 
 private:
     void onPlayerChangeRoom(EventPrePlayerChangeRoom e);

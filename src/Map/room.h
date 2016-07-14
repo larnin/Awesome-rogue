@@ -34,6 +34,11 @@ public:
     void setPopulation(std::vector<EntityType> entities);
     RoomType type() const;
 
+    void closeDoors();
+    void openDoors();
+
+    bool modified;
+
 private:
     void drawDoor(sf::Vector2u pos);
     void removeDrawedDoor(sf::Vector2u pos);

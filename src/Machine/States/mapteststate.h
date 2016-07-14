@@ -10,10 +10,11 @@
 #include "Entities/Types/player.h"
 #include "Entities/Types/entity.h"
 #include "GUI/minimap.h"
-#include "GUI/lifebar.h"
+#include "GUI/LifeBar/lifebar.h"
 #include "Machine/listholder.h"
 #include "Projectiles/ProjectileLauncher/projectilelauncher.h"
 #include "Entities/populator.h"
+#include "GUI/interactor.h"
 
 class MapTestState : public State
 {
@@ -25,6 +26,7 @@ public:
 
 private:
     std::shared_ptr<Player> getPlayer();
+
     std::shared_ptr<Map> map;
     std::shared_ptr<WorldRender> mapRender;
     std::weak_ptr<Player> player;
@@ -34,6 +36,7 @@ private:
     std::shared_ptr<ListHolder> listes;
     std::shared_ptr<ProjectileLauncher> projectilesLauncher;
     std::shared_ptr<Populator> populator;
+    std::shared_ptr<Interactor> interactor;
 };
 
 #endif // MAPTESTSTATE_H

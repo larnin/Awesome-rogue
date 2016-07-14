@@ -33,11 +33,11 @@ void MobDeath::generateParts(const sf::FloatRect & rect, float angle, const sf::
             sf::Vector2f size(std::min(partSize, rect.width-i), std::min(partSize, rect.height-i));
             sf::Vector2f pos(i, j);
             pos -= centerRect;
-            pos += sf::Vector2f(size.x-partSize, size.y-partSize);
+            pos += sf::Vector2f(size.x-partSize/2, size.y-partSize/2);
             pos = rotate(pos, angle);
 
             m_parts.push_back(MobDeath::Part(angle, pos, sf::FloatRect(rect.left+i, rect.top+j, size.x, size.y)
-                                             , sf::Vector2f(randSpeed(m_randEngine), randSpeed(m_randEngine))+speed
+                                             , sf::Vector2f(randSpeed(m_randEngine), randSpeed(m_randEngine))+speed*float(BlockType::tileSize)
                                              , randOrientation(m_randEngine), randTime(m_randEngine)));
         }
 
@@ -61,7 +61,7 @@ void MobDeath::update(const sf::Time & elapsedTime)
         else
         {
             float alphaLife((p.maxLifeTime-m_lifeTime)/minTime);
-            p.alpha = (1-alphaLife)*255;
+            p.alpha = (alphaLife)*255;
         }
     }
 }

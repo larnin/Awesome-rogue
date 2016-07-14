@@ -57,7 +57,6 @@ SOURCES += main.cpp \
     GUI/Widgets/Togglable/abstracttogglable.cpp \
     GUI/Widgets/RadioButtons/abstactradiobuttonitem.cpp \
     GUI/Widgets/RadioButtons/radiobuttons.tpp \
-    GUI/lifebar.cpp \
     Machine/States/testwidgetsstate.cpp \
     GUI/Widgets/graphichelper.cpp \
     GUI/Widgets/Buttons/basicbutton.cpp \
@@ -91,7 +90,12 @@ SOURCES += main.cpp \
     Particules/Types/mobspawn.cpp \
     Entities/populator.cpp \
     Entities/entitytype.cpp \
-    Particules/Types/mobdeath.cpp
+    Particules/Types/mobdeath.cpp \
+    GUI/interactor.cpp \
+    GUI/LifeBar/bosslifebar.cpp \
+    GUI/LifeBar/lifebar.cpp \
+    Entities/Types/boss1part.cpp \
+    Projectiles/Types/bigcircle.cpp
 
 HEADERS  += \
     Controles/commands.h \
@@ -150,7 +154,6 @@ HEADERS  += \
     GUI/Widgets/Togglable/abstracttogglable.h \
     GUI/Widgets/RadioButtons/radiobuttons.h \
     GUI/Widgets/RadioButtons/abstactradiobuttonitem.h \
-    GUI/lifebar.h \
     Machine/States/testwidgetsstate.h \
     GUI/Widgets/graphichelper.h \
     GUI/Widgets/Buttons/basicbutton.h \
@@ -197,7 +200,14 @@ HEADERS  += \
     Particules/Types/mobspawn.h \
     Entities/populator.h \
     Map/roomtype.h \
-    Particules/Types/mobdeath.h
+    Particules/Types/mobdeath.h \
+    GUI/interactor.h \
+    Events/Datas/eventinteraction.h \
+    GUI/LifeBar/bosslifebar.h \
+    GUI/LifeBar/lifebar.h \
+    Utilities/delayedtask.h \
+    Entities/Types/boss1part.h \
+    Projectiles/Types/bigcircle.h
 
 DEFINES += SFML_STATIC
 

@@ -98,7 +98,7 @@ std::vector<sf::Vector2u> PathFinder::path(const std::weak_ptr<Room> & room, con
                 if(i == 1 && j == 1)
                     continue;
                 sf::Vector2u localPos(pos.x+i-1, pos.y+j-1);
-                if(localPos.x > r->getSize().x || localPos.y > r->getSize().y)
+                if(localPos.x >= r->getSize().x || localPos.y >= r->getSize().y)
                     continue;
                 localStates(sf::Vector2u(i, j)) = getBoxType((*r)(localPos).boxCaracts) == BoxType::EMPTY;
             }

@@ -31,7 +31,7 @@ void TextDrawer::draw(sf::RenderTarget &target, sf::FloatRect b) const
 
 void TextDrawer::setText(const std::string & text)
 {
-    m_text.setString(text);
+    m_text.setString(sf::String::fromUtf8(text.begin(), text.end()));
     m_toRedraw = true;
 }
 
@@ -40,9 +40,9 @@ std::string TextDrawer::getText() const
     return m_text.getString().toAnsiString();
 }
 
-void TextDrawer::setText(const std::string &text, const Font & font, unsigned int size, const sf::Color & color)
+void TextDrawer::setText(const std::string & text, const Font & font, unsigned int size, const sf::Color & color)
 {
-    m_text.setString(text);
+    m_text.setString(sf::String::fromUtf8(text.begin(), text.end()));
     m_text.setFont(*font);
     m_font = font;
     m_text.setCharacterSize(size);

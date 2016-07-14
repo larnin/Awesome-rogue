@@ -71,3 +71,12 @@ HitBox HitBox::transform(float rotation, bool xFlip, bool yFlip) const
     }
     return out;
 }
+
+HitBox HitBox::transform(const sf::Vector2f & dir) const
+{
+    HitBox out;
+
+    for(const auto & line : m_lines)
+        out.addLine(line.move(dir));
+    return out;
+}

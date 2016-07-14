@@ -105,8 +105,9 @@ void CircleMob::onKill()
         std::uniform_real_distribution<float> dRandDir(-5.0f, 5.0f);
         for(unsigned int i(0) ; i < nb ; i++)
         {
-            auto e(EntityFactory::create(EntityType::E_SMALL_CIRCLE_MOB, m_pos));
-            e->push(sf::Vector2f(dRandDir(m_randEngine), dRandDir(m_randEngine)));
+            auto eList(EntityFactory::create(EntityType::E_SMALL_CIRCLE_MOB, m_pos));
+            for(auto & e : eList)
+                e->push(sf::Vector2f(dRandDir(m_randEngine), dRandDir(m_randEngine)));
         }
         ParticuleFactory::createSend<MobDeath>(m_pos, m_texture, sf::FloatRect(63, 0, 15, 15), 0, m_speed);
     }

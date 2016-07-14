@@ -5,11 +5,14 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include "Entities/Types/entity.h"
 #include "Utilities/ressource.h"
+#include "Utilities/noncopiable.h"
 
-class LifeBar : public sf::Drawable
+class LifeBar : public sf::Drawable, private NonCopiable
 {
 public:
     LifeBar(std::weak_ptr<Entity> e);
+    LifeBar(LifeBar &&) = default;
+    LifeBar & operator=(LifeBar &&) = default;
     virtual ~LifeBar() = default;
 
     virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;

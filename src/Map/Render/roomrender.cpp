@@ -10,14 +10,19 @@ RoomRender::RoomRender(std::weak_ptr<Room> room, bool current)
     redraw(current);
 }
 
-void RoomRender::redraw(bool current)
+void RoomRender::redraw(bool current) const
 {
+    const unsigned int flatWhiteID(30);
+
+    m_current = current;
     std::shared_ptr<Room> r(m_room.lock());
     if(!r)
     {
         m_render.resize(0);
         return;
     }
+
+    r->modified = false;
     if(r->isDiscovered())
     {
         m_render.resize((getNbSurfaces()+(current?0:1))*4);
@@ -31,7 +36,6 @@ void RoomRender::redraw(bool current)
             }
         if(!current)
         {
-            const unsigned int flatWhiteID(481);
             const unsigned int startIndex(m_render.getVertexCount()-4);
             sf::Vector2f texPos(flatWhiteID%BlockType::nbTile*BlockType::tileSize, flatWhiteID/BlockType::nbTile*BlockType::tileSize);
             drawFlatQuad(&m_render[startIndex]
@@ -46,7 +50,6 @@ void RoomRender::redraw(bool current)
     else
     {
         m_render.resize(8);
-        const unsigned int flatWhiteID(481);
         sf::Vector2f texPos(flatWhiteID%BlockType::nbTile*BlockType::tileSize, flatWhiteID/BlockType::nbTile*BlockType::tileSize);
         drawFlatQuad(&m_render[0]
                 , sf::FloatRect((sf::Vector2f(r->getPos())-sf::Vector2f(0.5f, 0.5f))*float(BlockType::tileSize), sf::Vector2f(r->getSize())*float(BlockType::tileSize))
@@ -65,12 +68,14 @@ void RoomRender::redraw(bool current)
 }
 
 void RoomRender::draw(sf::RenderTarget & target, sf::RenderStates) const
-{
-    target.draw(m_render, sf::RenderStates(m_texture()));
+{    std::shared_ptr<Room> r(m_room.lock());
+     if(!r)
+         return;
 
-    std::shared_ptr<Room> r(m_room.lock());
-    if(!r)
-        return;
+    if(r->modified)
+        redraw(m_current);
+
+    target.draw(m_render, sf::RenderStates(m_texture()));
 }
 
 unsigned int RoomRender::getNbSurfaces() const

@@ -22,6 +22,9 @@ struct GenerationEnvironement
         , generatePaterns(false)
         , sideRarity(10)
         , populationDensity(1.0f)
+        , chestProbability(0.25f)
+        , portalProbability(0.04f)
+        , saveProbability(0.06f)
     {
 
     }
@@ -37,6 +40,9 @@ struct GenerationEnvironement
     bool generatePaterns;
     unsigned int sideRarity;
     float populationDensity;
+    float chestProbability;
+    float portalProbability;
+    float saveProbability;
 };
 
 class Generator
@@ -58,6 +64,9 @@ private:
     Room placeRoom(const Patern & p, sf::IntRect allowedRect, const Door & origineDoor, unsigned int sideRarity);
     void placeDoors(Map & m, unsigned int nbTry);
     Door isOkPlaceDoor(const std::shared_ptr<Room> & r, Map & m, sf::Vector2u pos, Orientation o);
+    void placeChestsPortalsSave(Map & m, float chestProbability, float portalProbability, float saveProbability);
+    void placeSolidWallBlockOn(std::shared_ptr<Room> & r, unsigned int id);
+    void placeGroundBlockOn(std::shared_ptr<Room> & r, unsigned int id);
     void Populate(Map & m, float density);
 
     std::vector<Patern> m_paterns;

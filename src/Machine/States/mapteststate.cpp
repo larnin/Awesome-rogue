@@ -65,15 +65,21 @@ MapTestState::MapTestState(std::weak_ptr<StateMachine> machine)
     Updatable::add(projectilesLauncher);
 
     interface = std::make_shared<GameInterface>();
-    DrawableList::add(interface, 3);
+    DrawableList::add(interface, 6);
     minimap = std::make_shared<Minimap>(map);
-    DrawableList::add(minimap, 2);
+    DrawableList::add(minimap, 5);
 
     lifeBar = std::make_shared<LifeBar>(p);
-    DrawableList::add(lifeBar, 4);
+    DrawableList::add(lifeBar, 7);
 
     populator = std::make_shared<Populator>();
     Updatable::add(populator);
+
+    interactor = std::make_shared<Interactor>(p);
+    DrawableList::add(interactor, 5);
+    Controlable::add(interactor);
+
+    EntityFactory::create(E_BOSS1_PARTS, Location(map->room(0)->getSize()/2u, map->room(0)));
 
     Event<EventPrePlayerChangeRoom>::send(EventPrePlayerChangeRoom(p->getID()));
     Event<EventPlayerChangeRoom>::send(EventPlayerChangeRoom(p->getID()));

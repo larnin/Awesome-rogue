@@ -37,7 +37,7 @@ void Populator::onPlayerChangeRoom(EventPrePlayerChangeRoom e)
         return;
     std::uniform_int_distribution<unsigned int> dX(1, r->getSize().x-2);
     std::uniform_int_distribution<unsigned int> dY(1, r->getSize().y-2);
-    std::uniform_real_distribution<float> dTime(2.5f, 3.5f);
+    std::uniform_real_distribution<float> dTime(1.5f, 2.5f);
 
     auto population(r->getAndResetPopulation());
 

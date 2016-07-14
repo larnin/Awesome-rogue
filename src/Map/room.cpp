@@ -36,6 +36,7 @@ sf::Vector2u Room::getSize() const
 
 Block & Room::operator()(const sf::Vector2u & pos)
 {
+    modified = true;
     return m_blocks(pos);
 }
 
@@ -64,6 +65,8 @@ void Room::setDoor(const Door & door)
         return;
     if(doorAt(door.pos.getBlockPos()).pos.isValide())
         return;
+
+    modified = true;
     m_doors.push_back(door);
     drawDoor(door.pos.getBlockPos());
 }
@@ -74,6 +77,7 @@ void Room::delDoor(const sf::Vector2u & pos)
     if(it == m_doors.end())
         return;
 
+    modified = true;
     std::swap(*it, m_doors.back());
     m_doors.pop_back();
     removeDrawedDoor(pos);
@@ -164,9 +168,49 @@ void Room::drawDoor(sf::Vector2u pos)
         bRight.wallID = wallLineID;
         bRight.wallOrientation = createOrientation(static_cast<Rotation>(oSide), false, false);
     }
+
+    modified = true;
 }
 
 void Room::removeDrawedDoor(sf::Vector2u pos)
 {
     //todo if needed
+}
+
+void Room::closeDoors()
+{
+    modified = true;
+
+    const unsigned int openDoorID(4);
+    const unsigned int uncoveredOpenDoorID(5);
+    const unsigned int closeDoorID(6);
+    const unsigned int uncoveredCloseDoorID(7);
+
+    for(const Door & d : m_doors)
+    {
+        unsigned int &b(m_blocks(d.pos.getBlockPos()).wallID);
+        if(b == openDoorID)
+            b = closeDoorID;
+        if(b == uncoveredOpenDoorID)
+            b = uncoveredCloseDoorID;
+    }
+}
+
+void Room::openDoors()
+{
+    modified = true;
+
+    const unsigned int openDoorID(4);
+    const unsigned int uncoveredOpenDoorID(5);
+    const unsigned int closeDoorID(6);
+    const unsigned int uncoveredCloseDoorID(7);
+
+    for(const Door & d : m_doors)
+    {
+        unsigned int &b(m_blocks(d.pos.getBlockPos()).wallID);
+        if(b == closeDoorID)
+            b = openDoorID;
+        if(b == uncoveredCloseDoorID)
+            b = uncoveredOpenDoorID;
+    }
 }
