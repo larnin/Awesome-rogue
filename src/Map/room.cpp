@@ -1,4 +1,5 @@
 #include "room.h"
+#include "Generator/patern.h"
 
 unsigned int Room::lastID(0);
 

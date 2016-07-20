@@ -4,7 +4,9 @@
 #include <vector>
 #include <memory>
 #include "Map/location.h"
-#include "Map/room.h"
+#include <array>
+
+class Room;
 
 class Path
 {

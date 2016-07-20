@@ -1,6 +1,6 @@
 #include <cassert>
-
 #include "commandsvalue.h"
+#include "keyconfig.h"
 
 CommandsValue::CommandsValue()
 {

@@ -2,6 +2,7 @@
 #include "Events/eventgetter.h"
 #include "Map/room.h"
 #include "Utilities/vect2convert.h"
+#include "Entities/Types/entity.h"
 
 CacAura::CacAura(const Location & pos, Team team, std::weak_ptr<Entity> sender, float radius)
     : Projectile(pos, team, sender)

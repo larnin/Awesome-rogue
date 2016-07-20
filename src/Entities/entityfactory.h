@@ -4,8 +4,9 @@
 #include <memory>
 #include <vector>
 #include "entitytype.h"
-#include "Types/entity.h"
-#include "Map/location.h"
+
+class Location;
+class Entity;
 
 class EntityFactory
 {

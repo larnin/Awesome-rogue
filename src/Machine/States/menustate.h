@@ -5,8 +5,9 @@
 #include <memory>
 #include <SFML/Graphics/Sprite.hpp>
 #include "state.h"
-#include "GUI/Widgets/widget.h"
 #include "Utilities/ressource.h"
+
+class Widget;
 
 class MenuState : public State
 {

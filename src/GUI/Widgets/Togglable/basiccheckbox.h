@@ -3,7 +3,6 @@
 
 #include "abstracttogglable.h"
 #include "Utilities/ressource.h"
-#include <SFML/Graphics/RenderTexture.hpp>
 #include "GUI/textDrawer.h"
 
 class BasicCheckbox : public AbstractTogglable

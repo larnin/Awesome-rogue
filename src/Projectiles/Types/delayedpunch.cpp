@@ -7,6 +7,7 @@
 #include "Events/eventgetter.h"
 #include "Utilities/vect2convert.h"
 #include "Map/room.h"
+#include "Entities/Types/entity.h"
 
 const float totalTime(2.0f);
 const float frameTime(0.05f);

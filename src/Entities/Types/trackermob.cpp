@@ -13,6 +13,8 @@
 #include "Entities/Types/player.h"
 #include "Particules/particulefactory.h"
 #include "Particules/Types/mobdeath.h"
+#include "Events/Datas/eventplayerchangeroom.h"
+#include "Map/room.h"
 
 TrackerMob::TrackerMob(const Location & pos)
     : Entity(pos)

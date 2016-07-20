@@ -10,6 +10,7 @@
 #include "Events/eventgetter.h"
 #include "Particules/particulefactory.h"
 #include "Particules/Types/mobdeath.h"
+#include "Map/room.h"
 
 SquareMob::SquareMob(const Location & pos)
     : Entity(pos)

@@ -1,8 +1,9 @@
 #ifndef CONTROLABLE_H
 #define CONTROLABLE_H
 
-#include "Controles/commandsvalue.h"
 #include "staticlist.h"
+
+class CommandsValue;
 
 class Controlable : protected StaticList<Controlable>
 {

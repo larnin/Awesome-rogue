@@ -1,10 +1,14 @@
 #include <algorithm>
 #include "entitylist.h"
+#include "Types/entity.h"
 #include "Map/room.h"
 #include "Systemes/updatable.h"
 #include "Collisions/pathfinder.h"
 #include "Events/eventgetter.h"
 #include "Systemes/drawablelist.h"
+#include "Events/Datas/evententitycreated.h"
+#include "Events/Datas/eventpreplayerchangeroom.h"
+#include "Events/Datas/evententitychangeroom.h"
 
 bool EntityList::m_instanced(false);
 

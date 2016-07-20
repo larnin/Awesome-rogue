@@ -5,6 +5,10 @@
 #include "Map/room.h"
 #include <algorithm>
 #include "Events/eventgetter.h"
+#include "Events/Datas/eventparticulecreated.h"
+#include "Events/Datas/eventpreplayerchangeroom.h"
+#include "Types/particule.h"
+#include "Entities/Types/entity.h"
 
 const unsigned int particuleHeight(5);
 

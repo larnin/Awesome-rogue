@@ -7,6 +7,7 @@
 #include "Particules/particulefactory.h"
 #include "Particules/Types/mobspawn.h"
 #include "Utilities/vect2convert.h"
+#include "Events/Datas/eventpreplayerchangeroom.h"
 
 Populator::Populator()
 {

@@ -2,6 +2,8 @@
 #include "Utilities/vect2convert.h"
 #include "Projectiles/projectilefactory.h"
 #include "Projectiles/Types/playerbullet.h"
+#include "Entities/Types/entity.h"
+#include "Controles/commandsvalue.h"
 
 ParalleleBulletLauncher::ParalleleBulletLauncher(std::weak_ptr<Entity> holder, unsigned int bulletCount, float time)
     : ProjectileLauncher(holder)

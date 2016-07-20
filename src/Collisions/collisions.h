@@ -1,9 +1,13 @@
 #ifndef COLLISIONS_H
 #define COLLISIONS_H
 
-#include <memory.h>
-#include "Map/room.h"
-#include "hitbox.h"
+#include <memory>
+#include <SFML/System/Vector2.hpp>
+#include <SFML/Graphics/Rect.hpp>
+
+class HitBox;
+class Line;
+class Room;
 
 class Collisions
 {

@@ -4,8 +4,6 @@
 #include "entity.h"
 #include "Systemes/controlable.h"
 #include "Utilities/ressource.h"
-#include "Collisions/hitbox.h"
-#include <memory>
 
 class Player : public Entity, public Controlable
 {

@@ -2,6 +2,9 @@
 #include "Map/room.h"
 #include "Events/Datas/eventinteraction.h"
 #include "Events/event.h"
+#include "Entities/Types/entity.h"
+#include "Map/location.h"
+#include "Controles/commandsvalue.h"
 
 Interactor::Interactor(std::weak_ptr<Entity> holder)
     : Controlable(ControlState::ACTIVE)

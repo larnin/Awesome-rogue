@@ -2,7 +2,7 @@
 #define EFFECTTEST_H
 
 #include "cameraeffect.h"
-#include "random"
+#include <random>
 
 class EffectTest : public CameraEffect
 {

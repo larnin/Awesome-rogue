@@ -5,9 +5,13 @@
 #include <string>
 #include <random>
 #include <SFML/Graphics/Rect.hpp>
-#include "Map/map.h"
 #include "patern.h"
 #include "Map/roomtype.h"
+#include "Map/orientation.h"
+
+class Map;
+class Door;
+class Room;
 
 struct GenerationEnvironement
 {

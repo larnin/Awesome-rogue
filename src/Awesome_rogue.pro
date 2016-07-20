@@ -107,7 +107,6 @@ HEADERS  += \
     Systemes/updatable.h \
     Machine/statemachine.h \
     Machine/States/state.h \
-    Utilities/extendstd.h \
     Utilities/noncopiable.h \
     GUI/Widgets/widget.h \
     Utilities/ressource.h \
@@ -207,7 +206,14 @@ HEADERS  += \
     GUI/LifeBar/lifebar.h \
     Utilities/delayedtask.h \
     Entities/Types/boss1part.h \
-    Projectiles/Types/bigcircle.h
+    Projectiles/Types/bigcircle.h \
+    Controles/commandtype.h \
+    GUI/aligntype.h \
+    Map/blockinteractiontype.h \
+    Machine/CameraEffects/cameraeffecttype.h \
+    Map/boxtype.h \
+    Map/rotation.h \
+    Entities/team.h
 
 DEFINES += SFML_STATIC
 

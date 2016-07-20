@@ -6,6 +6,7 @@
 #include "Machine/statemachine.h"
 #include "GUI/Widgets/Buttons/basicbutton.h"
 #include "Machine/States/mapteststate.h"
+#include "GUI/Widgets/widget.h"
 
 MenuState::MenuState(std::weak_ptr<StateMachine> machine)
     : State(machine)

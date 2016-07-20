@@ -1,4 +1,5 @@
 #include "abstractcombobox.h"
+#include "Controles/commandsvalue.h"
 
 AbstractComboBox::AbstractComboBox(const AdaptableBounds & _bounds)
     : Widget(_bounds)

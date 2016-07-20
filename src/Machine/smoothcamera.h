@@ -3,15 +3,17 @@
 
 #include <memory>
 #include <vector>
+#include <SFML/System/Vector2.hpp>
 #include "Events/eventreceiver.h"
-#include "Events/Datas/eventcenterofviewchanged.h"
-#include "Events/Datas/eventinstantcenterofviewchanged.h"
-#include "Events/Datas/eventplaycameraeffect.h"
-#include "Events/Datas/eventclearcameraeffects.h"
 #include "Systemes/updatable.h"
-#include "CameraEffects/cameraeffect.h"
+#include "CameraEffects/cameraeffecttype.h"
 
 class StateMachine;
+class EventCenterOfViewChanged;
+class EventInstantCenterOfViewChanged;
+class EventPlayCameraEffect;
+class EventClearCameraEffects;
+class CameraEffect;
 
 class SmoothCamera : public EventReceiver, public Updatable
 {

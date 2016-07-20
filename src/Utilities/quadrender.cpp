@@ -1,5 +1,7 @@
 #include "quadrender.h"
 #include "Utilities/vect2convert.h"
+#include "Map/block.h"
+#include "Collisions/hitbox.h"
 
 void drawQuad(sf::Vertex* quads, const sf::FloatRect & rect, const sf::FloatRect & texRect, bool xFliped, bool yFliped, Rotation rot)
 {

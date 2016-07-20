@@ -5,7 +5,8 @@
 #include "Systemes/updatable.h"
 #include "Systemes/controlable.h"
 #include "Utilities/noncopiable.h"
-#include <Entities/Types/entity.h>
+
+class Entity;
 
 class ProjectileLauncher : public Updatable, public Controlable, private NonCopiable
 {

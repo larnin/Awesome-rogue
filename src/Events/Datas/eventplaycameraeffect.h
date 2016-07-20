@@ -1,10 +1,7 @@
 #ifndef EVENTPLAYCAMERAEFFECT_H
 #define EVENTPLAYCAMERAEFFECT_H
 
-enum CameraEffectType
-{
-    EFFECT_TEST
-};
+#include "Machine/CameraEffects/cameraeffecttype.h"
 
 struct EventPlayCameraEffect
 {

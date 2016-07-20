@@ -1,4 +1,5 @@
 #include "projectile.h"
+#include "Collisions/hitbox.h"
 
 std::default_random_engine Projectile::m_randEngine;
 

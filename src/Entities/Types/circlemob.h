@@ -4,11 +4,11 @@
 #include <memory>
 #include "entity.h"
 #include "Events/eventreceiver.h"
-#include "Events/Datas/eventplayerchangeroom.h"
 #include "Collisions/path.h"
 #include "Utilities/ressource.h"
 
 class Projectile;
+class EventPlayerChangeRoom;
 
 class CircleMob : public Entity, public EventReceiver
 {

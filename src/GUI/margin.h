@@ -54,19 +54,4 @@ struct Margin
     float right;
 };
 
-
-enum VAlign
-{
-    V_TOP,
-    V_CENTER,
-    V_BOTTOM
-};
-
-enum HAlign
-{
-    H_LEFT,
-    H_CENTER,
-    H_RIGHT
-};
-
 #endif // MARGIN_H

@@ -3,12 +3,13 @@
 
 #include <vector>
 #include <memory>
-#include "Types/entity.h"
 #include "Events/eventreceiver.h"
-#include "Events/Datas/evententitycreated.h"
-#include "Events/Datas/eventpreplayerchangeroom.h"
-#include "Events/Datas/evententitychangeroom.h"
 #include "Utilities/noncopiable.h"
+
+class EventEntityCreated;
+class EventPrePlayerChangeRoom;
+class EventEntityChangeRoom;
+class Entity;
 
 class EntityList : public EventReceiver , private NonCopiable
 {

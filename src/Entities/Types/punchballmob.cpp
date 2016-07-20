@@ -11,6 +11,7 @@
 #include "Entities/Types/player.h"
 #include "Particules/particulefactory.h"
 #include "Particules/Types/mobdeath.h"
+#include "Events/Datas/eventplayerchangeroom.h"
 
 PunchBallMob::PunchBallMob(const Location & pos)
     : Entity(pos)

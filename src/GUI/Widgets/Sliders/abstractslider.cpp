@@ -1,4 +1,5 @@
 #include "abstractslider.h"
+#include "Controles/commandsvalue.h"
 
 AbstractSlider::AbstractSlider(const AdaptableBounds & _bounds, bool vertical)
     : Widget(_bounds)

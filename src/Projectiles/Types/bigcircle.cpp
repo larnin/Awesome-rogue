@@ -6,6 +6,8 @@
 #include "Map/blocktype.h"
 #include "Utilities/vect2convert.h"
 #include "Events/eventgetter.h"
+#include "Map/room.h"
+#include "Entities/Types/entity.h"
 
 const float decreaseTime(1.5f);
 

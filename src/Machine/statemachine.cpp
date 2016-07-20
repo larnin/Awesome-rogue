@@ -7,6 +7,7 @@
 #include "Systemes/updatable.h"
 
 #include "Events/Datas/eventsizeviewchanged.h"
+#include "smoothcamera.h"
 
 const unsigned int windowWidth(1200);
 const unsigned int windowHeight(900);

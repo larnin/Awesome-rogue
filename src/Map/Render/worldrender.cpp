@@ -6,6 +6,12 @@
 #include "Map/blocktype.h"
 #include "Entities/entitylist.h"
 #include "Events/eventgetter.h"
+#include "Events/Datas/eventpreplayerchangeroom.h"
+#include "Events/Datas/eventsizeviewchanged.h"
+#include "Entities/Types/entity.h"
+#include "Map/map.h"
+#include "roomrender.h"
+#include "Map/room.h"
 
 const unsigned int height(0);
 

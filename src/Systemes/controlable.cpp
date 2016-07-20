@@ -1,5 +1,6 @@
 #include <memory>
 #include "controlable.h"
+#include "Controles/commandsvalue.h"
 
 Controlable::Controlable(ControlState state)
     : m_state(state)

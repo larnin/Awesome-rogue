@@ -7,13 +7,14 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/View.hpp>
-#include "Systemes/updatable.h"
-#include "Map/map.h"
-#include "roomrender.h"
 #include "Utilities/ressource.h"
 #include "Events/eventreceiver.h"
-#include "Events/Datas/eventpreplayerchangeroom.h"
-#include "Events/Datas/eventsizeviewchanged.h"
+
+class EventPrePlayerChangeRoom;
+class EventSizeViewChanged;
+class Map;
+class RoomRender;
+class Block;
 
 class WorldRender : public sf::Drawable , public EventReceiver
 {

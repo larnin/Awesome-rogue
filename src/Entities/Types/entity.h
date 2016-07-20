@@ -6,13 +6,7 @@
 #include "Systemes/updatable.h"
 #include "Utilities/noncopiable.h"
 #include "Map/location.h"
-#include "Collisions/hitbox.h"
-
-enum Team
-{
-    PLAYER_TEAM,
-    MOB_TEAM
-};
+#include "Entities/team.h"
 
 class Entity : public Updatable, public sf::Drawable, public NonCopiable
 {

@@ -11,6 +11,7 @@
 #include "Events/event.h"
 #include "Particules/particulefactory.h"
 #include "Particules/Types/mobdeath.h"
+#include "Controles/commandsvalue.h"
 
 const float PI(3.14159f);
 

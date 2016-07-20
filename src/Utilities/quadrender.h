@@ -3,8 +3,10 @@
 
 #include <SFML/Graphics/Vertex.hpp>
 #include <SFML/Graphics/Rect.hpp>
-#include "Map/block.h"
-#include "Collisions/hitbox.h"
+#include "Map/rotation.h"
+
+class Block;
+class HitBox;
 
 void drawQuad(sf::Vertex* quads, const sf::FloatRect & rect, const sf::FloatRect & texRect
               , bool xFliped = false, bool yFliped = false, Rotation rot = Rotation::ROT_0);

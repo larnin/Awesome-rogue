@@ -3,8 +3,6 @@
 
 #include "projectile.h"
 #include "Utilities/ressource.h"
-#include <memory>
-#include "Entities/Types/entity.h"
 
 class LaserMob : public Projectile
 {

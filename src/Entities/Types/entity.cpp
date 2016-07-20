@@ -7,6 +7,8 @@
 #include "Events/eventgetter.h"
 #include "Particules/particulefactory.h"
 #include "Particules/Types/particulelifebar.h"
+#include "Map/door.h"
+#include "Map/room.h"
 
 unsigned int Entity::lastID(0);
 std::default_random_engine Entity::m_randEngine;

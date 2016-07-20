@@ -5,7 +5,8 @@
 #include "Events/eventreceiver.h"
 #include "Utilities/ressource.h"
 #include "Collisions/path.h"
-#include "Events/Datas/eventplayerchangeroom.h"
+
+class EventPlayerChangeRoom;
 
 class PunchBallMob : public Entity, public EventReceiver
 {

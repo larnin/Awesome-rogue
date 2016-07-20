@@ -1,7 +1,6 @@
 #include "testwidgetsstate.h"
 #include "GUI/Widgets/graphichelper.h"
 #include "Systemes/drawablelist.h"
-
 #include "GUI/Widgets/Buttons/basicbutton.h"
 #include "GUI/Widgets/Sliders/basicslider.h"
 #include "GUI/Widgets/Togglable/togglablebasicbutton.h"
@@ -11,6 +10,7 @@
 #include "GUI/Widgets/Sliders/basicquantifiedslider.h"
 #include "GUI/Widgets/RadioButtons/radiobuttons.h"
 #include "GUI/Widgets/RadioButtons/basicradiobuttonitem.h"
+#include "GUI/Widgets/widget.h"
 
 TestWidgetsState::TestWidgetsState(std::weak_ptr<StateMachine> machine)
     : State(machine)

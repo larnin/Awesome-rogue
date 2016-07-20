@@ -8,6 +8,7 @@
 #include "Map/blocktype.h"
 #include "Collisions/collisions.h"
 #include "Events/eventgetter.h"
+#include "Entities/Types/entity.h"
 
 const float totalTime(2.5f);
 const float preTime(1.0f);

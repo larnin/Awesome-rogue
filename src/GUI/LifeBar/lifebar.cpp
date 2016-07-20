@@ -3,6 +3,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/Graphics/Rect.hpp>
+#include "Entities/Types/entity.h"
 
 LifeBar::LifeBar(std::weak_ptr<Entity> e)
     : m_entity(e)

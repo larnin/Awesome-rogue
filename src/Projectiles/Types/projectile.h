@@ -4,13 +4,13 @@
 #include <random>
 #include "Systemes/updatable.h"
 #include "Utilities/noncopiable.h"
-#include "Entities/Types/entity.h"
 #include "Map/location.h"
-#include "Collisions/hitbox.h"
 #include <SFML/Graphics/Drawable.hpp>
 #include <memory>
+#include "Entities/team.h"
 
 class Entity;
+class HitBox;
 
 class Projectile : public sf::Drawable, public Updatable, public NonCopiable
 {

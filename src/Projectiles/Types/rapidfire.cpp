@@ -7,6 +7,8 @@
 #include "Map/blocktype.h"
 #include "Collisions/collisions.h"
 #include "Events/eventgetter.h"
+#include "Map/room.h"
+#include "Entities/Types/entity.h"
 
 RapidFire::RapidFire(const Location & pos, Team team, const sf::Vector2f & speed, std::weak_ptr<Entity> sender)
     : Projectile(pos, team, sender)

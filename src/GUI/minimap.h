@@ -6,9 +6,10 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
-#include "Map/map.h"
 #include "Events/eventreceiver.h"
-#include "Events/Datas/eventplayerchangeroom.h"
+
+class EventPlayerChangeRoom;
+class Map;
 
 class Minimap : public sf::Drawable, public EventReceiver
 {

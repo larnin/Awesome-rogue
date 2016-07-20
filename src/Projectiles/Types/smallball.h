@@ -3,8 +3,6 @@
 
 #include "projectile.h"
 #include "Utilities/ressource.h"
-#include <SFML/System/Vector2.hpp>
-#include <SFML/System/Time.hpp>
 
 class SmallBall : public Projectile
 {

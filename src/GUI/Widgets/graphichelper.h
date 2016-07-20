@@ -5,7 +5,9 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/Font.hpp>
-#include "widget.h"
+#include "GUI/aligntype.h"
+
+class Margin;
 
 sf::VertexArray drawSelector(sf::FloatRect rect);
 sf::VertexArray drawButton(const sf::FloatRect & rect, const sf::FloatRect & texRect, const Margin & border);

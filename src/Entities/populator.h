@@ -5,9 +5,10 @@
 #include "entitytype.h"
 #include "Map/location.h"
 #include "Events/eventreceiver.h"
-#include "Events/Datas/eventpreplayerchangeroom.h"
 #include <vector>
 #include <random>
+
+class EventPrePlayerChangeRoom;
 
 class Populator : public Updatable, public EventReceiver
 {

@@ -6,7 +6,7 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Joystick.hpp>
 #include <SFML/Window/Event.hpp>
-#include "keyconfig.h"
+#include "commandtype.h"
 
 class Commands;
 

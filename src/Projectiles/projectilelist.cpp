@@ -4,6 +4,9 @@
 #include "Map/room.h"
 #include <algorithm>
 #include "Events/eventgetter.h"
+#include "Entities/Types/entity.h"
+#include "Events/Datas/eventprojectilecreated.h"
+#include "Events/Datas/eventpreplayerchangeroom.h"
 
 const unsigned int projectileHeight(1);
 

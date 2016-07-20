@@ -7,9 +7,9 @@
 #include <SFML/Graphics/Color.hpp>
 #include "Controles/commands.h"
 #include "Utilities/noncopiable.h"
-#include "smoothcamera.h"
 
 class State;
+class SmoothCamera;
 
 class StateMachine : private NonCopiable
 {

@@ -6,6 +6,8 @@
 #include "Map/blocktype.h"
 #include "Utilities/vect2convert.h"
 #include "Events/eventgetter.h"
+#include "Map/room.h"
+#include "Entities/Types/entity.h"
 
 SmallBall::SmallBall(const Location & pos, Team team, const sf::Vector2f & speed, unsigned int bounces, float maxTime, std::weak_ptr<Entity> sender)
     : Projectile(pos, team, sender)

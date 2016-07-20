@@ -6,8 +6,10 @@
 #include "Utilities/noncopiable.h"
 #include "block.h"
 #include "door.h"
-#include "Generator/patern.h"
 #include "Entities/entitytype.h"
+#include "roomtype.h"
+
+class Patern;
 
 class Room : private NonCopiable
 {

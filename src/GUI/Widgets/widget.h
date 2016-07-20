@@ -4,13 +4,12 @@
 #include <memory>
 #include <map>
 #include <SFML/Graphics/Drawable.hpp>
-#include <SFML/System/Vector2.hpp>
-#include <SFML/Graphics/Rect.hpp>
-#include <SFML/Graphics/View.hpp>
 #include "Systemes/controlable.h"
 #include "Systemes/updatable.h"
-#include "Controles/keyconfig.h"
 #include "GUI/adaptablebounds.h"
+#include "Controles/commandtype.h"
+
+class CommandsValue;
 
 class Widget : public sf::Drawable, public Controlable, public Updatable
 {

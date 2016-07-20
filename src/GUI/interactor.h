@@ -2,12 +2,14 @@
 #define INTERACTOR_H
 
 #include "Systemes/controlable.h"
-#include "Entities/Types/entity.h"
 #include "Utilities/noncopiable.h"
 #include <SFML/Graphics/Drawable.hpp>
-#include "Map/blocktype.h"
+#include "Map/blockinteractiontype.h"
 #include "textDrawer.h"
 #include "Utilities/ressource.h"
+
+class Location;
+class Entity;
 
 class Interactor : public Controlable, public sf::Drawable, private NonCopiable
 {

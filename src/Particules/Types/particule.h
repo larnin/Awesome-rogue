@@ -4,9 +4,7 @@
 #include <random>
 #include "Systemes/updatable.h"
 #include "Utilities/noncopiable.h"
-#include "Entities/Types/entity.h"
 #include "Map/location.h"
-#include "Collisions/hitbox.h"
 #include <SFML/Graphics/Drawable.hpp>
 #include <memory>
 

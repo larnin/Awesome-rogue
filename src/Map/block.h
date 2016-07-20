@@ -1,27 +1,8 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
-enum BoxType
-{
-    EMPTY = 0,
-    FULL = 1,
-    TRIANGLE = 2,
-    HALF = 3,
-    QUARTER = 4,
-    THREE_QUARTER = 5,
-    HALF_CENTRED = 6,
-    CROSS = 7,
-    T_SHARP = 8,
-    CORNER_CENTRED = 9
-};
-
-enum Rotation
-{
-    ROT_0 = 0,
-    ROT_90 = 1,
-    ROT_180 = 2,
-    ROT_270 = 3
-};
+#include "rotation.h"
+#include "boxtype.h"
 
 /* chars orientation  et boxCaracts
  *  [0-1] orientation (4 valeurs)

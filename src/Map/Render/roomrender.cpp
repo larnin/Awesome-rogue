@@ -1,6 +1,9 @@
 #include "roomrender.h"
 #include "Utilities/quadrender.h"
 #include "Map/blocktype.h"
+#include "Map/room.h"
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
 
 RoomRender::RoomRender(std::weak_ptr<Room> room, bool current)
     : m_render(sf::Quads)

@@ -4,10 +4,10 @@
 #include <memory>
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
-#include <SFML/Graphics/RenderStates.hpp>
-#include "Map/room.h"
 #include "Utilities/ressource.h"
+
+class Room;
+class Block;
 
 class RoomRender : public sf::Drawable
 {

@@ -4,17 +4,17 @@
 #include <memory>
 #include <vector>
 #include "state.h"
-#include "GUI/gameinterface.h"
-#include "Map/map.h"
-#include "Map/Render/worldrender.h"
-#include "Entities/Types/player.h"
-#include "Entities/Types/entity.h"
-#include "GUI/minimap.h"
-#include "GUI/LifeBar/lifebar.h"
-#include "Machine/listholder.h"
-#include "Projectiles/ProjectileLauncher/projectilelauncher.h"
-#include "Entities/populator.h"
-#include "GUI/interactor.h"
+
+class Player;
+class Map;
+class WorldRender;
+class GameInterface;
+class Minimap;
+class LifeBar;
+class ListHolder;
+class ProjectileLauncher;
+class Populator;
+class Interactor;
 
 class MapTestState : public State
 {

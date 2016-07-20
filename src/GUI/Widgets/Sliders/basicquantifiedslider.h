@@ -4,7 +4,6 @@
 #include "abstractquantifiedslider.h"
 #include "Utilities/ressource.h"
 #include "GUI/textDrawer.h"
-#include <memory>
 
 class BasicQuantifiedSlider : public AbstractQuantifiedSlider
 {

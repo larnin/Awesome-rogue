@@ -4,7 +4,6 @@
 #include <vector>
 #include <functional>
 #include "GUI/Widgets/widget.h"
-#include "GUI/adaptablebounds.h"
 
 template <typename T>
 class RadioButtons : public Widget

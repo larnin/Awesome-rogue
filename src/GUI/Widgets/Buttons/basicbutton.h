@@ -1,7 +1,6 @@
 #ifndef BASICBUTTON_H
 #define BASICBUTTON_H
 
-#include <SFML/Graphics/RenderTexture.hpp>
 #include "abstractbutton.h"
 #include "Utilities/ressource.h"
 #include "GUI/textDrawer.h"

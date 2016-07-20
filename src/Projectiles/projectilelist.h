@@ -3,9 +3,11 @@
 
 #include <vector>
 #include "Events/eventreceiver.h"
-#include "Events/Datas/eventprojectilecreated.h"
-#include "Events/Datas/eventpreplayerchangeroom.h"
 #include "Utilities/noncopiable.h"
+
+class EventProjectileCreated;
+class EventPrePlayerChangeRoom;
+class Projectile;
 
 class ProjectileList : public EventReceiver , private NonCopiable
 {

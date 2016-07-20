@@ -4,8 +4,6 @@
 #include "abstractcombobox.h"
 #include "Utilities/ressource.h"
 #include "GUI/textDrawer.h"
-#include <SFML/Graphics/RenderTexture.hpp>
-#include <memory>
 
 class BasicCombobox : public AbstractComboBox
 {

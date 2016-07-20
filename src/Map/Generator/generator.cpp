@@ -5,6 +5,9 @@
 #include "Map/orientation.h"
 #include "Entities/entitytype.h"
 #include "Collisions/pathfinder.h"
+#include "Map/map.h"
+#include "Map/door.h"
+#include "Map/room.h"
 
 const unsigned int multiplierStartRoom(2);
 const unsigned int multiplierBossRoom(2);

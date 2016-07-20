@@ -12,6 +12,7 @@
 #include "Entities/entityfactory.h"
 #include "Particules/particulefactory.h"
 #include "Particules/Types/mobdeath.h"
+#include "Events/Datas/eventplayerchangeroom.h"
 
 CircleMob::CircleMob(const Location & pos, bool small)
     : Entity(pos)

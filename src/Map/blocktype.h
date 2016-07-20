@@ -1,17 +1,12 @@
 #ifndef BLOCKTYPE_H
 #define BLOCKTYPE_H
 
-#include "block.h"
-#include "Collisions/hitbox.h"
+#include <string>
+#include "blockinteractiontype.h"
+#include "boxtype.h"
 
-enum BlockInteractionType
-{
-    BI_NO_INTERACTION,
-    BI_CHEST,
-    BI_PORTAL,
-    BI_SAVEPOINT,
-    BI_START_BOSS1
-};
+class Block;
+class HitBox;
 
 class BlockType
 {

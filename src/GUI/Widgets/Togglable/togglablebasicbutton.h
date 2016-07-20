@@ -2,7 +2,6 @@
 #define TOGGLABLEBASICBUTTON_H
 
 #include "abstracttogglable.h"
-#include <SFML/Graphics/RenderTexture.hpp>
 #include "Utilities/ressource.h"
 #include "GUI/textDrawer.h"
 

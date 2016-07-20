@@ -2,6 +2,8 @@
 #include "Utilities/quadrender.h"
 #include <SFML/Graphics/Text.hpp>
 
+#include "GUI/margin.h"
+
 sf::VertexArray drawSelector(sf::FloatRect rect)
 {
     rect.left--;

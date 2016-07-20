@@ -2,6 +2,7 @@
 #include "path.h"
 #include "pathfinder.h"
 #include "Utilities/vect2convert.h"
+#include "Map/room.h"
 
 Path::Path()
 {

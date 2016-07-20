@@ -1,5 +1,6 @@
 #include <cassert>
 #include "entityfactory.h"
+#include "Types/entity.h"
 #include "Types/circlemob.h"
 #include "Types/crosslasermob.h"
 #include "Types/punchballmob.h"
@@ -8,6 +9,7 @@
 #include "Types/boss1part.h"
 #include "Events/event.h"
 #include "Events/Datas/evententitycreated.h"
+#include "Map/location.h"
 
 std::vector<std::shared_ptr<Entity> > EntityFactory::create(EntityType type, const Location & pos, bool sendEvent)
 {

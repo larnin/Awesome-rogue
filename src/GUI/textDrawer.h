@@ -7,7 +7,6 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include "GUI/Widgets/widget.h"
 #include "Utilities/ressource.h"
-#include "adaptablebounds.h"
 
 class TextDrawer
 {

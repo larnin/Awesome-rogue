@@ -4,26 +4,7 @@
 #include <array>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Joystick.hpp>
-
-enum CommandType
-{
-    MOVE_UP,
-    MOVE_DOWN,
-    MOVE_LEFT,
-    MOVE_RIGHT,
-    SHOOT_UP,
-    SHOOT_DOWN,
-    SHOOT_LEFT,
-    SHOOT_RIGHT,
-    KEY_VALID,
-    KEY_CANCEL,
-    KEY_PAUSE,
-    KEY_MAP,
-    KEY_INVENTARY,
-    KEY_LEFT_PAGE,
-    KEY_RIGHT_PAGE,
-    COMMANDS_COUNT
-};
+#include "commandtype.h"
 
 struct KeyInfo
 {

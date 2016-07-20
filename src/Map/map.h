@@ -3,8 +3,10 @@
 
 #include <vector>
 #include <memory>
-#include "room.h"
+#include <SFML/System/Vector2.hpp>
 #include "Utilities/noncopiable.h"
+
+class Room;
 
 class Map : private NonCopiable
 {

@@ -1,4 +1,7 @@
 #include "blocktype.h"
+#include "block.h"
+#include "Collisions/hitbox.h"
+#include "blockinteractiontype.h"
 
 const float PI(3.14159f);
 

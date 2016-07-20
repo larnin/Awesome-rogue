@@ -1,4 +1,5 @@
 #include "abstracttogglable.h"
+#include "Controles/commandsvalue.h"
 
 AbstractTogglable::AbstractTogglable(const AdaptableBounds & _bounds, bool _state)
     : Widget(_bounds)

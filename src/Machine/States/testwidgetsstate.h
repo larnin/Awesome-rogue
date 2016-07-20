@@ -5,7 +5,7 @@
 #include <vector>
 #include "state.h"
 
-#include "GUI/Widgets/widget.h"
+class Widget;
 
 class TestWidgetsState : public State
 {

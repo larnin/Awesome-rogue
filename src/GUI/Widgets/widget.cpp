@@ -1,4 +1,5 @@
 #include "widget.h"
+#include "Controles/commandsvalue.h"
 
 Widget::Widget(const AdaptableBounds & _bounds)
     : bounds(_bounds)

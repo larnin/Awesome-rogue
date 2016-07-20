@@ -1,5 +1,6 @@
 #include <algorithm>
 #include "map.h"
+#include "room.h"
 
 Map::Map()
 {

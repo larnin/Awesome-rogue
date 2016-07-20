@@ -3,9 +3,10 @@
 
 #include <memory>
 #include <SFML/Graphics/Drawable.hpp>
-#include "Entities/Types/entity.h"
 #include "Utilities/ressource.h"
 #include "Utilities/noncopiable.h"
+
+class Entity;
 
 class LifeBar : public sf::Drawable, private NonCopiable
 {

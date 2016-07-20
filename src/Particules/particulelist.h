@@ -3,9 +3,11 @@
 
 #include <vector>
 #include "Events/eventreceiver.h"
-#include "Events/Datas/eventparticulecreated.h"
-#include "Events/Datas/eventpreplayerchangeroom.h"
 #include "Utilities/noncopiable.h"
+
+class EventParticuleCreated;
+class EventPrePlayerChangeRoom;
+class Particule;
 
 class ParticuleList: public EventReceiver , private NonCopiable
 {

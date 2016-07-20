@@ -5,6 +5,7 @@
 #include <SFML/Graphics/View.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include "margin.h"
+#include "aligntype.h"
 
 struct AdaptableBounds
 {

@@ -1,6 +1,7 @@
 
 #include <algorithm>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include "Controles/commandsvalue.h"
 
 //#include "radiobuttons.h"
 

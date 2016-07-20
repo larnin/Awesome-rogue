@@ -3,9 +3,6 @@
 
 #include "projectile.h"
 #include "Utilities/ressource.h"
-#include <SFML/System/Time.hpp>
-#include <memory>
-#include "Entities/Types/entity.h"
 
 class DelayedPunch : public Projectile
 {
