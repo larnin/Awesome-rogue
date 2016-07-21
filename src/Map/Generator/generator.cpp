@@ -14,13 +14,9 @@ const unsigned int multiplierBossRoom(2);
 
 Map Generator::generate(const GenerationEnvironement & env)
 {
-    if(env.generatePaterns)
-    {
-        generatePaterns(RoomType::NORMAL_ROOM, env.minRoomSize, env.maxRoomSize);
-        generatePaterns(RoomType::BOSS_ROOM, env.minRoomSize*multiplierBossRoom, env.maxRoomSize*multiplierBossRoom);
-        generatePaterns(RoomType::START_ROOM, env.minRoomSize*multiplierStartRoom, env.maxRoomSize*multiplierStartRoom);
-    }
-    else loadPaterns(env.paternsFileName, env.minRoomSize, env.maxRoomSize);
+    if(!env.paternsFileName.empty())
+        loadPaterns(env.paternsFileName, env.minRoomSize, env.maxRoomSize);
+    generatePaterns(env.minRoomSize, env.maxRoomSize);
 
     m_engine.seed(env.seed);
 
@@ -32,27 +28,30 @@ Map Generator::generate(const GenerationEnvironement & env)
     {
         try
         {
-            bool bossRoom(false);
-            for(float posBoss : env.posBoss)
+            unsigned int bossRoom(0);
+            for(unsigned int i(0) ; i < env.posBoss.size() ; i++)
             {
-                if(m.count() >= posBoss*env.nbRooms && m.count()-1 < posBoss*env.nbRooms)
+                if(m.count() >= env.posBoss[i]*env.nbRooms && m.count()-1 < env.posBoss[i]*env.nbRooms)
                 {
-                    bossRoom = true;
+                    bossRoom = i+1;
                     break;
                 }
+
             }
 
             float nextFrom(env.nextFrom + std::uniform_real_distribution<float>(-retry/100.0f, retry/100.0f)(m_engine));
-            auto door(bossRoom ? findDoorablePos(m, env.nextFrom, env.minRoomSize*multiplierBossRoom, env.maxRoomSize*multiplierBossRoom)
+            auto door(bossRoom > 0 ? findDoorablePos(m, env.nextFrom, env.minRoomSize*multiplierBossRoom, env.maxRoomSize*multiplierBossRoom)
                         : findDoorablePos(m, nextFrom, env.minRoomSize, env.maxRoomSize));
 
-            sf::Vector2u maxRect(std::min(int(env.maxRoomSize.x), door.second.width), std::min(int(env.maxRoomSize.y), door.second.height));
-            if(bossRoom)
-                maxRect *= 2u;
+            sf::Vector2u maxRect(std::min(int(env.maxRoomSize.x * (bossRoom>0?multiplierBossRoom:1)), door.second.width)
+                                 , std::min(int(env.maxRoomSize.y * (bossRoom>0?multiplierBossRoom:1)), door.second.height));
 
-
-            std::shared_ptr<Room> r(std::make_shared<Room>(placeRoom(
-                                        getPatern(maxRect, env.minRoomSize, bossRoom ? RoomType::BOSS_ROOM : RoomType::NORMAL_ROOM)
+            std::shared_ptr<Room> r(std::make_shared<Room>(placeRoom(getPatern(maxRect, env.minRoomSize
+                                        , bossRoom == 0 ? RoomType::NORMAL_ROOM
+                                        : bossRoom == 1 ? RoomType::BOSS1_ROOM
+                                        : bossRoom == 1 ? RoomType::BOSS2_ROOM
+                                        : bossRoom == 1 ? RoomType::BOSS3_ROOM
+                                                        : RoomType::BOSS4_ROOM)
                                         , door.second, door.first, env.sideRarity)));
             std::shared_ptr<Room> initialRoom(door.first.pos.getRoom().lock());
             assert(initialRoom);
@@ -87,20 +86,13 @@ Map Generator::generate(const GenerationEnvironement & env)
 void Generator::loadPaterns(const std::string & filename, const sf::Vector2u & minSize, const sf::Vector2u & maxSize)
 {
     m_paterns.clear();
-    m_paternsBoss.clear();
-    m_paternsStart.clear();
 
     auto paterns = Patern::load(filename);
     for(const auto & p : paterns)
     {
-        if(p.type == RoomType::START_ROOM)
+        if(p.type != RoomType::NORMAL_ROOM)
         {
-            m_paternsStart.push_back(p);
-            continue;
-        }
-        if(p.type == RoomType::BOSS_ROOM)
-        {
-            m_paternsBoss.push_back(p);
+            m_paterns.push_back(p);
             continue;
         }
         sf::Vector2u size(p.getSize());
@@ -111,46 +103,60 @@ void Generator::loadPaterns(const std::string & filename, const sf::Vector2u & m
             continue;
         }
     }
-
-    if(m_paternsStart.empty())
-        generatePaterns(RoomType::START_ROOM, sf::Vector2u(20, 20), sf::Vector2u(20, 20));
-    if(m_paternsBoss.empty())
-        generatePaterns(RoomType::BOSS_ROOM, minSize*2u, maxSize*2u);
-    if(m_paterns.empty())
-        generatePaterns(RoomType::NORMAL_ROOM, minSize, maxSize);
 }
 
-void Generator::generatePaterns(RoomType type, const sf::Vector2u & minSize, const sf::Vector2u & maxSize)
+void Generator::generatePaterns(const sf::Vector2u & minSize, const sf::Vector2u & maxSize)
 {
-    std::vector<Patern> & paterns(type == RoomType::START_ROOM ? m_paternsStart
-                              :   type == RoomType::BOSS_ROOM ? m_paternsBoss
-                                                                    : m_paterns);
-    paterns.clear();
-    unsigned int nbRooms(type == RoomType::NORMAL_ROOM ? 20
-                       : type == RoomType::BOSS_ROOM ? 4
-                                                              : 1);
+    RoomType type(RoomType::NORMAL_ROOM);
+    auto lambdaFunct([&type](unsigned int count, const Patern & p){if(p.type == type) return count+1; else return count;});
 
     m_engine.seed(0);
+
     std::uniform_int_distribution<unsigned int> xDistrib(minSize.x, maxSize.x);
     std::uniform_int_distribution<unsigned int> yDistrib(minSize.y, maxSize.y);
-
-    while(paterns.size() < nbRooms)
+    auto lambdaCreate([](RoomType type, unsigned int rarity, const sf::Vector2u & size)
     {
-        Patern p(sf::Vector2u(xDistrib(m_engine), yDistrib(m_engine)));
+        Patern p(size);
         p.type = type;
-        p.rarity = 50;
-        paterns.push_back(p);
-    }
+        p.rarity = rarity;
+        return p;
+    });
 
-    Patern p(minSize);
-    p.rarity = 1;
-    paterns.push_back(p);
+    int nb(20-std::accumulate(m_paterns.begin(), m_paterns.end(), 0u, lambdaFunct));
+    while(nb-->0)
+        m_paterns.push_back(lambdaCreate(type, 50, sf::Vector2u(xDistrib(m_engine), yDistrib(m_engine))));
+
+    type = RoomType::START_ROOM;
+    if(std::accumulate(m_paterns.begin(), m_paterns.end(), 0u, lambdaFunct) == 0)
+        m_paterns.push_back(lambdaCreate(type, 50, maxSize));
+
+    type = RoomType::BOSS1_ROOM;
+    if(std::accumulate(m_paterns.begin(), m_paterns.end(), 0u, lambdaFunct) == 0)
+        m_paterns.push_back(lambdaCreate(type, 50, maxSize));
+
+    type = RoomType::BOSS2_ROOM;
+    if(std::accumulate(m_paterns.begin(), m_paterns.end(), 0u, lambdaFunct) == 0)
+        m_paterns.push_back(lambdaCreate(type, 50, maxSize));
+
+    type = RoomType::BOSS3_ROOM;
+    if(std::accumulate(m_paterns.begin(), m_paterns.end(), 0u, lambdaFunct) == 0)
+        m_paterns.push_back(lambdaCreate(type, 50, maxSize));
+
+    type = RoomType::BOSS4_ROOM;
+    if(std::accumulate(m_paterns.begin(), m_paterns.end(), 0u, lambdaFunct) == 0)
+        m_paterns.push_back(lambdaCreate(type, 50, maxSize));
+
+    type = RoomType::FINAL_ROOM;
+    if(std::accumulate(m_paterns.begin(), m_paterns.end(), 0u, lambdaFunct) == 0)
+        m_paterns.push_back(lambdaCreate(type, 50, maxSize));
+
 }
 
 Room Generator::createFirstRoom()
 {
-    std::uniform_int_distribution<unsigned int> RoomIDDistrib(0, m_paternsStart.size()-1);
-    return Room(m_paternsStart[RoomIDDistrib(m_engine)], sf::Vector2i(0, 0));
+    unsigned int maxSize(1000);
+    getPatern(sf::Vector2u(maxSize, maxSize), sf::Vector2u(0, 0), RoomType::START_ROOM);
+    return Room(getPatern(sf::Vector2u(maxSize, maxSize), sf::Vector2u(0, 0), RoomType::START_ROOM), sf::Vector2i(0, 0));
 }
 
 std::pair<Door, sf::IntRect> Generator::findDoorablePos(const Map & m, float doorPos, const sf::Vector2u & minSize, const sf::Vector2u & maxSize)
@@ -286,14 +292,13 @@ bool Generator::isValidDoorPos(const sf::Vector2u & pos, const Patern & p)
 
 const Patern & Generator::getPatern(const sf::Vector2u & maxSize, const sf::Vector2u & minSize, RoomType type)
 {
-    std::vector<Patern> & paterns(type == RoomType::START_ROOM ? m_paternsStart
-                              :   type == RoomType::BOSS_ROOM ? m_paternsBoss
-                                                                    : m_paterns);
     std::vector<unsigned int> poids;
     std::vector<unsigned int> indexs;
-    for(unsigned int i(0) ; i < paterns.size() ; i++)
+    for(unsigned int i(0) ; i < m_paterns.size() ; i++)
     {
-        Patern & p(paterns[i]);
+        Patern & p(m_paterns[i]);
+        if(p.type != type)
+            continue;
         if(p.getSize().x < minSize.x || p.getSize().y < minSize.y || p.getSize().x > maxSize.x || p.getSize().y > maxSize.y)
             continue;
         poids.push_back(p.rarity);
@@ -304,10 +309,10 @@ const Patern & Generator::getPatern(const sf::Vector2u & maxSize, const sf::Vect
         assert(false);
 
     if(indexs.size() == 1)
-        return paterns[indexs[0]];
+        return m_paterns[indexs[0]];
 
     std::discrete_distribution<int> distrib(poids.begin(), poids.end());
-    return paterns[indexs[distrib(m_engine)]];
+    return m_paterns[indexs[distrib(m_engine)]];
 }
 
 Room Generator::placeRoom(const Patern & p, sf::IntRect allowedRect, const Door & origineDoor, unsigned int sideRarity)

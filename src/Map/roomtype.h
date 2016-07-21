@@ -4,7 +4,11 @@
 enum RoomType
 {
     NORMAL_ROOM,
-    BOSS_ROOM,
+    BOSS1_ROOM,
+    BOSS2_ROOM,
+    BOSS3_ROOM,
+    BOSS4_ROOM,
+    FINAL_ROOM,
     START_ROOM
 };
 

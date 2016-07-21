@@ -13,10 +13,10 @@ void drawQuad(sf::Vertex* quads, const sf::FloatRect & rect, const sf::FloatRect
     for(unsigned int i(0) ; i < rot ; i++)
     {
         sf::Vector2f texTemp(quads[0].texCoords);
-        quads[0].texCoords = quads[3].texCoords;
-        quads[3].texCoords = quads[2].texCoords;
-        quads[2].texCoords = quads[1].texCoords;
-        quads[1].texCoords = texTemp;
+        quads[0].texCoords = quads[1].texCoords;
+        quads[1].texCoords = quads[2].texCoords;
+        quads[2].texCoords = quads[3].texCoords;
+        quads[3].texCoords = texTemp;
     }
 
     if(xFliped)

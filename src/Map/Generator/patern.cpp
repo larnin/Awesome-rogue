@@ -191,14 +191,14 @@ void Patern::generate()
                 m_blocks(sf::Vector2u(i, j)) = Block(0, 0, wallCornerID, createOrientation(Rotation::ROT_0, false, false)
                                                      , createBoxCaracts(Rotation::ROT_0, false, false, BlockType::boxOf(wallCornerID)));
             else if(i == 0 && j == getSize().y-1)
-                m_blocks(sf::Vector2u(i, j)) = Block(0, 0, wallCornerID, createOrientation(Rotation::ROT_270, false, false)
-                                                     , createBoxCaracts(Rotation::ROT_270, false, false, BlockType::boxOf(wallCornerID)));
+                m_blocks(sf::Vector2u(i, j)) = Block(0, 0, wallCornerID, createOrientation(Rotation::ROT_90, false, false)
+                                                     , createBoxCaracts(Rotation::ROT_90, false, false, BlockType::boxOf(wallCornerID)));
             else if(i == getSize().x-1 && j == getSize().y-1)
                 m_blocks(sf::Vector2u(i, j)) = Block(0, 0, wallCornerID, createOrientation(Rotation::ROT_180, false, false)
                                                      , createBoxCaracts(Rotation::ROT_180, false, false, BlockType::boxOf(wallCornerID)));
             else if(i == getSize().x-1 && j == 0)
-                m_blocks(sf::Vector2u(i, j)) = Block(0, 0, wallCornerID, createOrientation(Rotation::ROT_90, false, false)
-                                                     , createBoxCaracts(Rotation::ROT_90, false, false, BlockType::boxOf(wallCornerID)));
+                m_blocks(sf::Vector2u(i, j)) = Block(0, 0, wallCornerID, createOrientation(Rotation::ROT_270, false, false)
+                                                     , createBoxCaracts(Rotation::ROT_270, false, false, BlockType::boxOf(wallCornerID)));
             else if(i == 0 || i == getSize().x-1)
             {
                 if(getSize().y%2==0 && j == getSize().y-2)

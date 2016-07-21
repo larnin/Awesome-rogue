@@ -134,9 +134,9 @@ void Room::drawDoor(sf::Vector2u pos)
     const unsigned int doorID(5);
     Orientation o(orientedSide(pos, sf::Rect<unsigned int>(sf::Vector2u(0, 0), getSize())));
     Rotation rot(o == Orientation::UP ? Rotation::ROT_0
-               : o == Orientation::RIGHT ? Rotation::ROT_90
+               : o == Orientation::RIGHT ? Rotation::ROT_270
                : o == Orientation::DOWN ? Rotation::ROT_180
-                                        : Rotation::ROT_270);
+                                        : Rotation::ROT_90);
     m_blocks(pos) = Block(doorID, createOrientation(rot, false, false));
 
     const unsigned int wallCornerID(1);
@@ -151,7 +151,8 @@ void Room::drawDoor(sf::Vector2u pos)
     if(bLeft.wallID == wallLineID || bLeft.wallID == wallLineNoflipID)
     {
         bLeft.wallID = wallCornerID;
-        bLeft.wallOrientation = createOrientation(static_cast<Rotation>(((unsigned int)(rot)+3)%4), false, false);
+        Rotation r(o == UP ? ROT_90 : o == LEFT ? ROT_180 : o == DOWN ? ROT_270 : ROT_0);
+        bLeft.wallOrientation = createOrientation(r, false, false);
     }
     else if(bLeft.wallID == wallCornerID)
     {
@@ -162,7 +163,8 @@ void Room::drawDoor(sf::Vector2u pos)
     if(bRight.wallID == wallLineID || bRight.wallID == wallLineNoflipID)
     {
         bRight.wallID = wallCornerID;
-        bRight.wallOrientation = createOrientation(static_cast<Rotation>(((unsigned int)(rot)+2)%4), false, false);
+        Rotation r(o == UP ? ROT_180 : o == LEFT ? ROT_270 : o == DOWN ? ROT_0 : ROT_90);
+        bRight.wallOrientation = createOrientation(r, false, false);
     }
     else if(bRight.wallID == wallCornerID)
     {

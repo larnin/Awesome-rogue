@@ -204,69 +204,69 @@ Block WorldRender::OutBlockInfo::toBlock() const
     if(borderD && borderL && borderR)
         return Block(treeSidesID, createOrientation(Rotation::ROT_0, false, false));
     if(borderD && borderR && borderU)
-        return Block(treeSidesID, createOrientation(Rotation::ROT_90, false, false));
+        return Block(treeSidesID, createOrientation(Rotation::ROT_270, false, false));
     if(borderL && borderR && borderU)
         return Block(treeSidesID, createOrientation(Rotation::ROT_180, false, false));
     if(borderD && borderL && borderU)
-        return Block(treeSidesID, createOrientation(Rotation::ROT_270, false, false));
+        return Block(treeSidesID, createOrientation(Rotation::ROT_90, false, false));
     //2 cotés face à face
     if(borderD && borderU)
         return Block(twoOppositeSideID, createOrientation(Rotation::ROT_0, false, false));
     if(borderL && borderR)
-        return Block(twoOppositeSideID, createOrientation(Rotation::ROT_90, false, false));
+        return Block(twoOppositeSideID, createOrientation(Rotation::ROT_270, false, false));
     //2 cotés en coin sans coin a l'opposé
     if(borderL && borderD && !cornerUR)
-        return Block(twoSidesInCornerID, createOrientation(Rotation::ROT_270, false, false));
+        return Block(twoSidesInCornerID, createOrientation(Rotation::ROT_90, false, false));
     if(borderD && borderR && !cornerUL)
         return Block(twoSidesInCornerID, createOrientation(Rotation::ROT_0, false, false));
     if(borderR && borderU && !cornerDL)
-        return Block(twoSidesInCornerID, createOrientation(Rotation::ROT_90, false, false));
+        return Block(twoSidesInCornerID, createOrientation(Rotation::ROT_270, false, false));
     if(borderU && borderL && !cornerDR)
         return Block(twoSidesInCornerID, createOrientation(Rotation::ROT_180, false, false));
     //2 cotés en coin avec 1 coin
     if(borderL && borderD)
         return Block(twoSidesInCornerAndOneCornerID, createOrientation(Rotation::ROT_0, false, false));
     if(borderD && borderR)
-        return Block(twoSidesInCornerAndOneCornerID, createOrientation(Rotation::ROT_90, false, false));
+        return Block(twoSidesInCornerAndOneCornerID, createOrientation(Rotation::ROT_270, false, false));
     if(borderR && borderU)
         return Block(twoSidesInCornerAndOneCornerID, createOrientation(Rotation::ROT_180, false, false));
     if(borderU && borderL)
-        return Block(twoSidesInCornerAndOneCornerID, createOrientation(Rotation::ROT_270, false, false));
+        return Block(twoSidesInCornerAndOneCornerID, createOrientation(Rotation::ROT_90, false, false));
     //1 coté sans coins
     if(borderD && !cornerUL && !cornerUR)
         return Block(oneSideID, createOrientation(Rotation::ROT_0, false, false));
     if(borderR && !cornerDL && !cornerUL)
-        return Block(oneSideID, createOrientation(Rotation::ROT_90, false, false));
+        return Block(oneSideID, createOrientation(Rotation::ROT_270, false, false));
     if(borderU && !cornerDL && !cornerDR)
         return Block(oneSideID, createOrientation(Rotation::ROT_180, false, false));
     if(borderL && !cornerDR && !cornerUR)
-        return Block(oneSideID, createOrientation(Rotation::ROT_270, false, false));
+        return Block(oneSideID, createOrientation(Rotation::ROT_90, false, false));
     //1 coté et 1 coin
     if(borderD && !cornerUR)
         return Block(oneSideAndOneCornerID, createOrientation(Rotation::ROT_0, false, false));
     if(borderD && !cornerUL)
         return Block(oneSideAndOneCornerID, createOrientation(Rotation::ROT_0, true, false));
     if(borderR && !cornerUL)
-        return Block(oneSideAndOneCornerID, createOrientation(Rotation::ROT_90, false, false));
+        return Block(oneSideAndOneCornerID, createOrientation(Rotation::ROT_270, false, false));
     if(borderR && !cornerDL)
-        return Block(oneSideAndOneCornerID, createOrientation(Rotation::ROT_90, false, true));
+        return Block(oneSideAndOneCornerID, createOrientation(Rotation::ROT_270, false, true));
     if(borderU && !cornerDL)
         return Block(oneSideAndOneCornerID, createOrientation(Rotation::ROT_180, false, false));
     if(borderU && !cornerDR)
         return Block(oneSideAndOneCornerID, createOrientation(Rotation::ROT_180, true, false));
     if(borderL && !cornerUR)
-        return Block(oneSideAndOneCornerID, createOrientation(Rotation::ROT_270, false, false));
+        return Block(oneSideAndOneCornerID, createOrientation(Rotation::ROT_90, false, false));
     if(borderL && !cornerDR)
-        return Block(oneSideAndOneCornerID, createOrientation(Rotation::ROT_270, false, true));
+        return Block(oneSideAndOneCornerID, createOrientation(Rotation::ROT_90, false, true));
     //1 coté et 2 coins
     if(borderD)
         return Block(oneSideAndTwoCornersID, createOrientation(Rotation::ROT_0, false, false));
     if(borderR)
-        return Block(oneSideAndTwoCornersID, createOrientation(Rotation::ROT_90, false, false));
+        return Block(oneSideAndTwoCornersID, createOrientation(Rotation::ROT_270, false, false));
     if(borderU)
         return Block(oneSideAndTwoCornersID, createOrientation(Rotation::ROT_180, false, false));
     if(borderL)
-        return Block(oneSideAndTwoCornersID, createOrientation(Rotation::ROT_270, false, false));
+        return Block(oneSideAndTwoCornersID, createOrientation(Rotation::ROT_90, false, false));
     //4 coins
     if(cornerDL && cornerDR && cornerUL && cornerUR)
         return Block(fourCornersID, createOrientation(Rotation::ROT_0, false, false));
@@ -274,33 +274,33 @@ Block WorldRender::OutBlockInfo::toBlock() const
     if(cornerDL && cornerDR && cornerUL)
         return Block(treeCornersID, createOrientation(Rotation::ROT_0, false, false));
     if(cornerDL && cornerDR && cornerUR)
-        return Block(treeCornersID, createOrientation(Rotation::ROT_90, false, false));
+        return Block(treeCornersID, createOrientation(Rotation::ROT_270, false, false));
     if(cornerDR && cornerUL && cornerUR)
         return Block(treeCornersID, createOrientation(Rotation::ROT_180, false, false));
     if(cornerDL && cornerUL && cornerUR)
-        return Block(treeCornersID, createOrientation(Rotation::ROT_270, false, false));
+        return Block(treeCornersID, createOrientation(Rotation::ROT_90, false, false));
     //2 coins cote a cote
     if(cornerDL && cornerDR)
         return Block(twoCornersSideID, createOrientation(Rotation::ROT_0, false, false));
     if(cornerDR && cornerUR)
-        return Block(twoCornersSideID, createOrientation(Rotation::ROT_90, false, false));
+        return Block(twoCornersSideID, createOrientation(Rotation::ROT_270, false, false));
     if(cornerUL && cornerUR)
         return Block(twoCornersSideID, createOrientation(Rotation::ROT_180, false, false));
     if(cornerDL && cornerUL)
-        return Block(twoCornersSideID, createOrientation(Rotation::ROT_270, false, false));
+        return Block(twoCornersSideID, createOrientation(Rotation::ROT_90, false, false));
     //2 coins face a face
     if(cornerDL && cornerUR)
         return Block(twoCornersOppositeID, createOrientation(Rotation::ROT_0, false, false));
     if(cornerDR && cornerUL)
-        return Block(twoCornersOppositeID, createOrientation(Rotation::ROT_90, false, false));
+        return Block(twoCornersOppositeID, createOrientation(Rotation::ROT_270, false, false));
     //1 coin
     if(cornerDL)
         return Block(oneCornerID, createOrientation(Rotation::ROT_0, false, false));
-    if(cornerDR)
+    if(cornerUL)
         return Block(oneCornerID, createOrientation(Rotation::ROT_270, false, false));
     if(cornerUR)
         return Block(oneCornerID, createOrientation(Rotation::ROT_180, false, false));
-    if(cornerUL)
+    if(cornerDR)
         return Block(oneCornerID, createOrientation(Rotation::ROT_90, false, false));
 
     assert(false); //retour normalement impossible

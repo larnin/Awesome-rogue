@@ -41,33 +41,24 @@ MapTestState::MapTestState(std::weak_ptr<StateMachine> machine)
     listes = std::make_shared<ListHolder>();
     Updatable::add(listes);
 
-    Generator g;
     std::shared_ptr<StateMachine> mLock(m_machine.lock());
     sf::View v(mLock->getWindow().getView());
     v.zoom(1.0f);
     mLock->getWindow().setView(v);
     mLock->setClearColor(sf::Color::Black);
 
-    map = std::make_shared<Map>(g.generate(GenerationEnvironement()));
-    map->room(0)->uncover();
-    (*(map->room(0)))(sf::Vector2u(8, 8)).wallID = 64;
-    (*(map->room(0)))(sf::Vector2u(8, 8)).boxCaracts = createBoxCaracts(Rotation::ROT_0, false, false, BoxType::FULL);
-    (*(map->room(0)))(sf::Vector2u(9, 8)).wallID = 64;
-    (*(map->room(0)))(sf::Vector2u(9, 8)).boxCaracts = createBoxCaracts(Rotation::ROT_0, false, false, BoxType::FULL);
-    (*(map->room(0)))(sf::Vector2u(10, 8)).wallID = 64;
-    (*(map->room(0)))(sf::Vector2u(10, 8)).boxCaracts = createBoxCaracts(Rotation::ROT_0, false, false, BoxType::FULL);
-    (*(map->room(0)))(sf::Vector2u(8, 9)).wallID = 64;
-    (*(map->room(0)))(sf::Vector2u(8, 9)).boxCaracts = createBoxCaracts(Rotation::ROT_0, false, false, BoxType::FULL);
-    (*(map->room(0)))(sf::Vector2u(8, 10)).wallID = 64;
-    (*(map->room(0)))(sf::Vector2u(8, 10)).boxCaracts = createBoxCaracts(Rotation::ROT_0, false, false, BoxType::FULL);
-    (*(map->room(0)))(sf::Vector2u(9, 9)).wallID = 259;
-    (*(map->room(0)))(sf::Vector2u(9, 9)).boxCaracts = createBoxCaracts(Rotation::ROT_180, false, false, BoxType::TRIANGLE);
+    Generator g;
+    GenerationEnvironement env;
+    env.paternsFileName = "res/paterns.json";
+    map = std::make_shared<Map>(g.generate(env));
+    const auto & r(map->room(0));
+    r->uncover();
 
     if(mLock)
         mapRender = std::make_shared<WorldRender>(map, 0, mLock->getWindow().getSize());
     DrawableList::add(mapRender, 0);
 
-    std::shared_ptr<Player> p(std::make_shared<Player>(Player(Location(sf::Vector2u(5, 5), map->room(0)))));
+    std::shared_ptr<Player> p(std::make_shared<Player>(Player(Location(r->getSize()/2u, r))));
     player = p;
     listes->entities.addEntity(p);
     Controlable::add(p);
@@ -92,7 +83,7 @@ MapTestState::MapTestState(std::weak_ptr<StateMachine> machine)
     DrawableList::add(interactor, 5);
     Controlable::add(interactor);
 
-    EntityFactory::create(E_BOSS1_PARTS, Location(map->room(0)->getSize()/2u, map->room(0)));
+    EntityFactory::create(E_BOSS1_PARTS, Location(r->getSize()/2u, r));
 
     Event<EventPrePlayerChangeRoom>::send(EventPrePlayerChangeRoom(p->getID()));
     Event<EventPlayerChangeRoom>::send(EventPlayerChangeRoom(p->getID()));
