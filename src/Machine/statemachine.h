@@ -23,10 +23,13 @@ public:
     void run();
     void setClearColor(const sf::Color & color);
     void setWindowCenter(const sf::Vector2f & pos);
+    void setSubstate(std::unique_ptr<State> sub);
 
 private:
     std::unique_ptr<State> m_actualState;
     std::unique_ptr<State> m_nextState;
+    std::unique_ptr<State> m_subState;
+
     sf::RenderWindow m_window;
     Commands m_commands;
     sf::Clock m_clock;

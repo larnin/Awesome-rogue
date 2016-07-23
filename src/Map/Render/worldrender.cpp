@@ -21,10 +21,25 @@ WorldRender::WorldRender(std::weak_ptr<Map> world, unsigned int centerRoom, cons
     , m_borderTexture("res/img/tileset.png")
     , m_screenSize(screenSize / BlockType::tileSize)
     , m_centerRoom(centerRoom)
+    , m_enabled(false)
 {
     connect<EventPrePlayerChangeRoom>(std::bind(&WorldRender::onPlayerChangeRoom, this, _1));
     connect<EventSizeViewChanged>(std::bind(&WorldRender::onScreenChangeSize, this, _1));
     redrawRooms();
+}
+
+void WorldRender::enable()
+{
+    m_enabled = true;
+    for(const auto & r : m_renders)
+        DrawableList::add(r, height);
+}
+
+void WorldRender::disable()
+{
+    m_enabled = false;
+    for(const auto & r : m_renders)
+        DrawableList::del(r);
 }
 
 void WorldRender::draw(sf::RenderTarget & target, sf::RenderStates) const
@@ -140,7 +155,8 @@ void WorldRender::redrawRooms()
         {
             bool actual(room == centerRoom);
             m_renders.push_back(std::make_shared<RoomRender>(room, actual));
-            DrawableList::add(m_renders.back(), height);
+            if(m_enabled)
+                DrawableList::add(m_renders.back(), height);
         }
     }
 

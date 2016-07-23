@@ -16,6 +16,7 @@ unsigned int entityHeight(2);
 
 EntityList::EntityList()
     : m_currentRoom(0)
+    , m_enabled(false)
 {
     assert(!m_instanced);
     m_instanced = true;
@@ -35,6 +36,28 @@ EntityList::~EntityList()
     m_instanced = false;
 }
 
+void EntityList::enable()
+{
+    m_enabled = true;
+    const auto & list(entitiesOn(m_currentRoom));
+    for(const auto & e : list)
+        DrawableList::add(e, entityHeight);
+
+    for(const auto & e : m_activeEntities)
+        Updatable::add(e);
+}
+
+void EntityList::disable()
+{
+    m_enabled = false;
+    const auto & list(entitiesOn(m_currentRoom));
+    for(const auto & e : list)
+        DrawableList::del(e);
+
+    for(const auto & e : m_activeEntities)
+        Updatable::del(e);
+}
+
 void EntityList::addEntity(std::shared_ptr<Entity> entity)
 {
     if(!entity)
@@ -50,7 +73,8 @@ void EntityList::addEntity(std::shared_ptr<Entity> entity)
     if(r->getID() != m_currentRoom)
         return;
         activeEntity(entity);
-    DrawableList::add(entity, entityHeight);
+    if(m_enabled)
+        DrawableList::add(entity, entityHeight);
 }
 
 void EntityList::removeEntity(std::shared_ptr<Entity> entity)
@@ -106,7 +130,8 @@ void EntityList::activeEntity(std::shared_ptr<Entity> e)
         return;
 
     m_activeEntities.push_back(e);
-    Updatable::add(e);
+    if(m_enabled)
+        Updatable::add(e);
 }
 
 void EntityList::disableEntity(std::shared_ptr<Entity> e)
@@ -155,7 +180,8 @@ void EntityList::onPlayerChangeRoom(EventPrePlayerChangeRoom e)
     for(const auto & entity : list)
     {
         activeEntity(entity);
-        DrawableList::add(entity, entityHeight);
+        if(m_enabled)
+            DrawableList::add(entity, entityHeight);
     }
 
     do
@@ -193,7 +219,11 @@ void EntityList::onEntityChangeRoom(EventEntityChangeRoom e)
     if(!r)
         return;
     if(r->getID() == m_currentRoom)
-        DrawableList::add(eLock, entityHeight);
+    {
+        if(m_enabled)
+            DrawableList::add(eLock, entityHeight);
+    }
+    else DrawableList::del(eLock);
 }
 
 std::shared_ptr<Entity> EntityList::entity(unsigned int ID)

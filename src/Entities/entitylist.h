@@ -28,6 +28,9 @@ public:
     void clean();
     void clear();
 
+    void enable();
+    void disable();
+
 private:
     void activeEntity(std::shared_ptr<Entity> e);
     void disableEntity(std::shared_ptr<Entity> e);
@@ -41,6 +44,7 @@ private:
     std::vector<std::shared_ptr<Entity>> m_entities;
     std::vector<std::shared_ptr<Entity>> m_activeEntities;
     unsigned int m_currentRoom;
+    bool m_enabled;
 
     static bool m_instanced;
 };

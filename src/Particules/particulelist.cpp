@@ -15,6 +15,7 @@ const unsigned int particuleHeight(5);
 bool ParticuleList::m_instanced(false);
 
 ParticuleList::ParticuleList()
+    : m_enabled(false)
 {
     assert(!m_instanced);
     m_instanced = true;
@@ -31,6 +32,28 @@ ParticuleList::~ParticuleList()
     m_instanced = false;
 }
 
+void ParticuleList::enable()
+{
+    m_enabled = true;
+
+    for(const auto & p : m_particules)
+    {
+        DrawableList::add(p, particuleHeight);
+        Updatable::add(p);
+    }
+}
+
+void ParticuleList::disable()
+{
+    m_enabled = false;
+
+    for(const auto & p : m_particules)
+    {
+        DrawableList::del(p);
+        Updatable::del(p);
+    }
+}
+
 void ParticuleList::addParticule(std::shared_ptr<Particule> p)
 {
     if(!p)
@@ -45,8 +68,11 @@ void ParticuleList::addParticule(std::shared_ptr<Particule> p)
         return;
     m_particules.push_back(p);
 
-    DrawableList::add(p, particuleHeight);
-    Updatable::add(p);
+    if(m_enabled)
+    {
+        DrawableList::add(p, particuleHeight);
+        Updatable::add(p);
+    }
 }
 
 void ParticuleList::removeParticule(std::shared_ptr<Particule> p)
@@ -62,7 +88,7 @@ void ParticuleList::removeParticule(std::shared_ptr<Particule> p)
     m_particules.pop_back();
 }
 
-const std::vector<std::shared_ptr<Particule>> ParticuleList::particules() const
+const std::vector<std::shared_ptr<Particule> > & ParticuleList::particules() const
 {
     return m_particules;
 }

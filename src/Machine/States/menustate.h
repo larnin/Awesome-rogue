@@ -17,6 +17,10 @@ public:
     MenuState & operator= (MenuState &&) = default;
     virtual ~MenuState();
 
+protected:
+    virtual void enable();
+    virtual void disable();
+
 private:
     void add(std::shared_ptr<Widget> w);
     void newGameFunction();

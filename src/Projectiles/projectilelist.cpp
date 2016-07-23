@@ -14,6 +14,7 @@ bool ProjectileList::m_instanced(false);
 
 ProjectileList::ProjectileList()
     : m_playerRoom(0)
+    , m_enabled(false)
 {
     assert(!m_instanced);
     m_instanced = true;
@@ -30,6 +31,29 @@ ProjectileList::~ProjectileList()
     m_instanced = false;
 }
 
+
+void ProjectileList::enable()
+{
+    m_enabled = true;
+
+    for(const auto & p : m_projectiles)
+    {
+        DrawableList::add(p, projectileHeight);
+        Updatable::add(p);
+    }
+}
+
+void ProjectileList::disable()
+{
+    m_enabled = false;
+
+    for(const auto & p : m_projectiles)
+    {
+        DrawableList::del(p);
+        Updatable::del(p);
+    }
+}
+
 void ProjectileList::addProjectile(std::shared_ptr<Projectile> p)
 {
     if(!p)
@@ -44,8 +68,11 @@ void ProjectileList::addProjectile(std::shared_ptr<Projectile> p)
         return;
     m_projectiles.push_back(p);
 
-    DrawableList::add(p, projectileHeight);
-    Updatable::add(p);
+    if(m_enabled)
+    {
+        DrawableList::add(p, projectileHeight);
+        Updatable::add(p);
+    }
 }
 
 void ProjectileList::removeProjectile(std::shared_ptr<Projectile> p)
@@ -61,7 +88,7 @@ void ProjectileList::removeProjectile(std::shared_ptr<Projectile> p)
     m_projectiles.pop_back();
 }
 
-const std::vector<std::shared_ptr<Projectile>> ProjectileList::projectiles() const
+const std::vector<std::shared_ptr<Projectile> > & ProjectileList::projectiles() const
 {
     return m_projectiles;
 }

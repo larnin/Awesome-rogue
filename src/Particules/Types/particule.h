@@ -8,7 +8,7 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <memory>
 
-class Particule : public sf::Drawable, public Updatable, public NonCopiable
+class Particule : public sf::Drawable, public Updatable, private NonCopiable
 {
 public:
     Particule(const Location & pos);

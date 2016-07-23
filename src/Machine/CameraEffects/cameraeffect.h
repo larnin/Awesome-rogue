@@ -9,7 +9,7 @@ class CameraEffect : public Updatable, private NonCopiable
 {
 public:
     CameraEffect()
-        : m_orientation(0), m_zoom(0), m_offset(0, 0) {}
+        : m_orientation(0), m_zoom(1), m_offset(0, 0) {}
     CameraEffect(CameraEffect &&) = default;
     CameraEffect & operator =(CameraEffect &&) = default;
     virtual ~CameraEffect() = default;

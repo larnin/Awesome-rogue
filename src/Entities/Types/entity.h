@@ -8,7 +8,7 @@
 #include "Map/location.h"
 #include "Entities/team.h"
 
-class Entity : public Updatable, public sf::Drawable, public NonCopiable
+class Entity : public Updatable, public sf::Drawable, private NonCopiable
 {
 public:
     Entity(const Location & pos);

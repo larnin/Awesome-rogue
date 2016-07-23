@@ -69,7 +69,6 @@ SOURCES += main.cpp \
     GUI/textDrawer.cpp \
     GUI/adaptablebounds.cpp \
     GUI/Widgets/RadioButtons/basicradiobuttonitem.cpp \
-    Machine/States/mapteststate.cpp \
     Machine/States/menustate.cpp \
     Projectiles/Types/projectile.cpp \
     Projectiles/projectilelist.cpp \
@@ -95,7 +94,10 @@ SOURCES += main.cpp \
     GUI/LifeBar/bosslifebar.cpp \
     GUI/LifeBar/lifebar.cpp \
     Entities/Types/boss1part.cpp \
-    Projectiles/Types/bigcircle.cpp
+    Projectiles/Types/bigcircle.cpp \
+    Machine/CameraEffects/shakeeffect.cpp \
+    Machine/States/gamestate.cpp \
+    Machine/gameholder.cpp
 
 HEADERS  += \
     Controles/commands.h \
@@ -166,7 +168,6 @@ HEADERS  += \
     GUI/adaptablebounds.h \
     GUI/margin.h \
     GUI/Widgets/RadioButtons/basicradiobuttonitem.h \
-    Machine/States/mapteststate.h \
     Machine/States/menustate.h \
     Projectiles/Types/projectile.h \
     Projectiles/projectilelist.h \
@@ -213,7 +214,10 @@ HEADERS  += \
     Machine/CameraEffects/cameraeffecttype.h \
     Map/boxtype.h \
     Map/rotation.h \
-    Entities/team.h
+    Entities/team.h \
+    Machine/CameraEffects/shakeeffect.h \
+    Machine/States/gamestate.h \
+    Machine/gameholder.h
 
 DEFINES += SFML_STATIC
 

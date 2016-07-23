@@ -3,7 +3,9 @@
 
 enum CameraEffectType
 {
-    EFFECT_TEST
+    EFFECT_TEST,
+    EFFECT_LOW_SHAKE,
+    EFFECT_HARD_SHAKE
 };
 
 #endif // CAMERAEFFECTTYPE_H

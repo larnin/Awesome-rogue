@@ -7,6 +7,7 @@
 #include "Events/Datas/eventplaycameraeffect.h"
 #include "Events/Datas/eventclearcameraeffects.h"
 #include "CameraEffects/effecttest.h"
+#include "CameraEffects/shakeeffect.h"
 #include "CameraEffects/cameraeffect.h"
 
 SmoothCamera::SmoothCamera(StateMachine & m)
@@ -98,7 +99,12 @@ std::shared_ptr<CameraEffect> SmoothCamera::createEffect(CameraEffectType type)
     {
     case EFFECT_TEST:
         return std::make_shared<EffectTest>();
+    case EFFECT_LOW_SHAKE:
+        return std::make_shared<ShakeEffect>(2);
+    case EFFECT_HARD_SHAKE:
+        return std::make_shared<ShakeEffect>(7);
     default:
-        return std::shared_ptr<CameraEffect>();
+        assert(false);
     }
+    return std::shared_ptr<CameraEffect>();
 }

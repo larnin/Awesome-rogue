@@ -12,7 +12,7 @@
 class Entity;
 class HitBox;
 
-class Projectile : public sf::Drawable, public Updatable, public NonCopiable
+class Projectile : public sf::Drawable, public Updatable, private NonCopiable
 {
 public:
     Projectile(const Location & pos, Team team, std::weak_ptr<Entity> sender);

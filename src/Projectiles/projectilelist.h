@@ -20,10 +20,13 @@ public:
     void addProjectile(std::shared_ptr<Projectile> p);
     void removeProjectile(std::shared_ptr<Projectile> p);
 
-    const std::vector<std::shared_ptr<Projectile>> projectiles() const;
+    const std::vector<std::shared_ptr<Projectile>> & projectiles() const;
 
     void clean();
     void clear();
+
+    void enable();
+    void disable();
 
 private:
     void onPlayerChangeRoom(EventPrePlayerChangeRoom e);
@@ -32,6 +35,7 @@ private:
     unsigned int m_playerRoom;
 
     std::vector<std::shared_ptr<Projectile>> m_projectiles;
+    bool m_enabled;
 
     static bool m_instanced;
 };

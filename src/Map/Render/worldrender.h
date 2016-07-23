@@ -25,6 +25,9 @@ public:
     void changeCenterRoom(unsigned int id);
     void changeScreenSize(const sf::Vector2u & size); //en nombre de blocks
 
+    void enable();
+    void disable();
+
 private:
     void regenBorder();
     void redrawRooms();
@@ -53,6 +56,8 @@ private:
         bool isOn;
         sf::Vector2i pos;
     };
+
+    bool m_enabled;
 };
 
 #endif // WORLDRENDER_H

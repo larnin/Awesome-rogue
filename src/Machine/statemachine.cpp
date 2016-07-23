@@ -55,9 +55,12 @@ void StateMachine::run()
     {
         if(m_nextState)
         {
+            if(!m_subState && m_actualState)
+                m_actualState->disable();
             std::swap(m_actualState, m_nextState);
-            //m_nextState.reset();
             m_nextState = std::unique_ptr<State>();
+            if(!m_subState && m_actualState)
+                m_actualState->enable();
         }
 
         m_commands.update();
@@ -83,4 +86,19 @@ void StateMachine::setWindowCenter(const sf::Vector2f & pos)
     sf::View v(m_window.getView());
     v.setCenter(sf::Vector2f(sf::Vector2i(pos)));
     m_window.setView(v);
+}
+
+void StateMachine::setSubstate(std::unique_ptr<State> sub)
+{
+    m_subState = std::move(sub);
+    if(sub)
+    {
+        if(m_actualState)
+            m_actualState->disable();
+    }
+    else
+    {
+        if(m_actualState)
+            m_actualState->enable();
+    }
 }

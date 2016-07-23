@@ -20,10 +20,13 @@ public:
     void addParticule(std::shared_ptr<Particule> p);
     void removeParticule(std::shared_ptr<Particule> p);
 
-    const std::vector<std::shared_ptr<Particule>> particules() const;
+    const std::vector<std::shared_ptr<Particule>> & particules() const;
 
     void clean();
     void clear();
+
+    void enable();
+    void disable();
 
 private:
     void onPlayerChangeRoom(EventPrePlayerChangeRoom e);
@@ -32,6 +35,7 @@ private:
     unsigned int m_playerRoom;
 
     std::vector<std::shared_ptr<Particule>> m_particules;
+    bool m_enabled;
 
     static bool m_instanced;
 };

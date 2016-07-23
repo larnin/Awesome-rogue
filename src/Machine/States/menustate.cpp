@@ -1,26 +1,18 @@
 #include "menustate.h"
 #include "Events/event.h"
 #include "Events/Datas/eventinstantcenterofviewchanged.h"
-#include "Events/Datas/eventplaycameraeffect.h"
 #include "Systemes/drawablelist.h"
 #include "Machine/statemachine.h"
 #include "GUI/Widgets/Buttons/basicbutton.h"
-#include "Machine/States/mapteststate.h"
+#include "Machine/States/gamestate.h"
 #include "GUI/Widgets/widget.h"
 
 MenuState::MenuState(std::weak_ptr<StateMachine> machine)
     : State(machine)
     , m_titleTexture("res/img/title.png")
 {
-    Event<EventInstantCenterOfViewChanged>::send(EventInstantCenterOfViewChanged(sf::Vector2f(0, 0)));
-
-    std::shared_ptr<StateMachine> m(machine.lock());
-    if(m)
-        m->setClearColor(sf::Color::White);
-
     m_title = std::make_shared<sf::Sprite>(*m_titleTexture);
     m_title->setPosition(-m_title->getGlobalBounds().width/2.0f, -m_title->getGlobalBounds().height-90);
-    DrawableList::add(m_title, 1);
 
     std::shared_ptr<BasicButton> bPlay(std::make_shared<BasicButton>
             (AdaptableBounds(sf::Vector2f(0, -10), sf::Vector2f(100, 25), Margin(1), VAlign::V_CENTER, HAlign::H_CENTER), "Nouveau"));
@@ -57,11 +49,40 @@ MenuState::~MenuState()
 
 }
 
+#include "Events/Datas/eventplaycameraeffect.h"
+
+void MenuState::enable()
+{
+    Event<EventInstantCenterOfViewChanged>::send(EventInstantCenterOfViewChanged(sf::Vector2f(0, 0)));
+
+    std::shared_ptr<StateMachine> m(m_machine.lock());
+    if(m)
+        m->setClearColor(sf::Color::White);
+
+    DrawableList::add(m_title, 1);
+
+    for(auto & w : m_buttons)
+    {
+        DrawableList::add(w, 1);
+        Controlable::add(w);
+        Updatable::add(w);
+    }
+}
+
+void MenuState::disable()
+{
+    DrawableList::del(m_title);
+
+    for(auto & w : m_buttons)
+    {
+        DrawableList::del(w);
+        Controlable::del(w);
+        Updatable::del(w);
+    }
+}
+
 void MenuState::add(std::shared_ptr<Widget> w)
 {
-    DrawableList::add(w, 1);
-    Controlable::add(w);
-    Updatable::add(w);
     m_buttons.push_back(w);
 }
 
@@ -70,7 +91,7 @@ void MenuState::newGameFunction()
     std::shared_ptr<StateMachine> m(m_machine.lock());
     if(m)
     {
-        std::unique_ptr<State> s(std::make_unique<MapTestState>(m_machine));
+        std::unique_ptr<State> s(std::make_unique<GameState>(m_machine));
         m->setNext(s);
     }
 }
@@ -91,3 +112,4 @@ void MenuState::exitFunction()
     if(m)
         m->getWindow().close();
 }
+
