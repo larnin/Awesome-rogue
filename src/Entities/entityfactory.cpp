@@ -50,7 +50,7 @@ std::vector<std::shared_ptr<Entity> > EntityFactory::create(EntityType type, con
 std::vector<std::shared_ptr<Entity>> EntityFactory::createBoss1Parts(const Location & pos)
 {
     const unsigned int nbParts(8);
-    const float dist(10.0f);
+    const float dist(7.0f);
     const float simpleAngle(3.14159f/(nbParts/2.0f));
 
     std::vector<std::shared_ptr<Entity>> parts;

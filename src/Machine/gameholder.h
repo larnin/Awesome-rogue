@@ -2,6 +2,7 @@
 #define GAMEHOLDER_H
 
 #include "Utilities/noncopiable.h"
+#include "Entities/populator.h"
 #include <memory>
 
 class StateMachine;
@@ -13,7 +14,6 @@ class Minimap;
 class LifeBar;
 class ListHolder;
 class ProjectileLauncher;
-class Populator;
 class Interactor;
 
 class GameHolder : private NonCopiable
@@ -38,7 +38,7 @@ private:
     std::shared_ptr<LifeBar> m_lifeBar;
     std::shared_ptr<ListHolder> m_listes;
     std::shared_ptr<ProjectileLauncher> m_projectilesLauncher;
-    std::shared_ptr<Populator> m_populator;
+    Populator m_populator;
     std::shared_ptr<Interactor> m_interactor;
 };
 

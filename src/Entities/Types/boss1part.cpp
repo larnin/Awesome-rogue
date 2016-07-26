@@ -7,6 +7,20 @@
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
 #include "Utilities/quadrender.h"
+#include "Projectiles/Types/smallball.h"
+#include "Projectiles/projectilefactory.h"
+#include "Utilities/vect2convert.h"
+#include "Events/eventgetter.h"
+
+const float minWaveTime(2.0f);
+const float maxWaveTime(5.0f);
+const float minRandProjectileTime(1.0f);
+const float maxRandProjectileTime(2.5f);
+const float delayBullets(0.1f);
+const float nbBullets(30.0f);
+const float bulletOnCircle(15.0f);
+const float projectileSpeed(1.5f);
+const float PI(3.14159f);
 
 Boss1Part::Boss1Part(const Location & pos, float startOrientation, float distanceFromCenter)
     : Entity(pos)
@@ -30,6 +44,9 @@ Boss1Part::Boss1Part(const Location & pos, float startOrientation, float distanc
         m_originalBox.addLine(Line(sf::Vector2f(radius*std::cos(a), radius*std::sin(a)), sf::Vector2f(radius*std::cos(nA), radius*std::sin(nA))));
     }
     m_currentBox = m_originalBox.transform(toVect(distanceFromCenter, startOrientation));
+
+    m_timeToNextWave = std::uniform_real_distribution<float>(minWaveTime, maxWaveTime)(m_randEngine);
+    m_timeToRandomProjectile = std::uniform_real_distribution<float>(minRandProjectileTime, maxRandProjectileTime)(m_randEngine);
 }
 
 void Boss1Part::draw(sf::RenderTarget & target, sf::RenderStates) const
@@ -51,6 +68,25 @@ void Boss1Part::updateComportement(const sf::Time & elapsedTime)
 
     m_orientation += rotationSpeed*elapsedTime.asSeconds();
     m_currentBox = m_originalBox.transform(toVect(m_distance, m_orientation));
+
+    float time(elapsedTime.asSeconds());
+
+    if(!m_damageable)
+        return;
+
+    m_timeToNextWave -= time;
+    if(m_timeToNextWave > 0)
+        m_timeToRandomProjectile -= time;
+
+    if(m_timeToRandomProjectile <= 0)
+    {
+        throwRandomProjectile();
+        m_timeToRandomProjectile = std::uniform_real_distribution<float>(minRandProjectileTime, maxRandProjectileTime)(m_randEngine);
+    }
+
+    if(m_timeToNextWave <= 0)
+        if(waveUpdate(elapsedTime))
+            m_timeToNextWave = std::uniform_real_distribution<float>(minWaveTime, maxWaveTime)(m_randEngine);
 }
 
 void Boss1Part::onKill()
@@ -60,4 +96,41 @@ void Boss1Part::onKill()
 
     m_killed = false;
     m_damageable = false;
+}
+
+void Boss1Part::throwRandomProjectile() const
+{
+    float orientation(std::uniform_real_distribution<float>(-PI,PI)(m_randEngine));
+
+    Location pos(getPos());
+    pos.move(toVect(m_distance, m_orientation));
+    pos.move(toVect(1, orientation));
+
+    ProjectileFactory::createSend<SmallBall>(pos, m_team, toVect(projectileSpeed*2, orientation), 2, 20
+                                             , EventGetter<std::shared_ptr<Entity>, unsigned int>::get(getID()));
+}
+
+bool Boss1Part::waveUpdate(const sf::Time & elapsedTime) const
+{
+    float time(elapsedTime.asSeconds());
+    if(m_timeToNextWave+time > 0)
+        return false;
+
+    if(-m_timeToNextWave > delayBullets*nbBullets)
+        return true;
+
+    int id(-m_timeToNextWave/delayBullets);
+    int lastID((-m_timeToNextWave-time)/delayBullets);
+
+    if(id == lastID)
+        return false;
+
+    float angle(2*PI*id/bulletOnCircle);
+    Location pos(getPos());
+
+    pos.move(toVect(m_distance, m_orientation));
+    pos.move(toVect(1, angle));
+    ProjectileFactory::createSend<SmallBall>(pos, m_team, toVect(projectileSpeed, angle), 2, 20
+                                             , EventGetter<std::shared_ptr<Entity>, unsigned int>::get(getID()));
+    return false;
 }

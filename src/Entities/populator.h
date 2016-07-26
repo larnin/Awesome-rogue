@@ -1,7 +1,6 @@
 #ifndef POPULATOR_H
 #define POPULATOR_H
 
-#include "Systemes/updatable.h"
 #include "entitytype.h"
 #include "Map/location.h"
 #include "Events/eventreceiver.h"
@@ -9,31 +8,29 @@
 #include <random>
 
 class EventPrePlayerChangeRoom;
+class EventInteraction;
+class DelayedTask;
 
-class Populator : public Updatable, public EventReceiver
+class Populator : public EventReceiver
 {
 public:
     Populator();
-    virtual ~Populator() = default;
+    virtual ~Populator();
 
-    virtual void update(const sf::Time & elapsedTime);
+    void enable();
+    void disable();
 
 private:
+    void cleanTasks();
+
     void onPlayerChangeRoom(EventPrePlayerChangeRoom e);
+    void onSpawnBossInteraction(EventInteraction e);
 
-    struct PopulatorData
-    {
-        PopulatorData(EntityType _type, const Location & _pos, float _time)
-            : type(_type), pos(_pos), timeToSpawn(_time)
-        { }
-
-        EntityType type;
-        Location pos;
-        float timeToSpawn;
-    };
-
-    std::vector<PopulatorData> m_toSpawn;
     std::default_random_engine m_rand;
+
+    std::vector<std::weak_ptr<DelayedTask>> m_tasks;
+
+    bool m_enabled;
 };
 
 #endif // POPULATOR_H

@@ -99,10 +99,12 @@ std::shared_ptr<CameraEffect> SmoothCamera::createEffect(CameraEffectType type)
     {
     case EFFECT_TEST:
         return std::make_shared<EffectTest>();
+    case EFFECT_VERY_LOW_SHAKE:
+        return std::make_shared<ShakeEffect>(1.0f);
     case EFFECT_LOW_SHAKE:
-        return std::make_shared<ShakeEffect>(2);
+        return std::make_shared<ShakeEffect>(2.0f);
     case EFFECT_HARD_SHAKE:
-        return std::make_shared<ShakeEffect>(7);
+        return std::make_shared<ShakeEffect>(7.0f);
     default:
         assert(false);
     }

@@ -12,7 +12,7 @@ public:
     ShakeEffect & operator =(ShakeEffect &&) = default;
     virtual ~ShakeEffect() = default;
 
-    virtual void update(const sf::Time & elapsedTime);
+    virtual void update(const sf::Time &);
 
 private:
     float m_maxValue;

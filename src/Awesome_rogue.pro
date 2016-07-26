@@ -97,7 +97,8 @@ SOURCES += main.cpp \
     Projectiles/Types/bigcircle.cpp \
     Machine/CameraEffects/shakeeffect.cpp \
     Machine/States/gamestate.cpp \
-    Machine/gameholder.cpp
+    Machine/gameholder.cpp \
+    Particules/Types/spawnboss1.cpp
 
 HEADERS  += \
     Controles/commands.h \
@@ -217,7 +218,9 @@ HEADERS  += \
     Entities/team.h \
     Machine/CameraEffects/shakeeffect.h \
     Machine/States/gamestate.h \
-    Machine/gameholder.h
+    Machine/gameholder.h \
+    Libs/json.hpp \
+    Particules/Types/spawnboss1.h
 
 DEFINES += SFML_STATIC
 

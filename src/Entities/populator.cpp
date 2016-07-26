@@ -8,23 +8,63 @@
 #include "Particules/Types/mobspawn.h"
 #include "Utilities/vect2convert.h"
 #include "Events/Datas/eventpreplayerchangeroom.h"
+#include "Events/Datas/eventinteraction.h"
+#include "Events/Datas/eventplaycameraeffect.h"
+#include "Particules/Types/spawnboss1.h"
+#include "Utilities/delayedtask.h"
+#include "entityfactory.h"
 
 Populator::Populator()
+    : m_enabled(false)
 {
     connect<EventPrePlayerChangeRoom>(std::bind(&Populator::onPlayerChangeRoom, this, _1));
+    connect<EventInteraction>(std::bind(&Populator::onSpawnBossInteraction, this, _1));
 }
 
-void Populator::update(const sf::Time & elapsedTime)
+Populator::~Populator()
 {
-    const float time(elapsedTime.asSeconds());
-    for(auto & data : m_toSpawn)
+    for(auto & t : m_tasks)
     {
-        data.timeToSpawn -= time;
-        if(data.timeToSpawn <= 0)
-            EntityFactory::create(data.type, data.pos);
+        std::shared_ptr<DelayedTask> task(t.lock());
+        if(task)
+            task->stop();
     }
-    auto it(std::remove_if(m_toSpawn.begin(), m_toSpawn.end(), [](const auto & v){return v.timeToSpawn <= 0;}));
-    m_toSpawn.erase(it, m_toSpawn.end());
+}
+
+void Populator::enable()
+{
+    m_enabled = true;
+
+    for(auto & t : m_tasks)
+    {
+        std::shared_ptr<DelayedTask> task(t.lock());
+        if(task)
+            task->unpause();
+    }
+
+    cleanTasks();
+}
+
+void Populator::disable()
+{
+    for(auto & t : m_tasks)
+    {
+        std::shared_ptr<DelayedTask> task(t.lock());
+        if(task)
+            task->pause();
+    }
+
+    cleanTasks();
+}
+
+void Populator::cleanTasks()
+{
+    auto it(std::remove_if(m_tasks.begin(), m_tasks.end(), [](const auto & t)
+    {
+        std::shared_ptr<DelayedTask> task(t.lock());
+        return !task;
+    }));
+    m_tasks.erase(it, m_tasks.end());
 }
 
 void Populator::onPlayerChangeRoom(EventPrePlayerChangeRoom e)
@@ -58,32 +98,38 @@ void Populator::onPlayerChangeRoom(EventPrePlayerChangeRoom e)
                         break;
                     }
                 }
+
             if(!posOk)
                 continue;
 
             Location l(pos, r);
 
-            for(const auto & p : m_toSpawn)
-            {
-                std::shared_ptr<Room> room(p.pos.getRoom().lock());
-                if(!room)
-                    continue;
-                if(room != r)
-                    continue;
-                if(norm(p.pos.getPos()-sf::Vector2f(pos)) < 1)
-                {
-                    posOk = false;
-                    break;
-                }
-            }
-            if(!posOk)
-                continue;
-
             float time(dTime(m_rand));
 
-            m_toSpawn.push_back(Populator::PopulatorData(type, l, time));
-            ParticuleFactory::createSend<MobSpawn>(l, time);
+            m_tasks.push_back(DelayedTask::create([type, l](){EntityFactory::create(type, l);}, time, m_enabled));
+            cleanTasks();
+
+            m_tasks.push_back(DelayedTask::create([time, l](){ParticuleFactory::createSend<MobSpawn>(l, time);}, 0.1f, m_enabled));
             break;
         }
     }
+}
+
+void Populator::onSpawnBossInteraction(EventInteraction e)
+{
+    const unsigned int blockUsedBoss1(514);
+
+    if(e.type != BlockInteractionType::BI_START_BOSS1)
+        return;
+
+    auto r(e.pos.getRoom().lock());
+    if(!r)
+        return;
+    Event<EventPlayCameraEffect>::send(EventPlayCameraEffect(CameraEffectType::EFFECT_HARD_SHAKE, 0.1f));
+    Event<EventPlayCameraEffect>::send(EventPlayCameraEffect(CameraEffectType::EFFECT_VERY_LOW_SHAKE, 6.0f));
+    r->closeDoors();
+    (*r)(e.pos.getBlockPos()).groundID = blockUsedBoss1;
+    ParticuleFactory::createSend<SpawnBoss1>(e.pos, 6, 7);
+
+    m_tasks.push_back(DelayedTask::create([e](){EntityFactory::create(EntityType::E_BOSS1_PARTS, e.pos);}, 6, m_enabled));
 }

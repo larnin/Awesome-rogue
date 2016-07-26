@@ -19,8 +19,14 @@ protected:
     virtual void onKill();
 
 private:
+    void throwRandomProjectile() const;
+    bool waveUpdate(const sf::Time & elapsedTime) const;
+
     float m_distance;
     Texture m_texture;
+
+    float m_timeToNextWave;
+    float m_timeToRandomProjectile;
 };
 
 #endif // BOSS1PART_H

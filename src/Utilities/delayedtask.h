@@ -10,14 +10,25 @@ class DelayedTask : public Updatable
 public:
     virtual ~DelayedTask() = default;
 
-    std::weak_ptr<DelayedTask> create(std::function<void()> task, float time)
+    static std::weak_ptr<DelayedTask> create(std::function<void()> task, float time, bool start = true)
     {
         //std::shared_ptr<DelayedTask> t(std::make_shared<DelayedTask>(task, time));
         std::shared_ptr<DelayedTask> t(new DelayedTask(task, time));
         t->setThis(t);
-        Updatable::add(t);
+        if(start)
+            Updatable::add(t);
 
         return t;
+    }
+
+    void pause()
+    {
+        Updatable::del(m_this);
+    }
+
+    void unpause()
+    {
+        Updatable::add(m_this);
     }
 
     bool finished() const

@@ -186,16 +186,17 @@ void Room::closeDoors()
 
     const unsigned int openDoorID(4);
     const unsigned int uncoveredOpenDoorID(5);
-    const unsigned int closeDoorID(6);
-    const unsigned int uncoveredCloseDoorID(7);
+    const unsigned int closeDoorID(10);
+    const unsigned int uncoveredCloseDoorID(11);
 
     for(const Door & d : m_doors)
     {
-        unsigned int &b(m_blocks(d.pos.getBlockPos()).wallID);
-        if(b == openDoorID)
-            b = closeDoorID;
-        if(b == uncoveredOpenDoorID)
-            b = uncoveredCloseDoorID;
+        Block & b(m_blocks(d.pos.getBlockPos()));
+        if(b.groundID == openDoorID)
+            b.groundID = closeDoorID;
+        if(b.groundID == uncoveredOpenDoorID)
+            b.groundID = uncoveredCloseDoorID;
+        setBoxType(b.boxCaracts, BoxType::FULL);
     }
 }
 
@@ -205,15 +206,16 @@ void Room::openDoors()
 
     const unsigned int openDoorID(4);
     const unsigned int uncoveredOpenDoorID(5);
-    const unsigned int closeDoorID(6);
-    const unsigned int uncoveredCloseDoorID(7);
+    const unsigned int closeDoorID(10);
+    const unsigned int uncoveredCloseDoorID(11);
 
     for(const Door & d : m_doors)
     {
-        unsigned int &b(m_blocks(d.pos.getBlockPos()).wallID);
-        if(b == closeDoorID)
-            b = openDoorID;
-        if(b == uncoveredCloseDoorID)
-            b = uncoveredOpenDoorID;
+        Block & b(m_blocks(d.pos.getBlockPos()));
+        if(b.groundID == closeDoorID)
+            b.groundID = openDoorID;
+        if(b.groundID == uncoveredCloseDoorID)
+            b.groundID = uncoveredOpenDoorID;
+        setBoxType(b.boxCaracts, BoxType::EMPTY);
     }
 }

@@ -1,10 +1,6 @@
 #include <cmath>
-#include <QFile>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QJsonValue>
-#include <QJsonParseError>
-#include <QJsonArray>
+#include "Libs/json.hpp"
+#include "fstream"
 
 #include "patern.h"
 #include "map/blocktype.h"
@@ -70,89 +66,84 @@ Patern Patern::transform(Rotation rot, bool flipX, bool flipY)
 
 std::vector<Patern> Patern::load(const std::string & fileName)
 {
-    QFile file(QString::fromStdString(fileName));
-    if(!file.exists())
-        return std::vector<Patern>();
-    if(!file.open(QIODevice::ReadOnly))
-        return std::vector<Patern>();
+    using json = nlohmann::json;
 
-    QJsonParseError error;
-    QJsonDocument doc(QJsonDocument::fromJson(file.readAll(), &error));
+    std::ifstream file(fileName);
+    json j(json::parse(file));
     file.close();
-    if(error.error != QJsonParseError::NoError)
-        return std::vector<Patern>();
-    if(!doc.isArray())
+    if(j.empty() || !j.is_array())
         return std::vector<Patern>();
 
-    QJsonArray docArray(doc.array());
     std::vector<Patern> paterns;
-    for(const auto & jsonPatern : docArray)
+
+    for(json & patern : j)
     {
-        if(!jsonPatern.isObject())
+        if(!patern.is_object())
             continue;
-        QJsonObject jsonPaternObject(jsonPatern.toObject());
-        sf::Vector2u size(jsonPaternObject.value("sizeX").toInt(), jsonPaternObject.value("sizeY").toInt());
-        if(size.x == 0 || size.y == 0)
+        auto sizeX(patern.find("sizeX"));
+        auto sizeY(patern.find("sizeY"));
+        auto blocks(patern.find("blocks"));
+        auto rType(patern.find("type"));
+        auto rName(patern.find("name"));
+        auto rRarity(patern.find("rarity"));
+
+        if(sizeX == patern.end() || sizeY == patern.end() || blocks == patern.end()
+           || rType == patern.end() || rName == patern.end() || rRarity == patern.end())
             continue;
-        QJsonArray blocks(jsonPaternObject.value("blocks").toArray());
-        if((unsigned int)(blocks.size()) != size.x*size.y)
+
+        sf::Vector2u size(*sizeX, *sizeY);
+
+        if(!blocks->is_array())
             continue;
+        if(blocks->size() < size.x*size.y)
+            continue;
+
         Patern p(size);
-        for(unsigned int i(0) ; i < (unsigned int)(blocks.size()) ; i++)
-        {
-            sf::Vector2u pos(i%size.x, i/size.x);
-            QJsonArray block(blocks[i].toArray());
-            if(block.size() != 5)
+        for(unsigned int i(0) ; i < size.x ; i++)
+            for(unsigned int j(0) ; j < size.y ; j++)
             {
-                p(pos) = Block();
-                continue;
+                json & block((*blocks)[i+j*size.x]);
+                if(!block.is_array() || block.size() < 5)
+                    p(sf::Vector2u(i, j)) = Block();
+                else p(sf::Vector2u(i, j)) = Block(block[0], block[1], block[2], block[3], block[4]);
             }
-            Block b;
-            b.groundID = block[0].toInt();
-            b.groundOrientation = block[1].toInt();
-            b.wallID = block[2].toInt();
-            b.wallOrientation = block[3].toInt();
-            b.boxCaracts = block[4].toInt();
-            p(pos) = b;
-        }
-        p.type = RoomType(jsonPaternObject.value("type").toInt());
-        p.name = jsonPaternObject.value("name").toString().toStdString();
-        p.rarity = jsonPaternObject.value("rarity").toInt();
+
+        p.type = RoomType(rType->get<unsigned int>());
+        p.name = *rName;
+        p.rarity = *rRarity;
         paterns.push_back(p);
     }
+
     return paterns;
 }
 
 void Patern::save(const std::string & fileName, const std::vector<Patern> & paterns)
 {
-    QJsonArray jsonPaterns;
-    for(const auto & p : paterns)
-    {
-        QJsonObject jsonPatern;
-        jsonPatern.insert("sizeX", int(p.getSize().x));
-        jsonPatern.insert("sizeY", int(p.getSize().y));
-        jsonPatern.insert("type", p.type);
-        jsonPatern.insert("name", QString::fromStdString(p.name));
-        jsonPatern.insert("rarity", int(p.rarity));
+    using json = nlohmann::json;
 
-        QJsonArray jsonBlocks;
+    json datas;
+    for(const Patern & p : paterns)
+    {
+        json j = {
+          {"sizeX", p.getSize().x},
+          {"sizeY", p.getSize().y},
+          {"type", p.type},
+          {"name", p.name},
+          {"rarity", p.rarity}
+        };
+        json jBlocks;
         for(const Block & b : p.m_blocks)
         {
-            QJsonArray jsonBlock;
-            jsonBlock.append(int(b.groundID));
-            jsonBlock.append(b.groundOrientation);
-            jsonBlock.append(int(b.wallID));
-            jsonBlock.append(b.wallOrientation);
-            jsonBlock.append(b.boxCaracts);
-            jsonBlocks.append(jsonBlock);
+            json jb{{b.groundID, b.groundOrientation, b.wallID, b.wallOrientation, b.boxCaracts}};
+            jBlocks.push_back(jb);
         }
-        jsonPatern.insert("blocks", jsonBlocks);
-        jsonPaterns.append(jsonPatern);
+        j["blocks"] = jBlocks;
+
+        datas.push_back(j);
     }
-    QFile file(QString::fromStdString(fileName));
-    if(!file.open(QIODevice::WriteOnly))
-        return;
-    file.write(QJsonDocument(jsonPaterns).toJson(QJsonDocument::Compact));
+
+    std::ofstream file(fileName);
+    file << datas.dump();
     file.close();
 }
 

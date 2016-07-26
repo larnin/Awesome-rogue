@@ -5,6 +5,7 @@ enum CameraEffectType
 {
     EFFECT_TEST,
     EFFECT_LOW_SHAKE,
+    EFFECT_VERY_LOW_SHAKE,
     EFFECT_HARD_SHAKE
 };
 

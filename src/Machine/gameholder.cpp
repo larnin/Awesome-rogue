@@ -8,13 +8,14 @@
 #include "GUI/LifeBar/lifebar.h"
 #include "listholder.h"
 #include "Projectiles/ProjectileLauncher/projectilelauncher.h"
-#include "Entities/populator.h"
 #include "GUI/interactor.h"
 #include "Map/Generator/generator.h"
 #include "Machine/statemachine.h"
 #include "Systemes/drawablelist.h"
 #include "Map/room.h"
 #include "Projectiles/ProjectileLauncher/parallelebulletlauncher.h"
+
+#include "Entities/entityfactory.h"
 
 GameHolder::GameHolder(std::weak_ptr<StateMachine> machine)
 {
@@ -44,8 +45,6 @@ GameHolder::GameHolder(std::weak_ptr<StateMachine> machine)
     m_minimap = std::make_shared<Minimap>(m_map);
     m_lifeBar = std::make_shared<LifeBar>(p);
 
-    m_populator = std::make_shared<Populator>();
-
     m_interactor = std::make_shared<Interactor>(p);
 }
 
@@ -70,7 +69,7 @@ void GameHolder::enable()
     DrawableList::add(m_minimap, 5);
     DrawableList::add(m_lifeBar, 7);
 
-    Updatable::add(m_populator);
+    m_populator.enable();
 
     DrawableList::add(m_interactor, 4);
     Controlable::add(m_interactor);
@@ -97,7 +96,7 @@ void GameHolder::disable()
     DrawableList::del(m_minimap);
     DrawableList::del(m_lifeBar);
 
-    Updatable::del(m_populator);
+    m_populator.disable();
 
     DrawableList::del(m_interactor);
     Controlable::del(m_interactor);
