@@ -58,11 +58,14 @@ class Event
 public :
     static void send(T value)
     {
-        for(auto & f : m_functions)
+        for(unsigned int i(0) ; i < m_functions.size() ; i++)
         {
-            if(f.second)
+            auto & f(m_functions[i]);
+            if(f.first != nullptr && f.second)
                 f.second(value);
         }
+
+        clean();
     }
 
 private:
@@ -82,7 +85,14 @@ private:
 
     static void disconnect(EventReceiver* e)
     {
-        auto it = std::remove_if(m_functions.begin(), m_functions.end(), [e](const auto & value){return value.first == e;});
+        for(auto & f : m_functions)
+            if(f.first == e)
+                f.first = nullptr;
+    }
+
+    static void clean()
+    {
+        auto it = std::remove_if(m_functions.begin(), m_functions.end(), [](const auto & value){return value.first == nullptr;});
         m_functions.erase(it, m_functions.end());
     }
 
