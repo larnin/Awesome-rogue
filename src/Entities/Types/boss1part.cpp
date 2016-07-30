@@ -8,12 +8,13 @@
 #include <SFML/Graphics/VertexArray.hpp>
 #include "Utilities/quadrender.h"
 #include "Projectiles/Types/smallball.h"
+#include "Projectiles/Types/rapidfire.h"
 #include "Projectiles/projectilefactory.h"
 #include "Utilities/vect2convert.h"
 #include "Events/eventgetter.h"
 
-const float minWaveTime(2.0f);
-const float maxWaveTime(5.0f);
+const float minWaveTime(10.0f);
+const float maxWaveTime(50.0f);
 const float minRandProjectileTime(1.0f);
 const float maxRandProjectileTime(2.5f);
 const float delayBullets(0.1f);
@@ -21,11 +22,13 @@ const float nbBullets(30.0f);
 const float bulletOnCircle(15.0f);
 const float projectileSpeed(1.5f);
 const float PI(3.14159f);
+const float timeDifficultyMultiplier(0.1f);
 
 Boss1Part::Boss1Part(const Location & pos, float startOrientation, float distanceFromCenter)
     : Entity(pos)
     , m_distance(distanceFromCenter)
     , m_texture("res/img/boss1.png")
+    , m_lifeTime(0)
 {
     m_orientation = startOrientation;
     m_maxLife = 50.0f;
@@ -33,6 +36,7 @@ Boss1Part::Boss1Part(const Location & pos, float startOrientation, float distanc
     m_team = Team::MOB_TEAM;
     m_activeDistance = 0;
     m_canPassDoor = false;
+    m_showLifeOnDamage = false;
 
     m_knockbackMultiplier = 0.0f;
 
@@ -64,6 +68,8 @@ void Boss1Part::draw(sf::RenderTarget & target, sf::RenderStates) const
 
 void Boss1Part::updateComportement(const sf::Time & elapsedTime)
 {
+    m_lifeTime += elapsedTime.asSeconds();
+
     const float rotationSpeed(0.2f);
 
     m_orientation += rotationSpeed*elapsedTime.asSeconds();
@@ -78,15 +84,17 @@ void Boss1Part::updateComportement(const sf::Time & elapsedTime)
     if(m_timeToNextWave > 0)
         m_timeToRandomProjectile -= time;
 
+    const float timeMultiplier(1+(m_lifeTime*timeDifficultyMultiplier));
+
     if(m_timeToRandomProjectile <= 0)
     {
         throwRandomProjectile();
-        m_timeToRandomProjectile = std::uniform_real_distribution<float>(minRandProjectileTime, maxRandProjectileTime)(m_randEngine);
+        m_timeToRandomProjectile = std::uniform_real_distribution<float>(minRandProjectileTime/timeMultiplier, maxRandProjectileTime/timeMultiplier)(m_randEngine);
     }
 
     if(m_timeToNextWave <= 0)
         if(waveUpdate(elapsedTime))
-            m_timeToNextWave = std::uniform_real_distribution<float>(minWaveTime, maxWaveTime)(m_randEngine);
+            m_timeToNextWave = std::uniform_real_distribution<float>(minWaveTime/timeMultiplier, maxWaveTime/timeMultiplier)(m_randEngine);
 }
 
 void Boss1Part::onKill()
@@ -96,6 +104,7 @@ void Boss1Part::onKill()
 
     m_killed = false;
     m_damageable = false;
+    m_lifeRegeneration = 0;
 }
 
 void Boss1Part::throwRandomProjectile() const
@@ -106,17 +115,18 @@ void Boss1Part::throwRandomProjectile() const
     pos.move(toVect(m_distance, m_orientation));
     pos.move(toVect(1, orientation));
 
-    ProjectileFactory::createSend<SmallBall>(pos, m_team, toVect(projectileSpeed*2, orientation), 2, 20
+    ProjectileFactory::createSend<RapidFire>(pos, m_team, toVect(projectileSpeed*5, orientation)
                                              , EventGetter<std::shared_ptr<Entity>, unsigned int>::get(getID()));
 }
 
 bool Boss1Part::waveUpdate(const sf::Time & elapsedTime) const
 {
+    float nbBulletsOnTime(nbBullets+m_lifeTime*timeDifficultyMultiplier);
     float time(elapsedTime.asSeconds());
     if(m_timeToNextWave+time > 0)
         return false;
 
-    if(-m_timeToNextWave > delayBullets*nbBullets)
+    if(-m_timeToNextWave > delayBullets*nbBulletsOnTime)
         return true;
 
     int id(-m_timeToNextWave/delayBullets);
@@ -130,7 +140,7 @@ bool Boss1Part::waveUpdate(const sf::Time & elapsedTime) const
 
     pos.move(toVect(m_distance, m_orientation));
     pos.move(toVect(1, angle));
-    ProjectileFactory::createSend<SmallBall>(pos, m_team, toVect(projectileSpeed, angle), 2, 20
+    ProjectileFactory::createSend<SmallBall>(pos, m_team, toVect(projectileSpeed, angle), m_lifeTime*timeDifficultyMultiplier, 20*(1+m_lifeTime*timeDifficultyMultiplier)
                                              , EventGetter<std::shared_ptr<Entity>, unsigned int>::get(getID()));
     return false;
 }

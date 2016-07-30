@@ -27,6 +27,8 @@ private:
 
     float m_timeToNextWave;
     float m_timeToRandomProjectile;
+
+    float m_lifeTime;
 };
 
 #endif // BOSS1PART_H

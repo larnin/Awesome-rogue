@@ -7,6 +7,7 @@
 #include "Utilities/noncopiable.h"
 
 class EventEntityCreated;
+class EventRemoveEntity;
 class EventPrePlayerChangeRoom;
 class EventEntityChangeRoom;
 class Entity;
@@ -39,6 +40,7 @@ private:
 
     void onPlayerChangeRoom(EventPrePlayerChangeRoom e);
     void onEntityCreated(EventEntityCreated e);
+    void onRemoveEntity(EventRemoveEntity e);
     void onEntityChangeRoom(EventEntityChangeRoom e);
 
     std::vector<std::shared_ptr<Entity>> m_entities;

@@ -7,6 +7,7 @@
 #include "Events/eventgetter.h"
 #include "Systemes/drawablelist.h"
 #include "Events/Datas/evententitycreated.h"
+#include "Events/Datas/eventremoveentity.h"
 #include "Events/Datas/eventpreplayerchangeroom.h"
 #include "Events/Datas/evententitychangeroom.h"
 
@@ -24,6 +25,7 @@ EntityList::EntityList()
     connect<EventPrePlayerChangeRoom>(std::bind(&EntityList::onPlayerChangeRoom, this, _1));
     connect<EventEntityCreated>(std::bind(&EntityList::onEntityCreated, this, _1));
     connect<EventEntityChangeRoom>(std::bind(&EntityList::onEntityChangeRoom, this, _1));
+    connect<EventRemoveEntity>(std::bind(&EntityList::onRemoveEntity, this, _1));
 
     EventGetter<std::shared_ptr<Entity>,unsigned int>::connect(std::bind(&EntityList::entity, this, _1));
     EventGetter<std::vector<std::shared_ptr<Entity>>,unsigned int>::connect(std::bind(&EntityList::entitiesOn, this, _1));
@@ -208,6 +210,11 @@ void EntityList::onPlayerChangeRoom(EventPrePlayerChangeRoom e)
 void EntityList::onEntityCreated(EventEntityCreated e)
 {
     addEntity(e.entity);
+}
+
+void EntityList::onRemoveEntity(EventRemoveEntity e)
+{
+    removeEntity(e.entity);
 }
 
 void EntityList::onEntityChangeRoom(EventEntityChangeRoom e)

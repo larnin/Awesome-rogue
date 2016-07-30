@@ -26,6 +26,9 @@ private:
     void onPlayerChangeRoom(EventPrePlayerChangeRoom e);
     void onSpawnBossInteraction(EventInteraction e);
 
+    void startBoss1(const Location & pos);
+    void startBoss1Final(const Location & pos);
+
     std::default_random_engine m_rand;
 
     std::vector<std::weak_ptr<DelayedTask>> m_tasks;

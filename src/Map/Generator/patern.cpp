@@ -69,6 +69,8 @@ std::vector<Patern> Patern::load(const std::string & fileName)
     using json = nlohmann::json;
 
     std::ifstream file(fileName);
+    if(!file.is_open())
+        return std::vector<Patern>();
     json j(json::parse(file));
     file.close();
     if(j.empty() || !j.is_array())
@@ -143,6 +145,8 @@ void Patern::save(const std::string & fileName, const std::vector<Patern> & pate
     }
 
     std::ofstream file(fileName);
+    if(!file.is_open())
+        return;
     file << datas.dump();
     file.close();
 }

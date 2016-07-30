@@ -5,6 +5,8 @@
 #include <QJsonParseError>
 #include <QJsonArray>
 #include "keyconfig.h"
+#include "Libs/json.hpp"
+#include <fstream>
 
 const std::string KeysConfig::keysFilename("commands.json");
 
@@ -59,61 +61,65 @@ KeysConfig::KeysConfig()
 KeysConfig::KeysConfig(const std::string & filename)
     : KeysConfig()
 {
-    QFile file(QString::fromStdString(filename));
-    if(!file.exists())
+    using json = nlohmann::json;
+
+    std::ifstream file(filename);
+    if(!file.is_open())
         return;
-    if(!file.open(QIODevice::ReadOnly))
+    json j(json::parse(file));
+    file.close();
+
+    if(!j.is_object())
         return;
-    QJsonParseError error;
-    QJsonDocument doc(QJsonDocument::fromJson(file.readAll(), &error));
-    if(error.error != QJsonParseError::NoError)
+
+    joysticID = *(j.find("joysticNumber"));
+    useJoystic = *(j.find("useJoystic"));
+
+    auto keys(j.find("keys"));
+    if(!keys->is_array() || keys->size() != CommandType::COMMANDS_COUNT)
         return;
-    if(!doc.isObject())
-        return;
-    QJsonObject configs(doc.object());
-    joysticID = configs.value("joysticNumber").toInt();
-    useJoystic = configs.value("useJoystic").toBool();
-    QJsonArray keysJson(configs.value("keys").toArray());
-    if(keysJson.size() != CommandType::COMMANDS_COUNT)
-        return;
+
     for(unsigned int i(0) ; i < CommandType::COMMANDS_COUNT ; i++)
     {
-        QJsonObject key(keysJson.at(i).toObject());
-        if(key.isEmpty())
+        json key((*keys)[i]);
+        if(!key.is_object())
             continue;
-        if(key.value("useAxis").toBool())
-            commands[i] = KeyInfo(sf::Keyboard::Key(key.value("key").toInt())
-                                  , sf::Joystick::Axis(key.value("axis").toInt()), key.value("axisSide").toBool());
-        else commands[i] = KeyInfo(sf::Keyboard::Key(key.value("key").toInt())
-                                   , key.value("button").toInt());
+        if(key["useAxis"].get<bool>())
+            commands[i] = KeyInfo(sf::Keyboard::Key(key["key"].get<int>()), sf::Joystick::Axis(key["axis"].get<int>()), key["axisSide"]);
+        else commands[i] = KeyInfo(sf::Keyboard::Key(key["key"].get<int>()), key["button"]);
     }
 }
 
 void KeysConfig::save(const std::string & filename) const
 {
-    QJsonObject configs;
-    configs.insert("joysticNumber", int(joysticID));
-    configs.insert("useJoystic", useJoystic);
-    QJsonArray keysJson;
+    using json = nlohmann::json;
+
+    json j =
+    {
+        {"joysticNumber", joysticID},
+        {"useJoystic", useJoystic}
+    };
+
+    json keys;
     for(const auto & key : commands)
     {
-        QJsonObject keyJson;
-        keyJson.insert("key", key.key);
-        keyJson.insert("useAxis", key.useAxis);
+        json k;
+        k["key"] = key.key;
+        k["useAxis"] = key.useAxis;
         if(key.useAxis)
         {
-            keyJson.insert("axis", key.axis);
-            keyJson.insert("axisSide", key.axisSide);
+            k["axis"] = key.axis;
+            k["axisSide"] = key.axisSide;
         }
-        else keyJson.insert("button", int(key.button));
-        keysJson.append(keyJson);
+        else k["button"] = key.button;
+        keys.push_back(k);
     }
-    configs.insert("keys", keysJson);
+    j["keys"] = keys;
 
-    QFile file(QString::fromStdString(filename));
-    if(!file.open(QIODevice::WriteOnly))
+    std::ofstream file(filename);
+    if(!file.is_open())
         return;
-    file.write(QJsonDocument(keysJson).toJson(QJsonDocument::Compact));
+    file << j.dump();
     file.close();
 }
 

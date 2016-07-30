@@ -17,6 +17,7 @@ public:
     virtual ~Entity() = default;
 
     bool damage(float value, std::weak_ptr<Entity>, const sf::Vector2f & dir = sf::Vector2f(0, 0));
+    bool damageable();
     void push(const sf::Vector2f & dir);
     float getLife() const;
     float getMaxLife() const;

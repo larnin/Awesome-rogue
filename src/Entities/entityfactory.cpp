@@ -7,6 +7,7 @@
 #include "Types/squaremob.h"
 #include "Types/trackermob.h"
 #include "Types/boss1part.h"
+#include "Types/boss1end.h"
 #include "Events/event.h"
 #include "Events/Datas/evententitycreated.h"
 #include "Map/location.h"
@@ -36,6 +37,9 @@ std::vector<std::shared_ptr<Entity> > EntityFactory::create(EntityType type, con
     break;
     case E_BOSS1_PARTS:
         e = createBoss1Parts(pos);
+    break;
+    case E_BOSS1_FINAL:
+        e.push_back(std::make_shared<Boss1End>(pos));
     break;
     default:
         assert(false);

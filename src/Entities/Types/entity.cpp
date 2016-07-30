@@ -92,6 +92,11 @@ bool Entity::damage(float value, std::weak_ptr<Entity>, const sf::Vector2f & dir
     return true;
 }
 
+bool Entity::damageable()
+{
+    return m_damageable;
+}
+
 void Entity::push(const sf::Vector2f & dir)
 {
     m_speed += dir*m_knockbackMultiplier;

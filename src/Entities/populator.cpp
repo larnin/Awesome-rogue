@@ -10,9 +10,13 @@
 #include "Events/Datas/eventpreplayerchangeroom.h"
 #include "Events/Datas/eventinteraction.h"
 #include "Events/Datas/eventplaycameraeffect.h"
+#include "Events/Datas/eventsetbosslifebar.h"
+#include "Events/event.h"
 #include "Particules/Types/spawnboss1.h"
 #include "Utilities/delayedtask.h"
 #include "entityfactory.h"
+#include "GUI/LifeBar/boss1partslifebar.h"
+#include "GUI/LifeBar/boss1finallifebar.h"
 
 Populator::Populator()
     : m_enabled(false)
@@ -117,19 +121,48 @@ void Populator::onPlayerChangeRoom(EventPrePlayerChangeRoom e)
 
 void Populator::onSpawnBossInteraction(EventInteraction e)
 {
+    switch(e.type)
+    {
+    case BlockInteractionType::BI_START_BOSS1:
+        startBoss1(e.pos);
+    break;
+    case BlockInteractionType::BI_START_BOSS1_FINAL:
+        startBoss1Final(e.pos);
+    break;
+    default:
+    break;
+    }
+}
+
+void Populator::startBoss1(const Location & pos)
+{
     const unsigned int blockUsedBoss1(514);
 
-    if(e.type != BlockInteractionType::BI_START_BOSS1)
-        return;
-
-    auto r(e.pos.getRoom().lock());
+    auto r(pos.getRoom().lock());
     if(!r)
         return;
     Event<EventPlayCameraEffect>::send(EventPlayCameraEffect(CameraEffectType::EFFECT_HARD_SHAKE, 0.1f));
     Event<EventPlayCameraEffect>::send(EventPlayCameraEffect(CameraEffectType::EFFECT_VERY_LOW_SHAKE, 6.0f));
     r->closeDoors();
-    (*r)(e.pos.getBlockPos()).groundID = blockUsedBoss1;
-    ParticuleFactory::createSend<SpawnBoss1>(e.pos, 6, 7);
+    (*r)(pos.getBlockPos()).groundID = blockUsedBoss1;
+    ParticuleFactory::createSend<SpawnBoss1>(pos, 6, 7);
 
-    m_tasks.push_back(DelayedTask::create([e](){EntityFactory::create(EntityType::E_BOSS1_PARTS, e.pos);}, 6, m_enabled));
+    m_tasks.push_back(DelayedTask::create([pos]()
+    {
+        auto eList(EntityFactory::create(EntityType::E_BOSS1_PARTS, pos));
+        std::vector<std::weak_ptr<Entity>> eWList;
+        for(auto & eS : eList)
+            eWList.push_back(eS);
+        auto lifeBar(std::make_shared<Boss1PartsLifeBar>(eWList));
+        Event<EventSetBossLifeBar>::send(EventSetBossLifeBar(lifeBar));
+    }, 6, m_enabled));
+}
+
+void Populator::startBoss1Final(const Location & pos)
+{
+    auto e(EntityFactory::create(EntityType::E_BOSS1_FINAL, pos));
+    std::vector<std::weak_ptr<Entity>> eWList;
+    for(auto & eS : e)
+        eWList.push_back(eS);
+    Event<EventSetBossLifeBar>::send(EventSetBossLifeBar(std::make_shared<Boss1FinalLifeBar>(eWList)));
 }

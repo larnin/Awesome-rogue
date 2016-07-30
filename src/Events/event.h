@@ -73,8 +73,7 @@ private:
 
     static void connect(EventReceiver* e, std::function<void(T)> funct)
     {
-        if(!funct)
-            assert(false);
+        assert(funct);
         m_functions.push_back(std::pair<EventReceiver*,std::function<void(T)>>(e, funct));
         if(!m_initialised)
         {

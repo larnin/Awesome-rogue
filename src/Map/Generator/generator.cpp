@@ -122,7 +122,7 @@ void Generator::generatePaterns(const sf::Vector2u & minSize, const sf::Vector2u
         return p;
     });
 
-    int nb(20-std::accumulate(m_paterns.begin(), m_paterns.end(), 0u, lambdaFunct));
+    int nb(30-std::accumulate(m_paterns.begin(), m_paterns.end(), 0u, lambdaFunct));
     while(nb-->0)
         m_paterns.push_back(lambdaCreate(type, 50, sf::Vector2u(xDistrib(m_engine), yDistrib(m_engine))));
 

@@ -98,7 +98,12 @@ SOURCES += main.cpp \
     Machine/CameraEffects/shakeeffect.cpp \
     Machine/States/gamestate.cpp \
     Machine/gameholder.cpp \
-    Particules/Types/spawnboss1.cpp
+    Particules/Types/spawnboss1.cpp \
+    GUI/LifeBar/boss1partslifebar.cpp \
+    Entities/Types/boss1end.cpp \
+    Particules/Types/boss1transition.cpp \
+    Utilities/animation.cpp \
+    GUI/LifeBar/boss1finallifebar.cpp
 
 HEADERS  += \
     Controles/commands.h \
@@ -220,7 +225,14 @@ HEADERS  += \
     Machine/States/gamestate.h \
     Machine/gameholder.h \
     Libs/json.hpp \
-    Particules/Types/spawnboss1.h
+    Particules/Types/spawnboss1.h \
+    Events/Datas/eventsetbosslifebar.h \
+    Events/Datas/eventremoveentity.h \
+    GUI/LifeBar/boss1partslifebar.h \
+    Entities/Types/boss1end.h \
+    Particules/Types/boss1transition.h \
+    Utilities/animation.h \
+    GUI/LifeBar/boss1finallifebar.h
 
 DEFINES += SFML_STATIC
 

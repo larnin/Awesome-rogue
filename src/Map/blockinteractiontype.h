@@ -7,7 +7,8 @@ enum BlockInteractionType
     BI_CHEST,
     BI_PORTAL,
     BI_SAVEPOINT,
-    BI_START_BOSS1
+    BI_START_BOSS1,
+    BI_START_BOSS1_FINAL
 };
 
 #endif // BLOCKINTERACTIONTYPE_H
