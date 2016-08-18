@@ -1,10 +1,12 @@
 #include "menustate.h"
 #include "Events/event.h"
 #include "Events/Datas/eventinstantcenterofviewchanged.h"
+#include "Events/Datas/eventplaycameraeffect.h"
 #include "Systemes/drawablelist.h"
 #include "Machine/statemachine.h"
 #include "GUI/Widgets/Buttons/basicbutton.h"
 #include "Machine/States/gamestate.h"
+#include "Machine/States/optionsstate.h"
 #include "GUI/Widgets/widget.h"
 
 MenuState::MenuState(std::weak_ptr<StateMachine> machine)
@@ -48,8 +50,6 @@ MenuState::~MenuState()
 {
 
 }
-
-#include "Events/Datas/eventplaycameraeffect.h"
 
 void MenuState::enable()
 {
@@ -103,7 +103,12 @@ void MenuState::LoadFunction()
 
 void MenuState::OptionsFunction()
 {
-
+    std::shared_ptr<StateMachine> m(m_machine.lock());
+    if(m)
+    {
+        std::unique_ptr<State> s(std::make_unique<OptionsState>(m_machine, StateType::ST_MENU));
+        m->setSubstate(s);
+    }
 }
 
 void MenuState::exitFunction()

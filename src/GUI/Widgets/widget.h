@@ -19,6 +19,7 @@ public:
     virtual ~Widget() = default;
 
     void connect(CommandType type, std::weak_ptr<Widget> widget);
+    void disconnect(CommandType type);
     virtual void control(CommandsValue & v);
     virtual void update(const sf::Time &);
 

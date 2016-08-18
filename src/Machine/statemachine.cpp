@@ -9,24 +9,36 @@
 #include "Events/Datas/eventsizeviewchanged.h"
 #include "smoothcamera.h"
 
-const unsigned int windowWidth(1200);
-const unsigned int windowHeight(900);
+#include "Utilities/configs.h"
+
 const std::string windowTitle("Awesome rogue");
 
 StateMachine::StateMachine(const KeysConfig & configs)
-    : m_window(sf::VideoMode(windowWidth, windowHeight), windowTitle, sf::Style::Default, sf::ContextSettings(0, 0, 2))
-    , m_commands(configs)
+    : m_commands(configs)
     , m_clearColor(sf::Color::White)
 {
+    if(Configs::c.useFullScreen)
+        m_window.create(sf::VideoMode::getFullscreenModes().front(), windowTitle, sf::Style::Fullscreen, sf::ContextSettings(0, 0, 2));
+    else m_window.create(sf::VideoMode(Configs::c.screenSize.x, Configs::c.screenSize.y), windowTitle, sf::Style::Default, sf::ContextSettings(0, 0, 2));
+
     m_window.setFramerateLimit(60);
+    m_window.setKeyRepeatEnabled(false);
 
     m_camera = std::make_shared<SmoothCamera>(*this);
+    m_camera->changeDefaultZoom(Configs::c.zoom);
     Updatable::add(m_camera);
 }
 
 sf::RenderWindow & StateMachine::getWindow()
 {
     return m_window;
+}
+
+void StateMachine::changeFullScreen(bool value)
+{
+    if(value)
+        m_window.create(sf::VideoMode::getFullscreenModes().front(), windowTitle, sf::Style::Fullscreen, sf::ContextSettings(0, 0, 2));
+    else m_window.create(sf::VideoMode(Configs::c.screenSize.x, Configs::c.screenSize.y), windowTitle, sf::Style::Default, sf::ContextSettings(0, 0, 2));
 }
 
 void StateMachine::setNext(std::unique_ptr<State> & state)
@@ -42,6 +54,11 @@ void StateMachine::setKeys(const KeysConfig & configs)
 void StateMachine::setClearColor(const sf::Color & color)
 {
     m_clearColor = color;
+}
+
+void StateMachine::changeWindowZoom(float value)
+{
+    m_camera->changeDefaultZoom(value);
 }
 
 void StateMachine::run()
@@ -79,6 +96,9 @@ void StateMachine::run()
         DrawableList::drawAll(m_window);
         m_window.display();
     }
+
+    if(!Configs::c.useFullScreen)
+        Configs::c.screenSize = m_window.getSize();
 }
 
 void StateMachine::setWindowCenter(const sf::Vector2f & pos)
@@ -88,10 +108,14 @@ void StateMachine::setWindowCenter(const sf::Vector2f & pos)
     m_window.setView(v);
 }
 
-void StateMachine::setSubstate(std::unique_ptr<State> sub)
+void StateMachine::setSubstate(std::unique_ptr<State> & sub)
 {
+    if(m_subState)
+        m_subState->disable();
     m_subState = std::move(sub);
-    if(sub)
+    if(m_subState)
+        m_subState->enable();
+    if(m_subState)
     {
         if(m_actualState)
             m_actualState->disable();
@@ -101,4 +125,10 @@ void StateMachine::setSubstate(std::unique_ptr<State> sub)
         if(m_actualState)
             m_actualState->enable();
     }
+}
+
+void StateMachine::resetSubstate()
+{
+    std::unique_ptr<State> s;
+    setSubstate(s);
 }

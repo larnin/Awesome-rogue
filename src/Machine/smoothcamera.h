@@ -22,6 +22,7 @@ public:
     virtual ~SmoothCamera() = default;
 
     virtual void update(const sf::Time & elapsedTime);
+    void changeDefaultZoom(float value);
 
 private:
     void onCenterChanged(EventCenterOfViewChanged e);

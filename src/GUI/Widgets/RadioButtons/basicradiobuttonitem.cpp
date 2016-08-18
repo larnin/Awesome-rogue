@@ -7,7 +7,7 @@ BasicRadioButtonItem::BasicRadioButtonItem()
     : AbstactRadioButtonItem()
     , m_texture("res/img/gui/radiobutton.png")
     , m_font("res/font/PressStart2P.ttf")
-    , m_text(VAlign::V_CENTER, HAlign::H_RIGHT)
+    , m_text(VAlign::V_CENTER, HAlign::H_LEFT)
 {
     m_text.setText(label, m_font, 8, sf::Color::Black);
 }

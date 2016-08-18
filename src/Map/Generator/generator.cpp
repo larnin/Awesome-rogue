@@ -49,10 +49,10 @@ Map Generator::generate(const GenerationEnvironement & env)
             std::shared_ptr<Room> r(std::make_shared<Room>(placeRoom(getPatern(maxRect, env.minRoomSize
                                         , bossRoom == 0 ? RoomType::NORMAL_ROOM
                                         : bossRoom == 1 ? RoomType::BOSS1_ROOM
-                                        : bossRoom == 1 ? RoomType::BOSS2_ROOM
-                                        : bossRoom == 1 ? RoomType::BOSS3_ROOM
+                                        : bossRoom == 2 ? RoomType::BOSS2_ROOM
+                                        : bossRoom == 3 ? RoomType::BOSS3_ROOM
                                                         : RoomType::BOSS4_ROOM)
-                                        , door.second, door.first, env.sideRarity)));
+                                        , door.second, door.first, env.sideRarity, m.count())));
             std::shared_ptr<Room> initialRoom(door.first.pos.getRoom().lock());
             assert(initialRoom);
 
@@ -156,7 +156,7 @@ Room Generator::createFirstRoom()
 {
     unsigned int maxSize(1000);
     getPatern(sf::Vector2u(maxSize, maxSize), sf::Vector2u(0, 0), RoomType::START_ROOM);
-    return Room(getPatern(sf::Vector2u(maxSize, maxSize), sf::Vector2u(0, 0), RoomType::START_ROOM), sf::Vector2i(0, 0));
+    return Room(getPatern(sf::Vector2u(maxSize, maxSize), sf::Vector2u(0, 0), RoomType::START_ROOM), sf::Vector2i(0, 0), 0);
 }
 
 std::pair<Door, sf::IntRect> Generator::findDoorablePos(const Map & m, float doorPos, const sf::Vector2u & minSize, const sf::Vector2u & maxSize)
@@ -315,7 +315,7 @@ const Patern & Generator::getPatern(const sf::Vector2u & maxSize, const sf::Vect
     return m_paterns[indexs[distrib(m_engine)]];
 }
 
-Room Generator::placeRoom(const Patern & p, sf::IntRect allowedRect, const Door & origineDoor, unsigned int sideRarity)
+Room Generator::placeRoom(const Patern & p, sf::IntRect allowedRect, const Door & origineDoor, unsigned int sideRarity, unsigned int id)
 {
     Orientation doorOrientation(origineDoor.getOrientation());
     Orientation moveOrientation(doorOrientation == Orientation::UP || doorOrientation == Orientation::DOWN ? Orientation::RIGHT : Orientation::DOWN);
@@ -373,7 +373,7 @@ Room Generator::placeRoom(const Patern & p, sf::IntRect allowedRect, const Door 
         throw std::runtime_error("No allowed pos !");
 
     std::discrete_distribution<int> distrib(poids.begin(), poids.end());
-    return Room(p, allowedPos[distrib(m_engine)]);
+    return Room(p, allowedPos[distrib(m_engine)], id);
 }
 
 void Generator::placeDoors(Map & m, unsigned int nbTry)

@@ -1,12 +1,10 @@
 #include "room.h"
 #include "Generator/patern.h"
 
-unsigned int Room::lastID(0);
-
-Room::Room(const Patern & p, sf::Vector2i pos)
+Room::Room(const Patern & p, sf::Vector2i pos, unsigned int id)
     : m_blocks(p.getSize())
     , m_pos(pos)
-    , m_UID(lastID++)
+    , m_UID(id)
     , m_discovered(false)
     , m_type(p.type)
 {
@@ -15,10 +13,10 @@ Room::Room(const Patern & p, sf::Vector2i pos)
             m_blocks(sf::Vector2u(i, j)) = p(sf::Vector2u(i, j));
 }
 
-Room::Room(sf::Vector2u size, sf::Vector2i pos, Block def)
+Room::Room(sf::Vector2u size, sf::Vector2i pos, unsigned int id, Block def)
     : m_blocks(size, def)
     , m_pos(pos)
-    , m_UID(lastID++)
+    , m_UID(id)
     , m_discovered(false)
     , m_type(NORMAL_ROOM)
 {

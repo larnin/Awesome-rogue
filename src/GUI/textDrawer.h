@@ -23,6 +23,7 @@ public:
     void setFont(const Font & font);
     void setTextSize(unsigned int size);
     void setTextColor(const sf::Color & color);
+    sf::Text getCurrentText() const;
 
     VAlign vAlign;
     HAlign hAlign;

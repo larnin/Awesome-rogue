@@ -123,7 +123,7 @@ void RadioButtons<T>::setCurrent(const std::string & label)
     auto it(std::find_if(m_buttons.begin(), m_buttons.end(), [label](const auto & b){return b.label == label;}));
     if(it != m_buttons.end())
     {
-        for(const auto & item : m_buttons)
+        for(auto & item : m_buttons)
             item.checked = false;
         it->checked = true;
     }

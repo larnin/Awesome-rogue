@@ -101,3 +101,8 @@ void TextDrawer::redrawText(const sf::Vector2f & size) const
         m_toRedraw = false;
     }
 }
+
+sf::Text TextDrawer::getCurrentText() const
+{
+    return m_text;
+}

@@ -24,6 +24,11 @@ SmoothCamera::SmoothCamera(StateMachine & m)
     connect<EventPlayCameraEffect>(std::bind(&onPlayCameraEffect, this, _1));
 }
 
+void SmoothCamera::changeDefaultZoom(float value)
+{
+    m_defaultZoomValue = value;
+}
+
 void SmoothCamera::update(const sf::Time & elapsedTime)
 {
     float current(norm(m_targetCenter-m_currentCenter));

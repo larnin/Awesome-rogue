@@ -17,6 +17,8 @@
 #include "GUI/LifeBar/bosslifebar.h"
 #include "Entities/entityfactory.h"
 #include "Events/Datas/eventsetbosslifebar.h"
+#include "Events/Datas/eventinstantcenterofviewchanged.h"
+#include "Map/blocktype.h"
 
 GameHolder::GameHolder(std::weak_ptr<StateMachine> machine)
     : m_enabled(false)
@@ -65,7 +67,10 @@ void GameHolder::enable()
 
     std::shared_ptr<Player> p(m_player.lock());
     if(p)
+    {
         Controlable::add(p);
+        Event<EventInstantCenterOfViewChanged>::send(EventInstantCenterOfViewChanged(p->getPos().toGlobalPos()*float(BlockType::tileSize)));
+    }
 
     Updatable::add(m_listes);
     m_listes->entities.enable();

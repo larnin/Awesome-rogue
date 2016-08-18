@@ -40,7 +40,7 @@ void Interactor::control(CommandsValue & v)
     if(!e)
         return;
 
-    if(v.isPressEvent(KEY_VALID))
+    if(v.isPressEvent(KEY_ACTION))
     {
         auto interaction(getInteractable());
         if(interaction.first != BI_NO_INTERACTION)

@@ -3,28 +3,56 @@
 
 #include <string>
 #include <memory>
-#include <unordered_map>
+#include <map>
 #include <stdexcept>
 
 template <typename T>
 class Ressource
 {
 public:
-    Ressource() : m_fileName("") , m_ressource(std::shared_ptr<T>()) {}
+    Ressource() : m_fileName(""), m_ressource(std::shared_ptr<T>())
+    {}
+
     Ressource(std::string fileName)
         : Ressource()
     {
         load(fileName);
     }
 
+    Ressource(const T & value)
+        : m_fileName("")
+        , m_ressource(std::make_shared<T>(value))
+    {
+
+    }
+
+    Ressource(const Ressource & r)
+        : m_fileName(r.m_fileName)
+        , m_ressource(r.m_ressource)
+    {
+
+    }
+
+    Ressource & operator=(const Ressource & r)
+    {
+        if(&r == this)
+            return *this;
+
+        freeMyRessource();
+
+        m_fileName = r.m_fileName;
+        m_ressource = r.m_ressource;
+        return *this;
+    }
+
     ~Ressource()
     {
-        if(m_ressource)
-            m_ressource.reset();
-        auto it(m_ressources.find(m_fileName));
-        if(it != m_ressources.end())
-            if(it->second.expired())
-                m_ressources.erase(it);
+        freeMyRessource();
+    }
+
+    Ressource clone(const Ressource & r)
+    {
+        return Ressource(*m_ressource);
     }
 
     void load(const std::string & fileName)
@@ -76,13 +104,24 @@ public:
     }
 
 private:
+
+    void freeMyRessource()
+    {
+        if(m_ressource)
+            m_ressource.reset();
+        auto it(m_ressources.find(m_fileName));
+        if(it != m_ressources.end())
+            if(it->second.expired())
+                m_ressources.erase(it);
+    }
+
     std::string m_fileName;
     std::shared_ptr<T> m_ressource;
-    static std::unordered_map<std::string, std::weak_ptr<T>> m_ressources;
+    static std::map<std::string, std::weak_ptr<T>> m_ressources;
 };
 
 template <typename T>
-std::unordered_map<std::string, std::weak_ptr<T>> Ressource<T>::m_ressources;
+std::map<std::string, std::weak_ptr<T>> Ressource<T>::m_ressources;
 
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Font.hpp>

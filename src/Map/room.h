@@ -14,8 +14,8 @@ class Patern;
 class Room : private NonCopiable
 {
 public:
-    Room(const Patern & p, sf::Vector2i pos);
-    Room(sf::Vector2u size, sf::Vector2i pos, Block def = Block());
+    Room(const Patern & p, sf::Vector2i pos, unsigned int id);
+    Room(sf::Vector2u size, sf::Vector2i pos, unsigned int id, Block def = Block());
     Room(Room &&) = default;
     Room & operator= (Room &&) = default;
     ~Room() = default;
@@ -52,8 +52,6 @@ private:
     bool m_discovered;
     std::vector<EntityType> m_population;
     RoomType m_type;
-
-    static unsigned int lastID;
 };
 
 #endif // ROOM_H

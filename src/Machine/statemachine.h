@@ -21,9 +21,14 @@ public:
     void setNext(std::unique_ptr<State> & state);
     void setKeys(const KeysConfig & configs);
     void run();
+
     void setClearColor(const sf::Color & color);
+    void changeFullScreen(bool value);
     void setWindowCenter(const sf::Vector2f & pos);
-    void setSubstate(std::unique_ptr<State> sub);
+    void changeWindowZoom(float value);
+
+    void setSubstate(std::unique_ptr<State> & sub);
+    void resetSubstate();
 
 private:
     std::unique_ptr<State> m_actualState;

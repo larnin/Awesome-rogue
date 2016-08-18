@@ -4,6 +4,8 @@
 #include "state.h"
 #include "Machine/gameholder.h"
 
+class SimpleControler;
+
 class GameState : public State
 {
 public:
@@ -17,7 +19,12 @@ protected:
     virtual void disable();
 
 private:
+    void onPressPause();
+    void onPressMap();
+    void onPressInventary();
+
     GameHolder m_game;
+    std::shared_ptr<SimpleControler> m_controler;
 };
 
 #endif // GAMESTATE_H

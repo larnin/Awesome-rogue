@@ -63,7 +63,7 @@ private:
     bool isValidDoorPos(const sf::Vector2u & pos, const Patern & p);
     Room createFirstRoom();
     const Patern & getPatern(const sf::Vector2u & maxSize, const sf::Vector2u & minSize, RoomType type);
-    Room placeRoom(const Patern & p, sf::IntRect allowedRect, const Door & origineDoor, unsigned int sideRarity);
+    Room placeRoom(const Patern & p, sf::IntRect allowedRect, const Door & origineDoor, unsigned int sideRarity, unsigned int id);
     void placeDoors(Map & m, unsigned int nbTry);
     Door isOkPlaceDoor(const std::shared_ptr<Room> & r, Map & m, sf::Vector2u pos, Orientation o);
     void placeChestsPortalsSave(Map & m, float chestProbability, float portalProbability, float saveProbability);

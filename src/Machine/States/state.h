@@ -22,4 +22,15 @@ protected:
     std::weak_ptr<StateMachine> m_machine;
 };
 
+enum StateType
+{
+    ST_GAME,
+    ST_MENU,
+    ST_OPTIONS,
+    ST_PAUSE,
+};
+
+bool isSubState(StateType type);
+std::unique_ptr<State> makeState(StateType type, std::weak_ptr<StateMachine> m);
+
 #endif // STATE_H

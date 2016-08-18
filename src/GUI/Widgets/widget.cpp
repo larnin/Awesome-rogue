@@ -15,6 +15,13 @@ void Widget::connect(CommandType type, std::weak_ptr<Widget> widget)
     else it->second = widget;
 }
 
+void Widget::disconnect(CommandType type)
+{
+    auto it(m_connexions.find(type));
+    if(it != m_connexions.end())
+        m_connexions.erase(it);
+}
+
 void Widget::control(CommandsValue & v)
 {
     for(auto & connection : m_connexions)
@@ -26,6 +33,7 @@ void Widget::control(CommandsValue & v)
             if(w)
                 w->changeActiveState(Controlable::ControlState::ACTIVE);
             changeActiveState(Controlable::ControlState::UNACTIVE);
+            break;
         }
     }
 }

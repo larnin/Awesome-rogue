@@ -103,7 +103,17 @@ SOURCES += main.cpp \
     Entities/Types/boss1end.cpp \
     Particules/Types/boss1transition.cpp \
     Utilities/animation.cpp \
-    GUI/LifeBar/boss1finallifebar.cpp
+    GUI/LifeBar/boss1finallifebar.cpp \
+    GUI/showfps.cpp \
+    Machine/States/pausestate.cpp \
+    GUI/simplecontroler.cpp \
+    Utilities/fileinfo.cpp \
+    Machine/States/optionsstate.cpp \
+    Controles/keytexture.cpp \
+    GUI/Widgets/keyconfigwidget.cpp \
+    Controles/commandtype.cpp \
+    GUI/Widgets/label.cpp \
+    Utilities/configs.cpp
 
 HEADERS  += \
     Controles/commands.h \
@@ -232,15 +242,21 @@ HEADERS  += \
     Entities/Types/boss1end.h \
     Particules/Types/boss1transition.h \
     Utilities/animation.h \
-    GUI/LifeBar/boss1finallifebar.h
-
-DEFINES += SFML_STATIC
+    GUI/LifeBar/boss1finallifebar.h \
+    GUI/showfps.h \
+    Machine/States/pausestate.h \
+    GUI/simplecontroler.h \
+    Utilities/fileinfo.h \
+    Machine/States/optionsstate.h \
+    Controles/keytexture.h \
+    GUI/Widgets/keyconfigwidget.h \
+    GUI/Widgets/label.h \
+    Utilities/configs.h
 
 CONFIG += c++14
-#QMAKE_CXXFLAGS += -std=c++11
-#QMAKE_CXXFLAGS += -std=gnu++1y
-#QMAKE_LFLAGS += -static-libgcc -static-libstdc++
 
+# SFML
+DEFINES += SFML_STATIC
 LIBS += -LC:/Users/Nicolas/Programation/c++/SFML/DW2_2.3_(Qt)/lib
 
 CONFIG(release, debug|release): LIBS += -lsfml-graphics-s \
@@ -265,3 +281,12 @@ CONFIG(debug, debug|release): LIBS +=   -lsfml-graphics-s-d \
 
 INCLUDEPATH += C:/Users/Nicolas/Programation/c++/SFML/DW2_2.3_(Qt)/include
 DEPENDPATH += C:/Users/Nicolas/Programation/c++/SFML/DW2_2.3_(Qt)/include
+
+#Boost
+#INCLUDEPATH += C:/Users/Nicolas/Programation/c++/boost/boost_1_61_0
+
+#Filesystem
+#CONFIG(release, debug|release): LIBS += C:/Users/Nicolas/Programation/c++/boost/Boost_lib/boost/bin.v2/libs/filesystem/build/gcc-mingw-4.9.2/release/link-static/threading-multi/libboost_filesystem-mgw49-mt-1_61.a /
+#                                        C:/Users/Nicolas/Programation/c++/boost/Boost_lib/boost/bin.v2/libs/system/build/gcc-mingw-4.9.2/release/link-static/threading-multi/libboost_system-mgw49-mt-1_61.a
+#CONFIG(debug, debug|release): LIBS +=   C:/Users/Nicolas/Programation/c++/boost/Boost_lib/boost/bin.v2/libs/filesystem/build/gcc-mingw-4.9.2/debug/link-static/threading-multi/libboost_filesystem-mgw49-mt-d-1_61.a /
+#                                        C:/Users/Nicolas/Programation/c++/boost/Boost_lib/boost/bin.v2/libs/system/build/gcc-mingw-4.9.2/debug/link-static/threading-multi/libboost_system-mgw49-mt-d-1_61.a

@@ -52,6 +52,7 @@ KeysConfig::KeysConfig()
     commands[CommandType::KEY_VALID] = KeyInfo(sf::Keyboard::Key::BackSpace, 1);
     commands[CommandType::KEY_CANCEL] = KeyInfo(sf::Keyboard::Key::Escape, 2);
     commands[CommandType::KEY_PAUSE] = KeyInfo(sf::Keyboard::Key::P, 4);
+    commands[CommandType::KEY_ACTION] = KeyInfo(sf::Keyboard::Key::BackSpace, 1);
     commands[CommandType::KEY_MAP] = KeyInfo(sf::Keyboard::Key::M, 6);
     commands[CommandType::KEY_INVENTARY] = KeyInfo(sf::Keyboard::Key::I, 7);
     commands[CommandType::KEY_LEFT_PAGE] = KeyInfo(sf::Keyboard::Key::LShift, 6);
