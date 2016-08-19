@@ -18,6 +18,7 @@
 #include "Entities/entityfactory.h"
 #include "Events/Datas/eventsetbosslifebar.h"
 #include "Events/Datas/eventinstantcenterofviewchanged.h"
+#include "Events/Datas/eventinteraction.h"
 #include "Map/blocktype.h"
 
 GameHolder::GameHolder(std::weak_ptr<StateMachine> machine)
@@ -27,6 +28,7 @@ GameHolder::GameHolder(std::weak_ptr<StateMachine> machine)
     assert(m);
 
     EventSimpleGetter<std::shared_ptr<Player>>::connect(std::bind(&GameHolder::getPlayer, this));
+    EventSimpleGetter<std::shared_ptr<Map>>::connect(std::bind(&GameHolder::getMap, this));
     connect<EventSetBossLifeBar>(std::bind(&onBossLifeBarSet, this, _1));
 
     Generator g;
@@ -56,6 +58,7 @@ GameHolder::GameHolder(std::weak_ptr<StateMachine> machine)
 GameHolder::~GameHolder()
 {
      EventSimpleGetter<std::shared_ptr<Player>>::disconnect();
+     EventSimpleGetter<std::shared_ptr<Map>>::disconnect();
 }
 
 void GameHolder::enable()
@@ -134,6 +137,11 @@ void GameHolder::disable()
 std::shared_ptr<Player> GameHolder::getPlayer()
 {
     return m_player.lock();
+}
+
+std::shared_ptr<Map> GameHolder::getMap()
+{
+    return m_map;
 }
 
 void GameHolder::onBossLifeBarSet(EventSetBossLifeBar e)

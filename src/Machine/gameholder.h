@@ -32,6 +32,7 @@ public:
 
 private:
     std::shared_ptr<Player> getPlayer();
+    std::shared_ptr<Map> getMap();
     void onBossLifeBarSet(EventSetBossLifeBar e);
 
     std::shared_ptr<Map> m_map;

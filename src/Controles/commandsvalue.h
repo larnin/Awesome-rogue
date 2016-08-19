@@ -20,6 +20,7 @@ public:
     bool isRelaseEvent(CommandType key) const;
     float getValue(CommandType key) const;
     void valide(CommandType key);
+    void valideAll();
 
     std::vector<sf::Event> events;
 

@@ -25,25 +25,14 @@ Populator::Populator()
     connect<EventInteraction>(std::bind(&Populator::onSpawnBossInteraction, this, _1));
 }
 
-Populator::~Populator()
-{
-    for(auto & t : m_tasks)
-    {
-        std::shared_ptr<DelayedTask> task(t.lock());
-        if(task)
-            task->stop();
-    }
-}
-
 void Populator::enable()
 {
     m_enabled = true;
 
     for(auto & t : m_tasks)
     {
-        std::shared_ptr<DelayedTask> task(t.lock());
-        if(task)
-            task->unpause();
+        t->unPause();
+        Updatable::add(t);
     }
 
     cleanTasks();
@@ -51,12 +40,10 @@ void Populator::enable()
 
 void Populator::disable()
 {
+    m_enabled = false;
+
     for(auto & t : m_tasks)
-    {
-        std::shared_ptr<DelayedTask> task(t.lock());
-        if(task)
-            task->pause();
-    }
+        Updatable::del(t);
 
     cleanTasks();
 }
@@ -65,8 +52,7 @@ void Populator::cleanTasks()
 {
     auto it(std::remove_if(m_tasks.begin(), m_tasks.end(), [](const auto & t)
     {
-        std::shared_ptr<DelayedTask> task(t.lock());
-        return !task;
+        return t->finished();
     }));
     m_tasks.erase(it, m_tasks.end());
 }
@@ -110,13 +96,14 @@ void Populator::onPlayerChangeRoom(EventPrePlayerChangeRoom e)
 
             float time(dTime(m_rand));
 
-            m_tasks.push_back(DelayedTask::create([type, l](){EntityFactory::create(type, l);}, time, m_enabled));
-            cleanTasks();
-
-            m_tasks.push_back(DelayedTask::create([time, l](){ParticuleFactory::createSend<MobSpawn>(l, time);}, 0.1f, m_enabled));
+            m_tasks.push_back(std::make_shared<DelayedTask>([type, l](){EntityFactory::create(type, l);}, time, m_enabled));
+            Updatable::add(m_tasks.back());
+            m_tasks.push_back(std::make_shared<DelayedTask>([time, l](){ParticuleFactory::createSend<MobSpawn>(l, time);}, 0.1f, m_enabled));
+            Updatable::add(m_tasks.back());
             break;
         }
     }
+    cleanTasks();
 }
 
 void Populator::onSpawnBossInteraction(EventInteraction e)
@@ -147,7 +134,7 @@ void Populator::startBoss1(const Location & pos)
     (*r)(pos.getBlockPos()).groundID = blockUsedBoss1;
     ParticuleFactory::createSend<SpawnBoss1>(pos, 6, 7);
 
-    m_tasks.push_back(DelayedTask::create([pos]()
+    m_tasks.push_back(std::make_shared<DelayedTask>([pos]()
     {
         auto eList(EntityFactory::create(EntityType::E_BOSS1_PARTS, pos));
         std::vector<std::weak_ptr<Entity>> eWList;
@@ -156,6 +143,7 @@ void Populator::startBoss1(const Location & pos)
         auto lifeBar(std::make_shared<Boss1PartsLifeBar>(eWList));
         Event<EventSetBossLifeBar>::send(EventSetBossLifeBar(lifeBar));
     }, 6, m_enabled));
+    Updatable::add(m_tasks.back());
 }
 
 void Populator::startBoss1Final(const Location & pos)

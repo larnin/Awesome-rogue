@@ -14,9 +14,8 @@
 #include "Systemes/drawablelist.h"
 #include "Utilities/configs.h"
 
-OptionsState::OptionsState(std::weak_ptr<StateMachine> machine, StateType oldState)
+OptionsState::OptionsState(std::weak_ptr<StateMachine> machine)
     : State(machine)
-    , m_oldState(oldState)
     , m_pageID(0)
     , m_originalKeyConfig(KeysConfig::keysFilename)
 {
@@ -301,12 +300,7 @@ void OptionsState::exitState()
     auto m(m_machine.lock());
     if(!m)
         return;
-    if(isSubState(m_oldState))
-    {
-        auto s(makeState(m_oldState, m_machine));
-        m->setSubstate(s);
-    }
-    else m->resetSubstate();
+    m->delSubstate();
 }
 
 void OptionsState::onKeyModified(CommandType, KeyInfo)

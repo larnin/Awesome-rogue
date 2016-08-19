@@ -4,9 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT       -= core gui
 
 TARGET = Awesome_rogue
 TEMPLATE = app
@@ -113,7 +111,10 @@ SOURCES += main.cpp \
     GUI/Widgets/keyconfigwidget.cpp \
     Controles/commandtype.cpp \
     GUI/Widgets/label.cpp \
-    Utilities/configs.cpp
+    Utilities/configs.cpp \
+    Machine/States/mapstate.cpp \
+    GUI/globalmaprender.cpp \
+    Utilities/delayedtask.cpp
 
 HEADERS  += \
     Controles/commands.h \
@@ -251,9 +252,12 @@ HEADERS  += \
     Controles/keytexture.h \
     GUI/Widgets/keyconfigwidget.h \
     GUI/Widgets/label.h \
-    Utilities/configs.h
+    Utilities/configs.h \
+    Machine/States/mapstate.h \
+    GUI/globalmaprender.h
 
 CONFIG += c++14
+#QMAKE_CXXFLAGS += -Wsign-conversion
 
 # SFML
 DEFINES += SFML_STATIC

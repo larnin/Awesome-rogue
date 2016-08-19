@@ -21,7 +21,7 @@ class BasicCheckbox;
 class OptionsState : public State
 {
 public:
-    OptionsState(std::weak_ptr<StateMachine> machine, StateType oldState);
+    OptionsState(std::weak_ptr<StateMachine> machine);
     OptionsState(OptionsState &&) = default;
     OptionsState & operator =(OptionsState &&) = default;
     virtual ~OptionsState() = default;
@@ -48,7 +48,6 @@ private:
     KeysConfig generateCurrentKeyconfig() const;
     void exitState();
 
-    StateType m_oldState;
     std::shared_ptr<SimpleControler> m_pageControler;
     unsigned int m_pageID;
     std::shared_ptr<Label> m_stateName;

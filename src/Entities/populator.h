@@ -15,7 +15,7 @@ class Populator : public EventReceiver
 {
 public:
     Populator();
-    virtual ~Populator();
+    virtual ~Populator() = default;
 
     void enable();
     void disable();
@@ -31,7 +31,7 @@ private:
 
     std::default_random_engine m_rand;
 
-    std::vector<std::weak_ptr<DelayedTask>> m_tasks;
+    std::vector<std::shared_ptr<DelayedTask>> m_tasks;
 
     bool m_enabled;
 };

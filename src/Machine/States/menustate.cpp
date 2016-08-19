@@ -106,8 +106,8 @@ void MenuState::OptionsFunction()
     std::shared_ptr<StateMachine> m(m_machine.lock());
     if(m)
     {
-        std::unique_ptr<State> s(std::make_unique<OptionsState>(m_machine, StateType::ST_MENU));
-        m->setSubstate(s);
+        std::unique_ptr<State> s(std::make_unique<OptionsState>(m_machine));
+        m->addSubstate(s);
     }
 }
 

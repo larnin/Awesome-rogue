@@ -1,9 +1,3 @@
-#include <QFile>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QJsonValue>
-#include <QJsonParseError>
-#include <QJsonArray>
 #include "keyconfig.h"
 #include "Libs/json.hpp"
 #include <fstream>

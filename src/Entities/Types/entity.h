@@ -31,6 +31,7 @@ public:
     unsigned int getID() const;
 
     Location getPos() const;
+    void jumpTo(const Location & pos);
     float getOrientation() const;
     void setOrientation(float value);
     void rotate(float value);

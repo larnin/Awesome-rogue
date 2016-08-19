@@ -2,6 +2,7 @@
 #define STATEMACHINE_H
 
 #include <memory>
+#include <stack>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Clock.hpp>
 #include <SFML/Graphics/Color.hpp>
@@ -30,10 +31,13 @@ public:
     void setSubstate(std::unique_ptr<State> & sub);
     void resetSubstate();
 
+    void addSubstate(std::unique_ptr<State> & sub);
+    void delSubstate();
+
 private:
     std::unique_ptr<State> m_actualState;
     std::unique_ptr<State> m_nextState;
-    std::unique_ptr<State> m_subState;
+    std::stack<std::unique_ptr<State>> m_subStates;
 
     sf::RenderWindow m_window;
     Commands m_commands;

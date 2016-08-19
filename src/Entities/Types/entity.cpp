@@ -135,6 +135,12 @@ Location Entity::getPos() const
     return m_pos;
 }
 
+void Entity::jumpTo(const Location & pos)
+{
+    m_pos = pos;
+    Event<EventEntityChangeRoom>::send(EventEntityChangeRoom(getID()));
+}
+
 unsigned int Entity::getActiveDistance() const
 {
     return m_activeDistance;

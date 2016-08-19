@@ -3,10 +3,12 @@
 
 #include "state.h"
 #include "Machine/gameholder.h"
+#include "Events/eventreceiver.h"
 
 class SimpleControler;
+class EventInteraction;
 
-class GameState : public State
+class GameState : public State, public EventReceiver
 {
 public:
     GameState(std::weak_ptr<StateMachine> machine);
@@ -22,6 +24,8 @@ private:
     void onPressPause();
     void onPressMap();
     void onPressInventary();
+
+    void onPortalTouched(EventInteraction e);
 
     GameHolder m_game;
     std::shared_ptr<SimpleControler> m_controler;

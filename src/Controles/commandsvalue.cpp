@@ -38,3 +38,9 @@ void CommandsValue::valide(CommandType key)
     m_pressedEventKey[key] = false;
     m_relachedEventKey[key] = false;
 }
+
+void CommandsValue::valideAll()
+{
+    for(unsigned int i(0) ; i < CommandType::COMMANDS_COUNT ; i++)
+        valide(CommandType(i));
+}

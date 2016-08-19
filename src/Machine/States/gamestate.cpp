@@ -3,6 +3,9 @@
 #include "Machine/statemachine.h"
 #include "GUI/simplecontroler.h"
 #include "pausestate.h"
+#include "mapstate.h"
+#include "Events/Datas/eventinteraction.h"
+#include "Events/event.h"
 
 GameState::GameState(std::weak_ptr<StateMachine> machine)
     : State(machine)
@@ -12,6 +15,8 @@ GameState::GameState(std::weak_ptr<StateMachine> machine)
     m_controler->set(CommandType::KEY_PAUSE, std::bind(&GameState::onPressPause, this));
     m_controler->set(CommandType::KEY_MAP, std::bind(&GameState::onPressMap, this));
     m_controler->set(CommandType::KEY_INVENTARY, std::bind(&GameState::onPressInventary, this));
+
+    connect<EventInteraction>(std::bind(&onPortalTouched, this, _1));
 }
 
 void GameState::enable()
@@ -36,16 +41,34 @@ void GameState::onPressPause()
     if(mLock)
     {
         std::unique_ptr<State> s(std::make_unique<PauseState>(m_machine));
-        mLock->setSubstate(s);
+        mLock->addSubstate(s);
     }
 }
 
 void GameState::onPressMap()
 {
-
+    std::shared_ptr<StateMachine> mLock(m_machine.lock());
+    if(mLock)
+    {
+        std::unique_ptr<State> s(std::make_unique<MapState>(m_machine));
+        mLock->addSubstate(s);
+    }
 }
 
 void GameState::onPressInventary()
 {
 
+}
+
+void GameState::onPortalTouched(EventInteraction e)
+{
+    if(e.type != BlockInteractionType::BI_PORTAL)
+        return;
+
+    std::shared_ptr<StateMachine> mLock(m_machine.lock());
+    if(mLock)
+    {
+        std::unique_ptr<State> s(std::make_unique<MapState>(m_machine, true));
+        mLock->addSubstate(s);
+    }
 }

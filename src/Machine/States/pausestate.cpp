@@ -6,6 +6,7 @@
 #include "Systemes/drawablelist.h"
 #include "menustate.h"
 #include "optionsstate.h"
+#include "mapstate.h"
 
 PauseState::PauseState(std::weak_ptr<StateMachine> machine)
     : State(machine)
@@ -87,12 +88,17 @@ void PauseState::continueFunction()
 {
     std::shared_ptr<StateMachine> m(m_machine.lock());
     if(m)
-        m->resetSubstate();
+        m->delSubstate();
 }
 
 void PauseState::mapFunction()
 {
-
+    std::shared_ptr<StateMachine> m(m_machine.lock());
+    if(m)
+    {
+        std::unique_ptr<State> s(std::make_unique<MapState>(m_machine));
+        m->addSubstate(s);
+    }
 }
 
 void PauseState::inventaryFunction()
@@ -105,8 +111,8 @@ void PauseState::optionsFunction()
     std::shared_ptr<StateMachine> m(m_machine.lock());
     if(m)
     {
-        std::unique_ptr<State> s(std::make_unique<OptionsState>(m_machine, StateType::ST_PAUSE));
-        m->setSubstate(s);
+        std::unique_ptr<State> s(std::make_unique<OptionsState>(m_machine));
+        m->addSubstate(s);
     }
 }
 
@@ -117,6 +123,6 @@ void PauseState::quitFunction()
     {
         std::unique_ptr<State> s(std::make_unique<MenuState>(m_machine));
         m->setNext(s);
-        m->resetSubstate();
+        m->delSubstate();
     }
 }

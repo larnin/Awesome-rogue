@@ -72,11 +72,11 @@ void StateMachine::run()
     {
         if(m_nextState)
         {
-            if(!m_subState && m_actualState)
+            if(m_subStates.empty() && m_actualState)
                 m_actualState->disable();
             std::swap(m_actualState, m_nextState);
             m_nextState = std::unique_ptr<State>();
-            if(!m_subState && m_actualState)
+            if(m_subStates.empty() && m_actualState)
                 m_actualState->enable();
         }
 
@@ -108,27 +108,25 @@ void StateMachine::setWindowCenter(const sf::Vector2f & pos)
     m_window.setView(v);
 }
 
-void StateMachine::setSubstate(std::unique_ptr<State> & sub)
+void StateMachine::addSubstate(std::unique_ptr<State> & sub)
 {
-    if(m_subState)
-        m_subState->disable();
-    m_subState = std::move(sub);
-    if(m_subState)
-        m_subState->enable();
-    if(m_subState)
-    {
-        if(m_actualState)
-            m_actualState->disable();
-    }
-    else
-    {
-        if(m_actualState)
-            m_actualState->enable();
-    }
+    if(!sub)
+        return;
+    if(!m_subStates.empty())
+        m_subStates.top()->disable();
+    else m_actualState->disable();
+
+    m_subStates.push(std::move(sub));
+    m_subStates.top()->enable();
 }
 
-void StateMachine::resetSubstate()
+void StateMachine::delSubstate()
 {
-    std::unique_ptr<State> s;
-    setSubstate(s);
+    if(m_subStates.empty())
+        return;
+    m_subStates.top()->disable();
+    m_subStates.pop();
+    if(!m_subStates.empty())
+        m_subStates.top()->enable();
+    else m_actualState->enable();
 }

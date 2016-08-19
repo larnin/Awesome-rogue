@@ -74,6 +74,7 @@ void KeyConfigWidget::control(CommandsValue & v)
         m_waitInput = false;
         if(m_function)
             m_function(m_type, m_key);
+        v.valideAll();
     }
     if(keyChanged)
         m_keyTexture = keyTexture(m_key.key);
