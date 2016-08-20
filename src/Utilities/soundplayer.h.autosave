@@ -1,0 +1,12 @@
+#ifndef SOUNDPLAYER_H
+#define SOUNDPLAYER_H
+
+#include "Events/eventreceiver.h"
+
+class SoundPlayer : public EventReceiver
+{
+public:
+    SoundPlayer();
+};
+
+#endif // SOUNDPLAYER_H

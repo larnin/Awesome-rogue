@@ -8,6 +8,7 @@
 #include <SFML/Graphics/Color.hpp>
 #include "Controles/commands.h"
 #include "Utilities/noncopiable.h"
+#include "Sounds/soundplayer.h"
 
 class State;
 class SmoothCamera;
@@ -34,6 +35,9 @@ public:
     void addSubstate(std::unique_ptr<State> & sub);
     void delSubstate();
 
+    void setMusicVolum(float value);
+    void setSoundVolum(float value);
+
 private:
     std::unique_ptr<State> m_actualState;
     std::unique_ptr<State> m_nextState;
@@ -44,6 +48,7 @@ private:
     sf::Clock m_clock;
     sf::Color m_clearColor;
     std::shared_ptr<SmoothCamera> m_camera;
+    SoundPlayer m_soundPlayer;
 };
 
 #endif // STATEMACHINE_H

@@ -117,8 +117,8 @@ void OptionsState::initPG2()
     m_musicVolume->min = 0;
     m_musicVolume->max = 100;
     m_musicVolume->value = Configs::c.musicVolum;
-    m_musicVolume->speed = 25;
-    m_musicVolume->connectValueChangedEvent(std::bind(&onMusicVolumeChanged, this, 1));
+    m_musicVolume->speed = 50;
+    m_musicVolume->connectValueChangedEvent(std::bind(&onMusicVolumeChanged, this, _1));
 
     m_othersLabels.push_back(std::make_shared<Label>(AdaptableBounds(sf::Vector2f(-100, topOffset + 3*vOffset), sf::Vector2f(150, vOffset-5), Margin(0), V_TOP, H_CENTER)));
     m_othersLabels.back()->setText("Sounds :", f, 8, sf::Color::Black);
@@ -127,7 +127,7 @@ void OptionsState::initPG2()
     m_soundsVolume->min = 0;
     m_soundsVolume->max = 100;
     m_soundsVolume->value = Configs::c.soundsVolum;
-    m_soundsVolume->speed = 25;
+    m_soundsVolume->speed = 50;
     m_soundsVolume->connectValueChangedEvent(std::bind(&onSoundVolumeChanged, this, _1));
 
     m_windowZoom->connect(MOVE_DOWN, m_fullScreen);
@@ -290,7 +290,8 @@ void OptionsState::onAnnuleClicked()
         m->changeFullScreen(Configs::c.useFullScreen);
     m->changeWindowZoom(m_windowZoom->getCurrent() == "*1" ? 1.0f : m_windowZoom->getCurrent() == "*2" ? 0.5f : 0.33f);
 
-    //add music and sounds !!!
+    m->setMusicVolum(Configs::c.musicVolum);
+    m->setSoundVolum(Configs::c.soundsVolum);
 
     exitState();
 }
@@ -324,12 +325,16 @@ void OptionsState::onZoomChanged(std::string zoomName)
 
 void OptionsState::onMusicVolumeChanged(float value)
 {
-    //todo
+    auto m(m_machine.lock());
+    if(m)
+        m->setMusicVolum(value);
 }
 
 void OptionsState::onSoundVolumeChanged(float value)
 {
-    //todo
+    auto m(m_machine.lock());
+    if(m)
+        m->setSoundVolum(value);
 }
 
 void OptionsState::onFullScreenToggle(bool value)

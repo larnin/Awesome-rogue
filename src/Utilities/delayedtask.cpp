@@ -48,8 +48,8 @@ void DelayedTask::update(const sf::Time & elapsedTime)
     m_life -= elapsedTime.asSeconds();
     if(m_life <= 0)
     {
+        m_finished = true;
         if(m_function)
             m_function();
-        m_finished = true;
     }
 }

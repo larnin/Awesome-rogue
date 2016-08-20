@@ -130,3 +130,13 @@ void StateMachine::delSubstate()
         m_subStates.top()->enable();
     else m_actualState->enable();
 }
+
+void StateMachine::setMusicVolum(float value)
+{
+    m_soundPlayer.setMusicVolum(value);
+}
+
+void StateMachine::setSoundVolum(float value)
+{
+    m_soundPlayer.setSoundVolum(value);
+}

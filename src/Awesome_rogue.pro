@@ -114,7 +114,8 @@ SOURCES += main.cpp \
     Utilities/configs.cpp \
     Machine/States/mapstate.cpp \
     GUI/globalmaprender.cpp \
-    Utilities/delayedtask.cpp
+    Utilities/delayedtask.cpp \
+    Sounds/soundplayer.cpp
 
 HEADERS  += \
     Controles/commands.h \
@@ -254,7 +255,12 @@ HEADERS  += \
     GUI/Widgets/label.h \
     Utilities/configs.h \
     Machine/States/mapstate.h \
-    GUI/globalmaprender.h
+    GUI/globalmaprender.h \
+    Events/Datas/eventplaysound.h \
+    Events/Datas/eventplaymusic.h \
+    Sounds/soundplayer.h \
+    Sounds/sounddata.h \
+    Events/Datas/eventstopmusic.h
 
 CONFIG += c++14
 #QMAKE_CXXFLAGS += -Wsign-conversion
@@ -265,23 +271,37 @@ LIBS += -LC:/Users/Nicolas/Programation/c++/SFML/DW2_2.4_(Qt)/lib
 
 CONFIG(release, debug|release): LIBS += -lsfml-graphics-s \
                                         -lsfml-window-s \
+                                        -lsfml-audio-s \
                                         -lsfml-system-s \
                                         -lfreetype \
                                         -lgdi32 \
                                         #-lglew \
                                         -ljpeg \
                                         -lopengl32 \
-                                        -lwinmm
+                                        -lwinmm \
+                                        -lopenal32 \
+                                        -lflac \
+                                        -lvorbisenc \
+                                        -lvorbisfile \
+                                        -lvorbis \
+                                        -logg
 
 CONFIG(debug, debug|release): LIBS +=   -lsfml-graphics-s-d \
                                         -lsfml-window-s-d \
+                                        -lsfml-audio-s-d \
                                         -lsfml-system-s-d \
                                         -lfreetype \
                                         -lgdi32 \
                                         #-lglew \
                                         -ljpeg \
                                         -lopengl32 \
-                                        -lwinmm
+                                        -lwinmm \
+                                        -lopenal32 \
+                                        -lflac \
+                                        -lvorbisenc \
+                                        -lvorbisfile \
+                                        -lvorbis \
+                                        -logg
 
 INCLUDEPATH += C:/Users/Nicolas/Programation/c++/SFML/DW2_2.4_(Qt)/include
 DEPENDPATH += C:/Users/Nicolas/Programation/c++/SFML/DW2_2.4_(Qt)/include

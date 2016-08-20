@@ -40,15 +40,15 @@ std::string TextDrawer::getText() const
     return m_text.getString().toAnsiString();
 }
 
-void TextDrawer::setText(const std::string & text, const Font & font, unsigned int size, const sf::Color & color)
+void TextDrawer::setText(const std::string & text, const Font & font, unsigned int size, const sf::Color & color, const sf::Color & outlineColor, float outlineThickness)
 {
     m_text.setString(sf::String::fromUtf8(text.begin(), text.end()));
     m_text.setFont(*font);
     m_font = font;
     m_text.setCharacterSize(size);
-    m_text.setOutlineColor(sf::Color::White);
-    m_text.setOutlineThickness(1);
     m_text.setFillColor(color);
+    m_text.setOutlineColor(outlineColor);
+    m_text.setOutlineThickness(outlineThickness);
     m_toRedraw = true;
 }
 
@@ -68,6 +68,18 @@ void TextDrawer::setTextSize(unsigned int size)
 void TextDrawer::setTextColor(const sf::Color & color)
 {
     m_text.setFillColor(color);
+    m_toRedraw = true;
+}
+
+void TextDrawer::setTextOutlineColor(const sf::Color & color)
+{
+    m_text.setOutlineColor(color);
+    m_toRedraw = true;
+}
+
+void TextDrawer::setTextOutlineThickness(float value)
+{
+    m_text.setOutlineThickness(value);
     m_toRedraw = true;
 }
 

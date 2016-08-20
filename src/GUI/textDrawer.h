@@ -19,10 +19,12 @@ public:
 
     void setText(const std::string & text);
     std::string getText() const;
-    void setText(const std::string &text, const Font & font, unsigned int size, const sf::Color & color);
+    void setText(const std::string &text, const Font & font, unsigned int size, const sf::Color & color, const sf::Color & outlineColor = sf::Color::Transparent, float outlineThickness = 0);
     void setFont(const Font & font);
     void setTextSize(unsigned int size);
     void setTextColor(const sf::Color & color);
+    void setTextOutlineColor(const sf::Color & color);
+    void setTextOutlineThickness(float value);
     sf::Text getCurrentText() const;
 
     VAlign vAlign;

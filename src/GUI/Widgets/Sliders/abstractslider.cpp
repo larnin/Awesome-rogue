@@ -36,8 +36,14 @@ void AbstractSlider::update(const sf::Time & t)
     if(m_state == ControlState::UNACTIVE)
         m_commandValue = 0;
 
+    if(std::abs(m_commandValue) < 0.2)
+        return;
+
     value += m_commandValue*t.asSeconds()*speed;
     value = std::min(max, std::max(min, value));
+
+    if(m_valueChangedFunction)
+        m_valueChangedFunction(value);
 }
 
 void AbstractSlider::connectValueChangedEvent(const std::function<void(float)> & function)
