@@ -261,7 +261,7 @@ CONFIG += c++14
 
 # SFML
 DEFINES += SFML_STATIC
-LIBS += -LC:/Users/Nicolas/Programation/c++/SFML/DW2_2.3_(Qt)/lib
+LIBS += -LC:/Users/Nicolas/Programation/c++/SFML/DW2_2.4_(Qt)/lib
 
 CONFIG(release, debug|release): LIBS += -lsfml-graphics-s \
                                         -lsfml-window-s \
@@ -283,8 +283,8 @@ CONFIG(debug, debug|release): LIBS +=   -lsfml-graphics-s-d \
                                         -lopengl32 \
                                         -lwinmm
 
-INCLUDEPATH += C:/Users/Nicolas/Programation/c++/SFML/DW2_2.3_(Qt)/include
-DEPENDPATH += C:/Users/Nicolas/Programation/c++/SFML/DW2_2.3_(Qt)/include
+INCLUDEPATH += C:/Users/Nicolas/Programation/c++/SFML/DW2_2.4_(Qt)/include
+DEPENDPATH += C:/Users/Nicolas/Programation/c++/SFML/DW2_2.4_(Qt)/include
 
 #Boost
 #INCLUDEPATH += C:/Users/Nicolas/Programation/c++/boost/boost_1_61_0

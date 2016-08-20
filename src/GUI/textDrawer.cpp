@@ -46,7 +46,9 @@ void TextDrawer::setText(const std::string & text, const Font & font, unsigned i
     m_text.setFont(*font);
     m_font = font;
     m_text.setCharacterSize(size);
-    m_text.setColor(color);
+    m_text.setOutlineColor(sf::Color::White);
+    m_text.setOutlineThickness(1);
+    m_text.setFillColor(color);
     m_toRedraw = true;
 }
 
@@ -65,7 +67,7 @@ void TextDrawer::setTextSize(unsigned int size)
 
 void TextDrawer::setTextColor(const sf::Color & color)
 {
-    m_text.setColor(color);
+    m_text.setFillColor(color);
     m_toRedraw = true;
 }
 

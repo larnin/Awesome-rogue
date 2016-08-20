@@ -45,7 +45,7 @@ void BasicTextBox::updateTextTexture(const sf::Vector2f & size, bool drawCursor)
         m_textTexture.create(size.x+3, size.y);
 
     sf::Text t(text, *m_font, 8);
-    t.setColor(sf::Color::Black);
+    t.setFillColor(sf::Color::Black);
     sf::Vector2f pos(-t.getGlobalBounds().left, -t.getGlobalBounds().top + int((size.y-t.getGlobalBounds().height)/2.0f));
     if(t.getGlobalBounds().width > size.x)
         pos.x -= t.getGlobalBounds().width - size.x;

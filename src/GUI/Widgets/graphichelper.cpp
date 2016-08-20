@@ -82,7 +82,7 @@ sf::Texture drawText(const std::string & _text, const sf::Font & font, const sf:
     texture.create(size.x, size.y);
 
     sf::Text text(_text, font, 8);
-    text.setColor(sf::Color::Black);
+    text.setFillColor(sf::Color::Black);
     text.setPosition(-text.getGlobalBounds().left, -text.getGlobalBounds().top);
 
     sf::Vector2f offset;

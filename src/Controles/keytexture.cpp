@@ -20,7 +20,7 @@ Texture keyTexture(sf::Keyboard::Key key)
     texture.draw(s);
     Font f("res/font/PressStart2P.ttf");
     sf::Text t(keyName(key), *f, 8);
-    t.setColor(sf::Color::Black);
+    t.setFillColor(sf::Color::Black);
     auto rect(t.getGlobalBounds());
     sf::Vector2f pos(sf::Vector2f(tBack->getSize())/2.0f-sf::Vector2f(rect.left, rect.top)-sf::Vector2f(rect.width, rect.height)/2.0f);
     pos.y -= 5; //kaka !!
@@ -341,7 +341,7 @@ Texture drawedText(const std::string & text)
     sf::Text t(text, *f, 8);
     texture.create(t.getGlobalBounds().width, t.getGlobalBounds().height);
     texture.clear(sf::Color::Transparent);
-    t.setColor(sf::Color::Black);
+    t.setFillColor(sf::Color::Black);
     t.setPosition(-t.getGlobalBounds().left, -t.getGlobalBounds().top);
     texture.draw(t);
     texture.display();
