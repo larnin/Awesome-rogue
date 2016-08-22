@@ -80,3 +80,11 @@ HitBox HitBox::transform(const sf::Vector2f & dir) const
         out.addLine(line.move(dir));
     return out;
 }
+
+HitBox HitBox::transform(float factor)
+{
+    HitBox out;
+    for(const auto & line : m_lines)
+        out.addLine(Line(line.pos1*factor, line.pos2*factor));
+    return out;
+}

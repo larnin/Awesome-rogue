@@ -115,7 +115,10 @@ SOURCES += main.cpp \
     Machine/States/mapstate.cpp \
     GUI/globalmaprender.cpp \
     Utilities/delayedtask.cpp \
-    Sounds/soundplayer.cpp
+    Sounds/soundplayer.cpp \
+    Items/itemslist.cpp \
+    Items/itemtype.cpp \
+    Entities/playerinfos.cpp
 
 HEADERS  += \
     Controles/commands.h \
@@ -260,7 +263,13 @@ HEADERS  += \
     Events/Datas/eventplaymusic.h \
     Sounds/soundplayer.h \
     Sounds/sounddata.h \
-    Events/Datas/eventstopmusic.h
+    Events/Datas/eventstopmusic.h \
+    Items/itemslist.h \
+    Items/itemtype.h \
+    Events/Datas/eventpickitem.h \
+    Events/Datas/eventdropitem.h \
+    Entities/playerinfos.h \
+    Events/Datas/eventexperiencechanged.h
 
 CONFIG += c++14
 #QMAKE_CXXFLAGS += -Wsign-conversion

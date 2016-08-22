@@ -38,6 +38,8 @@ PunchBallMob::PunchBallMob(const Location & pos)
     if(p)
         if(p->getPos().getRoom().lock() == m_pos.getRoom().lock())
             m_target = p;
+
+    m_drops = experienceToItems(8);
 }
 
 void PunchBallMob::updateComportement(const sf::Time & elapsedTime)

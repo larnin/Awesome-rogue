@@ -35,6 +35,8 @@ SquareMob::SquareMob(const Location & pos)
 
     std::uniform_real_distribution<float> a(0, 2*3.14159);
     m_orientation = a(m_randEngine);
+
+    m_drops = experienceToItems(6);
 }
 
 void SquareMob::updateComportement(const sf::Time & elapsedTime)

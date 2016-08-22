@@ -58,9 +58,8 @@ void SmoothCamera::update(const sf::Time & elapsedTime)
     }
 
     sf::RenderWindow & w(m_machine.getWindow());
-    sf::View v(sf::Vector2f(sf::Vector2i(center)), sf::Vector2f(w.getSize()));
+    sf::View v(sf::Vector2f(sf::Vector2i(center)), sf::Vector2f(w.getSize())*zoom);
     v.setRotation(orientation);
-    v.zoom(zoom);
     w.setView(v);
 
     auto it(std::remove_if(m_effects.begin(), m_effects.end(), [](const auto & e)

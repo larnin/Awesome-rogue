@@ -44,6 +44,8 @@ TrackerMob::TrackerMob(const Location & pos)
     if(p)
         if(p->getPos().getRoom().lock() == m_pos.getRoom().lock())
             m_target = p;
+
+    m_drops = experienceToItems(12);
 }
 
 void TrackerMob::updateComportement(const sf::Time & elapsedTime)

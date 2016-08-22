@@ -51,6 +51,8 @@ Boss1Part::Boss1Part(const Location & pos, float startOrientation, float distanc
 
     m_timeToNextWave = std::uniform_real_distribution<float>(minWaveTime, maxWaveTime)(m_randEngine);
     m_timeToRandomProjectile = std::uniform_real_distribution<float>(minRandProjectileTime, maxRandProjectileTime)(m_randEngine);
+
+    m_drops = experienceToItems(20);
 }
 
 void Boss1Part::draw(sf::RenderTarget & target, sf::RenderStates) const

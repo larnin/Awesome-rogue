@@ -4,8 +4,12 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/System/Vector2.hpp>
 #include "Utilities/ressource.h"
+#include "Events/eventreceiver.h"
+#include "textDrawer.h"
 
-class GameInterface : public sf::Drawable
+class EventExperienceChanged;
+
+class GameInterface : public sf::Drawable, public EventReceiver
 {
 public:
     GameInterface();
@@ -13,7 +17,10 @@ public:
     virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
 
 private:
+    void onExperienceChanged(EventExperienceChanged e);
+
     Texture m_texture;
+    TextDrawer m_text;
 };
 
 #endif // GAMEINTERFACE_H

@@ -5,6 +5,7 @@
 #include "Entities/populator.h"
 #include "Events/eventreceiver.h"
 #include <memory>
+#include "Entities/playerinfos.h"
 
 class StateMachine;
 class Player;
@@ -18,6 +19,7 @@ class ProjectileLauncher;
 class Interactor;
 class BossLifeBar;
 class EventSetBossLifeBar;
+class ItemsList;
 
 class GameHolder : private NonCopiable, public EventReceiver
 {
@@ -46,6 +48,8 @@ private:
     Populator m_populator;
     std::shared_ptr<Interactor> m_interactor;
     std::shared_ptr<BossLifeBar> m_bossLifeBar;
+    std::shared_ptr<ItemsList> m_items;
+    PlayerInfos m_playerInfos;
 
     bool m_enabled;
 };

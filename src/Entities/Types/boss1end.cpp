@@ -53,6 +53,8 @@ Boss1End::Boss1End(const Location & pos)
      m_currentBox = m_originalBox;
 
      m_time = std::uniform_real_distribution<float>(minFireDelay, maxFireDelay)(m_randEngine);
+
+     m_drops = experienceToItems(500);
 }
 
 void Boss1End::draw(sf::RenderTarget & target, sf::RenderStates) const

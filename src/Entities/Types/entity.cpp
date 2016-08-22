@@ -4,6 +4,7 @@
 
 #include "Events/event.h"
 #include "Events/Datas/evententitychangeroom.h"
+#include "Events/Datas/eventdropitem.h"
 #include "Events/eventgetter.h"
 #include "Particules/particulefactory.h"
 #include "Particules/Types/particulelifebar.h"
@@ -85,6 +86,13 @@ bool Entity::damage(float value, std::weak_ptr<Entity>, const sf::Vector2f & dir
     m_life -= value;
     if(m_life < 0)
     {
+        std::uniform_real_distribution<float> d(-itemDropSpeed, itemDropSpeed);
+        for(ItemType i : m_drops)
+        {
+            sf::Vector2f speed(d(m_randEngine), d(m_randEngine));
+            Event<EventDropItem>::send(EventDropItem(i, m_pos, speed));
+        }
+
         m_life = 0;
         m_killed = true;
         onKill();
@@ -175,6 +183,11 @@ void Entity::rotate(float value)
 HitBox Entity::getBox() const
 {
     return m_currentBox;
+}
+
+std::vector<ItemType> Entity::getDrops() const
+{
+    return m_drops;
 }
 
 void Entity::execMove(const sf::Vector2f & dir)

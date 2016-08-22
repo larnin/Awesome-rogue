@@ -26,6 +26,7 @@ public:
     sf::FloatRect globalRect() const;
     HitBox transform(float rotation, bool xFlip, bool yFlip) const;
     HitBox transform(const sf::Vector2f & dir) const;
+    HitBox transform(float factor);
 
 private:
     std::vector<Line> m_lines;

@@ -20,6 +20,7 @@
 #include "Events/Datas/eventinstantcenterofviewchanged.h"
 #include "Events/Datas/eventinteraction.h"
 #include "Map/blocktype.h"
+#include "Items/itemslist.h"
 
 GameHolder::GameHolder(std::weak_ptr<StateMachine> machine)
     : m_enabled(false)
@@ -53,6 +54,8 @@ GameHolder::GameHolder(std::weak_ptr<StateMachine> machine)
     m_lifeBar = std::make_shared<LifeBar>(p);
 
     m_interactor = std::make_shared<Interactor>(p);
+
+    m_items = std::make_shared<ItemsList>();
 }
 
 GameHolder::~GameHolder()
@@ -97,6 +100,9 @@ void GameHolder::enable()
         DrawableList::add(m_bossLifeBar, 6);
         Updatable::add(m_bossLifeBar);
     }
+
+    DrawableList::add(m_items, 1);
+    Updatable::add(m_items);
 }
 
 void GameHolder::disable()
@@ -132,6 +138,9 @@ void GameHolder::disable()
         DrawableList::del(m_bossLifeBar);
         Updatable::del(m_bossLifeBar);
     }
+
+    DrawableList::del(m_items);
+    Updatable::del(m_items);
 }
 
 std::shared_ptr<Player> GameHolder::getPlayer()

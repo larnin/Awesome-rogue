@@ -41,6 +41,8 @@ CircleMob::CircleMob(const Location & pos, bool small)
     if(p)
         if(p->getPos().getRoom().lock() == m_pos.getRoom().lock())
             m_target = p;
+
+    m_drops = experienceToItems(5);
 }
 
 void CircleMob::updateComportement(const sf::Time & elapsedTime)

@@ -41,6 +41,8 @@ CrossLaserMob::CrossLaserMob(const Location & pos)
 
     std::uniform_real_distribution<float> distrib(-5, 0);
     m_fireTimer = distrib(m_randEngine);
+
+    m_drops = experienceToItems(10);
 }
 
 void CrossLaserMob::updateComportement(const sf::Time & elapsedTime)

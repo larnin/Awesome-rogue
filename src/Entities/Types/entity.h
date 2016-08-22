@@ -7,6 +7,7 @@
 #include "Utilities/noncopiable.h"
 #include "Map/location.h"
 #include "Entities/team.h"
+#include "Items/itemtype.h"
 
 class Entity : public Updatable, public sf::Drawable, private NonCopiable
 {
@@ -38,6 +39,8 @@ public:
 
     HitBox getBox() const;
 
+    std::vector<ItemType> getDrops() const;
+
     void update(const sf::Time & elapsedTime);
 
 protected:
@@ -68,6 +71,7 @@ protected:
     unsigned int m_activeDistance;
     unsigned int m_UID;
     bool m_canPassDoor;
+    std::vector<ItemType> m_drops;
 
     float m_knockbackMultiplier;
 

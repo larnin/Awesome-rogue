@@ -3,11 +3,14 @@
 #include <SFML/Graphics/View.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
 #include "Utilities/quadrender.h"
+#include "Events/Datas/eventexperiencechanged.h"
 
 GameInterface::GameInterface()
     : m_texture("res/img/interface.png")
+    , m_text(V_CENTER, H_CENTER)
 {
-
+    connect<EventExperienceChanged>(std::bind(&onExperienceChanged, this, _1));
+    m_text.setText("0", Font("res/font/PressStart2P.ttf"), 8, sf::Color::Black);
 }
 
 void GameInterface::draw(sf::RenderTarget & target, sf::RenderStates) const
@@ -27,4 +30,11 @@ void GameInterface::draw(sf::RenderTarget & target, sf::RenderStates) const
     drawQuad(&array[8], sf::FloatRect(vTopLeft.x+texLifeHolder.width, vTopLeft.y+vSize.y-texCenter.height, vSize.x-texLifeHolder.width-texmapHolder.width, texCenter.height), texCenter);
 
     target.draw(array, sf::RenderStates(m_texture()));
+
+    m_text.draw(target, sf::FloatRect(vTopLeft.x+vSize.x-114, vTopLeft.y+vSize.y-17, 33, 15));
+}
+
+void GameInterface::onExperienceChanged(EventExperienceChanged e)
+{
+    m_text.setText(std::to_string(e.value));
 }
