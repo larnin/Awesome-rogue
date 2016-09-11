@@ -8,12 +8,14 @@
 #include "door.h"
 #include "Entities/entitytype.h"
 #include "roomtype.h"
+#include "File/serializable.h"
 
 class Patern;
 
-class Room : private NonCopiable
+class Room : public Serializable, private NonCopiable
 {
 public:
+    Room(const json & j);
     Room(const Patern & p, sf::Vector2i pos, unsigned int id);
     Room(sf::Vector2u size, sf::Vector2i pos, unsigned int id, Block def = Block());
     Room(Room &&) = default;
@@ -40,6 +42,9 @@ public:
     void openDoors();
 
     bool modified;
+
+protected:
+    virtual json serialize() const;
 
 private:
     void drawDoor(sf::Vector2u pos);

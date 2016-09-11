@@ -7,6 +7,8 @@
 #include "Systemes/updatable.h"
 #include <algorithm>
 #include "Utilities/configs.h"
+#include "Effects/fadeineffect.h"
+#include "Effects/fadeouteffect.h"
 
 const unsigned int absoluteMaxSounds(254);
 
@@ -16,6 +18,36 @@ SoundPlayer::SoundPlayer()
 {
     connect<EventPlaySound>(std::bind(&onPlaySound, this, _1));
     connect<EventPlayMusic>(std::bind(&onPlayMusic, this, _1));
+    connect<EventStopMusic>(std::bind(&onStopMusic, this, _1));
+}
+
+void SoundPlayer::update(const sf::Time &elapsedTime)
+{
+    for(auto & music : m_musics)
+    {
+        float volum(1);
+        float pitch(1);
+        for(auto & effect : music.effects)
+        {
+            effect->update(elapsedTime);
+            volum *= effect->getVolum();
+            pitch *= effect->getPitch();
+        }
+        music.music->setVolume(music.defaultVolum*volum*m_musicVolum);
+        music.music->setPitch(music.defaultPitch*pitch);
+
+        auto it(std::remove_if(music.effects.begin(), music.effects.end(), [](const auto & e){return e->isFinished();}));
+        music.effects.erase(it, music.effects.end());
+    }
+
+    auto it(std::remove_if(m_musics.begin(), m_musics.end(), [](const auto & m){
+        for(const auto & effect : m.effects)
+            if(effect->isMusicStopped())
+                return true;
+        return false;
+    }));
+
+    m_musics.erase(it, m_musics.end());
 }
 
 void SoundPlayer::playSound(const std::string & filename, const SoundData & data)
@@ -33,7 +65,7 @@ void SoundPlayer::playSound(const std::string & filename, const SoundData & data
 
     unsigned int id(m_playedSounds.empty() ? 0 : m_playedSounds.back().id+1);
     m_playedSounds.push_back(PlayedSoundData(*(it->buffer), id, data.volume));
-    sf::Sound & s(m_playedSounds.back().sound);
+    sf::Sound & s(*m_playedSounds.back().sound);
     s.setPitch(data.pitch);
     s.setVolume(data.volume*m_soundVolum);
     s.play();
@@ -43,21 +75,19 @@ void SoundPlayer::playSound(const std::string & filename, const SoundData & data
 
 }
 
-void SoundPlayer::playMusic(const std::string & filename, const MusicData & data)
+void SoundPlayer::playMusic(const std::string & filename, const MusicData & data, float fadeout, float fadein, float delay)
 {
-    if(!m_music.openFromFile(filename))
-        throw std::invalid_argument("File \"" + filename + "\" not found !");
-    m_musicPlayedVolum = data.volume;
-    m_music.setAttenuation(0);;
-    m_music.setLoop(data.loop);
-    m_music.setPitch(data.pitch);
-    m_music.setVolume(data.volume*m_musicVolum);
-    m_music.play();
+    for(auto & music : m_musics)
+        music.effects.push_back(std::make_unique<FadeoutEffect>(0, fadeout));
+    m_musics.push_back(PlayedMusicData(filename, data.volume, data.pitch, data.loop));
+    m_musics.back().effects.push_back(std::make_unique<FadeinEffect>(delay, fadein));
+    m_musics.back().music->play();
 }
 
-void SoundPlayer::stopMusic()
+void SoundPlayer::stopMusic(float fadeout)
 {
-    m_music.stop();
+    for(auto & music : m_musics)
+        music.effects.push_back(std::make_unique<FadeoutEffect>(0, fadeout));
 }
 
 void SoundPlayer::onPlaySound(EventPlaySound e)
@@ -67,12 +97,12 @@ void SoundPlayer::onPlaySound(EventPlaySound e)
 
 void SoundPlayer::onPlayMusic(EventPlayMusic e)
 {
-    playMusic(e.filename, e.data);
+    playMusic(e.filename, e.data, e.fadeoutTime, e.fadeinTime, e.delay);
 }
 
-void SoundPlayer::onStopMusic(EventStopMusic)
+void SoundPlayer::onStopMusic(EventStopMusic e)
 {
-    stopMusic();
+    stopMusic(e.fadeoutTime);
 }
 
 SoundPlayer::SoundBufferData::SoundBufferData(const std::string & _filename)
@@ -89,7 +119,7 @@ void SoundPlayer::delSound(unsigned int id)
     auto itSound(std::find_if(m_playedSounds.begin(), m_playedSounds.end(), [id](const auto & s){return s.id == id;}));
     assert(itSound != m_playedSounds.end());
 
-    auto itBuffer(std::find_if(m_buffers.begin(), m_buffers.end(), [itSound](const auto & b){return itSound->sound.getBuffer() == b.buffer.get();}));
+    auto itBuffer(std::find_if(m_buffers.begin(), m_buffers.end(), [itSound](const auto & b){return itSound->sound->getBuffer() == b.buffer.get();}));
     assert(itBuffer != m_buffers.end());
 
     m_playedSounds.erase(itSound);
@@ -104,12 +134,11 @@ void SoundPlayer::delSound(unsigned int id)
 void SoundPlayer::setMusicVolum(float value)
 {
     m_musicVolum = value;
-    m_music.setVolume(m_musicVolum*m_musicPlayedVolum);
 }
 
 void SoundPlayer::setSoundVolum(float value)
 {
     m_soundVolum = value;
     for(auto & v : m_playedSounds)
-        v.sound.setVolume(m_soundVolum*v.volum);
+        v.sound->setVolume(m_soundVolum*v.volum);
 }

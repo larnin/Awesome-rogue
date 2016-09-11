@@ -7,6 +7,8 @@
 #include "Events/Datas/eventinteraction.h"
 #include "Events/event.h"
 
+#include "File/serializer.h"
+
 GameState::GameState(std::weak_ptr<StateMachine> machine)
     : State(machine)
     , m_game(machine)

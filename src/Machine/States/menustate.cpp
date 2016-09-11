@@ -9,6 +9,8 @@
 #include "Machine/States/optionsstate.h"
 #include "GUI/Widgets/widget.h"
 
+#include "Events/Datas/eventplaymusic.h"
+
 MenuState::MenuState(std::weak_ptr<StateMachine> machine)
     : State(machine)
     , m_titleTexture("res/img/title.png")
@@ -44,6 +46,8 @@ MenuState::MenuState(std::weak_ptr<StateMachine> machine)
     bOptions->connectClickEvent(std::bind(&OptionsFunction, this));
     add(bExit);
     bExit->connectClickEvent(std::bind(&exitFunction, this));
+
+    Event<EventPlayMusic>::send(EventPlayMusic("res/music/ZoneAlpha.ogg", MusicData(1, 1, true), 2, 2, 0));
 }
 
 MenuState::~MenuState()

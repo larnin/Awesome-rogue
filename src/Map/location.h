@@ -8,11 +8,14 @@ class Room;
 
 class Location
 {
+    friend class Map;
+
 public:
     Location() = default;
     Location(const sf::Vector2u & blockPos, std::weak_ptr<Room> room = std::weak_ptr<Room>());
     Location(const sf::Vector2i &blockPos, std::weak_ptr<Room> room = std::weak_ptr<Room>());
     Location(const sf::Vector2f & pos, std::weak_ptr<Room> room = std::weak_ptr<Room>());
+    Location(const sf::Vector2f & pos, unsigned int roomID);
     ~Location() = default;
 
     bool isValide() const; //retourne true si la salle existe, et si les coordonées sont dans la salle
@@ -31,6 +34,7 @@ public:
 private:
     sf::Vector2f m_pos;
     std::weak_ptr<Room> m_room;
+    unsigned int m_roomID;
 };
 
 #endif // LOCATION_H

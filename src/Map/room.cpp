@@ -1,8 +1,48 @@
 #include "room.h"
 #include "Generator/patern.h"
 
+Room::Room(const json & j)
+    : Serializable(SERIALIZE_ROOM)
+    , m_blocks(sf::Vector2u(j["sizex"], j["sizey"]))
+    , m_pos(sf::Vector2i(j["posx"], j["posy"]))
+    , m_UID(j["id"])
+    , m_discovered(j["discovered"])
+    , m_type(RoomType(j["type"].get<int>()))
+{
+    auto blocks(j.find("blocks"));
+    if(blocks->is_array() && blocks->size() < m_blocks.getSize().x*m_blocks.getSize().y)
+    {
+        for(unsigned int i(0) ; i < m_blocks.getSize().x ; i++)
+            for(unsigned int j(0) ; j < m_blocks.getSize().y ; j++)
+            {
+                const json & block((*blocks)[i+j*m_blocks.getSize().x]);
+                if(!block.is_array() || block.size() < 5)
+                    m_blocks(sf::Vector2u(i, j)) = Block();
+                else m_blocks(sf::Vector2u(i, j)) = Block(block[0], block[1], block[2], block[3], block[4]);
+            }
+    }
+
+    auto doors(j.find("doors"));
+    if(doors->is_array())
+    {
+        for(const json jDoor : *doors)
+        {
+            Door d(Location(sf::Vector2f(jDoor["posx"], jDoor["posy"]), m_UID), Location(sf::Vector2f(jDoor["destx"], jDoor["desty"]), jDoor["destr"].get<int>()));
+            m_doors.push_back(d);
+        }
+    }
+
+    auto pop(j.find("pop"));
+    if(pop->is_array())
+    {
+        for(const json jPop : *pop)
+            m_population.push_back(EntityType(jPop.get<int>()));
+    }
+}
+
 Room::Room(const Patern & p, sf::Vector2i pos, unsigned int id)
-    : m_blocks(p.getSize())
+    : Serializable(SERIALIZE_ROOM)
+    , m_blocks(p.getSize())
     , m_pos(pos)
     , m_UID(id)
     , m_discovered(false)
@@ -14,7 +54,8 @@ Room::Room(const Patern & p, sf::Vector2i pos, unsigned int id)
 }
 
 Room::Room(sf::Vector2u size, sf::Vector2i pos, unsigned int id, Block def)
-    : m_blocks(size, def)
+    : Serializable(SERIALIZE_ROOM)
+    , m_blocks(size, def)
     , m_pos(pos)
     , m_UID(id)
     , m_discovered(false)
@@ -216,4 +257,52 @@ void Room::openDoors()
             b.groundID = uncoveredOpenDoorID;
         setBoxType(b.boxCaracts, BoxType::EMPTY);
     }
+}
+
+json Room::serialize() const
+{
+    json j = {
+        {"posx", m_pos.x},
+        {"posy", m_pos.y},
+        {"id", m_UID},
+        {"discovered", m_discovered},
+        {"type", m_type},
+        {"sizex", m_blocks.getSize().x},
+        {"sizey", m_blocks.getSize().y}
+    };
+
+    json jBlocks;
+    for(const Block & b : m_blocks)
+    {
+        json jb{{b.groundID, b.groundOrientation, b.wallID, b.wallOrientation, b.boxCaracts}};
+        jBlocks.push_back(jb);
+    }
+    j["blocks"] = jBlocks;
+
+    json jDoors;
+    for(const Door & d : m_doors)
+    {
+        auto r(d.pos.getRoom().lock());
+        auto rD(d.dest.getRoom().lock());
+        if(!r || !rD || r->getID() != getID())
+            continue;
+        json jd = {
+            {"posx", d.pos.getBlockPos().x},
+            {"posy", d.pos.getBlockPos().y},
+            {"destr", rD->getID()},
+            {"destx", d.dest.getBlockPos().x},
+            {"desty", d.dest.getBlockPos().y}
+        };
+        jDoors.push_back(jd);
+    }
+    j["doors"] = jDoors;
+
+    json jPop;
+    for(EntityType t : m_population)
+    {
+        jPop.push_back(t);
+    }
+    j["pop"] = jPop;
+
+    return j;
 }

@@ -4,6 +4,7 @@
 Location::Location(const sf::Vector2u & blockPos, std::weak_ptr<Room> room)
     : m_pos(blockPos)
     , m_room(room)
+    , m_roomID(0)
 {
 
 }
@@ -11,6 +12,7 @@ Location::Location(const sf::Vector2u & blockPos, std::weak_ptr<Room> room)
 Location::Location(const sf::Vector2i &blockPos, std::weak_ptr<Room> room)
     : m_pos(blockPos)
     , m_room(room)
+    , m_roomID(0)
 {
 
 }
@@ -18,6 +20,14 @@ Location::Location(const sf::Vector2i &blockPos, std::weak_ptr<Room> room)
 Location::Location(const sf::Vector2f & pos, std::weak_ptr<Room> room)
     : m_pos(pos)
     , m_room(room)
+    , m_roomID(0)
+{
+
+}
+
+Location::Location(const sf::Vector2f & pos, unsigned int roomID)
+    : m_pos(pos)
+    , m_roomID(roomID)
 {
 
 }

@@ -18,49 +18,8 @@ int main()
     machine->setNext(state);
     machine->run();
 
-    return 0;
-}
-
-/*
-#include <SFML/Graphics.hpp>
-#include <iostream>
-#include "Controles/keytexture.h"
-
-int main()
-{
-    sf::RenderWindow window(sf::VideoMode(500, 400), "SFML works!");
-    window.setFramerateLimit(60);
-    Texture lastKeyTexture;
-
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-            if (event.type == sf::Event::KeyPressed)
-                lastKeyTexture = keyTexture(event.key.code);
-            if (event.type == sf::Event::JoystickButtonPressed)
-                lastKeyTexture = joysticButtonTexture(event.joystickButton.button);
-            if (event.type == sf::Event::JoystickMoved)
-            {
-                if(std::abs(event.joystickMove.position)>50)
-                    lastKeyTexture = joysticAxisTexture(event.joystickMove.axis, event.joystickMove.position > 0);
-            }
-        }
-
-        window.clear(sf::Color::White);
-
-        if(lastKeyTexture.isValid())
-        {
-            sf::Sprite s(*lastKeyTexture);
-            s.scale(2, 2);
-            window.draw(s);
-        }
-        window.display();
-    }
+    std::vector<std::unique_ptr<sf::Music>> m;
+    m.push_back(std::make_unique<sf::Music>());
 
     return 0;
 }
-*/

@@ -3,6 +3,7 @@
 #include "Events/event.h"
 #include "Events/Datas/eventplaycameraeffect.h"
 #include "Events/Datas/eventsetbosslifebar.h"
+#include "Events/Datas/eventbosskilled.h"
 #include "player.h"
 #include "Particules/particulefactory.h"
 #include "Particules/Types/boss1transition.h"
@@ -85,6 +86,7 @@ void Boss1End::onKill()
     Event<EventPlayCameraEffect>::send(EventPlayCameraEffect(CameraEffectType::EFFECT_HARD_SHAKE, 0.1f));
     ParticuleFactory::createSend<MobDeath>(m_pos, m_texture, sf::FloatRect(280, 34, 54, 54), 0, sf::Vector2f(0, 0));
     Event<EventSetBossLifeBar>::send(EventSetBossLifeBar(std::shared_ptr<BossLifeBar>()));
+    Event<EventBossKilled>::send(EventBossKilled());
 }
 
 void Boss1End::fire()

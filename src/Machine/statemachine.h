@@ -48,7 +48,7 @@ private:
     sf::Clock m_clock;
     sf::Color m_clearColor;
     std::shared_ptr<SmoothCamera> m_camera;
-    SoundPlayer m_soundPlayer;
+    std::shared_ptr<SoundPlayer> m_soundPlayer;
 };
 
 #endif // STATEMACHINE_H

@@ -3,6 +3,8 @@
 
 #include "Events/eventreceiver.h"
 #include "Utilities/noncopiable.h"
+#include "Systemes/updatable.h"
+#include "Effects/soundeffect.h"
 #include <SFML/Audio/Music.hpp>
 #include <SFML/Audio/Sound.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
@@ -16,7 +18,7 @@ class SoundData;
 class MusicData;
 class DelayedTask;
 
-class SoundPlayer : public EventReceiver, private NonCopiable
+class SoundPlayer : public EventReceiver, public Updatable, private NonCopiable
 {
 public:
     SoundPlayer();
@@ -24,9 +26,13 @@ public:
     SoundPlayer & operator=(SoundPlayer &&) = default;
     virtual ~SoundPlayer() = default;
 
+    virtual void update(const sf::Time &elapsedTime);
+
     void playSound(const std::string & filename, const SoundData & data);
-    void playMusic(const std::string & filename, const MusicData & data);
-    void stopMusic();
+    void playMusic(const std::string &filename, const MusicData &data, float fadeout, float fadein, float delay);
+    void playMusic(const std::string & filename, const MusicData & data, float fadeout = 0, float fadein = 0)
+    { playMusic(filename, data, fadeout, fadein); }
+    void stopMusic(float fadeout = 0);
 
     void setMusicVolum(float value);
     void setSoundVolum(float value);
@@ -46,21 +52,45 @@ private:
     struct PlayedSoundData
     {
         PlayedSoundData(const sf::SoundBuffer & buffer, unsigned int _id, float _volum)
-            : sound(buffer), id(_id), volum(_volum) {}
+            : id(_id), volum(_volum)
+        {
+            sound = std::make_unique<sf::Sound>(buffer);
+        }
 
-        sf::Sound sound;
+        std::unique_ptr<sf::Sound> sound;
         unsigned int id;
         float volum;
+    };
+    struct PlayedMusicData
+    {
+        PlayedMusicData(const std::string & filename, float volum, float pitch, bool loop)
+            : defaultVolum(volum)
+            , defaultPitch(pitch)
+        {
+            music = std::make_unique<sf::Music>();
+            music->openFromFile(filename);
+            music->setLoop(loop);
+            music->setVolume(defaultVolum);
+            music->setPitch(defaultPitch);
+        }
+
+        PlayedMusicData(PlayedMusicData &&) = default;
+        PlayedMusicData & operator =(PlayedMusicData &&) = default;
+
+        float defaultVolum;
+        float defaultPitch;
+
+        std::unique_ptr<sf::Music> music;
+        std::vector<std::unique_ptr<SoundEffect>> effects;
     };
 
     void onPlaySound(EventPlaySound e);
     void onPlayMusic(EventPlayMusic e);
-    void onStopMusic(EventStopMusic);
+    void onStopMusic(EventStopMusic e);
 
     void delSound(unsigned int id);
 
-    sf::Music m_music;
-    float m_musicPlayedVolum;
+    std::vector<PlayedMusicData> m_musics;
 
     std::vector<SoundBufferData> m_buffers;
     std::vector<PlayedSoundData> m_playedSounds;

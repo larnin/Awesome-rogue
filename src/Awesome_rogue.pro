@@ -105,7 +105,6 @@ SOURCES += main.cpp \
     GUI/showfps.cpp \
     Machine/States/pausestate.cpp \
     GUI/simplecontroler.cpp \
-    Utilities/fileinfo.cpp \
     Machine/States/optionsstate.cpp \
     Controles/keytexture.cpp \
     GUI/Widgets/keyconfigwidget.cpp \
@@ -118,7 +117,12 @@ SOURCES += main.cpp \
     Sounds/soundplayer.cpp \
     Items/itemslist.cpp \
     Items/itemtype.cpp \
-    Entities/playerinfos.cpp
+    Entities/playerinfos.cpp \
+    File/serializable.cpp \
+    File/serializabletype.cpp \
+    File/serializer.cpp \
+    Sounds/Effects/fadeineffect.cpp \
+    Sounds/Effects/fadeouteffect.cpp
 
 HEADERS  += \
     Controles/commands.h \
@@ -251,7 +255,6 @@ HEADERS  += \
     GUI/showfps.h \
     Machine/States/pausestate.h \
     GUI/simplecontroler.h \
-    Utilities/fileinfo.h \
     Machine/States/optionsstate.h \
     Controles/keytexture.h \
     GUI/Widgets/keyconfigwidget.h \
@@ -269,7 +272,15 @@ HEADERS  += \
     Events/Datas/eventpickitem.h \
     Events/Datas/eventdropitem.h \
     Entities/playerinfos.h \
-    Events/Datas/eventexperiencechanged.h
+    Events/Datas/eventexperiencechanged.h \
+    Events/Datas/eventbosskilled.h \
+    File/serializable.h \
+    File/serializabletype.h \
+    File/serializer.h \
+    Events/Datas/eventitemloaded.h \
+    Sounds/Effects/soundeffect.h \
+    Sounds/Effects/fadeineffect.h \
+    Sounds/Effects/fadeouteffect.h
 
 CONFIG += c++14
 #QMAKE_CXXFLAGS += -Wsign-conversion
@@ -316,10 +327,11 @@ INCLUDEPATH += C:/Users/Nicolas/Programation/c++/SFML/DW2_2.4_(Qt)/include
 DEPENDPATH += C:/Users/Nicolas/Programation/c++/SFML/DW2_2.4_(Qt)/include
 
 #Boost
-#INCLUDEPATH += C:/Users/Nicolas/Programation/c++/boost/boost_1_61_0
+INCLUDEPATH += C:/Users/Nicolas/Programation/c++/boost/boost_1_61_0
 
-#Filesystem
-#CONFIG(release, debug|release): LIBS += C:/Users/Nicolas/Programation/c++/boost/Boost_lib/boost/bin.v2/libs/filesystem/build/gcc-mingw-4.9.2/release/link-static/threading-multi/libboost_filesystem-mgw49-mt-1_61.a /
-#                                        C:/Users/Nicolas/Programation/c++/boost/Boost_lib/boost/bin.v2/libs/system/build/gcc-mingw-4.9.2/release/link-static/threading-multi/libboost_system-mgw49-mt-1_61.a
-#CONFIG(debug, debug|release): LIBS +=   C:/Users/Nicolas/Programation/c++/boost/Boost_lib/boost/bin.v2/libs/filesystem/build/gcc-mingw-4.9.2/debug/link-static/threading-multi/libboost_filesystem-mgw49-mt-d-1_61.a /
-#                                        C:/Users/Nicolas/Programation/c++/boost/Boost_lib/boost/bin.v2/libs/system/build/gcc-mingw-4.9.2/debug/link-static/threading-multi/libboost_system-mgw49-mt-d-1_61.a
+LIBS += -LC:/Users/Nicolas/Programation/c++/boost/boost_lib/out
+
+CONFIG(release, debug|release): LIBS += -lboost_filesystem-mgw53-mt-1_61 \
+                                        -lboost_system-mgw53-mt-1_61
+CONFIG(debug, debug|release): LIBS +=   -lboost_filesystem-mgw53-mt-d-1_61 \
+                                        -lboost_system-mgw53-mt-d-1_61

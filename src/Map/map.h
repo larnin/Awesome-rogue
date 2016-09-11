@@ -5,10 +5,13 @@
 #include <memory>
 #include <SFML/System/Vector2.hpp>
 #include "Utilities/noncopiable.h"
+#include "Events/eventreceiver.h"
+
+class EventItemLoaded;
 
 class Room;
 
-class Map : private NonCopiable
+class Map : public EventReceiver, private NonCopiable
 {
 public:
     Map();
@@ -27,6 +30,8 @@ public:
     std::vector<std::shared_ptr<Room>>::const_iterator end() const;
 
 private:
+    void onRoomLoaded(EventItemLoaded e);
+
     std::vector<std::shared_ptr<Room>> m_rooms;
 };
 

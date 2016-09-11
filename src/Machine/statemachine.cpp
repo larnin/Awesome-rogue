@@ -27,6 +27,9 @@ StateMachine::StateMachine(const KeysConfig & configs)
     m_camera = std::make_shared<SmoothCamera>(*this);
     m_camera->changeDefaultZoom(Configs::c.zoom);
     Updatable::add(m_camera);
+
+    m_soundPlayer = std::make_shared<SoundPlayer>();
+    Updatable::add(m_soundPlayer);
 }
 
 sf::RenderWindow & StateMachine::getWindow()
@@ -133,10 +136,10 @@ void StateMachine::delSubstate()
 
 void StateMachine::setMusicVolum(float value)
 {
-    m_soundPlayer.setMusicVolum(value);
+    m_soundPlayer->setMusicVolum(value);
 }
 
 void StateMachine::setSoundVolum(float value)
 {
-    m_soundPlayer.setSoundVolum(value);
+    m_soundPlayer->setSoundVolum(value);
 }

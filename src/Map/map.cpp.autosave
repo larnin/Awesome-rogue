@@ -83,13 +83,7 @@ void Map::onRoomLoaded(EventItemLoaded e)
     if(e.type != SERIALIZE_ROOM)
         return;
 
-    try
-    {
-        std::shared_ptr<Room> r(std::dynamic_pointer_cast<Room>(e.item));
+    std::shared_ptr<Room> r(std::dynamic_pointer_cast<Room>(e.item));
+    if(r)
         m_rooms.push_back(r);
-    }
-    catch(const std::exception & e)
-    {
-
-    }
 }
