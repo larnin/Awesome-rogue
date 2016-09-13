@@ -122,7 +122,9 @@ SOURCES += main.cpp \
     File/serializabletype.cpp \
     File/serializer.cpp \
     Sounds/Effects/fadeineffect.cpp \
-    Sounds/Effects/fadeouteffect.cpp
+    Sounds/Effects/fadeouteffect.cpp \
+    Lights/lightrender.cpp \
+    Lights/Types/circlecoloredlight.cpp
 
 HEADERS  += \
     Controles/commands.h \
@@ -280,7 +282,13 @@ HEADERS  += \
     Events/Datas/eventitemloaded.h \
     Sounds/Effects/soundeffect.h \
     Sounds/Effects/fadeineffect.h \
-    Sounds/Effects/fadeouteffect.h
+    Sounds/Effects/fadeouteffect.h \
+    Lights/lightrender.h \
+    Lights/Types/light.h \
+    Events/Datas/eventchangelightcolor.h \
+    Events/Datas/eventaddlight.h \
+    Events/Datas/eventdellight.h \
+    Lights/Types/circlecoloredlight.h
 
 CONFIG += c++14
 #QMAKE_CXXFLAGS += -Wsign-conversion

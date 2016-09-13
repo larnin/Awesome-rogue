@@ -47,7 +47,7 @@ MenuState::MenuState(std::weak_ptr<StateMachine> machine)
     add(bExit);
     bExit->connectClickEvent(std::bind(&exitFunction, this));
 
-    Event<EventPlayMusic>::send(EventPlayMusic("res/music/ZoneAlpha.ogg", MusicData(1, 1, true), 2, 2, 0));
+    //Event<EventPlayMusic>::send(EventPlayMusic("res/music/ZoneAlpha.ogg", MusicData(1, 1, true), 2, 2, 0));
 }
 
 MenuState::~MenuState()

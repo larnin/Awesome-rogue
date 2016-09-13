@@ -20,6 +20,7 @@ class Interactor;
 class BossLifeBar;
 class EventSetBossLifeBar;
 class ItemsList;
+class LightRender;
 
 class GameHolder : private NonCopiable, public EventReceiver
 {
@@ -50,6 +51,7 @@ private:
     std::shared_ptr<BossLifeBar> m_bossLifeBar;
     std::shared_ptr<ItemsList> m_items;
     PlayerInfos m_playerInfos;
+    std::shared_ptr<LightRender> m_light;
 
     bool m_enabled;
 };

@@ -21,6 +21,7 @@
 #include "Events/Datas/eventinteraction.h"
 #include "Map/blocktype.h"
 #include "Items/itemslist.h"
+#include "Lights/lightrender.h"
 
 GameHolder::GameHolder(std::weak_ptr<StateMachine> machine)
     : m_enabled(false)
@@ -31,6 +32,9 @@ GameHolder::GameHolder(std::weak_ptr<StateMachine> machine)
     EventSimpleGetter<std::shared_ptr<Player>>::connect(std::bind(&GameHolder::getPlayer, this));
     EventSimpleGetter<std::shared_ptr<Map>>::connect(std::bind(&GameHolder::getMap, this));
     connect<EventSetBossLifeBar>(std::bind(&onBossLifeBarSet, this, _1));
+
+    m_light = std::make_shared<LightRender>();
+    m_light->setColors(sf::Color(64, 64, 64), sf::Color::Black);
 
     Generator g;
     GenerationEnvironement e;
@@ -86,9 +90,9 @@ void GameHolder::enable()
     Updatable::add(m_projectilesLauncher);
     Controlable::add(m_projectilesLauncher);
 
-    DrawableList::add(m_interface, 6);
-    DrawableList::add(m_minimap, 5);
-    DrawableList::add(m_lifeBar, 7);
+    DrawableList::add(m_interface, 8);
+    DrawableList::add(m_minimap, 7);
+    DrawableList::add(m_lifeBar, 9);
 
     m_populator.enable();
 
@@ -97,12 +101,14 @@ void GameHolder::enable()
 
     if(m_bossLifeBar)
     {
-        DrawableList::add(m_bossLifeBar, 6);
+        DrawableList::add(m_bossLifeBar, 8);
         Updatable::add(m_bossLifeBar);
     }
 
     DrawableList::add(m_items, 1);
     Updatable::add(m_items);
+
+    DrawableList::add(m_light, 6);
 }
 
 void GameHolder::disable()
@@ -141,6 +147,8 @@ void GameHolder::disable()
 
     DrawableList::del(m_items);
     Updatable::del(m_items);
+
+    DrawableList::del(m_light);
 }
 
 std::shared_ptr<Player> GameHolder::getPlayer()
