@@ -34,6 +34,7 @@ private:
     static std::array<int,4> multiplyMatrice(const std::array<int,4> & left, const std::array<int,4> & right);
 
     Matrix<Block> m_blocks;
+    std::string m_renderInfosName;
 };
 
 #endif // PATERN_H

@@ -8,7 +8,14 @@
 RoomRender::RoomRender(std::weak_ptr<Room> room, bool current)
     : m_render(sf::Quads)
     , m_room(room)
-    , m_texture("res/img/tileset.png")
+    , m_data([room]() -> std::string
+    {
+        auto r(room.lock());
+        if(!r)
+            return "";
+        return r->getRenderInfosName();
+    }())
+    , m_time(0)
 {
     redraw(current);
 }
@@ -25,7 +32,9 @@ void RoomRender::redraw(bool current) const
         return;
     }
 
+    m_animation.clear();
     r->modified = false;
+
     if(r->isDiscovered())
     {
         m_render.resize((getNbSurfaces()+(current?0:1))*4);
@@ -35,6 +44,16 @@ void RoomRender::redraw(bool current) const
             for(unsigned int j(0) ; j < r->getSize().y ; j++)
             {
                 Block b((*r)(sf::Vector2u(i, j)));
+                if(m_data.hasAnimation(b.groundID))
+                {
+                    m_animation.push_back(BlockAnimationState(&m_render[index*4], b.groundID, b.groundOrientation, sf::Vector2u(i, j)));
+                    b.groundID = m_data.frameOf(b.groundID, m_time);
+                }
+                if(m_data.hasAnimation(b.wallID))
+                {
+                    m_animation.push_back(BlockAnimationState(&m_render[(index+1)*4], b.wallID, b.wallOrientation, sf::Vector2u(i, j)));
+                    b.wallID = m_data.frameOf(b.wallID, m_time);
+                }
                 index += drawBlock(&m_render[index*4], b, sf::Vector2i(i, j)+r->getPos());
             }
         if(!current)
@@ -78,7 +97,8 @@ void RoomRender::draw(sf::RenderTarget & target, sf::RenderStates) const
     if(r->modified)
         redraw(m_current);
 
-    target.draw(m_render, sf::RenderStates(m_texture()));
+    if(m_data.texture.isValid())
+        target.draw(m_render, sf::RenderStates(m_data.texture()));
 }
 
 unsigned int RoomRender::getNbSurfaces() const
@@ -129,4 +149,27 @@ unsigned int RoomRender::drawBlock(sf::Vertex* quads, const Block & b, const sf:
 std::weak_ptr<Room> RoomRender::getRoom() const
 {
     return m_room;
+}
+
+void RoomRender::update(const sf::Time & elapsedTime)
+{
+    m_time += elapsedTime.asSeconds();
+    std::shared_ptr<Room> r(m_room.lock());
+    if(!r)
+        return;
+
+    for(BlockAnimationState & a : m_animation)
+    {
+        unsigned int id(m_data.frameOf(a.id, m_time));
+        if(id == a.animID)
+            continue;
+        a.animID = id;
+
+        sf::Vector2f texPos(a.animID%BlockType::nbTile, a.animID/BlockType::nbTile);
+        sf::Vector2f globalPos((sf::Vector2f(r->getPos())+sf::Vector2f(a.pos))*float(BlockType::tileSize));
+        drawQuad(a.quad, sf::FloatRect(sf::Vector2f(globalPos)*float(BlockType::tileSize)
+                                    -sf::Vector2f(BlockType::tileSize, BlockType::tileSize)/2.0f, sf::Vector2f(BlockType::tileSize, BlockType::tileSize))
+                 , sf::FloatRect(texPos*float(BlockType::tileSize), sf::Vector2f(BlockType::tileSize, BlockType::tileSize))
+                 , getXFlip(a.orientation), getYFlip(a.orientation), getRotation(a.orientation));
+    }
 }

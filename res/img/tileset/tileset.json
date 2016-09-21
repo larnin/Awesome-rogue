@@ -1,0 +1,18 @@
+{
+	"texture":"tileset.png",
+	"blocks":
+	[
+		[
+			{
+				"id":5,
+				"time":0.2
+			},
+			{
+				"id":6,
+				"time":0.2
+			}
+		],
+		[
+		]
+	]
+}

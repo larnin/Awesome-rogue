@@ -124,7 +124,8 @@ SOURCES += main.cpp \
     Sounds/Effects/fadeineffect.cpp \
     Sounds/Effects/fadeouteffect.cpp \
     Lights/lightrender.cpp \
-    Lights/Types/circlecoloredlight.cpp
+    Lights/Types/circlecoloredlight.cpp \
+    Map/Render/renderdata.cpp
 
 HEADERS  += \
     Controles/commands.h \
@@ -288,7 +289,8 @@ HEADERS  += \
     Events/Datas/eventchangelightcolor.h \
     Events/Datas/eventaddlight.h \
     Events/Datas/eventdellight.h \
-    Lights/Types/circlecoloredlight.h
+    Lights/Types/circlecoloredlight.h \
+    Map/Render/renderdata.h
 
 CONFIG += c++14
 #QMAKE_CXXFLAGS += -Wsign-conversion

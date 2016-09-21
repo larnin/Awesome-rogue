@@ -41,6 +41,7 @@ public:
     void closeDoors();
     void openDoors();
 
+    std::string getRenderInfosName() const;
     bool modified;
 
 protected:
@@ -57,6 +58,7 @@ private:
     bool m_discovered;
     std::vector<EntityType> m_population;
     RoomType m_type;
+    std::string m_renderInfosName;
 };
 
 #endif // ROOM_H

@@ -32,14 +32,20 @@ void WorldRender::enable()
 {
     m_enabled = true;
     for(const auto & r : m_renders)
+    {
         DrawableList::add(r, height);
+        Updatable::add(r);
+    }
 }
 
 void WorldRender::disable()
 {
     m_enabled = false;
     for(const auto & r : m_renders)
+    {
         DrawableList::del(r);
+        Updatable::del(r);
+    }
 }
 
 void WorldRender::draw(sf::RenderTarget & target, sf::RenderStates) const

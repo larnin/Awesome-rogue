@@ -6,12 +6,14 @@
 #include "map/blocktype.h"
 Patern::Patern(sf::Vector2u size, Block def)
     : m_blocks(size, def)
+    , m_renderInfosName("tileset")
 {
 
 }
 
 Patern::Patern(sf::Vector2u size)
     : m_blocks(size)
+    , m_renderInfosName("tileset")
 {
     generate();
 }
@@ -113,6 +115,7 @@ std::vector<Patern> Patern::load(const std::string & fileName)
         p.type = RoomType(rType->get<unsigned int>());
         p.name = *rName;
         p.rarity = *rRarity;
+        p.m_renderInfosName = patern["render"].get<std::string>();
         paterns.push_back(p);
     }
 
@@ -131,7 +134,8 @@ void Patern::save(const std::string & fileName, const std::vector<Patern> & pate
           {"sizeY", p.getSize().y},
           {"type", p.type},
           {"name", p.name},
-          {"rarity", p.rarity}
+          {"rarity", p.rarity},
+          {"render", p.m_renderInfosName}
         };
         json jBlocks;
         for(const Block & b : p.m_blocks)

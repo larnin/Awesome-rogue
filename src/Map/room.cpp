@@ -8,6 +8,7 @@ Room::Room(const json & j)
     , m_UID(j["id"])
     , m_discovered(j["discovered"])
     , m_type(RoomType(j["type"].get<int>()))
+    , m_renderInfosName(j["render"].get<std::string>())
 {
     auto blocks(j.find("blocks"));
     if(blocks->is_array() && blocks->size() < m_blocks.getSize().x*m_blocks.getSize().y)
@@ -47,6 +48,7 @@ Room::Room(const Patern & p, sf::Vector2i pos, unsigned int id)
     , m_UID(id)
     , m_discovered(false)
     , m_type(p.type)
+    , m_renderInfosName(p.m_renderInfosName)
 {
     for(unsigned int i(0) ; i < p.getSize().x ; i++)
         for(unsigned int j(0) ; j < p.getSize().y ; j++)
@@ -268,7 +270,8 @@ json Room::serialize() const
         {"discovered", m_discovered},
         {"type", m_type},
         {"sizex", m_blocks.getSize().x},
-        {"sizey", m_blocks.getSize().y}
+        {"sizey", m_blocks.getSize().y},
+        {"render", m_renderInfosName}
     };
 
     json jBlocks;
@@ -305,4 +308,9 @@ json Room::serialize() const
     j["pop"] = jPop;
 
     return j;
+}
+
+std::string Room::getRenderInfosName() const
+{
+    return m_renderInfosName;
 }
