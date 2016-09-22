@@ -75,7 +75,7 @@ std::vector<sf::Vector2u> PathFinder::path(const std::weak_ptr<Room> & room, con
     if(begin.x > r->getSize().x || begin.y > r->getSize().y || end.x > r->getSize().x || end.y > r->getSize().y)
         return std::vector<sf::Vector2u>();
 
-    if(getBoxType((*r)(begin).boxCaracts) != BoxType::EMPTY || getBoxType((*r)(end).boxCaracts) != BoxType::EMPTY)
+    if(getBoxType(r->get(begin).boxCaracts) != BoxType::EMPTY || getBoxType(r->get(end).boxCaracts) != BoxType::EMPTY)
         return std::vector<sf::Vector2u>();
 
     std::vector<std::pair<sf::Vector2u, unsigned int>> nextPos;
@@ -101,7 +101,7 @@ std::vector<sf::Vector2u> PathFinder::path(const std::weak_ptr<Room> & room, con
                 sf::Vector2u localPos(pos.x+i-1, pos.y+j-1);
                 if(localPos.x >= r->getSize().x || localPos.y >= r->getSize().y)
                     continue;
-                localStates(sf::Vector2u(i, j)) = getBoxType((*r)(localPos).boxCaracts) == BoxType::EMPTY;
+                localStates(sf::Vector2u(i, j)) = getBoxType(r->get(localPos).boxCaracts) == BoxType::EMPTY;
             }
 
         std::array<sf::Vector2i, 4> check({sf::Vector2i(0, -1), sf::Vector2i(-1, 0), sf::Vector2i(0, 1), sf::Vector2i(1, 0)});

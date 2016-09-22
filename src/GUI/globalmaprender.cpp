@@ -203,7 +203,7 @@ void GlobalMapRender::createIcons(std::shared_ptr<Map> map)
         for(unsigned int i(0) ; i < r->getSize().x ; i++)
             for(unsigned int j(0) ; j < r->getSize().y ; j++)
             {
-                unsigned int id((*r)(sf::Vector2u(i, j)).wallID);
+                unsigned int id(r->get(sf::Vector2u(i, j)).wallID);
                 sf::FloatRect rect;
                 if(id == portalID)
                 {

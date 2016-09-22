@@ -76,7 +76,7 @@ sf::Vector2u Room::getSize() const
     return m_blocks.getSize();
 }
 
-Block & Room::operator()(const sf::Vector2u & pos)
+/*Block & Room::operator()(const sf::Vector2u & pos)
 {
     modified = true;
     return m_blocks(pos);
@@ -85,6 +85,23 @@ Block & Room::operator()(const sf::Vector2u & pos)
 const Block & Room::operator()(const sf::Vector2u & pos) const
 {
     return m_blocks(pos);
+}*/
+
+const Block & Room::get(const sf::Vector2u & pos) const
+{
+    return m_blocks(pos);
+}
+
+Block & Room::modify(const sf::Vector2u & pos)
+{
+    modified = true;
+    return m_blocks(pos);
+}
+
+void Room::set(const sf::Vector2u & pos, const Block & b)
+{
+    modified = true;
+    m_blocks(pos) = b;
 }
 
 Door Room::doorAt(const sf::Vector2u & pos) const
@@ -146,7 +163,7 @@ void Room::uncover()
         std::shared_ptr<Room> r(d.dest.getRoom().lock());
         if(!r)
             continue;
-        (*r)(sf::Vector2u(relative(sf::Vector2i(d.dest.getBlockPos()), d.getOrientation(), -1))).groundID = uncoveredDoorID;
+        r->modify(sf::Vector2u(relative(sf::Vector2i(d.dest.getBlockPos()), d.getOrientation(), -1))).groundID = uncoveredDoorID;
     }
 }
 

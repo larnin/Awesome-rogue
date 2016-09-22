@@ -43,7 +43,7 @@ void RoomRender::redraw(bool current) const
         for(unsigned int i(0) ; i < r->getSize().x ; i++)
             for(unsigned int j(0) ; j < r->getSize().y ; j++)
             {
-                Block b((*r)(sf::Vector2u(i, j)));
+                Block b(r->get(sf::Vector2u(i, j)));
                 if(m_data.hasAnimation(b.groundID))
                 {
                     m_animation.push_back(BlockAnimationState(&m_render[index*4], b.groundID, b.groundOrientation, sf::Vector2u(i, j)));
@@ -111,7 +111,7 @@ unsigned int RoomRender::getNbSurfaces() const
     for(unsigned int i(0) ; i < r->getSize().x ; i++)
         for(unsigned int j(0) ; j < r->getSize().y ; j++)
         {
-            Block b((*r)(sf::Vector2u(i, j)));
+            Block b(r->get(sf::Vector2u(i, j)));
             if(b.groundID != 0)
                 nbDrawable++;
             if(b.wallID != 0)
@@ -154,7 +154,7 @@ std::weak_ptr<Room> RoomRender::getRoom() const
 void RoomRender::update(const sf::Time & elapsedTime)
 {
     m_time += elapsedTime.asSeconds();
-    std::shared_ptr<Room> r(m_room.lock());
+    /*std::shared_ptr<Room> r(m_room.lock());
     if(!r)
         return;
 
@@ -171,5 +171,5 @@ void RoomRender::update(const sf::Time & elapsedTime)
                                     -sf::Vector2f(BlockType::tileSize, BlockType::tileSize)/2.0f, sf::Vector2f(BlockType::tileSize, BlockType::tileSize))
                  , sf::FloatRect(texPos*float(BlockType::tileSize), sf::Vector2f(BlockType::tileSize, BlockType::tileSize))
                  , getXFlip(a.orientation), getYFlip(a.orientation), getRotation(a.orientation));
-    }
+    }*/
 }

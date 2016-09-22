@@ -192,7 +192,7 @@ bool Collisions::canRotate(const HitBox & box, const sf::Vector2f & pos, float a
                 boxBlock = BlockType::createBox(createBoxCaracts(Rotation::ROT_0, false, false, BoxType::FULL));
             else
             {
-                Block & b ((*r)(sf::Vector2u(i, j)));
+                const Block & b (r->get(sf::Vector2u(i, j)));
                 if(getBoxType(b.boxCaracts) == BoxType::EMPTY)
                     continue;
                 boxBlock = BlockType::createBox(b.boxCaracts);
@@ -254,7 +254,7 @@ HitBox Collisions::optimizedBox(const sf::Vector2i & pos, std::shared_ptr<Room> 
     HitBox box;
     if(pos.x < 0 || pos.y < 0 || pos.x >= int(r->getSize().x) || pos.y >= int(r->getSize().y))
         box = BlockType::createBox(createBoxCaracts(Rotation::ROT_0, false, false, BoxType::FULL));
-    else box = BlockType::createBox((*r)(sf::Vector2u(pos)).boxCaracts);
+    else box = BlockType::createBox(r->get(sf::Vector2u(pos)).boxCaracts);
 
     if(box.m_lines.empty())
         return box;
@@ -270,7 +270,7 @@ HitBox Collisions::optimizedBox(const sf::Vector2i & pos, std::shared_ptr<Room> 
         HitBox blockTest;
         if(p.x < 0 || p.y < 0 || p.x >= int(r->getSize().x) || p.y >= int(r->getSize().y))
             blockTest = BlockType::createBox(createBoxCaracts(Rotation::ROT_0, false, false, BoxType::FULL));
-        else blockTest = BlockType::createBox((*r)(sf::Vector2u(p)).boxCaracts);
+        else blockTest = BlockType::createBox(r->get(sf::Vector2u(p)).boxCaracts);
 
         for(const Line & l1 : box.m_lines)
         { bool canAdd(true);

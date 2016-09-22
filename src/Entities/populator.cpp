@@ -82,7 +82,7 @@ void Populator::onPlayerChangeRoom(EventPrePlayerChangeRoom e)
                 for(int v(-1) ; v <= 1 ; v++)
                 {
                     sf::Vector2u dPos(pos.x+u, pos.y+v);
-                    if(getBoxType((*r)(dPos).boxCaracts) != EMPTY)
+                    if(getBoxType(r->get(dPos).boxCaracts) != EMPTY)
                     {
                         posOk = false;
                         break;
@@ -131,7 +131,7 @@ void Populator::startBoss1(const Location & pos)
     Event<EventPlayCameraEffect>::send(EventPlayCameraEffect(CameraEffectType::EFFECT_HARD_SHAKE, 0.1f));
     Event<EventPlayCameraEffect>::send(EventPlayCameraEffect(CameraEffectType::EFFECT_VERY_LOW_SHAKE, 6.0f));
     r->closeDoors();
-    (*r)(pos.getBlockPos()).groundID = blockUsedBoss1;
+    r->modify(pos.getBlockPos()).groundID = blockUsedBoss1;
     ParticuleFactory::createSend<SpawnBoss1>(pos, 6, 7);
 
     m_tasks.push_back(std::make_shared<DelayedTask>([pos]()

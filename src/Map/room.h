@@ -24,8 +24,11 @@ public:
 
     sf::Vector2i getPos() const;
     sf::Vector2u getSize() const;
-    Block & operator()(const sf::Vector2u & pos);
-    const Block & operator()(const sf::Vector2u & pos) const;
+    //Block & operator()(const sf::Vector2u & pos);
+    //const Block & operator()(const sf::Vector2u & pos) const;
+    const Block & get(const sf::Vector2u & pos) const;
+    Block & modify(const sf::Vector2u & pos);
+    void set(const sf::Vector2u & pos, const Block & b);
 
     Door doorAt(const sf::Vector2u & pos) const;
     const std::vector<Door> & doors() const;

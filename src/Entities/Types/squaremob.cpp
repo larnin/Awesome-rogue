@@ -52,7 +52,7 @@ void SquareMob::updateComportement(const sf::Time & elapsedTime)
         std::uniform_int_distribution<int> distrib(-2, 2);
         sf::Vector2i pathEnd(sf::Vector2i(m_pos.getBlockPos())+sf::Vector2i(distrib(m_randEngine), distrib(m_randEngine)));
         if(pathEnd.x >= 0 && pathEnd.y >= 0 && pathEnd.x < int(r->getSize().x) && pathEnd.y < int(r->getSize().y))
-            if(getBoxType((*r)(sf::Vector2u(pathEnd)).boxCaracts) == BoxType::EMPTY)
+            if(getBoxType(r->get(sf::Vector2u(pathEnd)).boxCaracts) == BoxType::EMPTY)
                 m_path.newPath(m_pos, Location(pathEnd, r));
     }
     else targetPos = m_path.next(m_pos).getPos();

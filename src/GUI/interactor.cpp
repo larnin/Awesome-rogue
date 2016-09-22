@@ -64,7 +64,7 @@ std::pair<BlockInteractionType, Location> Interactor::getInteractable() const
             sf::Vector2i pos(e->getPos().getBlockPos().x+i, e->getPos().getBlockPos().y+j);
             if(pos.x < 0 || pos.y < 0 || pos.x >= int(r->getSize().x) || pos.y >= int(r->getSize().y))
                 continue;
-            BlockInteractionType type(BlockType::getInteraction((*r)(sf::Vector2u(pos))));
+            BlockInteractionType type(BlockType::getInteraction(r->get(sf::Vector2u(pos))));
             if(type != BI_NO_INTERACTION)
                 return std::make_pair(type, Location(pos, r));
         }

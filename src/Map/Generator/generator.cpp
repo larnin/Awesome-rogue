@@ -263,13 +263,13 @@ bool Generator::isValidDoorPos(const sf::Vector2u & pos, const std::shared_ptr<R
         return false;
 
     const std::vector<unsigned int> validWallIds{2, 3};
-    bool validBlock(std::find(validWallIds.begin(), validWallIds.end(), ((*r)(pos)).wallID) != validWallIds.end());
+    bool validBlock(std::find(validWallIds.begin(), validWallIds.end(), r->get(pos).wallID) != validWallIds.end());
     if(!validBlock)
         return false;
 
     Orientation o(orientedSide(pos, sf::Rect<unsigned int>(sf::Vector2u(0, 0), r->getSize())));
 
-    return getBoxType(((*r)(sf::Vector2u(relative(sf::Vector2i(pos), o, -1)))).boxCaracts) == BoxType::EMPTY;
+    return getBoxType(r->get(sf::Vector2u(relative(sf::Vector2i(pos), o, -1))).boxCaracts) == BoxType::EMPTY;
 }
 
 bool Generator::isValidDoorPos(const sf::Vector2u & pos, const Patern & p)
@@ -476,7 +476,7 @@ void Generator::placeSolidWallBlockOn(std::shared_ptr<Room> & r, unsigned int id
     for(unsigned int i(0) ; i < 10 ; i++)
     {
         sf::Vector2u pos(dX(m_engine), dY(m_engine));
-        Block & b((*r)(pos));
+        Block & b(r->modify(pos));
         Block old(b);
         if(getBoxType(b.boxCaracts) != BoxType::EMPTY)
             continue;
@@ -523,7 +523,7 @@ void Generator::placeGroundBlockOn(std::shared_ptr<Room> & r, unsigned int id)
     for(unsigned int i(0) ; i < 10 ; i++)
     {
         sf::Vector2u pos(dX(m_engine), dY(m_engine));
-        Block & b((*r)(pos));
+        Block & b(r->modify(pos));
         if(getBoxType(b.boxCaracts) != BoxType::EMPTY)
             continue;
 

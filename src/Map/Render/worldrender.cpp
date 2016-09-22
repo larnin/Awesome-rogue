@@ -163,6 +163,7 @@ void WorldRender::redrawRooms()
             m_renders.push_back(std::make_shared<RoomRender>(room, actual));
             if(m_enabled)
                 DrawableList::add(m_renders.back(), height);
+                Updatable::add(m_renders.back());
         }
     }
 

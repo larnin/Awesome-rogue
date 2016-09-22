@@ -19,7 +19,9 @@ void DrawableList::clean()
 {
     for(auto & list : m_objects)
     {
-        std::vector<std::weak_ptr<sf::Drawable>> toDelete;
+        auto it(std::remove_if(list.second.begin(), list.second.end(), [](const auto & obj){return !obj.lock();}));
+        list.second.erase(it, list.second.end());
+        /*std::vector<std::weak_ptr<sf::Drawable>> toDelete;
         for(auto & object : list.second)
         {
             std::shared_ptr<sf::Drawable> objectLock(object.lock());
@@ -27,7 +29,7 @@ void DrawableList::clean()
                 toDelete.push_back(object);
         }
         for(auto & object : toDelete)
-            delPrivate(object);
+            delPrivate(object);*/
     }
 }
 
