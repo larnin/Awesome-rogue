@@ -43,6 +43,6 @@ void setBoxType(unsigned char & value, BoxType type);
 BoxType getBoxType(unsigned char value);
 
 unsigned char transformData(unsigned char data, Rotation rot, bool flipX, bool flipY);
-
+unsigned char transformData(unsigned char data, unsigned char transform);
 
 #endif // BLOCK_H

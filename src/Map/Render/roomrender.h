@@ -24,14 +24,13 @@ public:
 private:
     struct BlockAnimationState
     {
-        BlockAnimationState(sf::Vertex *_quad, unsigned int _id, unsigned char _orientation, sf::Vector2u _pos)
-            : quad(_quad), id(_id), orientation(_orientation), animID(_id), pos(_pos)
+        BlockAnimationState(unsigned int _index, unsigned int _id, unsigned char _orientation, sf::Vector2u _pos)
+            : index(_index), id(_id), orientation(_orientation), pos(_pos)
         {}
 
-        sf::Vertex* quad;
+        unsigned int index;
         unsigned int id;
         unsigned char orientation;
-        unsigned int animID;
         sf::Vector2u pos;
     };
 
@@ -42,7 +41,6 @@ private:
     mutable bool m_current;
     RenderData m_data;
     mutable std::vector<BlockAnimationState> m_animation;
-    float m_time;
 };
 
 #endif // ROOMRENDER_H

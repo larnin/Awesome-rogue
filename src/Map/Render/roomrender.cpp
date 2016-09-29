@@ -15,7 +15,6 @@ RoomRender::RoomRender(std::weak_ptr<Room> room, bool current)
             return "";
         return r->getRenderInfosName();
     }())
-    , m_time(0)
 {
     redraw(current);
 }
@@ -46,13 +45,17 @@ void RoomRender::redraw(bool current) const
                 Block b(r->get(sf::Vector2u(i, j)));
                 if(m_data.hasAnimation(b.groundID))
                 {
-                    m_animation.push_back(BlockAnimationState(&m_render[index*4], b.groundID, b.groundOrientation, sf::Vector2u(i, j)));
-                    b.groundID = m_data.frameOf(b.groundID, m_time);
+                    m_animation.push_back(BlockAnimationState(index*4, b.groundID, b.groundOrientation, sf::Vector2u(i, j)));
+                    BlockFrame f(m_data.frameOf(b.groundID));
+                    b.groundID = f.id;
+                    b.groundOrientation = transformData(b.groundOrientation, f.rot, f.flipX, f.flipY);
                 }
                 if(m_data.hasAnimation(b.wallID))
                 {
-                    m_animation.push_back(BlockAnimationState(&m_render[(index+1)*4], b.wallID, b.wallOrientation, sf::Vector2u(i, j)));
-                    b.wallID = m_data.frameOf(b.wallID, m_time);
+                    m_animation.push_back(BlockAnimationState(index*4+(b.groundID != 0 ? 4: 0), b.wallID, b.wallOrientation, sf::Vector2u(i, j)));
+                    BlockFrame f(m_data.frameOf(b.wallID));
+                    b.wallID = f.id;
+                    b.wallOrientation = transformData(b.wallOrientation, f.rot, f.flipX, f.flipY);
                 }
                 index += drawBlock(&m_render[index*4], b, sf::Vector2i(i, j)+r->getPos());
             }
@@ -151,25 +154,29 @@ std::weak_ptr<Room> RoomRender::getRoom() const
     return m_room;
 }
 
+#include <iostream>
+
 void RoomRender::update(const sf::Time & elapsedTime)
 {
-    m_time += elapsedTime.asSeconds();
-    /*std::shared_ptr<Room> r(m_room.lock());
+    if(m_animation.empty())
+        return;
+
+    m_data.addTime(elapsedTime.asSeconds());
+    std::shared_ptr<Room> r(m_room.lock());
     if(!r)
         return;
 
     for(BlockAnimationState & a : m_animation)
     {
-        unsigned int id(m_data.frameOf(a.id, m_time));
-        if(id == a.animID)
-            continue;
-        a.animID = id;
+        BlockFrame f(m_data.frameOf(a.id));
+        std::cout << f.id << std::endl;
 
-        sf::Vector2f texPos(a.animID%BlockType::nbTile, a.animID/BlockType::nbTile);
-        sf::Vector2f globalPos((sf::Vector2f(r->getPos())+sf::Vector2f(a.pos))*float(BlockType::tileSize));
-        drawQuad(a.quad, sf::FloatRect(sf::Vector2f(globalPos)*float(BlockType::tileSize)
-                                    -sf::Vector2f(BlockType::tileSize, BlockType::tileSize)/2.0f, sf::Vector2f(BlockType::tileSize, BlockType::tileSize))
+        unsigned char o(transformData(a.orientation, f.rot, f.flipX, f.flipY));
+
+        sf::Vector2f globalPos(sf::Vector2f(r->getPos()+sf::Vector2i(a.pos))*float(BlockType::tileSize));
+        sf::Vector2f texPos(f.id%BlockType::nbTile, f.id/BlockType::nbTile);
+        drawQuad(&m_render[a.index], sf::FloatRect(globalPos-sf::Vector2f(BlockType::tileSize, BlockType::tileSize)/2.0f, sf::Vector2f(BlockType::tileSize, BlockType::tileSize))
                  , sf::FloatRect(texPos*float(BlockType::tileSize), sf::Vector2f(BlockType::tileSize, BlockType::tileSize))
-                 , getXFlip(a.orientation), getYFlip(a.orientation), getRotation(a.orientation));
-    }*/
+                 , getXFlip(o), getYFlip(o), getRotation(o));
+    }
 }

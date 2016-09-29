@@ -106,3 +106,8 @@ unsigned char transformData(unsigned char data, Rotation rot, bool flipX, bool f
     setYFlip(data, newFlipY);
     return data;
 }
+
+unsigned char transformData(unsigned char data, unsigned char transform)
+{
+    return transformData(data, getRotation(transform), getXFlip(transform), getYFlip(transform));
+}

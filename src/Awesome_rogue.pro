@@ -290,7 +290,8 @@ HEADERS  += \
     Events/Datas/eventaddlight.h \
     Events/Datas/eventdellight.h \
     Lights/Types/circlecoloredlight.h \
-    Map/Render/renderdata.h
+    Map/Render/renderdata.h \
+    Map/Render/blockanimation.h
 
 CONFIG += c++14
 #QMAKE_CXXFLAGS += -Wsign-conversion
