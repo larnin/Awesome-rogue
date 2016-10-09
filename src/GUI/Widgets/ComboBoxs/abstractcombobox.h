@@ -1,9 +1,9 @@
 #ifndef ABSTRACTCOMBOBOX_H
 #define ABSTRACTCOMBOBOX_H
 
+#include "GUI/Widgets/widget.h"
 #include <vector>
 #include <functional>
-#include "GUI/Widgets/widget.h"
 
 class AbstractComboBox : public Widget
 {

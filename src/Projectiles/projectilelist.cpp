@@ -2,11 +2,11 @@
 #include "Systemes/drawablelist.h"
 #include "Entities/entitylist.h"
 #include "Map/room.h"
-#include <algorithm>
 #include "Events/eventgetter.h"
 #include "Entities/Types/entity.h"
 #include "Events/Datas/eventprojectilecreated.h"
 #include "Events/Datas/eventpreplayerchangeroom.h"
+#include <algorithm>
 
 const unsigned int projectileHeight(1);
 

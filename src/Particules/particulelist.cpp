@@ -1,14 +1,14 @@
 #include "particulelist.h"
-#include <cassert>
 #include "Systemes/drawablelist.h"
 #include "Entities/entitylist.h"
 #include "Map/room.h"
-#include <algorithm>
 #include "Events/eventgetter.h"
 #include "Events/Datas/eventparticulecreated.h"
 #include "Events/Datas/eventpreplayerchangeroom.h"
 #include "Types/particule.h"
 #include "Entities/Types/entity.h"
+#include <algorithm>
+#include <cassert>
 
 const unsigned int particuleHeight(5);
 

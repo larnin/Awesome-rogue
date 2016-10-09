@@ -1,11 +1,11 @@
 #ifndef SHOWFPS_H
 #define SHOWFPS_H
 
-#include <SFML/Graphics/Drawable.hpp>
-#include <SFML/System/Clock.hpp>
 #include "Utilities/ressource.h"
 #include "textDrawer.h"
 #include "Systemes/updatable.h"
+#include <SFML/Graphics/Drawable.hpp>
+#include <SFML/System/Clock.hpp>
 
 class ShowFPS : public sf::Drawable, public Updatable
 {

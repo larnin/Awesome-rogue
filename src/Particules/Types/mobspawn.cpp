@@ -1,9 +1,9 @@
 #include "mobspawn.h"
+#include "Utilities/quadrender.h"
+#include "Map/blocktype.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
-#include "Utilities/quadrender.h"
-#include "Map/blocktype.h"
 #include <algorithm>
 
 const float initTime(0.3f);

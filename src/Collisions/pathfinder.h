@@ -1,9 +1,9 @@
 #ifndef PATHFINDER_H
 #define PATHFINDER_H
 
+#include <sfml/System/Vector2.hpp>
 #include <vector>
 #include <memory>
-#include <sfml/System/Vector2.hpp>
 
 class Room;
 

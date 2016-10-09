@@ -1,8 +1,8 @@
 #ifndef EVENTSETBOSSLIFEBAR_H
 #define EVENTSETBOSSLIFEBAR_H
 
-#include <memory>
 #include "GUI/LifeBar/bosslifebar.h"
+#include <memory>
 
 struct EventSetBossLifeBar
 {

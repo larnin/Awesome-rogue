@@ -1,10 +1,10 @@
 #ifndef KEYCONFIG_H
 #define KEYCONFIG_H
 
-#include <array>
+#include "commandtype.h"
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Joystick.hpp>
-#include "commandtype.h"
+#include <array>
 
 struct KeyInfo
 {

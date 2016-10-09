@@ -5,7 +5,6 @@
 #include <functional>
 #include <memory>
 #include <algorithm>
-
 #include <cassert>
 
 using namespace std::placeholders;

@@ -1,10 +1,10 @@
 #include "particulelifebar.h"
 #include "Entities/Types/entity.h"
-#include <SFML/Graphics/VertexArray.hpp>
 #include "Utilities/quadrender.h"
+#include "Map/blocktype.h"
+#include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
-#include "Map/blocktype.h"
 
 ParticleLifeBar::ParticleLifeBar(const Location & pos, std::weak_ptr<Entity> entity)
     : Particule(pos)

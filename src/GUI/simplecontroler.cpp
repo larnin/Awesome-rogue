@@ -1,7 +1,7 @@
 #include "simplecontroler.h"
-#include <algorithm>
 #include "Controles/commandsvalue.h"
 #include "cassert"
+#include <algorithm>
 
 SimpleControler::SimpleControler()
     : Controlable(Controlable::ACTIVE)

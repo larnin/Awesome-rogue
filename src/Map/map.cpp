@@ -1,7 +1,7 @@
-#include <algorithm>
 #include "map.h"
 #include "room.h"
 #include "Events/Datas/eventitemloaded.h"
+#include <algorithm>
 
 Map::Map()
 {

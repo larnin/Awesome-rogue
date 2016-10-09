@@ -1,10 +1,10 @@
 #include "spawnboss1.h"
-#include <SFML/Graphics/RenderTarget.hpp>
-#include <SFML/Graphics/RenderStates.hpp>
-#include <SFML/Graphics/VertexArray.hpp>
 #include "Map/blocktype.h"
 #include "Utilities/vect2convert.h"
 #include "Utilities/quadrender.h"
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
+#include <SFML/Graphics/VertexArray.hpp>
 
 const float startLaserTime(0.3f);
 const unsigned int beamsCount(8);

@@ -1,8 +1,8 @@
 #ifndef EVENTREMOVEENTITY_H
 #define EVENTREMOVEENTITY_H
 
-#include <memory>
 #include "Entities/Types/entity.h"
+#include <memory>
 
 struct EventRemoveEntity
 {

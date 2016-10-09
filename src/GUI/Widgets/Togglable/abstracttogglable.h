@@ -1,8 +1,8 @@
 #ifndef ABSTRACTTOGGLABLE_H
 #define ABSTRACTTOGGLABLE_H
 
-#include <functional>
 #include "GUI/Widgets/widget.h"
+#include <functional>
 
 class AbstractTogglable : public Widget
 {

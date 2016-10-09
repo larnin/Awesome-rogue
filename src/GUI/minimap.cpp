@@ -1,13 +1,13 @@
 #include "minimap.h"
-#include <SFML/Graphics/RenderTarget.hpp>
-#include <SFML/Graphics/View.hpp>
-#include <SFML/Graphics/RenderTexture.hpp>
-#include <SFML/Graphics/Sprite.hpp>
 #include "Map/blocktype.h"
 #include "Utilities/quadrender.h"
 #include "Events/Datas/eventplayerchangeroom.h"
 #include "Map/map.h"
 #include "Map/room.h"
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/View.hpp>
+#include <SFML/Graphics/RenderTexture.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 
 float mapScale(0.75f);
 float mapOverResolution(3.0f);

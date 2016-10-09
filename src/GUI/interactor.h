@@ -3,10 +3,10 @@
 
 #include "Systemes/controlable.h"
 #include "Utilities/noncopiable.h"
-#include <SFML/Graphics/Drawable.hpp>
 #include "Map/blockinteractiontype.h"
 #include "textDrawer.h"
 #include "Utilities/ressource.h"
+#include <SFML/Graphics/Drawable.hpp>
 
 class Location;
 class Entity;

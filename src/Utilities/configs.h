@@ -1,8 +1,8 @@
 #ifndef CONFIGS_H
 #define CONFIGS_H
 
-#include <string>
 #include <SFML/System/Vector2.hpp>
+#include <string>
 
 class Configs
 {

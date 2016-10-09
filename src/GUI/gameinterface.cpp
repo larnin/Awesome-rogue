@@ -1,9 +1,9 @@
 #include "gameinterface.h"
+#include "Utilities/quadrender.h"
+#include "Events/Datas/eventexperiencechanged.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/View.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
-#include "Utilities/quadrender.h"
-#include "Events/Datas/eventexperiencechanged.h"
 
 GameInterface::GameInterface()
     : m_texture("res/img/interface.png")

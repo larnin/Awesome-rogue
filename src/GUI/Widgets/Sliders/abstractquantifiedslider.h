@@ -1,9 +1,9 @@
 #ifndef ABSTRACTQUANTIFIEDSLIDER_H
 #define ABSTRACTQUANTIFIEDSLIDER_H
 
+#include "GUI/Widgets/widget.h"
 #include <vector>
 #include <functional>
-#include "GUI/Widgets/widget.h"
 
 class AbstractQuantifiedSlider : public Widget
 {

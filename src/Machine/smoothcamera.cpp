@@ -1,7 +1,6 @@
 #include "smoothcamera.h"
 #include "statemachine.h"
 #include "Utilities/vect2convert.h"
-#include <algorithm>
 #include "Events/Datas/eventcenterofviewchanged.h"
 #include "Events/Datas/eventinstantcenterofviewchanged.h"
 #include "Events/Datas/eventplaycameraeffect.h"
@@ -9,6 +8,7 @@
 #include "CameraEffects/effecttest.h"
 #include "CameraEffects/shakeeffect.h"
 #include "CameraEffects/cameraeffect.h"
+#include <algorithm>
 
 SmoothCamera::SmoothCamera(StateMachine & m)
     : m_machine(m)

@@ -1,7 +1,7 @@
 #include "basicradiobuttonitem.h"
 #include "GUI/Widgets/graphichelper.h"
-#include <SFML/Graphics/VertexArray.hpp>
 #include "Utilities/quadrender.h"
+#include <SFML/Graphics/VertexArray.hpp>
 
 BasicRadioButtonItem::BasicRadioButtonItem()
     : AbstactRadioButtonItem()

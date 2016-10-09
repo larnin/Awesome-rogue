@@ -1,15 +1,12 @@
-#include <SFML/Window/VideoMode.hpp>
 #include "statemachine.h"
 #include "States/state.h"
-
 #include "Systemes/controlable.h"
 #include "Systemes/drawablelist.h"
 #include "Systemes/updatable.h"
-
 #include "Events/Datas/eventsizeviewchanged.h"
 #include "smoothcamera.h"
-
 #include "Utilities/configs.h"
+#include <SFML/Window/VideoMode.hpp>
 
 const std::string windowTitle("Awesome rogue");
 

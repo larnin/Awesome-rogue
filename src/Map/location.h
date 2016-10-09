@@ -1,8 +1,8 @@
 #ifndef LOCATION_H
 #define LOCATION_H
 
-#include <memory>
 #include <SFML/System/Vector2.hpp>
+#include <memory>
 
 class Room;
 

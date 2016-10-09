@@ -1,8 +1,8 @@
 #ifndef EVENTDELLIGHT_H
 #define EVENTDELLIGHT_H
 
-#include <memory>
 #include "Lights/Types/light.h"
+#include <memory>
 
 struct EventDelLight
 {

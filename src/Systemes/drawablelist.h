@@ -1,12 +1,11 @@
 #ifndef DRAWABLE_LIST_H
 #define DRAWABLE_LIST_H
 
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
 #include <map>
 #include <vector>
 #include <memory>
-
-#include <SFML/Graphics/RenderTarget.hpp>
-#include <SFML/Graphics/RenderStates.hpp>
 
 class DrawableList
 {

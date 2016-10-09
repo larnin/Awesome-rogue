@@ -1,13 +1,13 @@
 #ifndef PROJECTILE_H
 #define PROJECTILE_H
 
-#include <random>
 #include "Systemes/updatable.h"
 #include "Utilities/noncopiable.h"
 #include "Map/location.h"
+#include "Entities/team.h"
 #include <SFML/Graphics/Drawable.hpp>
 #include <memory>
-#include "Entities/team.h"
+#include <random>
 
 class Entity;
 class HitBox;

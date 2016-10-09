@@ -1,13 +1,13 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
-#include <memory>
-#include <map>
-#include <SFML/Graphics/Drawable.hpp>
 #include "Systemes/controlable.h"
 #include "Systemes/updatable.h"
 #include "GUI/adaptablebounds.h"
 #include "Controles/commandtype.h"
+#include <SFML/Graphics/Drawable.hpp>
+#include <memory>
+#include <map>
 
 class CommandsValue;
 

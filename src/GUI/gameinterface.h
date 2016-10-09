@@ -1,11 +1,11 @@
 #ifndef GAMEINTERFACE_H
 #define GAMEINTERFACE_H
 
-#include <SFML/Graphics/Drawable.hpp>
-#include <SFML/System/Vector2.hpp>
 #include "Utilities/ressource.h"
 #include "Events/eventreceiver.h"
 #include "textDrawer.h"
+#include <SFML/Graphics/Drawable.hpp>
+#include <SFML/System/Vector2.hpp>
 
 class EventExperienceChanged;
 

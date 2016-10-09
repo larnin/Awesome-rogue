@@ -1,8 +1,8 @@
 #ifndef EVENTENTITYCREATED_H
 #define EVENTENTITYCREATED_H
 
-#include <memory>
 #include "Entities/Types/entity.h"
+#include <memory>
 
 struct EventEntityCreated
 {

@@ -1,8 +1,8 @@
 #include "basiccheckbox.h"
-#include <SFML/Graphics/Text.hpp>
-#include <SFML/Graphics/Sprite.hpp>
 #include "GUI/Widgets/graphichelper.h"
 #include "Utilities/quadrender.h"
+#include <SFML/Graphics/Text.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 
 BasicCheckbox::BasicCheckbox(const AdaptableBounds & _bounds, const std::string & label)
     : AbstractTogglable(_bounds)

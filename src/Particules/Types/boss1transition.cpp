@@ -1,9 +1,9 @@
 #include "boss1transition.h"
-#include <SFML/Graphics/RenderTarget.hpp>
-#include <SFML/Graphics/VertexArray.hpp>
 #include "Utilities/quadrender.h"
 #include "Utilities/vect2convert.h"
 #include "Map/blocktype.h"
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/VertexArray.hpp>
 
 const float frameTime(0.2f);
 const float PI(3.14159f);

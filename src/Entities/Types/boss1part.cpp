@@ -3,15 +3,15 @@
 #include "Particules/particulefactory.h"
 #include "Particules/Types/mobdeath.h"
 #include "Map/blocktype.h"
-#include <SFML/Graphics/RenderTarget.hpp>
-#include <SFML/Graphics/RenderStates.hpp>
-#include <SFML/Graphics/VertexArray.hpp>
 #include "Utilities/quadrender.h"
 #include "Projectiles/Types/smallball.h"
 #include "Projectiles/Types/rapidfire.h"
 #include "Projectiles/projectilefactory.h"
 #include "Utilities/vect2convert.h"
 #include "Events/eventgetter.h"
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
+#include <SFML/Graphics/VertexArray.hpp>
 
 const float minWaveTime(10.0f);
 const float maxWaveTime(50.0f);

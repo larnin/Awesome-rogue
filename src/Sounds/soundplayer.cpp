@@ -5,10 +5,10 @@
 #include "Utilities/delayedtask.h"
 #include "sounddata.h"
 #include "Systemes/updatable.h"
-#include <algorithm>
 #include "Utilities/configs.h"
 #include "Effects/fadeineffect.h"
 #include "Effects/fadeouteffect.h"
+#include <algorithm>
 
 const unsigned int absoluteMaxSounds(254);
 

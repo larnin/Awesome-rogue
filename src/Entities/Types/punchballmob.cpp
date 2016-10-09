@@ -1,5 +1,3 @@
-#include <SFML/Graphics/VertexArray.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
 #include "punchballmob.h"
 #include "Utilities/vect2convert.h"
 #include "Map/blocktype.h"
@@ -12,6 +10,8 @@
 #include "Particules/particulefactory.h"
 #include "Particules/Types/mobdeath.h"
 #include "Events/Datas/eventplayerchangeroom.h"
+#include <SFML/Graphics/VertexArray.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 
 PunchBallMob::PunchBallMob(const Location & pos)
     : Entity(pos)

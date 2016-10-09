@@ -1,5 +1,3 @@
-#include <SFML/Graphics/VertexArray.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
 #include "crosslasermob.h"
 #include "Utilities/vect2convert.h"
 #include "Collisions/collisions.h"
@@ -10,6 +8,8 @@
 #include "Events/eventgetter.h"
 #include "Particules/particulefactory.h"
 #include "Particules/Types/mobdeath.h"
+#include <SFML/Graphics/VertexArray.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 
 const float speed(1.0f);
 

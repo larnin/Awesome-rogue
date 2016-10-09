@@ -1,9 +1,9 @@
 #ifndef PARTICULELIST_H
 #define PARTICULELIST_H
 
-#include <vector>
 #include "Events/eventreceiver.h"
 #include "Utilities/noncopiable.h"
+#include <vector>
 
 class EventParticuleCreated;
 class EventPrePlayerChangeRoom;

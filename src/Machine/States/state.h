@@ -1,8 +1,8 @@
 #ifndef STATE_H
 #define STATE_H
 
-#include <memory>
 #include "Utilities/noncopiable.h"
+#include <memory>
 
 class StateMachine;
 

@@ -1,9 +1,9 @@
 #ifndef QUADRENDER_H
 #define QUADRENDER_H
 
+#include "Map/rotation.h"
 #include <SFML/Graphics/Vertex.hpp>
 #include <SFML/Graphics/Rect.hpp>
-#include "Map/rotation.h"
 
 class Block;
 class HitBox;

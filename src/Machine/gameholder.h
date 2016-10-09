@@ -4,8 +4,8 @@
 #include "Utilities/noncopiable.h"
 #include "Entities/populator.h"
 #include "Events/eventreceiver.h"
-#include <memory>
 #include "Entities/playerinfos.h"
+#include <memory>
 
 class StateMachine;
 class Player;

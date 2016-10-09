@@ -1,4 +1,3 @@
-#include <algorithm>
 #include "entitylist.h"
 #include "Types/entity.h"
 #include "Map/room.h"
@@ -10,6 +9,7 @@
 #include "Events/Datas/eventremoveentity.h"
 #include "Events/Datas/eventpreplayerchangeroom.h"
 #include "Events/Datas/evententitychangeroom.h"
+#include <algorithm>
 
 bool EntityList::m_instanced(false);
 

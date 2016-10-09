@@ -1,5 +1,3 @@
-#include <SFML/Graphics/VertexArray.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
 #include "squaremob.h"
 #include "Utilities/vect2convert.h"
 #include "Collisions/collisions.h"
@@ -11,6 +9,8 @@
 #include "Particules/particulefactory.h"
 #include "Particules/Types/mobdeath.h"
 #include "Map/room.h"
+#include <SFML/Graphics/VertexArray.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 
 SquareMob::SquareMob(const Location & pos)
     : Entity(pos)

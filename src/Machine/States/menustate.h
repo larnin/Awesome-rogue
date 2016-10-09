@@ -1,11 +1,11 @@
 #ifndef MENUSTATE_H
 #define MENUSTATE_H
 
-#include <vector>
-#include <memory>
-#include <SFML/Graphics/Sprite.hpp>
 #include "state.h"
 #include "Utilities/ressource.h"
+#include <SFML/Graphics/Sprite.hpp>
+#include <vector>
+#include <memory>
 
 class Widget;
 

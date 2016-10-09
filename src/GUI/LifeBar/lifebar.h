@@ -1,10 +1,10 @@
 #ifndef LIFEBAR_H
 #define LIFEBAR_H
 
-#include <memory>
-#include <SFML/Graphics/Drawable.hpp>
 #include "Utilities/ressource.h"
 #include "Utilities/noncopiable.h"
+#include <SFML/Graphics/Drawable.hpp>
+#include <memory>
 
 class Entity;
 

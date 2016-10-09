@@ -1,9 +1,9 @@
 #ifndef DOOR_H
 #define DOOR_H
 
-#include <memory>
 #include "location.h"
 #include "orientation.h"
+#include <memory>
 
 class Room;
 

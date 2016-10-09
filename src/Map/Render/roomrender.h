@@ -1,12 +1,12 @@
 #ifndef ROOMRENDER_H
 #define ROOMRENDER_H
 
-#include <memory>
-#include <SFML/Graphics/Drawable.hpp>
-#include <SFML/Graphics/VertexArray.hpp>
 #include "Utilities/ressource.h"
 #include "Systemes/updatable.h"
 #include "renderdata.h"
+#include <SFML/Graphics/Drawable.hpp>
+#include <SFML/Graphics/VertexArray.hpp>
+#include <memory>
 
 class Room;
 class Block;

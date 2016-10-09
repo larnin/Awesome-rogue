@@ -1,6 +1,3 @@
-#include <memory>
-#include <stdexcept>
-#include <algorithm>
 #include "generator.h"
 #include "Map/orientation.h"
 #include "Entities/entitytype.h"
@@ -8,6 +5,9 @@
 #include "Map/map.h"
 #include "Map/door.h"
 #include "Map/room.h"
+#include <memory>
+#include <stdexcept>
+#include <algorithm>
 
 const unsigned int multiplierStartRoom(2);
 const unsigned int multiplierBossRoom(2);

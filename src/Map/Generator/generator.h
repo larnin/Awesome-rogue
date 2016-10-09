@@ -1,13 +1,14 @@
 #ifndef GENERATOR_H
 #define GENERATOR_H
 
-#include <array>
-#include <string>
-#include <random>
-#include <SFML/Graphics/Rect.hpp>
 #include "patern.h"
 #include "Map/roomtype.h"
 #include "Map/orientation.h"
+#include <SFML/Graphics/Rect.hpp>
+#include <array>
+#include <string>
+#include <random>
+#include <memory>
 
 class Map;
 class Door;

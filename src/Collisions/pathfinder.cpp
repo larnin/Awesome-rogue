@@ -1,8 +1,8 @@
+#include "pathfinder.h"
+#include "Map/room.h"
 #include <queue>
 #include <algorithm>
 #include <cassert>
-#include "pathfinder.h"
-#include "Map/room.h"
 
 const unsigned int PathFinder::straightDistance(2);
 const unsigned int PathFinder::diagonalDistance(3);

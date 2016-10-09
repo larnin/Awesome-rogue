@@ -9,9 +9,6 @@
 #include "Particules/Types/boss1transition.h"
 #include "Particules/Types/particule.h"
 #include "Map/blocktype.h"
-#include <SFML/Graphics/RenderTarget.hpp>
-#include <SFML/Graphics/RenderStates.hpp>
-#include <SFML/Graphics/VertexArray.hpp>
 #include "Utilities/quadrender.h"
 #include "Projectiles/projectilefactory.h"
 #include "Projectiles/Types/bigcircle.h"
@@ -19,6 +16,9 @@
 #include "Particules/Types/mobdeath.h"
 #include "Utilities/vect2convert.h"
 #include "Map/room.h"
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
+#include <SFML/Graphics/VertexArray.hpp>
 
 const float PI(3.14159f);
 const float minFireDelay(1.0f);

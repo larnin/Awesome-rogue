@@ -1,9 +1,9 @@
-#include <array>
 #include "collisions.h"
 #include "Utilities/vect2convert.h"
 #include "Map/blocktype.h"
 #include "Map/room.h"
 #include "hitbox.h"
+#include <array>"
 
 const float epsilon(0.01f);
 

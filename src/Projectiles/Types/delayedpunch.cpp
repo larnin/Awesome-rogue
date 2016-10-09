@@ -1,13 +1,13 @@
 #include "delayedpunch.h"
-#include <SFML/Graphics/VertexArray.hpp>
 #include "Utilities/quadrender.h"
 #include "Map/blocktype.h"
-#include <SFML/Graphics/RenderStates.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
 #include "Events/eventgetter.h"
 #include "Utilities/vect2convert.h"
 #include "Map/room.h"
 #include "Entities/Types/entity.h"
+#include <SFML/Graphics/VertexArray.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 
 const float totalTime(2.0f);
 const float frameTime(0.05f);

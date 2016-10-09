@@ -1,11 +1,11 @@
 #ifndef GRAPHICHELPER_H
 #define GRAPHICHELPER_H
 
+#include "GUI/aligntype.h"
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/Font.hpp>
-#include "GUI/aligntype.h"
 
 class Margin;
 

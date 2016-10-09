@@ -1,8 +1,8 @@
 #ifndef KEYTEXTURE_H
 #define KEYTEXTURE_H
 
-#include "Utilities/ressource.h"
 #include "keyconfig.h"
+#include "Utilities/ressource.h"
 
 std::pair<Texture, Texture> texturesOfKey(const KeyInfo & key);
 

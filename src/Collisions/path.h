@@ -1,10 +1,9 @@
 #ifndef PATH_H
 #define PATH_H
 
+#include "Map/location.h"
 #include <vector>
 #include <memory>
-#include "Map/location.h"
-#include <array>
 
 class Room;
 

@@ -1,9 +1,9 @@
 #include "boss1finallifebar.h"
-#include <SFML/Graphics/VertexArray.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
 #include "Utilities/quadrender.h"
 #include "Utilities/vect2convert.h"
 #include "Entities/Types/entity.h"
+#include <SFML/Graphics/VertexArray.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 
 const float frameTime(0.1f);
 

@@ -1,11 +1,11 @@
 #include "basicslider.h"
+#include "Utilities/quadrender.h"
+#include "GUI/Widgets/graphichelper.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
-#include "GUI/Widgets/graphichelper.h"
-#include "Utilities/quadrender.h"
 
 BasicSlider::BasicSlider(const AdaptableBounds & _bounds)
     : AbstractSlider(_bounds)

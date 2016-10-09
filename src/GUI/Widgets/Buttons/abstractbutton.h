@@ -1,9 +1,9 @@
 #ifndef ABSTRACTBUTTON_H
 #define ABSTRACTBUTTON_H
 
-#include <functional>
-#include <SFML/System/Time.hpp>
 #include "GUI/Widgets/widget.h"
+#include <SFML/System/Time.hpp>
+#include <functional>
 
 class AbstractButton : public Widget
 {

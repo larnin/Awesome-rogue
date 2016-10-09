@@ -1,6 +1,6 @@
 #include "abstracttextbox.h"
-#include <SFML/Window/Event.hpp>
 #include "Controles/commandsvalue.h"
+#include <SFML/Window/Event.hpp>
 
 AbstractTextBox::AbstractTextBox(const AdaptableBounds & _bounds)
     : Widget(_bounds)

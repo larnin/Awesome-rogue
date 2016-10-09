@@ -1,10 +1,10 @@
 #ifndef ENTITYLIST_H
 #define ENTITYLIST_H
 
-#include <vector>
-#include <memory>
 #include "Events/eventreceiver.h"
 #include "Utilities/noncopiable.h"
+#include <vector>
+#include <memory>
 
 class EventEntityCreated;
 class EventRemoveEntity;

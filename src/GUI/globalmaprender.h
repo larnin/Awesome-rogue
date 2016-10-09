@@ -1,14 +1,14 @@
 #ifndef GLOBALMAPRENDER_H
 #define GLOBALMAPRENDER_H
 
-#include <memory>
-#include <vector>
-#include <SFML/Graphics/Drawable.hpp>
-#include <SFML/Graphics/VertexArray.hpp>
 #include "Map/location.h"
 #include "Utilities/ressource.h"
 #include "Systemes/controlable.h"
 #include "Systemes/updatable.h"
+#include <SFML/Graphics/Drawable.hpp>
+#include <SFML/Graphics/VertexArray.hpp>
+#include <memory>
+#include <vector>
 
 class Map;
 

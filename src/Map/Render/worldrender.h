@@ -1,14 +1,14 @@
 #ifndef WORLDRENDER_H
 #define WORLDRENDER_H
 
-#include <vector>
+#include "Utilities/ressource.h"
+#include "Events/eventreceiver.h"
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/View.hpp>
-#include "Utilities/ressource.h"
-#include "Events/eventreceiver.h"
+#include <vector>
 
 class EventPrePlayerChangeRoom;
 class EventSizeViewChanged;

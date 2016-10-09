@@ -1,6 +1,6 @@
-#include <algorithm>
-#include <SFML/Graphics/Drawable.hpp>
 #include "drawablelist.h"
+#include <SFML/Graphics/Drawable.hpp>
+#include <algorithm>
 
 std::map<unsigned int, std::vector<std::weak_ptr<sf::Drawable>>> DrawableList::m_objects;
 std::vector<DrawableList::ObjectModif> DrawableList::m_modification;

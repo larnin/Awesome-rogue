@@ -1,6 +1,6 @@
+#include "updatable.h"
 #include <algorithm>
 #include <memory>
-#include "updatable.h"
 
 Updatable::Updatable()
     : m_isAware(false)

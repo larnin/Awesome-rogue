@@ -1,11 +1,11 @@
 #ifndef ADAPTABLEBOUNDS_H
 #define ADAPTABLEBOUNDS_H
 
+#include "margin.h"
+#include "aligntype.h"
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/View.hpp>
 #include <SFML/Graphics/Rect.hpp>
-#include "margin.h"
-#include "aligntype.h"
 
 struct AdaptableBounds
 {

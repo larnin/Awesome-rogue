@@ -1,9 +1,9 @@
 #ifndef MATRIX
 #define MATRIX
 
+#include <SFML/System/Vector2.hpp>
 #include <cassert>
 #include <vector>
-#include <SFML/System/Vector2.hpp>
 
 template <typename T>
 class Matrix

@@ -1,11 +1,10 @@
 #ifndef OPTIONSSTATE_H
 #define OPTIONSSTATE_H
 
+#include "Controles/keyconfig.h"
 #include "state.h"
 #include <vector>
 #include <memory>
-
-#include "Controles/keyconfig.h"
 
 class KeyConfigWidget;
 class Widget;

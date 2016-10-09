@@ -1,9 +1,9 @@
 #ifndef BLOCKTYPE_H
 #define BLOCKTYPE_H
 
-#include <string>
 #include "blockinteractiontype.h"
 #include "boxtype.h"
+#include <string>
 
 class Block;
 class HitBox;

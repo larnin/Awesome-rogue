@@ -1,8 +1,7 @@
 #include "graphichelper.h"
 #include "Utilities/quadrender.h"
-#include <SFML/Graphics/Text.hpp>
-
 #include "GUI/margin.h"
+#include <SFML/Graphics/Text.hpp>
 
 sf::VertexArray drawSelector(sf::FloatRect rect)
 {

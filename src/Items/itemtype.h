@@ -1,8 +1,8 @@
 #ifndef ITEMTYPE_H
 #define ITEMTYPE_H
 
-#include <vector>
 #include <SFML/Graphics/Rect.hpp>
+#include <vector>
 
 class HitBox;
 

@@ -1,13 +1,13 @@
 #include "smallball.h"
 #include "Collisions/collisions.h"
-#include <SFML/Graphics/VertexArray.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
-#include <Utilities/quadrender.h>
+#include "Utilities/quadrender.h"
 #include "Map/blocktype.h"
 #include "Utilities/vect2convert.h"
 #include "Events/eventgetter.h"
 #include "Map/room.h"
 #include "Entities/Types/entity.h"
+#include <SFML/Graphics/VertexArray.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 
 SmallBall::SmallBall(const Location & pos, Team team, const sf::Vector2f & speed, unsigned int bounces, float maxTime, std::weak_ptr<Entity> sender)
     : Projectile(pos, team, sender)

@@ -2,8 +2,8 @@
 #define PAUSESTATE_H
 
 #include "state.h"
-#include <SFML/Graphics/Sprite.hpp>
 #include "Utilities/ressource.h"
+#include <SFML/Graphics/Sprite.hpp>
 
 class Widget;
 

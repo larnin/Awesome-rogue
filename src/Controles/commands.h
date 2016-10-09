@@ -1,10 +1,9 @@
 #ifndef COMMANDS_H
 #define COMMANDS_H
 
-#include <SFML/Window/Event.hpp>
-
 #include "keyconfig.h"
 #include "commandsvalue.h"
+#include <SFML/Window/Event.hpp>
 
 class Commands
 {

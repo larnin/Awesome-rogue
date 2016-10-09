@@ -1,10 +1,10 @@
 #include "mobdeath.h"
 #include "Utilities/quadrender.h"
+#include "Map/blocktype.h"
+#include "Utilities/vect2convert.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
-#include "Map/blocktype.h"
-#include "Utilities/vect2convert.h"
 
 const float minTime(0.5f);
 const float maxTime(1.5f);

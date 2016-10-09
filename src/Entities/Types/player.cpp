@@ -1,5 +1,3 @@
-#include <SFML/Graphics/VertexArray.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
 #include "player.h"
 #include "Utilities/vect2convert.h"
 #include "Collisions/collisions.h"
@@ -14,6 +12,8 @@
 #include "Controles/commandsvalue.h"
 #include "events/Datas/eventaddlight.h"
 #include "Lights/Types/circlecoloredlight.h"
+#include <SFML/Graphics/VertexArray.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 
 const float PI(3.14159f);
 

@@ -1,9 +1,9 @@
 #ifndef ENTITYFACTORY_H
 #define ENTITYFACTORY_H
 
+#include "entitytype.h"
 #include <memory>
 #include <vector>
-#include "entitytype.h"
 
 class Location;
 class Entity;

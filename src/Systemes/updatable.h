@@ -1,9 +1,8 @@
 #ifndef UPDATABLE_H
 #define UPDATABLE_H
 
-#include <SFML/System/Time.hpp>
-
 #include "staticlist.h"
+#include <SFML/System/Time.hpp>
 
 class Updatable : protected StaticList<Updatable>
 {

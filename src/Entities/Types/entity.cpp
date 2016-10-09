@@ -1,7 +1,6 @@
 #include "entity.h"
 #include "Collisions/collisions.h"
 #include "Utilities/vect2convert.h"
-
 #include "Events/event.h"
 #include "Events/Datas/evententitychangeroom.h"
 #include "Events/Datas/eventdropitem.h"

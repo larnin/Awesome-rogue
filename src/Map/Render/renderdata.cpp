@@ -1,8 +1,8 @@
 #include "renderdata.h"
+#include "Libs/json.hpp"
 #include <algorithm>
 #include <numeric>
 #include <fstream>
-#include "Libs/json.hpp"
 
 std::default_random_engine RenderData::m_rand;
 const std::string dir("res/img/tileset/");

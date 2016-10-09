@@ -1,11 +1,11 @@
 #ifndef MAP_H
 #define MAP_H
 
-#include <vector>
-#include <memory>
-#include <SFML/System/Vector2.hpp>
 #include "Utilities/noncopiable.h"
 #include "Events/eventreceiver.h"
+#include <SFML/System/Vector2.hpp>
+#include <vector>
+#include <memory>
 
 class EventItemLoaded;
 

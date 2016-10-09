@@ -1,7 +1,4 @@
 #include "rapidfire.h"
-#include <SFML/Graphics/VertexArray.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
 #include "Utilities/quadrender.h"
 #include "Utilities/vect2convert.h"
 #include "Map/blocktype.h"
@@ -9,6 +6,9 @@
 #include "Events/eventgetter.h"
 #include "Map/room.h"
 #include "Entities/Types/entity.h"
+#include <SFML/Graphics/VertexArray.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 
 RapidFire::RapidFire(const Location & pos, Team team, const sf::Vector2f & speed, std::weak_ptr<Entity> sender)
     : Projectile(pos, team, sender)

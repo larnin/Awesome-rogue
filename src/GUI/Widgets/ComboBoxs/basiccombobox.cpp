@@ -1,9 +1,9 @@
 #include "basiccombobox.h"
+#include "GUI/Widgets/graphichelper.h"
+#include "Utilities/quadrender.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Sprite.hpp>
-#include "GUI/Widgets/graphichelper.h"
-#include "Utilities/quadrender.h"
 
 BasicCombobox::BasicCombobox(const AdaptableBounds & _bounds)
     : AbstractComboBox(_bounds)

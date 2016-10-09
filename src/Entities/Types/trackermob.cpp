@@ -1,5 +1,3 @@
-#include <SFML/Graphics/VertexArray.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
 #include "trackermob.h"
 #include "Map/blocktype.h"
 #include "Utilities/quadrender.h"
@@ -15,6 +13,8 @@
 #include "Particules/Types/mobdeath.h"
 #include "Events/Datas/eventplayerchangeroom.h"
 #include "Map/room.h"
+#include <SFML/Graphics/VertexArray.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 
 TrackerMob::TrackerMob(const Location & pos)
     : Entity(pos)

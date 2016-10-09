@@ -1,5 +1,3 @@
-#include <cassert>
-#include <SFML/Graphics/Rect.hpp>
 #include "worldrender.h"
 #include "Systemes/drawablelist.h"
 #include "Utilities/quadrender.h"
@@ -12,6 +10,8 @@
 #include "Map/map.h"
 #include "roomrender.h"
 #include "Map/room.h"
+#include <SFML/Graphics/Rect.hpp>
+#include <cassert>
 
 const unsigned int height(0);
 

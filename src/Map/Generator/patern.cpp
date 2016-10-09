@@ -1,9 +1,9 @@
-#include <cmath>
 #include "Libs/json.hpp"
 #include "fstream"
-
 #include "patern.h"
 #include "map/blocktype.h"
+#include <cmath>
+
 Patern::Patern(sf::Vector2u size, Block def)
     : m_blocks(size, def)
     , m_renderInfosName("tileset")

@@ -1,13 +1,12 @@
 #include "gamestate.h"
-#include <SFML/Graphics/Color.hpp>
 #include "Machine/statemachine.h"
 #include "GUI/simplecontroler.h"
 #include "pausestate.h"
 #include "mapstate.h"
 #include "Events/Datas/eventinteraction.h"
 #include "Events/event.h"
-
 #include "File/serializer.h"
+#include <SFML/Graphics/Color.hpp>
 
 GameState::GameState(std::weak_ptr<StateMachine> machine)
     : State(machine)

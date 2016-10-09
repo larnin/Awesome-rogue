@@ -1,12 +1,12 @@
 #ifndef LIGHTRENDER_H
 #define LIGHTRENDER_H
 
+#include "Utilities/noncopiable.h"
+#include "Events/eventreceiver.h"
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <memory>
 #include <vector>
-#include "Utilities/noncopiable.h"
-#include "Events/eventreceiver.h"
 
 class Light;
 class EventChangeLightColor;

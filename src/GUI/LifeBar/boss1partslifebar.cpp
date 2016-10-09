@@ -1,7 +1,5 @@
 #include "boss1partslifebar.h"
 #include "Entities/Types/entity.h"
-#include <SFML/Graphics/RenderTarget.hpp>
-#include <SFML/Graphics/VertexArray.hpp>
 #include "Utilities/vect2convert.h"
 #include "Utilities/quadrender.h"
 #include "Particules/particulefactory.h"
@@ -10,6 +8,8 @@
 #include "Events/Datas/eventinteraction.h"
 #include "Events/Datas/eventremoveentity.h"
 #include "cassert"
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/VertexArray.hpp>
 
 Boss1PartsLifeBar::Boss1PartsLifeBar(const std::vector<std::weak_ptr<Entity>> & entities)
     : BossLifeBar(entities)

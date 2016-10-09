@@ -1,10 +1,10 @@
 #include "keyconfigwidget.h"
 #include "Controles/keyconfig.h"
 #include "graphichelper.h"
-#include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
 #include "Controles/keytexture.h"
 #include "Controles/commandsvalue.h"
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 
 KeyConfigWidget::KeyConfigWidget(CommandType type, const KeyInfo & currentKey, const AdaptableBounds & _bounds)
     : Widget(_bounds)

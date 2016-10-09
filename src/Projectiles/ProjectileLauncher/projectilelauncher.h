@@ -1,10 +1,10 @@
 #ifndef PROJECTILELAUNCHER_H
 #define PROJECTILELAUNCHER_H
 
-#include <memory>
 #include "Systemes/updatable.h"
 #include "Systemes/controlable.h"
 #include "Utilities/noncopiable.h"
+#include <memory>
 
 class Entity;
 

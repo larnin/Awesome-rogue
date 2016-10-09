@@ -1,8 +1,8 @@
 #ifndef ABSTRACTTEXTBOX_H
 #define ABSTRACTTEXTBOX_H
 
-#include <functional>
 #include "GUI/Widgets/widget.h"
+#include <functional>
 
 class AbstractTextBox : public Widget
 {

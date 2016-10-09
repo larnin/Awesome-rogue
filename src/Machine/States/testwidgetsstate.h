@@ -1,9 +1,9 @@
 #ifndef TESTWIDGETSSTATE_H
 #define TESTWIDGETSSTATE_H
 
+#include "state.h"
 #include <memory>
 #include <vector>
-#include "state.h"
 
 class Widget;
 

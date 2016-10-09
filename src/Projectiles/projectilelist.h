@@ -1,9 +1,9 @@
 #ifndef PROJECTILELIST_H
 #define PROJECTILELIST_H
 
-#include <vector>
 #include "Events/eventreceiver.h"
 #include "Utilities/noncopiable.h"
+#include <vector>
 
 class EventProjectileCreated;
 class EventPrePlayerChangeRoom;

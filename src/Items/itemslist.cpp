@@ -8,11 +8,11 @@
 #include "Events/Datas/eventpickitem.h"
 #include "Map/location.h"
 #include "Map/blocktype.h"
+#include "Utilities/quadrender.h"
+#include "Events/Datas/eventdropitem.h"
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
-#include "Utilities/quadrender.h"
-#include "Events/Datas/eventdropitem.h"
 
 ItemsList::ItemsList()
     : m_texture("res/img/items.png")

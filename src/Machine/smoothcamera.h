@@ -1,12 +1,12 @@
 #ifndef SMOOTHCAMERA_H
 #define SMOOTHCAMERA_H
 
-#include <memory>
-#include <vector>
-#include <SFML/System/Vector2.hpp>
 #include "Events/eventreceiver.h"
 #include "Systemes/updatable.h"
 #include "CameraEffects/cameraeffecttype.h"
+#include <SFML/System/Vector2.hpp>
+#include <memory>
+#include <vector>
 
 class StateMachine;
 class EventCenterOfViewChanged;

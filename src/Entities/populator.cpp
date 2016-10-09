@@ -1,6 +1,5 @@
 #include "populator.h"
 #include "entityfactory.h"
-#include <algorithm>
 #include "Events/eventgetter.h"
 #include "Entities/Types/entity.h"
 #include "Map/room.h"
@@ -17,6 +16,7 @@
 #include "entityfactory.h"
 #include "GUI/LifeBar/boss1partslifebar.h"
 #include "GUI/LifeBar/boss1finallifebar.h"
+#include <algorithm>
 
 Populator::Populator()
     : m_enabled(false)

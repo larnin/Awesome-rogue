@@ -2,14 +2,14 @@
 #define ITEMSLIST_H
 
 #include "Systemes/updatable.h"
-#include <SFML/System/Vector2.hpp>
-#include <SFML/Graphics/Drawable.hpp>
 #include "Utilities/noncopiable.h"
 #include "Events/eventreceiver.h"
 #include "itemtype.h"
+#include "Utilities/ressource.h"
+#include <SFML/System/Vector2.hpp>
+#include <SFML/Graphics/Drawable.hpp>
 #include <vector>
 #include <map>
-#include "Utilities/ressource.h"
 
 class Location;
 class EventDropItem;

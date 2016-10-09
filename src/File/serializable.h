@@ -1,9 +1,10 @@
 #ifndef SERIALIZABLE_H
 #define SERIALIZABLE_H
 
-#include <vector>
 #include "Libs/json.hpp"
 #include "serializabletype.h"
+#include <vector>
+
 using json = nlohmann::json;
 
 class Serializable

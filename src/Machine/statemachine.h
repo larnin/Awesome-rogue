@@ -1,14 +1,14 @@
 #ifndef STATEMACHINE_H
 #define STATEMACHINE_H
 
-#include <memory>
-#include <stack>
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/System/Clock.hpp>
-#include <SFML/Graphics/Color.hpp>
 #include "Controles/commands.h"
 #include "Utilities/noncopiable.h"
 #include "Sounds/soundplayer.h"
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System/Clock.hpp>
+#include <SFML/Graphics/Color.hpp>
+#include <memory>
+#include <stack>
 
 class State;
 class SmoothCamera;

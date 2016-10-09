@@ -1,5 +1,3 @@
-#include <SFML/Graphics/VertexArray.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
 #include "circlemob.h"
 #include "Map/blocktype.h"
 #include "Utilities/quadrender.h"
@@ -13,6 +11,8 @@
 #include "Particules/particulefactory.h"
 #include "Particules/Types/mobdeath.h"
 #include "Events/Datas/eventplayerchangeroom.h"
+#include <SFML/Graphics/VertexArray.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 
 CircleMob::CircleMob(const Location & pos, bool small)
     : Entity(pos)

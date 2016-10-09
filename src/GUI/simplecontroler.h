@@ -3,9 +3,9 @@
 
 #include "Systemes/controlable.h"
 #include "Utilities/noncopiable.h"
-#include <vector>
 #include "Controles/commandtype.h"
 #include <functional>
+#include <vector>
 
 class SimpleControler : public Controlable, private NonCopiable
 {

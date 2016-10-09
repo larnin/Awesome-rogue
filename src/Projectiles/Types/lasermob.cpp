@@ -1,7 +1,4 @@
 #include "lasermob.h"
-#include <SFML/Graphics/VertexArray.hpp>
-#include <SFML/Graphics/RenderStates.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
 #include "Utilities/vect2convert.h"
 #include "Utilities/quadrender.h"
 #include "Map/room.h"
@@ -9,6 +6,9 @@
 #include "Collisions/collisions.h"
 #include "Events/eventgetter.h"
 #include "Entities/Types/entity.h"
+#include <SFML/Graphics/VertexArray.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 
 const float totalTime(2.5f);
 const float preTime(1.0f);

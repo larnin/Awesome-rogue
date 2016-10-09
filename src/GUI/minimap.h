@@ -1,12 +1,12 @@
 #ifndef MINIMAP_H
 #define MINIMAP_H
 
-#include <memory>
+#include "Events/eventreceiver.h"
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
-#include "Events/eventreceiver.h"
+#include <memory>
 
 class EventPlayerChangeRoom;
 class Map;

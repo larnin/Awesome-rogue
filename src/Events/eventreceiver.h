@@ -1,8 +1,8 @@
 #ifndef EVENTRECEIVER_H
 #define EVENTRECEIVER_H
 
-#include <functional>
 #include "event.h"
+#include <functional>
 
 class EventReceiver
 {

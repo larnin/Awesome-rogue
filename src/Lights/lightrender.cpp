@@ -1,9 +1,9 @@
 #include "lightrender.h"
 #include "Types/light.h"
-#include <SFML/Graphics/Sprite.hpp>
 #include "Events/Datas/eventchangelightcolor.h"
 #include "Events/Datas/eventaddlight.h"
 #include "Events/Datas/eventdellight.h"
+#include <SFML/Graphics/Sprite.hpp>
 
 LightRender::LightRender()
     : m_baseColor(sf::Color::White)

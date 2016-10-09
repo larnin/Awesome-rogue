@@ -1,9 +1,9 @@
 #ifndef COLLISIONS_H
 #define COLLISIONS_H
 
-#include <memory>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/Rect.hpp>
+#include <memory>
 
 class HitBox;
 class Line;

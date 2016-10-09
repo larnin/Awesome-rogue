@@ -1,7 +1,7 @@
 #include "togglablebasicbutton.h"
+#include "GUI/Widgets/graphichelper.h"
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Sprite.hpp>
-#include "GUI/Widgets/graphichelper.h"
 
 TogglableBasicButton::TogglableBasicButton(const AdaptableBounds & _bounds, const std::string & text)
     : AbstractTogglable(_bounds)

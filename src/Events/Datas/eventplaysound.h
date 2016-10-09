@@ -1,8 +1,8 @@
 #ifndef EVENTPLAYSOUND_H
 #define EVENTPLAYSOUND_H
 
-#include <string>
 #include "Sounds/sounddata.h"
+#include <string>
 
 struct EventPlaySound
 {

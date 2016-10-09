@@ -1,7 +1,6 @@
 #ifndef ROOM_H
 #define ROOM_H
 
-#include <vector>
 #include "Utilities/matrix.h"
 #include "Utilities/noncopiable.h"
 #include "block.h"
@@ -9,6 +8,7 @@
 #include "Entities/entitytype.h"
 #include "roomtype.h"
 #include "File/serializable.h"
+#include <vector>
 
 class Patern;
 

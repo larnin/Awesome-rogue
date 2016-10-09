@@ -1,7 +1,4 @@
 #include "globalmaprender.h"
-#include <SFML/Graphics/RenderTarget.hpp>
-#include <SFML/Graphics/RenderStates.hpp>
-#include <SFML/Graphics/Sprite.hpp>
 #include "Map/map.h"
 #include "Map/room.h"
 #include "Utilities/quadrender.h"
@@ -12,6 +9,9 @@
 #include "Events/Datas/eventcenterofviewchanged.h"
 #include "Controles/commandsvalue.h"
 #include "Utilities/vect2convert.h"
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 
 const sf::Color wallsColor(47, 52, 60);
 const sf::Color groundColor(62, 74, 77);

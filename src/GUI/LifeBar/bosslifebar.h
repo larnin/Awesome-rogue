@@ -1,9 +1,9 @@
 #ifndef BOSSLIFEBAR_H
 #define BOSSLIFEBAR_H
 
-#include <SFML/Graphics/Drawable.hpp>
 #include "Utilities/noncopiable.h"
 #include "Systemes/updatable.h"
+#include <SFML/Graphics/Drawable.hpp>
 #include <vector>
 #include <memory>
 

@@ -1,9 +1,9 @@
 #ifndef RADIOBUTTONS_H
 #define RADIOBUTTONS_H
 
+#include "GUI/Widgets/widget.h"
 #include <vector>
 #include <functional>
-#include "GUI/Widgets/widget.h"
 
 template <typename T>
 class RadioButtons : public Widget

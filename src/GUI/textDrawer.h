@@ -1,12 +1,12 @@
 #ifndef TEXTDRAWER_H
 #define TEXTDRAWER_H
 
-#include <memory>
+#include "GUI/Widgets/widget.h"
+#include "Utilities/ressource.h"
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Drawable.hpp>
-#include "GUI/Widgets/widget.h"
-#include "Utilities/ressource.h"
+#include <memory>
 
 class TextDrawer
 {

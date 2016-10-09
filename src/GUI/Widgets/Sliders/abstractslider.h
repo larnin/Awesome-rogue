@@ -1,8 +1,8 @@
 #ifndef ABSTRACTSLIDER_H
 #define ABSTRACTSLIDER_H
 
-#include <functional>
 #include "GUI/Widgets/widget.h"
+#include <functional>
 
 class AbstractSlider : public Widget
 {

@@ -2,6 +2,7 @@
 #define SERIALIZABLETYPE_H
 
 #include "Libs/json.hpp"
+
 using json = nlohmann::json;
 
 enum SerializableType

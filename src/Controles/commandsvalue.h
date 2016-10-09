@@ -1,12 +1,12 @@
 #ifndef COMMANDSVALUE_H
 #define COMMANDSVALUE_H
 
-#include <array>
-#include <vector>
+#include "commandtype.h"
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Joystick.hpp>
 #include <SFML/Window/Event.hpp>
-#include "commandtype.h"
+#include <array>
+#include <vector>
 
 class Commands;
 

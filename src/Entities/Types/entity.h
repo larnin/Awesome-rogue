@@ -1,13 +1,13 @@
 #ifndef COMPORTEMENT_H
 #define COMPORTEMENT_H
 
-#include <random>
-#include <SFML/Graphics/Drawable.hpp>
 #include "Systemes/updatable.h"
 #include "Utilities/noncopiable.h"
 #include "Map/location.h"
 #include "Entities/team.h"
 #include "Items/itemtype.h"
+#include <SFML/Graphics/Drawable.hpp>
+#include <random>
 
 class Entity : public Updatable, public sf::Drawable, private NonCopiable
 {

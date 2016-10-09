@@ -1,8 +1,8 @@
 #ifndef EVENTADDLIGHT_H
 #define EVENTADDLIGHT_H
 
-#include <memory>
 #include "Lights/Types/light.h"
+#include <memory>
 
 struct EventAddLight
 {

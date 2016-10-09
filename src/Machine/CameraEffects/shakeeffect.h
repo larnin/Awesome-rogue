@@ -1,8 +1,8 @@
 #ifndef SHAKEEFFECT_H
 #define SHAKEEFFECT_H
 
-#include <random>
 #include "cameraeffect.h"
+#include <random>
 
 class ShakeEffect : public CameraEffect
 {

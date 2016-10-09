@@ -2,10 +2,10 @@
 #define KEYCONFIGWIDGET_H
 
 #include "widget.h"
-#include <functional>
 #include "Controles/keyconfig.h"
 #include "Controles/commandtype.h"
 #include "Utilities/ressource.h"
+#include <functional>
 
 class KeyConfigWidget : public Widget
 {
