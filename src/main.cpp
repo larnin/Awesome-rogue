@@ -1,4 +1,4 @@
-/*#include "Machine/statemachine.h"
+#include "Machine/statemachine.h"
 #include "Machine/States/testwidgetsstate.h"
 #include "Machine/States/menustate.h"
 #include "GUI/showfps.h"
@@ -22,7 +22,7 @@ int main()
 
     return 0;
 }
-*/
+
 
 /*#define _WIN32_WINNT 0x0600
 #include <iostream>
@@ -48,12 +48,3 @@ int main()
 if(const char* env_p = std::getenv("LANG"))
     std::cout << "Your LANG is: " << env_p << '\n';
 */
-
-#include "Utilities/tr.h"
-#include <iostream>
-
-int main()
-{
-    std::cout << tr("Test") << std::endl;
-    std::cout << tr("With $ params ?", 5) << std::endl;
-}
