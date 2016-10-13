@@ -16,6 +16,7 @@ class BasicRadioButtonItem;
 class Label;
 class SimpleControler;
 class BasicCheckbox;
+class BasicCombobox;
 
 class OptionsState : public State
 {
@@ -64,6 +65,8 @@ private:
     std::shared_ptr<BasicCheckbox> m_fullScreen;
     std::shared_ptr<BasicSlider> m_musicVolume;
     std::shared_ptr<BasicSlider> m_soundsVolume;
+    std::shared_ptr<BasicCombobox> m_lang;
+
 };
 
 #endif // OPTIONSSTATE_H

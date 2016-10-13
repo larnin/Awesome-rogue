@@ -169,7 +169,6 @@ void RoomRender::update(const sf::Time & elapsedTime)
     for(BlockAnimationState & a : m_animation)
     {
         BlockFrame f(m_data.frameOf(a.id));
-        std::cout << f.id << std::endl;
 
         unsigned char o(transformData(a.orientation, f.rot, f.flipX, f.flipY));
 

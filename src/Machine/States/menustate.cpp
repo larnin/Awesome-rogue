@@ -8,6 +8,7 @@
 #include "Machine/States/gamestate.h"
 #include "Machine/States/optionsstate.h"
 #include "GUI/Widgets/widget.h"
+#include "Utilities/tr.h"
 
 #include "Events/Datas/eventplaymusic.h"
 
@@ -19,17 +20,17 @@ MenuState::MenuState(std::weak_ptr<StateMachine> machine)
     m_title->setPosition(-m_title->getGlobalBounds().width/2.0f, -m_title->getGlobalBounds().height-90);
 
     std::shared_ptr<BasicButton> bPlay(std::make_shared<BasicButton>
-            (AdaptableBounds(sf::Vector2f(0, -10), sf::Vector2f(100, 25), Margin(1), VAlign::V_CENTER, HAlign::H_CENTER), "Nouveau"));
+            (AdaptableBounds(sf::Vector2f(0, -10), sf::Vector2f(100, 25), Margin(1), VAlign::V_CENTER, HAlign::H_CENTER), tr("New")));
     bPlay->changeActiveState(Widget::ControlState::ACTIVE);
 
     std::shared_ptr<BasicButton> bLoad(std::make_shared<BasicButton>
-            (AdaptableBounds(sf::Vector2f(0, 20), sf::Vector2f(100, 25), Margin(1), VAlign::V_CENTER, HAlign::H_CENTER), "Charger"));
+            (AdaptableBounds(sf::Vector2f(0, 20), sf::Vector2f(100, 25), Margin(1), VAlign::V_CENTER, HAlign::H_CENTER), tr("Load")));
 
     std::shared_ptr<BasicButton> bOptions(std::make_shared<BasicButton>
-            (AdaptableBounds(sf::Vector2f(0, 50), sf::Vector2f(100, 25), Margin(1), VAlign::V_CENTER, HAlign::H_CENTER), "Options"));
+            (AdaptableBounds(sf::Vector2f(0, 50), sf::Vector2f(100, 25), Margin(1), VAlign::V_CENTER, HAlign::H_CENTER), tr("Options")));
 
     std::shared_ptr<BasicButton> bExit(std::make_shared<BasicButton>
-            (AdaptableBounds(sf::Vector2f(0, 80), sf::Vector2f(100, 25), Margin(1), VAlign::V_CENTER, HAlign::H_CENTER), "Quitter"));
+            (AdaptableBounds(sf::Vector2f(0, 80), sf::Vector2f(100, 25), Margin(1), VAlign::V_CENTER, HAlign::H_CENTER), tr("Quit")));
 
     bPlay->connect(CommandType::MOVE_DOWN, bLoad);
     bLoad->connect(CommandType::MOVE_UP, bPlay);

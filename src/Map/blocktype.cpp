@@ -2,6 +2,7 @@
 #include "block.h"
 #include "Collisions/hitbox.h"
 #include "blockinteractiontype.h"
+#include "Utilities/tr.h"
 
 const float PI(3.14159f);
 
@@ -159,13 +160,13 @@ std::string BlockType::interactionName(BlockInteractionType b)
     switch(b)
     {
     case BI_CHEST:
-        return "Ouvrir";
+        return tr("Open");
     case BI_PORTAL:
-        return "Se téléporter";
+        return tr("Teleport");
     case BI_SAVEPOINT:
-        return "Sauvegarder";
+        return tr("Save");
     case BI_START_BOSS1:
-        return "Activer";
+        return tr("Activate");
     default:
         return "";
     }

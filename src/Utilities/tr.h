@@ -8,9 +8,19 @@
 class Tr
 {
 public:
-    static void load(const std::string & filename);
+    static void load();
     static void save();
     static std::string tr(const std::string & str);
+
+    static const std::string langDir;
+
+    static std::string systemLang();
+    static std::string defaultLang();
+    static std::vector<std::string> availableLangs();
+    static std::string langPartOf(std::string lang); // en_english
+    static std::string namePartOf(std::string lang);
+    static std::string fileNameFromLang(const std::string & lang);
+    static std::string fileNameFromName(const std::string & name);
 
 private:
     Tr() = delete;

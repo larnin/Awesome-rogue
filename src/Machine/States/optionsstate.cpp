@@ -10,9 +10,11 @@
 #include "GUI/Widgets/RadioButtons/basicradiobuttonitem.h"
 #include "GUI/Widgets/Sliders/basicslider.h"
 #include "GUI/Widgets/Togglable/basiccheckbox.h"
+#include "GUI/Widgets/ComboBoxs/basiccombobox.h"
 #include "GUI/simplecontroler.h"
 #include "Systemes/drawablelist.h"
 #include "Utilities/configs.h"
+#include "Utilities/tr.h"
 
 OptionsState::OptionsState(std::weak_ptr<StateMachine> machine)
     : State(machine)
@@ -31,12 +33,12 @@ OptionsState::OptionsState(std::weak_ptr<StateMachine> machine)
     m_pageControler->set(CommandType::KEY_RIGHT_PAGE, std::bind(&jumpTOPG2, this));
 
     m_stateName = std::make_shared<Label>(AdaptableBounds(sf::Vector2f(0, 15), sf::Vector2f(250, 30), Margin(0), VAlign::V_TOP, HAlign::H_CENTER));
-    m_stateName->setText("Options", f, 16, sf::Color::Black);
+    m_stateName->setText(tr("Options"), f, 16, sf::Color::Black);
 
     m_validButton = std::make_shared<BasicButton>(AdaptableBounds(sf::Vector2f(-110, -5), sf::Vector2f(100, 25), Margin(1)
-                                                                  , VAlign::V_BOTTOM, HAlign::H_RIGHT), "Valider");
+                                                                  , VAlign::V_BOTTOM, HAlign::H_RIGHT), tr("Accept"));
     m_annuleButton = std::make_shared<BasicButton>(AdaptableBounds(sf::Vector2f(-5, -5), sf::Vector2f(100, 25), Margin(1)
-                                                                   , VAlign::V_BOTTOM, HAlign::H_RIGHT), "Annuler");
+                                                                   , VAlign::V_BOTTOM, HAlign::H_RIGHT), tr("Cancel"));
 
     m_validButton->connect(MOVE_RIGHT, m_annuleButton);
     m_annuleButton->connect(MOVE_LEFT, m_validButton);
@@ -96,7 +98,7 @@ void OptionsState::initPG2()
     const float labelOffset(10.0f);
 
     m_othersLabels.push_back(std::make_shared<Label>(AdaptableBounds(sf::Vector2f(-100, topOffset), sf::Vector2f(150, vOffset-5), Margin(0), V_TOP, H_CENTER)));
-    m_othersLabels.back()->setText("Zoom :", f, 8, sf::Color::Black);
+    m_othersLabels.back()->setText(tr("Zoom :"), f, 8, sf::Color::Black);
     m_windowZoom = std::make_shared<RadioButtons<BasicRadioButtonItem>>(AdaptableBounds(sf::Vector2f(100, topOffset - labelOffset), sf::Vector2f(150, vOffset-5), Margin(0), V_TOP, H_CENTER), false);
     m_windowZoom->addButton("*1");
     m_windowZoom->addButton("*2");
@@ -105,13 +107,13 @@ void OptionsState::initPG2()
     m_windowZoom->connectIndexChangedEvent(std::bind(&onZoomChanged, this, _1));
 
     m_othersLabels.push_back(std::make_shared<Label>(AdaptableBounds(sf::Vector2f(-100, topOffset + vOffset), sf::Vector2f(150, vOffset-5), Margin(0), V_TOP, H_CENTER)));
-    m_othersLabels.back()->setText("Plein écran :", f, 8, sf::Color::Black);
+    m_othersLabels.back()->setText(tr("Full screen :"), f, 8, sf::Color::Black);
     m_fullScreen = std::make_shared<BasicCheckbox>(AdaptableBounds(sf::Vector2f(100, topOffset + vOffset - labelOffset), sf::Vector2f(150, vOffset-5), Margin(0), V_TOP, H_CENTER));
     m_fullScreen->state = Configs::c.useFullScreen;
     m_fullScreen->connecToggledEvent(std::bind(&onFullScreenToggle, this, _1));
 
     m_othersLabels.push_back(std::make_shared<Label>(AdaptableBounds(sf::Vector2f(-100, topOffset + 2*vOffset), sf::Vector2f(150, vOffset-5), Margin(0), V_TOP, H_CENTER)));
-    m_othersLabels.back()->setText("Music :", f, 8, sf::Color::Black);
+    m_othersLabels.back()->setText(tr("Music :"), f, 8, sf::Color::Black);
 
     m_musicVolume = std::make_shared<BasicSlider>(AdaptableBounds(sf::Vector2f(100, topOffset + 2*vOffset - labelOffset), sf::Vector2f(150, vOffset-5), Margin(0), V_TOP, H_CENTER));
     m_musicVolume->min = 0;
@@ -121,7 +123,7 @@ void OptionsState::initPG2()
     m_musicVolume->connectValueChangedEvent(std::bind(&onMusicVolumeChanged, this, _1));
 
     m_othersLabels.push_back(std::make_shared<Label>(AdaptableBounds(sf::Vector2f(-100, topOffset + 3*vOffset), sf::Vector2f(150, vOffset-5), Margin(0), V_TOP, H_CENTER)));
-    m_othersLabels.back()->setText("Sounds :", f, 8, sf::Color::Black);
+    m_othersLabels.back()->setText(tr("Sounds :"), f, 8, sf::Color::Black);
 
     m_soundsVolume = std::make_shared<BasicSlider>(AdaptableBounds(sf::Vector2f(100, topOffset + 3*vOffset - labelOffset), sf::Vector2f(150, vOffset-5), Margin(0), V_TOP, H_CENTER));
     m_soundsVolume->min = 0;
@@ -130,15 +132,29 @@ void OptionsState::initPG2()
     m_soundsVolume->speed = 50;
     m_soundsVolume->connectValueChangedEvent(std::bind(&onSoundVolumeChanged, this, _1));
 
+    m_othersLabels.push_back(std::make_shared<Label>(AdaptableBounds(sf::Vector2f(-100, topOffset + 4*vOffset), sf::Vector2f(150, vOffset-5), Margin(0), V_TOP, H_CENTER)));
+    m_othersLabels.back()->setText(tr("Language :"), f, 8, sf::Color::Black);
+
+    m_lang = std::make_shared<BasicCombobox>(AdaptableBounds(sf::Vector2f(100, topOffset + 4*vOffset - labelOffset), sf::Vector2f(150, vOffset-5), Margin(0), V_TOP, H_CENTER));
+    unsigned int index(0);
+    for(const auto & l : Tr::availableLangs())
+    {
+        if(Tr::namePartOf(Tr::fileNameFromLang(Configs::c.lang)) == Tr::namePartOf(l))
+            index = m_lang->items().size();
+        m_lang->addItem(Tr::namePartOf(l));
+    }
+    m_lang->setCurrentIndex(index);
+
     m_windowZoom->connect(MOVE_DOWN, m_fullScreen);
     m_fullScreen->connect(MOVE_UP, m_windowZoom);
     m_fullScreen->connect(MOVE_DOWN, m_musicVolume);
     m_musicVolume->connect(MOVE_UP, m_fullScreen);
     m_musicVolume->connect(MOVE_DOWN, m_soundsVolume);
     m_soundsVolume->connect(MOVE_UP, m_musicVolume);
-    m_soundsVolume->connect(MOVE_DOWN, m_validButton);
+    m_soundsVolume->connect(MOVE_DOWN, m_lang);
+    m_lang->connect(MOVE_UP, m_soundsVolume);
+    m_lang->connect(MOVE_DOWN, m_validButton);
 }
-
 
 void OptionsState::enable()
 {
@@ -214,6 +230,10 @@ void OptionsState::jumpTOPG2()
     Updatable::add(m_soundsVolume);
     Controlable::add(m_soundsVolume);
 
+    DrawableList::add(m_lang, 0);
+    Updatable::add(m_lang);
+    Controlable::add(m_lang);
+
     m_windowZoom->changeActiveState(Controlable::ACTIVE);
 
     m_validButton->connect(MOVE_UP, m_soundsVolume);
@@ -261,6 +281,10 @@ void OptionsState::disablePages()
     Controlable::del(m_soundsVolume);
     m_soundsVolume->changeActiveState(Controlable::UNACTIVE);
 
+    DrawableList::del(m_lang);
+    Updatable::del(m_lang);
+    Controlable::del(m_lang);
+
     m_validButton->disconnect(MOVE_UP);
     m_validButton->changeActiveState(Controlable::UNACTIVE);
     m_annuleButton->disconnect(MOVE_UP);
@@ -275,6 +299,9 @@ void OptionsState::onValidClicked()
     Configs::c.zoom = m_windowZoom->getCurrent() == "*1" ? 1.0f : m_windowZoom->getCurrent() == "*2" ? 0.5f : 0.33f;
     Configs::c.musicVolum = m_musicVolume->value;
     Configs::c.soundsVolum = m_soundsVolume->value;
+    auto lang(Tr::langPartOf(Tr::fileNameFromName(m_lang->current())));
+    if(!lang.empty())
+        Configs::c.lang = lang;
 
     exitState();
 }

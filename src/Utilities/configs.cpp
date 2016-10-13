@@ -33,12 +33,17 @@ void Configs::load(const std::string & filename)
     if(!j.is_object())
         return;
 
-    useFullScreen = j["fullScreen"];
-    screenSize.x = j["screenSizeX"];
-    screenSize.y = j["screenSizeY"];
-    zoom = j["zoom"];
-    musicVolum = j["music"];
-    soundsVolum = j["sounds"];
+    try
+    {
+        useFullScreen = j["fullScreen"];
+        screenSize.x = j["screenSizeX"];
+        screenSize.y = j["screenSizeY"];
+        zoom = j["zoom"];
+        musicVolum = j["music"];
+        soundsVolum = j["sounds"];
+        lang = j["lang"];
+    }
+    catch(const std::exception & e) {}
 }
 
 void Configs::save(const std::string & filename)
@@ -52,8 +57,8 @@ void Configs::save(const std::string & filename)
         {"screenSizeY", screenSize.y},
         {"zoom", zoom},
         {"music", musicVolum},
-        {"sounds", soundsVolum}
-
+        {"sounds", soundsVolum},
+        {"lang", lang}
     };
 
     std::ofstream file(filename);

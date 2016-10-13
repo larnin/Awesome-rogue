@@ -15,6 +15,7 @@ public:
     float zoom;
     float musicVolum;
     float soundsVolum;
+    std::string lang;
 
 
 private:

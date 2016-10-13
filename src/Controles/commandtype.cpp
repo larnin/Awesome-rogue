@@ -1,4 +1,5 @@
 #include "commandtype.h"
+#include "Utilities/tr.h"
 #include <cassert>
 
 std::string commandTypeToString(CommandType type)
@@ -6,37 +7,37 @@ std::string commandTypeToString(CommandType type)
     switch (type)
     {
     case MOVE_UP:
-        return "Haut";
+        return tr("Up");
     case MOVE_DOWN:
-        return "Bas";
+        return tr("Down");
     case MOVE_LEFT:
-        return "Gauche";
+        return tr("Left");
     case MOVE_RIGHT:
-        return "Droite";
+        return tr("Right");
     case SHOOT_UP:
-        return "Tir haut";
+        return tr("Fire up");
     case SHOOT_DOWN:
-        return "Tir bas";
+        return tr("Fire down");
     case SHOOT_LEFT:
-        return "Tir gauche";
+        return tr("Fire left");
     case SHOOT_RIGHT:
-        return "Tir droite";
+        return tr("Fire right");
     case KEY_VALID:
-        return "Accepter";
+        return tr("Accept");
     case KEY_CANCEL:
-        return "Annuler";
+        return tr("Cancel");
     case KEY_PAUSE:
-        return "Pause";
+        return tr("Pause");
     case KEY_ACTION:
-        return "Action";
+        return tr("Action");
     case KEY_MAP:
-        return "Map";
+        return tr("Map");
     case KEY_INVENTARY:
-        return "Inventaire";
+        return tr("Inventory");
     case KEY_LEFT_PAGE:
-        return "Page gauche";
+        return tr("Left page");
     case KEY_RIGHT_PAGE:
-        return "Page droite";
+        return tr("Right page");
     default:
         assert(false);
     break;

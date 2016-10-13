@@ -7,6 +7,7 @@
 #include "menustate.h"
 #include "optionsstate.h"
 #include "mapstate.h"
+#include "Utilities/tr.h"
 
 PauseState::PauseState(std::weak_ptr<StateMachine> machine)
     : State(machine)
@@ -16,20 +17,20 @@ PauseState::PauseState(std::weak_ptr<StateMachine> machine)
     m_title->setPosition(-m_title->getGlobalBounds().width/2.0f, -m_title->getGlobalBounds().height-90);
 
     std::shared_ptr<BasicButton> bContinue(std::make_shared<BasicButton>
-            (AdaptableBounds(sf::Vector2f(0, -10), sf::Vector2f(100, 25), Margin(1), VAlign::V_CENTER, HAlign::H_CENTER), "Continue"));
+            (AdaptableBounds(sf::Vector2f(0, -10), sf::Vector2f(100, 25), Margin(1), VAlign::V_CENTER, HAlign::H_CENTER), tr("Continue")));
     bContinue->changeActiveState(Widget::ControlState::ACTIVE);
 
     std::shared_ptr<BasicButton> bMap(std::make_shared<BasicButton>
-            (AdaptableBounds(sf::Vector2f(0, 20), sf::Vector2f(100, 25), Margin(1), VAlign::V_CENTER, HAlign::H_CENTER), "Map"));
+            (AdaptableBounds(sf::Vector2f(0, 20), sf::Vector2f(100, 25), Margin(1), VAlign::V_CENTER, HAlign::H_CENTER), tr("Map")));
 
     std::shared_ptr<BasicButton> bInv(std::make_shared<BasicButton>
-            (AdaptableBounds(sf::Vector2f(0, 50), sf::Vector2f(100, 25), Margin(1), VAlign::V_CENTER, HAlign::H_CENTER), "Inventaire"));
+            (AdaptableBounds(sf::Vector2f(0, 50), sf::Vector2f(100, 25), Margin(1), VAlign::V_CENTER, HAlign::H_CENTER), tr("Inventary")));
 
     std::shared_ptr<BasicButton> bOptions(std::make_shared<BasicButton>
-            (AdaptableBounds(sf::Vector2f(0, 80), sf::Vector2f(100, 25), Margin(1), VAlign::V_CENTER, HAlign::H_CENTER), "Options"));
+            (AdaptableBounds(sf::Vector2f(0, 80), sf::Vector2f(100, 25), Margin(1), VAlign::V_CENTER, HAlign::H_CENTER), tr("Options")));
 
     std::shared_ptr<BasicButton> bQuit(std::make_shared<BasicButton>
-            (AdaptableBounds(sf::Vector2f(0, 110), sf::Vector2f(100, 25), Margin(1), VAlign::V_CENTER, HAlign::H_CENTER), "Quitter"));
+            (AdaptableBounds(sf::Vector2f(0, 110), sf::Vector2f(100, 25), Margin(1), VAlign::V_CENTER, HAlign::H_CENTER), tr("Quit")));
 
 
     bContinue->connect(CommandType::MOVE_DOWN, bMap);
