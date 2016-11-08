@@ -284,6 +284,7 @@ void OptionsState::disablePages()
     DrawableList::del(m_lang);
     Updatable::del(m_lang);
     Controlable::del(m_lang);
+    m_lang->changeActiveState(Controlable::UNACTIVE);
 
     m_validButton->disconnect(MOVE_UP);
     m_validButton->changeActiveState(Controlable::UNACTIVE);

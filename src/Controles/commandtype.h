@@ -17,6 +17,7 @@ enum CommandType
     KEY_CANCEL,
     KEY_PAUSE,
     KEY_ACTION,
+    KEY_SPECIAL,
     KEY_MAP,
     KEY_INVENTARY,
     KEY_LEFT_PAGE,

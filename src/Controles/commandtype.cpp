@@ -30,6 +30,8 @@ std::string commandTypeToString(CommandType type)
         return tr("Pause");
     case KEY_ACTION:
         return tr("Action");
+    case KEY_SPECIAL:
+        return tr("Special");
     case KEY_MAP:
         return tr("Map");
     case KEY_INVENTARY:

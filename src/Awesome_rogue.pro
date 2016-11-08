@@ -126,7 +126,8 @@ SOURCES += main.cpp \
     Lights/lightrender.cpp \
     Lights/Types/circlecoloredlight.cpp \
     Map/Render/renderdata.cpp \
-    Utilities/tr.cpp
+    Utilities/tr.cpp \
+    Machine/States/loadstate.cpp
 
 HEADERS  += \
     Controles/commands.h \
@@ -293,7 +294,8 @@ HEADERS  += \
     Lights/Types/circlecoloredlight.h \
     Map/Render/renderdata.h \
     Map/Render/blockanimation.h \
-    Utilities/tr.h
+    Utilities/tr.h \
+    Machine/States/loadstate.h
 
 CONFIG += c++14
 #QMAKE_CXXFLAGS += -Wsign-conversion
