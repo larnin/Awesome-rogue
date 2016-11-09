@@ -13,7 +13,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 
 SquareMob::SquareMob(const Location & pos)
-    : Entity(pos)
+    : Entity(pos, SERIALIZE_SQUAREMOB)
     , m_texture("res/img/mobs.png")
     , m_projectileTime(0)
 {

@@ -5,7 +5,7 @@
 
 Map::Map()
 {
-    connect<EventItemLoaded>(std::bind(&onRoomLoaded, this, _1));
+    connect<EventItemLoaded<Room>>(std::bind(&onRoomLoaded, this, _1));
 }
 
 void Map::addRoom(const std::shared_ptr<Room> & r)
@@ -78,11 +78,8 @@ std::vector<std::shared_ptr<Room>>::const_iterator Map::end() const
     return m_rooms.cend();
 }
 
-void Map::onRoomLoaded(EventItemLoaded e)
+void Map::onRoomLoaded(EventItemLoaded<Room> e)
 {
-    if(e.type != SERIALIZE_ROOM)
-        return;
-
     std::shared_ptr<Room> r(std::dynamic_pointer_cast<Room>(e.item));
     if(r)
         m_rooms.push_back(r);

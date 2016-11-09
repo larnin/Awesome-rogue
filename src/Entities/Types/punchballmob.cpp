@@ -14,7 +14,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 
 PunchBallMob::PunchBallMob(const Location & pos)
-    : Entity(pos)
+    : Entity(pos, SERIALIZE_PUNCHBALLMOB)
     , m_texture("res/img/mobs.png")
     , m_fireTime(0)
     , m_onFire(false)

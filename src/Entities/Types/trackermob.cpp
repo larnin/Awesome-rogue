@@ -17,7 +17,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 
 TrackerMob::TrackerMob(const Location & pos)
-    : Entity(pos)
+    : Entity(pos, SERIALIZE_TRACKERMOB)
     , m_texture("res/img/mobs.png")
     , m_canfire(false)
     , m_projectilesToFire(3)

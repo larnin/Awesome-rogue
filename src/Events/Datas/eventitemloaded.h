@@ -5,14 +5,14 @@
 #include "File/serializabletype.h"
 #include <memory>
 
+template <typename T>
 struct EventItemLoaded
 {
-    EventItemLoaded(SerializableType _type, std::shared_ptr<Serializable> _item)
-        : type(_type), item(_item)
+    EventItemLoaded(std::shared_ptr<T> _item)
+        : item(_item)
     {}
 
-    SerializableType type;
-    std::shared_ptr<Serializable> item;
+    std::shared_ptr<T> item;
 };
 
 #endif // EVENTITEMLOADED_H

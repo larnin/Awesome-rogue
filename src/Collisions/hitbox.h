@@ -1,6 +1,7 @@
 #ifndef HITBOX_H
 #define HITBOX_H
 
+#include "Libs/json.hpp"
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <vector>
@@ -18,15 +19,18 @@ struct Line
 class HitBox
 {
     friend class Collisions;
+    using json = nlohmann::json;
 
 public:
     HitBox() = default;
+    HitBox(const json & j);
     ~HitBox() = default;
     void addLine(const Line & l);
     sf::FloatRect globalRect() const;
     HitBox transform(float rotation, bool xFlip, bool yFlip) const;
     HitBox transform(const sf::Vector2f & dir) const;
     HitBox transform(float factor);
+    json toJson() const;
 
 private:
     std::vector<Line> m_lines;

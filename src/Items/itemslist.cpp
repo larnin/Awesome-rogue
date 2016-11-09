@@ -15,9 +15,22 @@
 #include <SFML/Graphics/RenderStates.hpp>
 
 ItemsList::ItemsList()
-    : m_texture("res/img/items.png")
+    : Serializable(SERIALIZE_ITEM_LIST)
+    , m_texture("res/img/items.png")
 {
     connect<EventDropItem>(std::bind(&onItemDrop, this, _1));
+}
+
+ItemsList::ItemsList(const json & j)
+    : ItemsList()
+{
+    if(!j.is_array())
+        return;
+    for(json jItem : j)
+    {
+        ItemData i(ItemType(jItem["type"].get<int>()), sf::Vector2f(jItem["posx"], jItem["posy"]), sf::Vector2f(jItem["speedx"], jItem["speedy"]));
+        addItem(jItem["room"], i);
+    }
 }
 
 void ItemsList::addItem(ItemType type, const Location & pos, const sf::Vector2f & originalSpeed)
@@ -27,10 +40,15 @@ void ItemsList::addItem(ItemType type, const Location & pos, const sf::Vector2f 
         return;
     unsigned int rID(r->getID());
 
-    if(m_items.find(rID) == m_items.end())
-        m_items.emplace(rID, std::vector<ItemData>());
+    addItem(rID, ItemData(type, pos.getPos(), originalSpeed));
+}
 
-    m_items.find(rID)->second.push_back(ItemData(type, pos.getPos(), originalSpeed));
+void ItemsList::addItem(unsigned int roomID, const ItemData & item)
+{
+    if(m_items.find(roomID) == m_items.end())
+        m_items.emplace(roomID, std::vector<ItemData>());
+
+    m_items.find(roomID)->second.push_back(item);
 }
 
 void ItemsList::update(const sf::Time & elapsedTime)
@@ -132,4 +150,26 @@ void ItemsList::draw(sf::RenderTarget & target, sf::RenderStates) const
 void ItemsList::onItemDrop(EventDropItem e)
 {
     addItem(e.type, e.pos, e.speed);
+}
+
+json ItemsList::serialize() const
+{
+    json j;
+    for(const auto & items : m_items)
+    {
+        if(items.second.empty())
+            continue;
+        for(const auto & item : items.second)
+        {
+            json jItem;
+            jItem["room"] = items.first;
+            jItem["posx"] = item.pos.x;
+            jItem["posy"] = item.pos.y;
+            jItem["speedx"] = item.speed.x;
+            jItem["speedy"] = item.speed.y;
+            jItem["type"] = (int)item.type;
+            j.push_back(jItem);
+        }
+    }
+    return j;
 }

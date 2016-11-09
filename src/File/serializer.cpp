@@ -4,6 +4,7 @@
 #include "Events/event.h"
 #include "Events/Datas/eventitemloaded.h"
 #include "Map/room.h"
+#include "Items/itemslist.h"
 #include <boost/filesystem.hpp>
 #include <cassert>
 
@@ -67,16 +68,20 @@ void createAndEmitObject(SerializableType type, const json &j)
 {
     std::shared_ptr<Serializable> item;
 
+    auto it(j.find("data"));
+    if(it == j.end())
+        throw std::runtime_error("Can't find the data on json !");
+
     switch(type)
     {
     case SERIALIZE_ROOM:
-        item = std::make_shared<Room>(j);
-    break;
+        Event<EventItemLoaded<Room>>::send(EventItemLoaded<Room>(std::make_shared<Room>(*it)));
+        break;
+    case SERIALIZE_ITEM_LIST:
+        Event<EventItemLoaded<ItemsList>>::send(EventItemLoaded<ItemsList>(std::make_shared<ItemsList>(*it)));
+        break;
     default:
         assert(false);
     break;
     }
-
-    if(item)
-        Event<EventItemLoaded>::send(EventItemLoaded(type, item));
 }

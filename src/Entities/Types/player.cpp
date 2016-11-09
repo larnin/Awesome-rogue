@@ -18,7 +18,7 @@
 const float PI(3.14159f);
 
 Player::Player(const Location & pos)
-    : Entity(pos)
+    : Entity(pos, SERIALIZE_PLAYER)
     , Controlable(ControlState::ACTIVE)
     , m_texture("res/img/player.png")
     , m_controleDirection(0, 0)

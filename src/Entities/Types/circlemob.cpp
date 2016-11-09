@@ -15,7 +15,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 
 CircleMob::CircleMob(const Location & pos, bool small)
-    : Entity(pos)
+    : Entity(pos, SERIALIZE_CIRCLEMOB)
     , m_texture("res/img/mobs.png")
     , m_lastRandDirTime(0)
     , m_randAngle(0)

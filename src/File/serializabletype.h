@@ -8,6 +8,15 @@ using json = nlohmann::json;
 enum SerializableType
 {
     SERIALIZE_ROOM,
+    SERIALIZE_ITEM_LIST,
+    SERIALIZE_PLAYERINFOS,
+    SERIALIZE_CIRCLEMOB,
+    SERIALIZE_CROSSLASERMOB,
+    SERIALIZE_PLAYER,
+    SERIALIZE_PUNCHBALLMOB,
+    SERIALIZE_SQUAREMOB,
+    SERIALIZE_TRACKERMOB,
+    SERIALIZE_NONE
 };
 
 SerializableType fromJson(const json & j);

@@ -14,7 +14,7 @@
 const float speed(1.0f);
 
 CrossLaserMob::CrossLaserMob(const Location & pos)
-    : Entity(pos)
+    : Entity(pos, SERIALIZE_CROSSLASERMOB)
     , m_texture("res/img/mobs.png")
     , m_fireTimer(0)
 {

@@ -63,9 +63,10 @@ json Serializable::serializeAll()
     json j;
     for(auto s : m_serializables)
     {
-        json js(s->serialize());
-        js["serializableType"] = s->m_serializableType;
-        j.push_back(js);
+        json jItem;
+        jItem["serializableType"] = s->m_serializableType;
+        jItem["data"] = s->serialize();
+        j.push_back(jItem);
     }
     return j;
 }

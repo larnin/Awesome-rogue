@@ -13,8 +13,9 @@
 unsigned int Entity::lastID(0);
 std::default_random_engine Entity::m_randEngine;
 
-Entity::Entity(const Location & pos)
-    : m_pos(pos)
+Entity::Entity(const Location & pos, SerializableType type)
+    : Serializable(type)
+    , m_pos(pos)
     , m_orientation(0.0f)
     , m_damageable(true)
     , m_maxLife(1.0f)
@@ -33,9 +34,38 @@ Entity::Entity(const Location & pos)
     , m_UID(lastID++)
     , m_canPassDoor(false)
     , m_knockbackMultiplier(1.0f)
-
 {
 
+}
+
+Entity::Entity(const json & j, SerializableType type)
+    : Entity(Location(sf::Vector2f(j["posx"], j["posy"]), j["room"].get<unsigned int>()), type)
+{
+    m_speed = sf::Vector2f(j["speedx"], j["speedy"]);
+    m_orientation = j["orientation"];
+    m_damageable = j["damageable"];
+    m_maxLife = j["maxlife"];
+    m_life = j["life"];
+    m_lifeRegeneration = j["liferegen"];
+    m_maxShield = j["maxshield"];
+    m_shield = j["shield"];
+    m_shieldRegeneration = j["shieldregen"];
+    m_shieldDelay = j["shielddelay"];
+    m_timeFromLastDamage = j["timefromlastdmg"];
+    m_invincibleTime = j["invincibletime"];
+    m_showLifeOnDamage = j["showlife"];
+    m_killed = j["killed"];
+    m_originalBox = HitBox(j["originalbox"]);
+    m_currentBox = HitBox(j["box"]);
+    m_team = (Team)j["team"].get<int>();
+    m_activeDistance = j["activedistance"];
+    m_UID = j["uid"];
+    m_canPassDoor = j["canpassdoor"];
+    m_knockbackMultiplier = j["knockback"];
+
+    auto drops = j["drops"];
+    for(const auto & jDrop : drops)
+        m_drops.push_back((ItemType)jDrop.get<int>());
 }
 
 void Entity::update(const sf::Time & elapsedTime)
@@ -237,4 +267,44 @@ void Entity::execRotate(float newAngle)
 void Entity::onKill()
 {
 
+}
+
+json Entity::serialize() const
+{
+    json j;
+    j["posx"] = m_pos.getPos().x;
+    j["posy"] = m_pos.getPos().y;
+    auto room = m_pos.getRoom().lock();
+    if(room)
+        j["room"] = room->getID();
+    else j["room"] = 0;
+    j["speedx"] = m_speed.x;
+    j["speedy"] = m_speed.y;
+    j["orientation"] = m_orientation;
+    j["damageable"] = m_damageable;
+    j["maxlife"] = m_maxLife;
+    j["life"] = m_life;
+    j["liferegen"] = m_lifeRegeneration;
+    j["maxshield"] = m_maxShield;
+    j["shield"] = m_shield;
+    j["shieldregen"] = m_shieldRegeneration;
+    j["shielddelay"] = m_shieldDelay;
+    j["timefromlastdmg"] = m_timeFromLastDamage;
+    j["invincibletime"] = m_invincibleTime;
+    j["showlife"] = m_showLifeOnDamage;
+    j["killed"] = m_killed;
+    j["originalbox"] = m_originalBox.toJson();
+    j["box"] = m_currentBox.toJson();
+    j["team"] = (int)m_team;
+    j["activedistance"] = m_activeDistance;
+    j["uid"] = m_UID;
+    j["canpassdoor"] = m_canPassDoor;
+    j["knockback"] = m_knockbackMultiplier;
+
+    json jDrops;
+    for(ItemType i : m_drops)
+        jDrops.push_back((int)i);
+    j["drops"] = jDrops;
+
+    return j;
 }

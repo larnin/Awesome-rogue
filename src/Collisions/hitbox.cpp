@@ -1,6 +1,8 @@
 #include "hitbox.h"
 #include "Utilities/vect2convert.h"
 
+using json = nlohmann::json;
+
 Line Line::move(const sf::Vector2f & delta) const
 {
     return Line(pos1+delta, pos2+delta);
@@ -87,4 +89,27 @@ HitBox HitBox::transform(float factor)
     for(const auto & line : m_lines)
         out.addLine(Line(line.pos1*factor, line.pos2*factor));
     return out;
+}
+
+HitBox::HitBox(const json & j)
+{
+    if(!j.is_array())
+        return;
+    for(const json & jLine : j)
+        m_lines.push_back(Line(sf::Vector2f(jLine["x1"], jLine["y1"]), sf::Vector2f(jLine["x2"], jLine["y2"])));
+}
+
+json HitBox::toJson() const
+{
+    json j;
+    for(const auto & l : m_lines)
+    {
+        json jLine;
+        jLine["x1"] = l.pos1.x;
+        jLine["x2"] = l.pos2.x;
+        jLine["y1"] = l.pos1.y;
+        jLine["y2"] = l.pos2.y;
+        j.push_back(jLine);
+    }
+    return j;
 }

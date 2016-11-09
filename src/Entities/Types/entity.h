@@ -6,13 +6,16 @@
 #include "Map/location.h"
 #include "Entities/team.h"
 #include "Items/itemtype.h"
+#include "File/serializable.h"
 #include <SFML/Graphics/Drawable.hpp>
 #include <random>
 
-class Entity : public Updatable, public sf::Drawable, private NonCopiable
+class Entity : public Updatable, public sf::Drawable, public Serializable, private NonCopiable
 {
 public:
-    Entity(const Location & pos);
+    Entity(const Location & pos):Entity(pos, SERIALIZE_NONE) {}
+    Entity(const Location & pos, SerializableType type);
+    Entity(const json & j, SerializableType type);
     Entity(Entity&&) = default;
     Entity & operator= (Entity &&) = default;
     virtual ~Entity() = default;
@@ -44,6 +47,8 @@ public:
     void update(const sf::Time & elapsedTime);
 
 protected:
+    virtual json serialize() const;
+
     virtual void updateComportement(const sf::Time & elapsedTime) = 0;
     virtual void onKill();
 

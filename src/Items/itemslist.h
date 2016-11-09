@@ -6,6 +6,7 @@
 #include "Events/eventreceiver.h"
 #include "itemtype.h"
 #include "Utilities/ressource.h"
+#include "File/serializable.h"
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/Drawable.hpp>
 #include <vector>
@@ -14,10 +15,11 @@
 class Location;
 class EventDropItem;
 
-class ItemsList : public Updatable, public sf::Drawable, public EventReceiver, private NonCopiable
+class ItemsList : public Updatable, public sf::Drawable, public EventReceiver, public Serializable, private NonCopiable
 {
 public:
     ItemsList();
+    ItemsList(const json & j);
     ItemsList(ItemsList &&) = default;
     ItemsList & operator=(ItemsList &&) = default;
     virtual ~ItemsList() = default;
@@ -26,6 +28,9 @@ public:
 
     virtual void update(const sf::Time & elapsedTime);
     virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
+
+protected:
+    virtual json serialize() const;
 
 private:
     struct ItemData
@@ -39,6 +44,7 @@ private:
     };
 
     void onItemDrop(EventDropItem e);
+    void addItem(unsigned int roomID, const ItemData & item);
 
     std::map<unsigned int, std::vector<ItemData>> m_items;
     Texture m_texture;

@@ -7,6 +7,7 @@
 #include <vector>
 #include <memory>
 
+template <typename T>
 class EventItemLoaded;
 
 class Room;
@@ -30,7 +31,7 @@ public:
     std::vector<std::shared_ptr<Room>>::const_iterator end() const;
 
 private:
-    void onRoomLoaded(EventItemLoaded e);
+    void onRoomLoaded(EventItemLoaded<Room> e);
 
     std::vector<std::shared_ptr<Room>> m_rooms;
 };
