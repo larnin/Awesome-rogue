@@ -45,6 +45,15 @@ Player::Player(const Location & pos)
     Event<EventAddLight>::send(EventAddLight(m_light));
 }
 
+Player::Player(const json & j)
+    : Entity(j, SERIALIZE_PLAYER)
+    , Controlable(ControlState::ACTIVE)
+    , m_texture("res/img/player.png")
+    , m_controleDirection(0, 0)
+{
+
+}
+
 void Player::control(CommandsValue & v)
 {
     m_controleDirection = sf::Vector2f(v.getValue(CommandType::MOVE_RIGHT) - v.getValue(CommandType::MOVE_LEFT)

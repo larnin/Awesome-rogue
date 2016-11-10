@@ -11,6 +11,7 @@ class Player : public Entity, public Controlable
 {
 public:
     Player(const Location & pos);
+    Player(const json & j);
     Player(Player&&) = default;
     Player & operator= (Player &&) = default;
     virtual ~Player() = default;

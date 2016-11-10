@@ -48,6 +48,16 @@ TrackerMob::TrackerMob(const Location & pos)
     m_drops = experienceToItems(12);
 }
 
+TrackerMob::TrackerMob(const json & j)
+    : Entity(j, SERIALIZE_TRACKERMOB)
+    , m_texture("res/img/mobs.png")
+    , m_canfire(false)
+    , m_projectilesToFire(3)
+    , m_timeToFire(1)
+{
+
+}
+
 void TrackerMob::updateComportement(const sf::Time & elapsedTime)
 {
     std::shared_ptr<Room> r(m_pos.getRoom().lock());

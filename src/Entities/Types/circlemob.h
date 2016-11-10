@@ -14,6 +14,7 @@ class CircleMob : public Entity, public EventReceiver
 {
 public:
     CircleMob(const Location & pos, bool small = false);
+    CircleMob(const json & j);
     CircleMob(CircleMob&&) = default;
     CircleMob & operator= (CircleMob &&) = default;
     virtual ~CircleMob() = default;
@@ -25,6 +26,8 @@ protected:
     virtual void onKill();
     virtual void onAwake();
     virtual void onDisable();
+
+    virtual json serialize() const;
 
 private:
     void onPlayerChangeRoom(EventPlayerChangeRoom e);

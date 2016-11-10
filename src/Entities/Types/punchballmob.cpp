@@ -42,6 +42,15 @@ PunchBallMob::PunchBallMob(const Location & pos)
     m_drops = experienceToItems(8);
 }
 
+PunchBallMob::PunchBallMob(const json & j)
+    : Entity(j, SERIALIZE_PUNCHBALLMOB)
+    , m_texture("res/img/mobs.png")
+    , m_fireTime(0)
+    , m_onFire(false)
+{
+
+}
+
 void PunchBallMob::updateComportement(const sf::Time & elapsedTime)
 {
     float maxFireTime(2.0f);

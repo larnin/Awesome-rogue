@@ -45,6 +45,16 @@ CircleMob::CircleMob(const Location & pos, bool small)
     m_drops = experienceToItems(5);
 }
 
+CircleMob::CircleMob(const json & j)
+    : Entity(j, SERIALIZE_CIRCLEMOB)
+    , m_texture("res/img/mobs.png")
+    , m_lastRandDirTime(0)
+    , m_randAngle(0)
+    , m_isSmall(j["small"])
+{
+
+}
+
 void CircleMob::updateComportement(const sf::Time & elapsedTime)
 {
     const float accelerationNorm(m_isSmall ? 8.0f : 6.0f);
@@ -153,4 +163,11 @@ void CircleMob::recreatePath()
     if(!target)
         return;
     m_path.newPath(getPos(), target->getPos());
+}
+
+json CircleMob::serialize() const
+{
+    json j(Entity::serialize());
+    j["small"] = m_isSmall;
+    return j;
 }

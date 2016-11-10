@@ -9,6 +9,7 @@ class SquareMob : public Entity
 {
 public:
     SquareMob(const Location & pos);
+    SquareMob(const json & j);
     SquareMob(SquareMob&&) = default;
     SquareMob & operator= (SquareMob &&) = default;
     virtual ~SquareMob() = default;
@@ -18,6 +19,7 @@ public:
 protected:
     virtual void updateComportement(const sf::Time & elapsedTime);
     virtual void onKill();
+    virtual json serialize() const;
 
 private:
     Texture m_texture;

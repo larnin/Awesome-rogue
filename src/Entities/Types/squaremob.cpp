@@ -39,6 +39,15 @@ SquareMob::SquareMob(const Location & pos)
     m_drops = experienceToItems(6);
 }
 
+SquareMob::SquareMob(const json & j)
+    : Entity(j, SERIALIZE_SQUAREMOB)
+    , m_texture("res/img/mobs.png")
+    , m_rotationSide(j["rotside"])
+    , m_projectileTime(0)
+{
+
+}
+
 void SquareMob::updateComportement(const sf::Time & elapsedTime)
 {
     std::shared_ptr<Room> r(m_pos.getRoom().lock());
@@ -107,4 +116,11 @@ void SquareMob::draw(sf::RenderTarget & target, sf::RenderStates) const
 void SquareMob::onKill()
 {
     ParticuleFactory::createSend<MobDeath>(m_pos, m_texture, sf::FloatRect(0, 0, 16, 16), 0, m_speed);
+}
+
+json SquareMob::serialize() const
+{
+    json j(Entity::serialize());
+    j["rotside"] = m_rotationSide;
+    return j;
 }

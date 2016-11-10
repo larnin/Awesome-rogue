@@ -8,6 +8,7 @@ class CrossLaserMob : public Entity
 {
 public:
     CrossLaserMob(const Location & pos);
+    CrossLaserMob(const json & j);
     CrossLaserMob(CrossLaserMob&&) = default;
     CrossLaserMob & operator= (CrossLaserMob &&) = default;
     virtual ~CrossLaserMob() = default;
@@ -17,6 +18,7 @@ public:
 protected:
     virtual void updateComportement(const sf::Time & elapsedTime);
     virtual void onKill();
+    virtual json serialize() const;
 
 private:
     bool m_rotationSide;

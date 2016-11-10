@@ -45,6 +45,15 @@ CrossLaserMob::CrossLaserMob(const Location & pos)
     m_drops = experienceToItems(10);
 }
 
+CrossLaserMob::CrossLaserMob(const json & j)
+    : Entity(j, SERIALIZE_CROSSLASERMOB)
+    , m_rotationSide(j["rotside"])
+    , m_texture("res/img/mobs.png")
+    , m_fireTimer(0)
+{
+
+}
+
 void CrossLaserMob::updateComportement(const sf::Time & elapsedTime)
 {
     std::shared_ptr<Room> r(m_pos.getRoom().lock());
@@ -94,4 +103,10 @@ void CrossLaserMob::draw(sf::RenderTarget & target, sf::RenderStates) const
 void CrossLaserMob::onKill()
 {
     ParticuleFactory::createSend<MobDeath>(m_pos, m_texture, sf::FloatRect(33, 0, 15, 15), m_orientation, m_speed);
+}
+
+json CrossLaserMob::serialize() const
+{
+    json j(Entity::serialize());
+    j["rotside"] = m_rotationSide;
 }

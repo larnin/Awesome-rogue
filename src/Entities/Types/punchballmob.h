@@ -12,6 +12,7 @@ class PunchBallMob : public Entity, public EventReceiver
 {
 public:
     PunchBallMob(const Location & pos);
+    PunchBallMob(const json & j);
     PunchBallMob(PunchBallMob&&) = default;
     PunchBallMob & operator= (PunchBallMob &&) = default;
     virtual ~PunchBallMob() = default;

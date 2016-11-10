@@ -12,6 +12,7 @@ class TrackerMob : public Entity, public EventReceiver
 {
 public:
     TrackerMob(const Location & pos);
+    TrackerMob(const json & j);
     TrackerMob(TrackerMob&&) = default;
     TrackerMob & operator= (TrackerMob &&) = default;
     virtual ~TrackerMob() = default;
