@@ -64,6 +64,11 @@ std::vector<std::string> filesIn(const std::string & dir, const std::string & ex
     return fileList;
 }
 
+std::vector<std::string> saveList()
+{
+    return filesIn(saveDir, "json");
+}
+
 void createAndEmitObject(SerializableType type, const json &j)
 {
     std::shared_ptr<Serializable> item;
@@ -84,4 +89,15 @@ void createAndEmitObject(SerializableType type, const json &j)
         assert(false);
     break;
     }
+}
+
+std::string filenameFromDir(std::string dir)
+{
+    auto pos(dir.find_last_of("/\\"));
+    if(pos != std::string::npos)
+        dir = dir.substr(pos+1);
+    pos = dir.find_first_of('.');
+    if(pos != std::string::npos)
+        return dir.substr(0, pos);
+    return dir;
 }

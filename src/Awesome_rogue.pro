@@ -304,14 +304,14 @@ CONFIG += c++14
 # SFML
 DEFINES += SFML_STATIC
 #   --- HOME
-#LIBS += -LC:/Users/Nicolas/Programation/c++/SFML/DW2_2.4_(Qt)/lib
-#INCLUDEPATH += C:/Users/Nicolas/Programation/c++/SFML/DW2_2.4_(Qt)/include
-#DEPENDPATH += C:/Users/Nicolas/Programation/c++/SFML/DW2_2.4_(Qt)/include
+LIBS += -LC:/Users/Nicolas/Programation/c++/SFML/DW2_2.4_(Qt)/lib
+INCLUDEPATH += C:/Users/Nicolas/Programation/c++/SFML/DW2_2.4_(Qt)/include
+DEPENDPATH += C:/Users/Nicolas/Programation/c++/SFML/DW2_2.4_(Qt)/include
 
 #   --- RUBIKA
-LIBS += -LC:/Users/n.laurent/Desktop/perso/SFML/SFML-2.4.0-SW2/lib
-INCLUDEPATH += C:/Users/n.laurent/Desktop/perso/SFML/SFML-2.4.0-SW2/include
-DEPENDPATH += C:/Users/n.laurent/Desktop/perso/SFML/SFML-2.4.0-SW2/include
+#LIBS += -LC:/Users/n.laurent/Desktop/perso/SFML/SFML-2.4.0-SW2/lib
+#INCLUDEPATH += C:/Users/n.laurent/Desktop/perso/SFML/SFML-2.4.0-SW2/include
+#DEPENDPATH += C:/Users/n.laurent/Desktop/perso/SFML/SFML-2.4.0-SW2/include
 
 CONFIG(release, debug|release): LIBS += -lsfml-graphics-s \
                                         -lsfml-window-s \
@@ -349,18 +349,17 @@ CONFIG(debug, debug|release): LIBS +=   -lsfml-graphics-s-d \
 
 #Boost
 #   --- HOME
-#LIBS += -LC:/Users/Nicolas/Programation/c++/boost/boost_lib/out
-#INCLUDEPATH += C:/Users/Nicolas/Programation/c++/boost/boost_1_61_0
-#CONFIG(release, debug|release): LIBS += -lboost_filesystem-mgw53-mt-1_61 \
-#                                        -lboost_system-mgw53-mt-1_61
-#CONFIG(debug, debug|release): LIBS +=   -lboost_filesystem-mgw53-mt-d-1_61 \
-#                                        -lboost_system-mgw53-mt-d-1_61
+LIBS += -LC:/Users/Nicolas/Programation/c++/boost/boost_lib/out
+INCLUDEPATH += C:/Users/Nicolas/Programation/c++/boost/boost_1_61_0
+CONFIG(release, debug|release): LIBS += -lboost_filesystem-mgw53-mt-1_61 \
+                                        -lboost_system-mgw53-mt-1_61
+CONFIG(debug, debug|release): LIBS +=   -lboost_filesystem-mgw53-mt-d-1_61 \
+                                        -lboost_system-mgw53-mt-d-1_61
 
 #   --- RUBIKA
-LIBS += -LC:/Users/n.laurent/Desktop/perso/boost_1_62_0/boost_release/out
-INCLUDEPATH += C:/Users/n.laurent/Desktop/perso/boost_1_62_0
-
-CONFIG(release, debug|release): LIBS += -lboost_filesystem-mgw53-mt-1_62 \
-                                        -lboost_system-mgw53-mt-1_62
-CONFIG(debug, debug|release): LIBS +=   -lboost_filesystem-mgw53-mt-d-1_62 \
-                                        -lboost_system-mgw53-mt-d-1_62
+#LIBS += -LC:/Users/n.laurent/Desktop/perso/boost_1_62_0/boost_release/out
+#INCLUDEPATH += C:/Users/n.laurent/Desktop/perso/boost_1_62_0
+#CONFIG(release, debug|release): LIBS += -lboost_filesystem-mgw53-mt-1_62 \
+#                                        -lboost_system-mgw53-mt-1_62
+#CONFIG(debug, debug|release): LIBS +=   -lboost_filesystem-mgw53-mt-d-1_62 \
+#                                        -lboost_system-mgw53-mt-d-1_62

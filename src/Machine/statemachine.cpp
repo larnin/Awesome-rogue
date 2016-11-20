@@ -14,12 +14,7 @@ StateMachine::StateMachine(const KeysConfig & configs)
     : m_commands(configs)
     , m_clearColor(sf::Color::White)
 {
-    if(Configs::c.useFullScreen)
-        m_window.create(sf::VideoMode::getFullscreenModes().front(), windowTitle, sf::Style::Fullscreen, sf::ContextSettings(0, 0, 2));
-    else m_window.create(sf::VideoMode(Configs::c.screenSize.x, Configs::c.screenSize.y), windowTitle, sf::Style::Default, sf::ContextSettings(0, 0, 2));
-
-    m_window.setFramerateLimit(60);
-    m_window.setKeyRepeatEnabled(false);
+    changeFullScreen(Configs::c.useFullScreen);
 
     m_camera = std::make_shared<SmoothCamera>(*this);
     m_camera->changeDefaultZoom(Configs::c.zoom);
@@ -39,6 +34,9 @@ void StateMachine::changeFullScreen(bool value)
     if(value)
         m_window.create(sf::VideoMode::getFullscreenModes().front(), windowTitle, sf::Style::Fullscreen, sf::ContextSettings(0, 0, 2));
     else m_window.create(sf::VideoMode(Configs::c.screenSize.x, Configs::c.screenSize.y), windowTitle, sf::Style::Default, sf::ContextSettings(0, 0, 2));
+
+    m_window.setFramerateLimit(60);
+    m_window.setKeyRepeatEnabled(false);
 }
 
 void StateMachine::setNext(std::unique_ptr<State> & state)

@@ -1,13 +1,17 @@
 #include "configs.h"
 #include "Libs/json.hpp"
+#include <SFML/Window/VideoMode.hpp>
 #include <fstream>
 
 const std::string Configs::filename("configs.json");
 Configs Configs::c(Configs::filename);
 
+const float widthProportion(0.7f);
+const float heightProportion(0.8f);
+
 Configs::Configs(const std::string & filename)
     : useFullScreen(false)
-    , screenSize(1200, 900)
+    , screenSize(sf::VideoMode::getDesktopMode().width*widthProportion, sf::VideoMode::getDesktopMode().height*heightProportion)
     , zoom(0.5f)
     , musicVolum(100.0f)
     , soundsVolum(100.0f)

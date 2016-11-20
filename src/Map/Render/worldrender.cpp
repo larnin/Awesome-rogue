@@ -18,7 +18,7 @@ const unsigned int height(0);
 WorldRender::WorldRender(std::weak_ptr<Map> world, unsigned int centerRoom, const sf::Vector2u & screenSize)
     : m_map(world)
     , m_border(sf::Quads)
-    , m_borderTexture("res/img/tileset.png")
+    , m_borderTexture("res/img/border.png")
     , m_screenSize(screenSize / BlockType::tileSize)
     , m_centerRoom(centerRoom)
     , m_enabled(false)
@@ -202,22 +202,20 @@ void WorldRender::onPlayerChangeRoom(EventPrePlayerChangeRoom e)
 
 Block WorldRender::OutBlockInfo::toBlock() const
 {
-    const unsigned int oneCornerID(32);
-    const unsigned int twoCornersSideID(33);
-    const unsigned int twoCornersOppositeID(34);
-    const unsigned int treeCornersID(35);
-    const unsigned int fourCornersID(36);
-    const unsigned int oneSideID(37);
-    const unsigned int twoOppositeSideID(38);
-    const unsigned int oneSideAndOneCornerID(39);
-    const unsigned int oneSideAndTwoCornersID(40);
-    const unsigned int twoSidesInCornerID(41);
-    const unsigned int treeSidesID(42);
-    const unsigned int fourSidesID(43);
-    const unsigned int twoSidesInCornerAndOneCornerID(44);
+    const unsigned int oneCornerID(0);
+    const unsigned int twoCornersSideID(1);
+    const unsigned int twoCornersOppositeID(2);
+    const unsigned int treeCornersID(3);
+    const unsigned int fourCornersID(4);
+    const unsigned int oneSideID(5);
+    const unsigned int twoOppositeSideID(6);
+    const unsigned int oneSideAndOneCornerID(7);
+    const unsigned int oneSideAndTwoCornersID(8);
+    const unsigned int twoSidesInCornerID(9);
+    const unsigned int treeSidesID(10);
+    const unsigned int fourSidesID(11);
+    const unsigned int twoSidesInCornerAndOneCornerID(12);
 
-    /*if(isOn)
-        return Block();*/
     assert(!isOn);
 
     //4 cotés
