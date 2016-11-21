@@ -38,6 +38,8 @@ public:
     void setMusicVolum(float value);
     void setSoundVolum(float value);
 
+    bool isCurrentSubstate() const;
+
 private:
     std::unique_ptr<State> m_actualState;
     std::unique_ptr<State> m_nextState;

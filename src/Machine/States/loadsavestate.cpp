@@ -1,8 +1,11 @@
-#include "loadstate.h"
+#include "loadsavestate.h"
 #include "Utilities/tr.h"
 #include "Systemes/drawablelist.h"
 #include "Machine/statemachine.h"
 #include "Events/Datas/eventinstantcenterofviewchanged.h"
+#include "GUI/Widgets/Buttons/basicbutton.h"
+#include "GUI/Widgets/TextBoxs/basictextbox.h"
+#include "GUI/Widgets/label.h"
 #include "menustate.h"
 #include "File/serializer.h"
 
@@ -12,10 +15,11 @@ const float TopFrame(-100);
 const float OffsetText(20);
 const float ButtonOffset(28);
 
-LoadState::LoadState(std::weak_ptr<StateMachine> machine)
+LoadSaveState::LoadSaveState(std::weak_ptr<StateMachine> machine, bool load)
     : State(machine)
-    , m_titleTexture(tr("res/img/load_en.png"))
+    , m_titleTexture(load ? tr("res/img/load_en.png") : tr("res/img/save_en.png"))
     , m_frame("res/img/load_frame.png")
+    , m_isLoadState(load)
 {
     m_title = std::make_shared<sf::Sprite>(*m_titleTexture);
     m_title->setPosition(-m_title->getGlobalBounds().width/2.0f, -m_title->getGlobalBounds().height-120);
@@ -27,10 +31,12 @@ LoadState::LoadState(std::weak_ptr<StateMachine> machine)
     createItemsList();
     if(!m_items.empty())
         m_items.front().playButton->changeActiveState(Widget::ControlState::ACTIVE);
-    else m_returnButton->changeActiveState(Widget::ControlState::ACTIVE);
+    else if(load)
+        m_returnButton->changeActiveState(Widget::ControlState::ACTIVE);
+    else m_newSave.saveName->changeActiveState(Widget::ControlState::ACTIVE);
 }
 
-void LoadState::createItemsList()
+void LoadSaveState::createItemsList()
 {
     Font f("res/font/PressStart2P.ttf");
     auto files(saveList());
@@ -47,11 +53,12 @@ void LoadState::createItemsList()
         item.saveName->setText(filenameFromDir(file), f, 8, sf::Color::Black);
 
         item.playButton = std::make_shared<BasicButton>(AdaptableBounds(sf::Vector2f(pos.x+m_frame->getSize().x/2, pos.y+OffsetText+ButtonOffset)
-                                                                        , sf::Vector2f(m_frame->getSize().x-2*OffsetText, 25), Margin(1), VAlign::V_CENTER, HAlign::H_CENTER), tr("Play"));
+                                                                        , sf::Vector2f(m_frame->getSize().x-2*OffsetText, 25), Margin(1), VAlign::V_CENTER, HAlign::H_CENTER)
+                                                        , m_isLoadState ? tr("Play") : tr("Save"));
         item.removeButton = std::make_shared<BasicButton>(AdaptableBounds(sf::Vector2f(pos.x+m_frame->getSize().x/2, pos.y+OffsetText+2*ButtonOffset)
                                                                           , sf::Vector2f(m_frame->getSize().x-2*OffsetText, 25), Margin(1), VAlign::V_CENTER, HAlign::H_CENTER), tr("Delete"));
 
-        item.playButton->connectClickEvent(std::bind(&onPressPlayButton, this, file));
+        item.playButton->connectClickEvent(std::bind(m_isLoadState ? &onPressPlayButton : &onPressSaveButton, this, file));
         item.removeButton->connectClickEvent(std::bind(&onPressRemoveButton, this, file));
 
         m_items.push_back(std::move(item));
@@ -79,16 +86,54 @@ void LoadState::createItemsList()
             item.removeButton->connect(MOVE_DOWN, m_items[i+2].playButton);
     }
 
-    if(!m_items.empty())
+    if(m_isLoadState)
     {
-        m_items.back().removeButton->connect(MOVE_DOWN, m_returnButton);
-        m_returnButton->connect(MOVE_UP, m_items.back().removeButton);
+        if(!m_items.empty())
+        {
+            m_items.back().removeButton->connect(MOVE_DOWN, m_returnButton);
+            m_returnButton->connect(MOVE_UP, m_items.back().removeButton);
+        }
+        if(m_items.size() > 1)
+            m_items[m_items.size()-2].removeButton->connect(MOVE_DOWN, m_returnButton);
     }
-    if(m_items.size() > 1)
-        m_items[m_items.size()-2].removeButton->connect(MOVE_DOWN, m_returnButton);
+    else
+    {
+        m_newSave.useSave = true;
+        auto index = m_items.size();
+        sf::Vector2f pos(index%2 == 0 ? -HFrameOffset-m_frame->getSize().x : HFrameOffset, (index/2)*(VFrameOffset+m_frame->getSize().y)+TopFrame);
+        m_newSave.frame = std::make_shared<sf::Sprite>(*m_frame);
+        m_newSave.frame->setPosition(pos);
+
+        m_newSave.saveName = std::make_shared<BasicTextBox>(AdaptableBounds(sf::Vector2f(pos.x+m_frame->getSize().x/2, pos.y+OffsetText+0.5f*ButtonOffset)
+                                                                        , sf::Vector2f(m_frame->getSize().x-2*OffsetText, 25), Margin(1), VAlign::V_CENTER, HAlign::H_CENTER));
+        m_newSave.saveButton = std::make_shared<BasicButton>(AdaptableBounds(sf::Vector2f(pos.x+m_frame->getSize().x/2, pos.y+OffsetText+1.5f*ButtonOffset)
+                                                                          , sf::Vector2f(m_frame->getSize().x-2*OffsetText, 25), Margin(1), VAlign::V_CENTER, HAlign::H_CENTER), tr("New"));
+
+        m_newSave.saveButton->connectClickEvent(std::bind(&onPressNewButton, this));
+        m_newSave.saveName->connect(MOVE_DOWN, m_newSave.saveButton);
+        m_newSave.saveButton->connect(MOVE_UP, m_newSave.saveName);
+        m_newSave.saveButton->connect(MOVE_DOWN, m_returnButton);
+        m_returnButton->connect(MOVE_UP, m_newSave.saveButton);
+
+        if(!m_items.empty())
+        {
+            m_items.back().removeButton->connect(MOVE_DOWN, m_returnButton);
+            if(m_items.size()%2 != 0)
+            {
+                m_newSave.saveButton->connect(MOVE_LEFT, m_items.back().playButton);
+                m_items.back().playButton->connect(MOVE_RIGHT, m_newSave.saveButton);
+                m_items.back().removeButton->connect(MOVE_RIGHT, m_newSave.saveButton);
+            }
+            if(m_items.size() > 1)
+            {
+                m_items[m_items.size()-2].removeButton->connect(MOVE_DOWN,  m_newSave.saveName);
+                m_newSave.saveName->connect(MOVE_UP, m_items[m_items.size()-2].removeButton);
+            }
+        }
+    }
 }
 
-void LoadState::enable()
+void LoadSaveState::enable()
 {
     std::shared_ptr<StateMachine> m(m_machine.lock());
     if(m)
@@ -115,9 +160,22 @@ void LoadState::enable()
         Updatable::add(item.removeButton);
         Controlable::add(item.removeButton);
     }
+
+    if(m_newSave.useSave)
+    {
+        DrawableList::add(m_newSave.frame, 1);
+
+        DrawableList::add(m_newSave.saveName, 2);
+        Updatable::add(m_newSave.saveName);
+        Controlable::add(m_newSave.saveName);
+
+        DrawableList::add(m_newSave.saveButton, 2);
+        Updatable::add(m_newSave.saveButton);
+        Controlable::add(m_newSave.saveButton);
+    }
 }
 
-void LoadState::disable()
+void LoadSaveState::disable()
 {
     DrawableList::del(m_title);
 
@@ -138,31 +196,52 @@ void LoadState::disable()
         Updatable::del(item.removeButton);
         Controlable::del(item.removeButton);
     }
+
+    if(m_newSave.useSave)
+    {
+        DrawableList::del(m_newSave.frame);
+
+        DrawableList::del(m_newSave.saveName);
+        Updatable::del(m_newSave.saveName);
+        Controlable::del(m_newSave.saveName);
+
+        DrawableList::del(m_newSave.saveButton);
+        Updatable::del(m_newSave.saveButton);
+        Controlable::del(m_newSave.saveButton);
+    }
 }
 
-void LoadState::onPressPlayButton(std::string file)
+void LoadSaveState::onPressPlayButton(std::string file)
 {
 
 }
 
-void LoadState::onPressRemoveButton(std::string file)
+void LoadSaveState::onPressSaveButton(std::string file)
 {
 
 }
 
-void LoadState::onReturn()
+void LoadSaveState::onPressRemoveButton(std::string file)
+{
+
+}
+
+void LoadSaveState::onPressNewButton()
+{
+
+}
+
+void LoadSaveState::onReturn()
 {
     std::shared_ptr<StateMachine> m(m_machine.lock());
     if(m)
     {
-        std::unique_ptr<State> s(std::make_unique<MenuState>(m_machine));
-        m->setNext(s);
+        if(m->isCurrentSubstate())
+            m->delSubstate();
+        else
+        {
+            std::unique_ptr<State> s(std::make_unique<MenuState>(m_machine));
+            m->setNext(s);
+        }
     }
 }
-
-/*
-std::shared_ptr<sf::Sprite> m_title;
-Texture m_titleTexture;
-std::vector<LoadItem> m_items;
-std::shared_ptr<BasicButton> m_returnButton;
-*/

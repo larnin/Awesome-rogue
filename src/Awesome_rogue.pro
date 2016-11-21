@@ -127,7 +127,7 @@ SOURCES += main.cpp \
     Lights/Types/circlecoloredlight.cpp \
     Map/Render/renderdata.cpp \
     Utilities/tr.cpp \
-    Machine/States/loadstate.cpp
+    Machine/States/loadsavestate.cpp
 
 HEADERS  += \
     Controles/commands.h \
@@ -295,8 +295,8 @@ HEADERS  += \
     Map/Render/renderdata.h \
     Map/Render/blockanimation.h \
     Utilities/tr.h \
-    Machine/States/loadstate.h \
-    Events/Datas/eventloadfinished.h
+    Events/Datas/eventloadfinished.h \
+    Machine/States/loadsavestate.h
 
 CONFIG += c++14
 #QMAKE_CXXFLAGS += -Wsign-conversion

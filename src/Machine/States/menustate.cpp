@@ -7,7 +7,7 @@
 #include "GUI/Widgets/Buttons/basicbutton.h"
 #include "Machine/States/gamestate.h"
 #include "Machine/States/optionsstate.h"
-#include "Machine/States/loadstate.h"
+#include "Machine/States/loadsavestate.h"
 #include "GUI/Widgets/widget.h"
 #include "Utilities/tr.h"
 
@@ -107,7 +107,7 @@ void MenuState::LoadFunction()
     std::shared_ptr<StateMachine> m(m_machine.lock());
     if(m)
     {
-        std::unique_ptr<State> s(std::make_unique<LoadState>(m_machine));
+        std::unique_ptr<State> s(std::make_unique<LoadSaveState>(m_machine, false));
         m->setNext(s);
     }
 }

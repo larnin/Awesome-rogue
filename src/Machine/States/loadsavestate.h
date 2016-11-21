@@ -3,18 +3,20 @@
 
 #include "state.h"
 #include "Utilities/ressource.h"
-#include "GUI/Widgets/Buttons/basicbutton.h"
-#include "GUI/Widgets/label.h"
 #include <SFML/Graphics/Sprite.hpp>
 #include <memory>
 
-class LoadState : public State
+class BasicButton;
+class BasicTextBox;
+class Label;
+
+class LoadSaveState : public State
 {
 public:
-    LoadState(std::weak_ptr<StateMachine> machine);
-    LoadState(LoadState &&) = default;
-    LoadState & operator =(LoadState &&) = default;
-    virtual ~LoadState() = default;
+    LoadSaveState(std::weak_ptr<StateMachine> machine, bool load);
+    LoadSaveState(LoadSaveState &&) = default;
+    LoadSaveState & operator =(LoadSaveState &&) = default;
+    virtual ~LoadSaveState() = default;
 
 protected:
     virtual void enable();
@@ -24,6 +26,8 @@ private:
     void createItemsList();
 
     void onPressPlayButton(std::string file);
+    void onPressSaveButton(std::string file);
+    void onPressNewButton();
     void onPressRemoveButton(std::string file);
     void onReturn();
 
@@ -35,11 +39,21 @@ private:
         std::shared_ptr<sf::Sprite> frame;
     };
 
+    struct NewSaveItem
+    {
+        bool useSave = false;
+        std::shared_ptr<BasicTextBox> saveName;
+        std::shared_ptr<BasicButton> saveButton;
+        std::shared_ptr<sf::Sprite> frame;
+    };
+
     std::shared_ptr<sf::Sprite> m_title;
     Texture m_titleTexture;
     Texture m_frame;
     std::vector<LoadItem> m_items;
+    NewSaveItem m_newSave;
     std::shared_ptr<BasicButton> m_returnButton;
+    bool m_isLoadState;
 
 };
 

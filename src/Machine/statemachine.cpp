@@ -138,3 +138,8 @@ void StateMachine::setSoundVolum(float value)
 {
     m_soundPlayer->setSoundVolum(value);
 }
+
+bool StateMachine::isCurrentSubstate() const
+{
+    return !m_subStates.empty();
+}
