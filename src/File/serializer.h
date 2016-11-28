@@ -6,6 +6,7 @@
 
 void load(const std::string & filename);
 void save(const std::string & filename);
+void remove(const std::string & filename);
 
 const std::string saveDir("res/save/");
 
@@ -13,5 +14,7 @@ std::vector<std::string> filesIn(const std::string & dir, const std::string & ex
 std::vector<std::string> saveList();
 
 std::string filenameFromDir(std::string dir);
+
+bool isValidFilename(const std::string & filename);
 
 #endif // SERIALIZER_H

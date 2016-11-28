@@ -17,7 +17,7 @@ class Room;
 struct GenerationEnvironement
 {
     GenerationEnvironement()
-        : seed(0)
+        : seed(2)
         , nbRooms(100)
         , nbTryDoors(2)
         , posBoss({0.2, 0.4, 0.6, 0.8})
@@ -28,7 +28,7 @@ struct GenerationEnvironement
         , populationDensity(1.0f)
         , chestProbability(0.25f)
         , portalProbability(0.04f)
-        , saveProbability(0.06f)
+        , saveProbability(0.5f)
     {
 
     }

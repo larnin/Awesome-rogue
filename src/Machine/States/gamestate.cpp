@@ -3,6 +3,7 @@
 #include "GUI/simplecontroler.h"
 #include "pausestate.h"
 #include "mapstate.h"
+#include "loadsavestate.h"
 #include "Events/Datas/eventinteraction.h"
 #include "Events/event.h"
 #include "File/serializer.h"
@@ -18,6 +19,7 @@ GameState::GameState(std::weak_ptr<StateMachine> machine)
     m_controler->set(CommandType::KEY_INVENTARY, std::bind(&GameState::onPressInventary, this));
 
     connect<EventInteraction>(std::bind(&onPortalTouched, this, _1));
+    connect<EventInteraction>(std::bind(&onSaveTouched, this, _1));
 }
 
 void GameState::enable()
@@ -70,6 +72,19 @@ void GameState::onPortalTouched(EventInteraction e)
     if(mLock)
     {
         std::unique_ptr<State> s(std::make_unique<MapState>(m_machine, true));
+        mLock->addSubstate(s);
+    }
+}
+
+void GameState::onSaveTouched(EventInteraction e)
+{
+    if(e.type != BlockInteractionType::BI_SAVEPOINT)
+        return;
+
+    std::shared_ptr<StateMachine> mLock(m_machine.lock());
+    if(mLock)
+    {
+        std::unique_ptr<State> s(std::make_unique<LoadSaveState>(m_machine, false));
         mLock->addSubstate(s);
     }
 }

@@ -24,6 +24,7 @@ private:
     void onPressPause();
     void onPressMap();
     void onPressInventary();
+    void onSaveTouched(EventInteraction e);
 
     void onPortalTouched(EventInteraction e);
 

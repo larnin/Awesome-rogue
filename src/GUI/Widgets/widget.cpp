@@ -29,10 +29,12 @@ void Widget::control(CommandsValue & v)
         if(v.isPressEvent(connection.first))
         {
             v.valide(connection.first);
-            std::shared_ptr<Widget> w(connection.second);
+            std::shared_ptr<Widget> w(connection.second.lock());
             if(w)
+            {
                 w->changeActiveState(Controlable::ControlState::ACTIVE);
-            changeActiveState(Controlable::ControlState::UNACTIVE);
+                changeActiveState(Controlable::ControlState::UNACTIVE);
+            }
             break;
         }
     }

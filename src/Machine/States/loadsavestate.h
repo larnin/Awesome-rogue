@@ -55,6 +55,8 @@ private:
     std::shared_ptr<BasicButton> m_returnButton;
     bool m_isLoadState;
 
+    bool m_enabled;
+
 };
 
 #endif // LOADSTATE_H

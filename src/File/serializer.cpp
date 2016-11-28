@@ -40,6 +40,12 @@ void save(const std::string & filename)
     file.close();
 }
 
+void remove(const std::string & filename)
+{
+    namespace fs = boost::filesystem;
+    fs::remove(filename);
+}
+
 std::vector<std::string> filesIn(const std::string & dir, const std::string & extension)
 {
     namespace fs = boost::filesystem;
@@ -100,4 +106,10 @@ std::string filenameFromDir(std::string dir)
     if(pos != std::string::npos)
         return dir.substr(0, pos);
     return dir;
+}
+
+bool isValidFilename(const std::string & filename)
+{
+    std::string invalidChar("/\\:*\"<>|");
+    return filename.find_first_of(invalidChar) == std::string::npos;
 }

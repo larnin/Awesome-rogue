@@ -107,7 +107,7 @@ void MenuState::LoadFunction()
     std::shared_ptr<StateMachine> m(m_machine.lock());
     if(m)
     {
-        std::unique_ptr<State> s(std::make_unique<LoadSaveState>(m_machine, false));
+        std::unique_ptr<State> s(std::make_unique<LoadSaveState>(m_machine, true));
         m->setNext(s);
     }
 }

@@ -20,6 +20,7 @@ LoadSaveState::LoadSaveState(std::weak_ptr<StateMachine> machine, bool load)
     , m_titleTexture(load ? tr("res/img/load_en.png") : tr("res/img/save_en.png"))
     , m_frame("res/img/load_frame.png")
     , m_isLoadState(load)
+    , m_enabled(false)
 {
     m_title = std::make_shared<sf::Sprite>(*m_titleTexture);
     m_title->setPosition(-m_title->getGlobalBounds().width/2.0f, -m_title->getGlobalBounds().height-120);
@@ -38,6 +39,8 @@ LoadSaveState::LoadSaveState(std::weak_ptr<StateMachine> machine, bool load)
 
 void LoadSaveState::createItemsList()
 {
+    m_items.clear();
+
     Font f("res/font/PressStart2P.ttf");
     auto files(saveList());
     for(const std::string & file : files)
@@ -82,7 +85,7 @@ void LoadSaveState::createItemsList()
 
         if(i > 1)
             item.playButton->connect(MOVE_UP, m_items[i-2].removeButton);
-        if(i < m_items.size()-2)
+        if(i+2 < m_items.size())
             item.removeButton->connect(MOVE_DOWN, m_items[i+2].playButton);
     }
 
@@ -173,6 +176,8 @@ void LoadSaveState::enable()
         Updatable::add(m_newSave.saveButton);
         Controlable::add(m_newSave.saveButton);
     }
+
+    m_enabled = true;
 }
 
 void LoadSaveState::disable()
@@ -209,6 +214,8 @@ void LoadSaveState::disable()
         Updatable::del(m_newSave.saveButton);
         Controlable::del(m_newSave.saveButton);
     }
+
+    m_enabled = false;
 }
 
 void LoadSaveState::onPressPlayButton(std::string file)
@@ -218,17 +225,39 @@ void LoadSaveState::onPressPlayButton(std::string file)
 
 void LoadSaveState::onPressSaveButton(std::string file)
 {
-
+    save(file);
+    onReturn();
 }
 
 void LoadSaveState::onPressRemoveButton(std::string file)
 {
+    remove(file);
+    createItemsList();
+    if(m_returnButton->getState() == Controlable::ControlState::UNACTIVE)
+    {
+        if(!m_items.empty())
+            m_items.front().playButton->changeActiveState(Widget::ControlState::ACTIVE);
+        else if(m_newSave.useSave)
+            m_newSave.saveButton->changeActiveState(Widget::ControlState::ACTIVE);
+        else m_returnButton->changeActiveState(Widget::ControlState::ACTIVE);
+    }
 
+    if(m_enabled)
+        enable();
 }
 
 void LoadSaveState::onPressNewButton()
 {
-
+    if(!m_newSave.useSave)
+        return;
+    if(!m_newSave.saveName)
+        return;
+    std::string filename(m_newSave.saveName->text);
+    if(!isValidFilename(filename))
+        return;
+    filename = saveDir + filename + ".json";
+    save(filename);
+    onReturn();
 }
 
 void LoadSaveState::onReturn()
