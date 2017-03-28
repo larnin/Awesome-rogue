@@ -10,6 +10,7 @@
 #include "Machine/States/loadsavestate.h"
 #include "GUI/Widgets/widget.h"
 #include "Utilities/tr.h"
+#include "Map/Generator/generator.h"
 
 #include "Events/Datas/eventplaymusic.h"
 
@@ -97,7 +98,11 @@ void MenuState::newGameFunction()
     std::shared_ptr<StateMachine> m(m_machine.lock());
     if(m)
     {
-        std::unique_ptr<State> s(std::make_unique<GameState>(m_machine));
+        GenerationEnvironement e;
+        e.paternsFileName = "res/paterns.json";
+        e.populationDensity = 0.5f;
+
+        std::unique_ptr<State> s(std::make_unique<GameState>(m_machine, e));
         m->setNext(s);
     }
 }

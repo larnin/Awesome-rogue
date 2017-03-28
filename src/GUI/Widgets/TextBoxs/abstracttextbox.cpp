@@ -16,7 +16,7 @@ void AbstractTextBox::control(CommandsValue & v)
     {
         if(e.type == sf::Event::TextEntered)
         {
-            if(e.text.unicode < 256 && e.text.unicode > 10)
+            if(e.text.unicode < 256 && e.text.unicode >= 32)
             {
                 text.insert(m_cursorIndex, 1, e.text.unicode);
                 if(m_textEntredFunction)

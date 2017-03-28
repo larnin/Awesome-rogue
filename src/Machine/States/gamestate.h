@@ -7,11 +7,13 @@
 
 class SimpleControler;
 class EventInteraction;
+class GenerationEnvironement;
 
 class GameState : public State, public EventReceiver
 {
 public:
-    GameState(std::weak_ptr<StateMachine> machine);
+    GameState(std::weak_ptr<StateMachine> machine, const std::string & filename);
+    GameState(std::weak_ptr<StateMachine> machine, const GenerationEnvironement & e);
     GameState(GameState &&) = default;
     GameState & operator =(GameState &&) = default;
     virtual ~GameState() = default;
@@ -24,12 +26,15 @@ private:
     void onPressPause();
     void onPressMap();
     void onPressInventary();
-    void onSaveTouched(EventInteraction e);
 
+    void onSaveTouched(EventInteraction e);
     void onPortalTouched(EventInteraction e);
+
+    void init();
 
     GameHolder m_game;
     std::shared_ptr<SimpleControler> m_controler;
 };
 
 #endif // GAMESTATE_H
+

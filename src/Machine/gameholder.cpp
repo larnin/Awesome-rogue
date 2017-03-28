@@ -23,23 +23,40 @@
 #include "Items/itemslist.h"
 #include "Lights/lightrender.h"
 
-GameHolder::GameHolder(std::weak_ptr<StateMachine> machine)
+GameHolder::GameHolder(std::weak_ptr<StateMachine> machine, const std::string & fileName)
     : m_enabled(false)
 {
+    initEvents();
+
     auto m(machine.lock());
     assert(m);
-
-    EventSimpleGetter<std::shared_ptr<Player>>::connect(std::bind(&GameHolder::getPlayer, this));
-    EventSimpleGetter<std::shared_ptr<Map>>::connect(std::bind(&GameHolder::getMap, this));
-    connect<EventSetBossLifeBar>(std::bind(&onBossLifeBarSet, this, _1));
 
     m_light = std::make_shared<LightRender>();
     m_light->setColors(sf::Color(64, 64, 64), sf::Color::Black);
 
+    m_map = std::make_shared<Map>();
+    m_mapRender = std::make_shared<WorldRender>(m_map, 0, m->getWindow().getSize());
+    m_listes = std::make_shared<ListHolder>();
+
+    m_interface = std::make_shared<GameInterface>();
+    m_minimap = std::make_shared<Minimap>(m_map);
+    m_lifeBar = std::make_shared<LifeBar>(p);
+
+    m_items = std::make_shared<ItemsList>();
+}
+
+GameHolder::GameHolder(std::weak_ptr<StateMachine> machine, const GenerationEnvironement & e)
+    : m_enabled(false)
+{
+    initEvents();
+
+    auto m(machine.lock());
+    assert(m);
+
+    m_light = std::make_shared<LightRender>();
+    m_light->setColors(sf::Color(0, 64, 64), sf::Color::Black);
+
     Generator g;
-    GenerationEnvironement e;
-    e.paternsFileName = "res/paterns.json";
-    e.populationDensity = 0.5f;
     m_map = std::make_shared<Map>(g.generate(e));
     auto r(m_map->room(0));
     r->uncover();
@@ -60,6 +77,13 @@ GameHolder::GameHolder(std::weak_ptr<StateMachine> machine)
     m_interactor = std::make_shared<Interactor>(p);
 
     m_items = std::make_shared<ItemsList>();
+}
+
+void GameHolder::initEvents()
+{
+    EventSimpleGetter<std::shared_ptr<Player>>::connect(std::bind(&GameHolder::getPlayer, this));
+    EventSimpleGetter<std::shared_ptr<Map>>::connect(std::bind(&GameHolder::getMap, this));
+    connect<EventSetBossLifeBar>(std::bind(&onBossLifeBarSet, this, _1));
 }
 
 GameHolder::~GameHolder()

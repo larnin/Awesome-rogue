@@ -21,11 +21,13 @@ class BossLifeBar;
 class EventSetBossLifeBar;
 class ItemsList;
 class LightRender;
+class GenerationEnvironement;
 
 class GameHolder : private NonCopiable, public EventReceiver
 {
 public:
-    GameHolder(std::weak_ptr<StateMachine> machine);
+    GameHolder(std::weak_ptr<StateMachine> machine, const std::string & fileName);
+    GameHolder(std::weak_ptr<StateMachine> machine, const GenerationEnvironement & e);
     GameHolder(GameHolder &&) = default;
     GameHolder & operator =(GameHolder &&) = default;
     virtual ~GameHolder();
@@ -37,6 +39,7 @@ private:
     std::shared_ptr<Player> getPlayer();
     std::shared_ptr<Map> getMap();
     void onBossLifeBarSet(EventSetBossLifeBar e);
+    void initEvents();
 
     std::shared_ptr<Map> m_map;
     std::shared_ptr<WorldRender> m_mapRender;

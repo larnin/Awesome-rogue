@@ -7,6 +7,7 @@
 #include "GUI/Widgets/TextBoxs/basictextbox.h"
 #include "GUI/Widgets/label.h"
 #include "menustate.h"
+#include "gamestate.h"
 #include "File/serializer.h"
 
 const float HFrameOffset(5);
@@ -220,7 +221,14 @@ void LoadSaveState::disable()
 
 void LoadSaveState::onPressPlayButton(std::string file)
 {
-
+    std::shared_ptr<StateMachine> m(m_machine.lock());
+    if(m)
+    {
+        if(m->isCurrentSubstate())
+            m->delSubstate();
+        std::unique_ptr<State> s(std::make_unique<GameState>(m_machine, file));
+        m->setNext(s);
+    }
 }
 
 void LoadSaveState::onPressSaveButton(std::string file)

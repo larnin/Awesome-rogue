@@ -9,9 +9,21 @@
 #include "File/serializer.h"
 #include <SFML/Graphics/Color.hpp>
 
-GameState::GameState(std::weak_ptr<StateMachine> machine)
+GameState::GameState(std::weak_ptr<StateMachine> machine, const std::string & filename)
     : State(machine)
-    , m_game(machine)
+    , m_game(machine, filename)
+{
+    init();
+}
+
+GameState::GameState(std::weak_ptr<StateMachine> machine, const GenerationEnvironement & e)
+    : State(machine)
+    , m_game(machine, e)
+{
+   init();
+}
+
+void GameState::init()
 {
     m_controler = std::make_shared<SimpleControler>();
     m_controler->set(CommandType::KEY_PAUSE, std::bind(&GameState::onPressPause, this));
