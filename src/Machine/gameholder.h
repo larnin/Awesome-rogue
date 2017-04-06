@@ -22,6 +22,8 @@ class EventSetBossLifeBar;
 class ItemsList;
 class LightRender;
 class GenerationEnvironement;
+template <typename T>
+class EventItemLoaded;
 
 class GameHolder : private NonCopiable, public EventReceiver
 {
@@ -39,6 +41,8 @@ private:
     std::shared_ptr<Player> getPlayer();
     std::shared_ptr<Map> getMap();
     void onBossLifeBarSet(EventSetBossLifeBar e);
+    void onItemListLoaded(EventItemLoaded<ItemsList> e);
+    void onPlayerLoaded(EventItemLoaded<Player> e);
     void initEvents();
 
     std::shared_ptr<Map> m_map;

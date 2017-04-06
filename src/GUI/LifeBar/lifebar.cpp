@@ -5,6 +5,12 @@
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/Graphics/Rect.hpp>
 
+LifeBar::LifeBar()
+    : m_texture("res/img/lifebar.png")
+{
+
+}
+
 LifeBar::LifeBar(std::weak_ptr<Entity> e)
     : m_entity(e)
     , m_texture("res/img/lifebar.png")

@@ -80,7 +80,5 @@ std::vector<std::shared_ptr<Room>>::const_iterator Map::end() const
 
 void Map::onRoomLoaded(EventItemLoaded<Room> e)
 {
-    std::shared_ptr<Room> r(std::dynamic_pointer_cast<Room>(e.item));
-    if(r)
-        m_rooms.push_back(r);
+    m_rooms.push_back(e.item);
 }

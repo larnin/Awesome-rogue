@@ -109,4 +109,5 @@ json CrossLaserMob::serialize() const
 {
     json j(Entity::serialize());
     j["rotside"] = m_rotationSide;
+    return j;
 }

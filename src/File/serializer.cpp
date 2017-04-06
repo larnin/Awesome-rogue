@@ -5,6 +5,14 @@
 #include "Events/Datas/eventitemloaded.h"
 #include "Map/room.h"
 #include "Items/itemslist.h"
+#include "Entities/playerinfos.h"
+#include "Entities/Types/entity.h"
+#include "Entities/Types/circlemob.h"
+#include "Entities/Types/crosslasermob.h"
+#include "Entities/Types/player.h"
+#include "Entities/Types/punchballmob.h"
+#include "Entities/Types/squaremob.h"
+#include "Entities/Types/trackermob.h"
 #include <boost/filesystem.hpp>
 #include <cassert>
 
@@ -90,6 +98,31 @@ void createAndEmitObject(SerializableType type, const json &j)
         break;
     case SERIALIZE_ITEM_LIST:
         Event<EventItemLoaded<ItemsList>>::send(EventItemLoaded<ItemsList>(std::make_shared<ItemsList>(*it)));
+        break;
+    case SERIALIZE_PLAYERINFOS:
+        Event<EventItemLoaded<PlayerInfos>>::send(EventItemLoaded<PlayerInfos>(std::make_shared<PlayerInfos>(*it)));
+        break;
+    case SERIALIZE_CIRCLEMOB:
+        Event<EventItemLoaded<Entity>>::send(EventItemLoaded<Entity>(std::make_shared<CircleMob>(*it)));
+        break;
+    case SERIALIZE_CROSSLASERMOB:
+        Event<EventItemLoaded<Entity>>::send(EventItemLoaded<Entity>(std::make_shared<CrossLaserMob>(*it)));
+        break;
+    case SERIALIZE_PLAYER:
+        {
+            auto player = std::make_shared<Player>(*it);
+            Event<EventItemLoaded<Entity>>::send(EventItemLoaded<Entity>(player));
+            Event<EventItemLoaded<Player>>::send(EventItemLoaded<Player>(player));
+        }
+        break;
+    case SERIALIZE_PUNCHBALLMOB:
+        Event<EventItemLoaded<Entity>>::send(EventItemLoaded<Entity>(std::make_shared<PunchBallMob>(*it)));
+        break;
+    case SERIALIZE_SQUAREMOB:
+        Event<EventItemLoaded<Entity>>::send(EventItemLoaded<Entity>(std::make_shared<SquareMob>(*it)));
+        break;
+    case SERIALIZE_TRACKERMOB:
+        Event<EventItemLoaded<Entity>>::send(EventItemLoaded<Entity>(std::make_shared<TrackerMob>(*it)));
         break;
     default:
         assert(false);

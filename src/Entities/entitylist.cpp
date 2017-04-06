@@ -9,6 +9,7 @@
 #include "Events/Datas/eventremoveentity.h"
 #include "Events/Datas/eventpreplayerchangeroom.h"
 #include "Events/Datas/evententitychangeroom.h"
+#include "Events/Datas/eventitemloaded.h"
 #include <algorithm>
 
 bool EntityList::m_instanced(false);
@@ -26,6 +27,7 @@ EntityList::EntityList()
     connect<EventEntityCreated>(std::bind(&EntityList::onEntityCreated, this, _1));
     connect<EventEntityChangeRoom>(std::bind(&EntityList::onEntityChangeRoom, this, _1));
     connect<EventRemoveEntity>(std::bind(&EntityList::onRemoveEntity, this, _1));
+    connect<EventItemLoaded<Entity>>(std::bind(&EntityList::onEntityLoaded, this, _1));
 
     EventGetter<std::shared_ptr<Entity>,unsigned int>::connect(std::bind(&EntityList::entity, this, _1));
     EventGetter<std::vector<std::shared_ptr<Entity>>,unsigned int>::connect(std::bind(&EntityList::entitiesOn, this, _1));
@@ -231,6 +233,12 @@ void EntityList::onEntityChangeRoom(EventEntityChangeRoom e)
             DrawableList::add(eLock, entityHeight);
     }
     else DrawableList::del(eLock);
+}
+
+
+void EntityList::onEntityLoaded(EventItemLoaded<Entity> e)
+{
+
 }
 
 std::shared_ptr<Entity> EntityList::entity(unsigned int ID)

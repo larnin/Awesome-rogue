@@ -10,6 +10,8 @@ class EventEntityCreated;
 class EventRemoveEntity;
 class EventPrePlayerChangeRoom;
 class EventEntityChangeRoom;
+template <typename T>
+class EventItemLoaded;
 class Entity;
 
 class EntityList : public EventReceiver , private NonCopiable
@@ -42,6 +44,7 @@ private:
     void onEntityCreated(EventEntityCreated e);
     void onRemoveEntity(EventRemoveEntity e);
     void onEntityChangeRoom(EventEntityChangeRoom e);
+    void onEntityLoaded(EventItemLoaded<Entity> e);
 
     std::vector<std::shared_ptr<Entity>> m_entities;
     std::vector<std::shared_ptr<Entity>> m_activeEntities;

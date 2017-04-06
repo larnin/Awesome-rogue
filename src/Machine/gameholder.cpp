@@ -19,9 +19,11 @@
 #include "Events/Datas/eventsetbosslifebar.h"
 #include "Events/Datas/eventinstantcenterofviewchanged.h"
 #include "Events/Datas/eventinteraction.h"
+#include "Events/Datas/eventitemloaded.h"
 #include "Map/blocktype.h"
 #include "Items/itemslist.h"
 #include "Lights/lightrender.h"
+#include "File/serializer.h"
 
 GameHolder::GameHolder(std::weak_ptr<StateMachine> machine, const std::string & fileName)
     : m_enabled(false)
@@ -40,9 +42,11 @@ GameHolder::GameHolder(std::weak_ptr<StateMachine> machine, const std::string & 
 
     m_interface = std::make_shared<GameInterface>();
     m_minimap = std::make_shared<Minimap>(m_map);
-    m_lifeBar = std::make_shared<LifeBar>(p);
+    m_lifeBar = std::make_shared<LifeBar>();
 
     m_items = std::make_shared<ItemsList>();
+
+    load(fileName);
 }
 
 GameHolder::GameHolder(std::weak_ptr<StateMachine> machine, const GenerationEnvironement & e)
@@ -84,6 +88,8 @@ void GameHolder::initEvents()
     EventSimpleGetter<std::shared_ptr<Player>>::connect(std::bind(&GameHolder::getPlayer, this));
     EventSimpleGetter<std::shared_ptr<Map>>::connect(std::bind(&GameHolder::getMap, this));
     connect<EventSetBossLifeBar>(std::bind(&onBossLifeBarSet, this, _1));
+    connect<EventItemLoaded<Player>>(std::bind(&onPlayerLoaded, this, _1));
+    connect<EventItemLoaded<ItemsList>>(std::bind(&onItemListLoaded, this, _1));
 }
 
 GameHolder::~GameHolder()
@@ -199,4 +205,15 @@ void GameHolder::onBossLifeBarSet(EventSetBossLifeBar e)
         DrawableList::add(m_bossLifeBar, 6);
         Updatable::add(m_bossLifeBar);
     }
+}
+
+void GameHolder::onPlayerLoaded(EventItemLoaded<Player> e)
+{
+    m_player = e.item;
+    m_lifeBar->setEntity(e.item);
+}
+
+void GameHolder::onItemListLoaded(EventItemLoaded<ItemsList> e)
+{
+    m_items = e.item;
 }

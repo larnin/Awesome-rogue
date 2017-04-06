@@ -32,15 +32,7 @@ private:
 
 namespace
 {
-    std::string trPrivate(const std::string & s)
-    {
-        return s;
-    }
 
-    std::string str(const std::string & v)
-    {
-        return v;
-    }
 
     template <typename T, class = typename std::enable_if<std::is_arithmetic<T>::value>::type>
     std::string str(const T & v)
@@ -56,6 +48,16 @@ namespace
             return s;
         return trPrivate(s.substr(0, index) + str(t) + s.substr(index+1), args...);
         //return trPrivate(s + " " + str(t), args ...);
+    }
+
+    std::string trPrivate(const std::string & s)
+    {
+        return s;
+    }
+
+    std::string str(const std::string & v)
+    {
+        return v;
     }
 }
 
