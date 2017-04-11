@@ -11,7 +11,7 @@ Room::Room(const json & j)
     , m_renderInfosName(j["render"].get<std::string>())
 {
     auto blocks(j.find("blocks"));
-    if(blocks->is_array() && blocks->size() < m_blocks.getSize().x*m_blocks.getSize().y)
+    if(blocks->is_array() && blocks->size() >= m_blocks.getSize().x*m_blocks.getSize().y)
     {
         for(unsigned int i(0) ; i < m_blocks.getSize().x ; i++)
             for(unsigned int j(0) ; j < m_blocks.getSize().y ; j++)

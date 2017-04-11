@@ -224,6 +224,8 @@ void GameHolder::onPlayerLoaded(EventItemLoaded<Player> e)
 {
     m_player = e.item;
     m_lifeBar->setEntity(e.item);
+    m_projectilesLauncher = std::make_shared<ParalleleBulletLauncher>(e.item, 2, 0.15f);
+    m_interactor = std::make_shared<Interactor>(e.item);
 }
 
 void GameHolder::onItemListLoaded(EventItemLoaded<ItemsList> e)
