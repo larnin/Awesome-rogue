@@ -53,7 +53,7 @@ class Generator
 public:
     Generator() = default;
     ~Generator() = default;
-    Map generate(const GenerationEnvironement & env);
+    std::shared_ptr<Map> generate(const GenerationEnvironement & env);
 
 private:
     void loadPaterns(const std::string & filename, const sf::Vector2u & minSize, const sf::Vector2u & maxSize);

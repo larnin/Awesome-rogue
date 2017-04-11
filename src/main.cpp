@@ -7,7 +7,6 @@
 
 int main()
 {
-
     Tr::load();
 
     std::shared_ptr<ShowFPS> s(std::make_shared<ShowFPS>());

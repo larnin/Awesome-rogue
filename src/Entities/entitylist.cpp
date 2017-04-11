@@ -23,11 +23,11 @@ EntityList::EntityList()
     assert(!m_instanced);
     m_instanced = true;
 
-    connect<EventPrePlayerChangeRoom>(std::bind(&EntityList::onPlayerChangeRoom, this, _1));
-    connect<EventEntityCreated>(std::bind(&EntityList::onEntityCreated, this, _1));
-    connect<EventEntityChangeRoom>(std::bind(&EntityList::onEntityChangeRoom, this, _1));
-    connect<EventRemoveEntity>(std::bind(&EntityList::onRemoveEntity, this, _1));
-    connect<EventItemLoaded<Entity>>(std::bind(&EntityList::onEntityLoaded, this, _1));
+    connect<EventPrePlayerChangeRoom>(std::bind(&onPlayerChangeRoom, this, _1));
+    connect<EventEntityCreated>(std::bind(&onEntityCreated, this, _1));
+    connect<EventEntityChangeRoom>(std::bind(&onEntityChangeRoom, this, _1));
+    connect<EventRemoveEntity>(std::bind(&onRemoveEntity, this, _1));
+    connect<EventItemLoaded<Entity>>(std::bind(&onEntityLoaded, this, _1));
 
     EventGetter<std::shared_ptr<Entity>,unsigned int>::connect(std::bind(&EntityList::entity, this, _1));
     EventGetter<std::vector<std::shared_ptr<Entity>>,unsigned int>::connect(std::bind(&EntityList::entitiesOn, this, _1));
@@ -235,10 +235,9 @@ void EntityList::onEntityChangeRoom(EventEntityChangeRoom e)
     else DrawableList::del(eLock);
 }
 
-
 void EntityList::onEntityLoaded(EventItemLoaded<Entity> e)
 {
-
+    addEntity(e.item);
 }
 
 std::shared_ptr<Entity> EntityList::entity(unsigned int ID)

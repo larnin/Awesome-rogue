@@ -12,7 +12,7 @@
 const unsigned int multiplierStartRoom(2);
 const unsigned int multiplierBossRoom(2);
 
-Map Generator::generate(const GenerationEnvironement & env)
+std::shared_ptr<Map> Generator::generate(const GenerationEnvironement & env)
 {
     if(!env.paternsFileName.empty())
         loadPaterns(env.paternsFileName, env.minRoomSize, env.maxRoomSize);
@@ -20,7 +20,8 @@ Map Generator::generate(const GenerationEnvironement & env)
 
     m_engine.seed(env.seed);
 
-    Map m;
+    std::shared_ptr<Map> map(std::make_shared<Map>());
+    Map &m(*map);
     m.addRoom(std::make_shared<Room>(createFirstRoom()));
 
     int retry(0);
@@ -80,7 +81,7 @@ Map Generator::generate(const GenerationEnvironement & env)
 
     Populate(m, env.populationDensity);
 
-    return m;
+    return map;
 }
 
 void Generator::loadPaterns(const std::string & filename, const sf::Vector2u & minSize, const sf::Vector2u & maxSize)

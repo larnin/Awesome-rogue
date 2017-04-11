@@ -149,7 +149,6 @@ void CircleMob::onDisable()
     disconnect();
 }
 
-
 void CircleMob::onPlayerChangeRoom(EventPlayerChangeRoom e)
 {
     std::shared_ptr<Entity> target(m_target.lock());

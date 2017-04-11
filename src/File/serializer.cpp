@@ -3,6 +3,7 @@
 #include "serializable.h"
 #include "Events/event.h"
 #include "Events/Datas/eventitemloaded.h"
+#include "Events/Datas/eventloadfinished.h"
 #include "Map/room.h"
 #include "Items/itemslist.h"
 #include "Entities/playerinfos.h"
@@ -33,6 +34,8 @@ void load(const std::string & filename)
         SerializableType type(fromJson(jItem));
         createAndEmitObject(type, jItem);
     }
+
+    Event<EventLoadFinished>::send(EventLoadFinished());
 }
 
 void save(const std::string & filename)

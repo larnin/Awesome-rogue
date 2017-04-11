@@ -2,13 +2,12 @@
 #define PUNCHBALLMOB_H
 
 #include "entity.h"
-#include "Events/eventreceiver.h"
 #include "Utilities/ressource.h"
 #include "Collisions/path.h"
 
 class EventPlayerChangeRoom;
 
-class PunchBallMob : public Entity, public EventReceiver
+class PunchBallMob : public Entity
 {
 public:
     PunchBallMob(const Location & pos);

@@ -51,7 +51,9 @@ Player::Player(const json & j)
     , m_texture("res/img/player.png")
     , m_controleDirection(0, 0)
 {
-
+    m_light = std::make_shared<CircleColoredLight>(m_pos.toGlobalPos()*float(BlockType::tileSize)
+                                                   , sf::Color::White, 250, sf::Color(50, 0, 0), 50);
+    Event<EventAddLight>::send(EventAddLight(m_light));
 }
 
 void Player::control(CommandsValue & v)

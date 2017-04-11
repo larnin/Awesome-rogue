@@ -3,12 +3,11 @@
 
 #include "entity.h"
 #include "Utilities/ressource.h"
-#include "Events/eventreceiver.h"
 #include "Collisions/path.h"
 
 class EventPlayerChangeRoom;
 
-class TrackerMob : public Entity, public EventReceiver
+class TrackerMob : public Entity
 {
 public:
     TrackerMob(const Location & pos);

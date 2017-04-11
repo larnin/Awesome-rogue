@@ -20,6 +20,7 @@ public:
 
     bool isValide() const; //retourne true si la salle existe, et si les coordonées sont dans la salle
     const std::weak_ptr<Room> & getRoom() const;
+    unsigned int getRoomID() const;
 
     sf::Vector2f getPos() const;
     sf::Vector2u getBlockPos() const;

@@ -14,6 +14,8 @@ class Patern;
 
 class Room : public Serializable, private NonCopiable
 {
+    friend class Map;
+
 public:
     Room(const json & j);
     Room(const Patern & p, sf::Vector2i pos, unsigned int id);

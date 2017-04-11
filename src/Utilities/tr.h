@@ -47,7 +47,6 @@ namespace
         if(index == std::string::npos)
             return s;
         return trPrivate(s.substr(0, index) + str(t) + s.substr(index+1), args...);
-        //return trPrivate(s + " " + str(t), args ...);
     }
 
     std::string trPrivate(const std::string & s)

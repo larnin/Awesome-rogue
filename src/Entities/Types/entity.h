@@ -7,10 +7,13 @@
 #include "Entities/team.h"
 #include "Items/itemtype.h"
 #include "File/serializable.h"
+#include "Events/eventreceiver.h"
 #include <SFML/Graphics/Drawable.hpp>
 #include <random>
 
-class Entity : public Updatable, public sf::Drawable, public Serializable, private NonCopiable
+class EventLoadFinished;
+
+class Entity : public Updatable, public sf::Drawable, public Serializable, private NonCopiable, public EventReceiver
 {
 public:
     Entity(const Location & pos):Entity(pos, SERIALIZE_NONE) {}
@@ -82,6 +85,9 @@ protected:
 
     static unsigned int lastID;
     static std::default_random_engine m_randEngine;
+
+private:
+    void onLoadFinish(EventLoadFinished);
 };
 
 #endif // COMPORTEMENT_H

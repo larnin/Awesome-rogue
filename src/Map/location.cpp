@@ -50,6 +50,14 @@ const std::weak_ptr<Room> & Location::getRoom() const
     return m_room;
 }
 
+unsigned int Location::getRoomID() const
+{
+    auto r(m_room.lock());
+    if(r)
+        return r->getID();
+    return m_roomID;
+}
+
 sf::Vector2f Location::getPos() const
 {
     return m_pos;

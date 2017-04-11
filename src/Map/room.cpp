@@ -294,7 +294,7 @@ json Room::serialize() const
     json jBlocks;
     for(const Block & b : m_blocks)
     {
-        json jb{{b.groundID, b.groundOrientation, b.wallID, b.wallOrientation, b.boxCaracts}};
+        json jb{b.groundID, b.groundOrientation, b.wallID, b.wallOrientation, b.boxCaracts};
         jBlocks.push_back(jb);
     }
     j["blocks"] = jBlocks;

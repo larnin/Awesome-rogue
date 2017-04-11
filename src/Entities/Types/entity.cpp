@@ -4,6 +4,7 @@
 #include "Events/event.h"
 #include "Events/Datas/evententitychangeroom.h"
 #include "Events/Datas/eventdropitem.h"
+#include "Events/Datas/eventloadfinished.h"
 #include "Events/eventgetter.h"
 #include "Particules/particulefactory.h"
 #include "Particules/Types/particulelifebar.h"
@@ -35,7 +36,7 @@ Entity::Entity(const Location & pos, SerializableType type)
     , m_canPassDoor(false)
     , m_knockbackMultiplier(1.0f)
 {
-
+    connect<EventLoadFinished>(std::bind(&onLoadFinish, this, _1));
 }
 
 Entity::Entity(const json & j, SerializableType type)
@@ -307,4 +308,9 @@ json Entity::serialize() const
     j["drops"] = jDrops;
 
     return j;
+}
+
+void Entity::onLoadFinish(EventLoadFinished)
+{
+    m_pos = Location(m_pos.getPos(), EventGetter<std::shared_ptr<Room>, unsigned int>::get(m_pos.getRoomID()));
 }

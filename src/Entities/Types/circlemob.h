@@ -2,7 +2,6 @@
 #define CIRCLEMOB_H
 
 #include "entity.h"
-#include "Events/eventreceiver.h"
 #include "Collisions/path.h"
 #include "Utilities/ressource.h"
 #include <memory>
@@ -10,7 +9,7 @@
 class Projectile;
 class EventPlayerChangeRoom;
 
-class CircleMob : public Entity, public EventReceiver
+class CircleMob : public Entity
 {
 public:
     CircleMob(const Location & pos, bool small = false);

@@ -24,6 +24,7 @@ class LightRender;
 class GenerationEnvironement;
 template <typename T>
 class EventItemLoaded;
+class EventLoadFinished;
 
 class GameHolder : private NonCopiable, public EventReceiver
 {
@@ -43,6 +44,7 @@ private:
     void onBossLifeBarSet(EventSetBossLifeBar e);
     void onItemListLoaded(EventItemLoaded<ItemsList> e);
     void onPlayerLoaded(EventItemLoaded<Player> e);
+    void onLoadFinish(EventLoadFinished);
     void initEvents();
 
     std::shared_ptr<Map> m_map;

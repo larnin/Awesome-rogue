@@ -1,11 +1,20 @@
 #include "map.h"
 #include "room.h"
 #include "Events/Datas/eventitemloaded.h"
+#include "Events/Datas/eventloadfinished.h"
+#include "Events/eventgetter.h"
 #include <algorithm>
 
 Map::Map()
 {
     connect<EventItemLoaded<Room>>(std::bind(&onRoomLoaded, this, _1));
+    connect<EventLoadFinished>(std::bind(&onLoadFinished, this, _1));
+    EventGetter<std::shared_ptr<Room>,unsigned int>::connect(std::bind(&room, this, _1));
+}
+
+Map::~Map()
+{
+    EventGetter<std::shared_ptr<Room>,unsigned int>::disconnect();
 }
 
 void Map::addRoom(const std::shared_ptr<Room> & r)
@@ -81,4 +90,18 @@ std::vector<std::shared_ptr<Room>>::const_iterator Map::end() const
 void Map::onRoomLoaded(EventItemLoaded<Room> e)
 {
     m_rooms.push_back(e.item);
+}
+
+void Map::onLoadFinished(EventLoadFinished)
+{
+    for(auto & r : m_rooms)
+    {
+        for(auto & d : r->m_doors)
+        {
+            d.pos = Location(d.pos.getPos(), r);
+            auto rDest(std::find_if(m_rooms.begin(), m_rooms.end(), [roomID = d.dest.getRoomID()](const auto & room){return room->getID() == roomID;}));
+            if(rDest != m_rooms.end())
+                d.dest = Location(d.dest.getPos(), *rDest);
+        }
+    }
 }

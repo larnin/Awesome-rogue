@@ -84,6 +84,8 @@ void StateMachine::run()
         {
             if(e.type == sf::Event::Closed)
                 m_window.close();
+            if(e.type == sf::Event::Resized)
+                Event<EventSizeViewChanged>::send(EventSizeViewChanged(sf::Vector2f(e.size.width, e.size.height)));
             m_commands.event(e);
         }
 

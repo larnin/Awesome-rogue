@@ -9,6 +9,7 @@
 
 template <typename T>
 class EventItemLoaded;
+class EventLoadFinished;
 
 class Room;
 
@@ -18,7 +19,7 @@ public:
     Map();
     Map(Map &&) = default;
     Map & operator= (Map &&) = default;
-    ~Map() = default;
+    virtual ~Map();
 
     void addRoom(const std::shared_ptr<Room> & r);
     void removeRoom(const std::shared_ptr<Room> & r);
@@ -32,6 +33,7 @@ public:
 
 private:
     void onRoomLoaded(EventItemLoaded<Room> e);
+    void onLoadFinished(EventLoadFinished);
 
     std::vector<std::shared_ptr<Room>> m_rooms;
 };

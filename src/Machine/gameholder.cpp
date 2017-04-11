@@ -20,10 +20,15 @@
 #include "Events/Datas/eventinstantcenterofviewchanged.h"
 #include "Events/Datas/eventinteraction.h"
 #include "Events/Datas/eventitemloaded.h"
+#include "Events/Datas/eventpreplayerchangeroom.h"
+#include "Events/Datas/eventplayerchangeroom.h"
 #include "Map/blocktype.h"
 #include "Items/itemslist.h"
 #include "Lights/lightrender.h"
 #include "File/serializer.h"
+#include "Events/Datas/eventloadfinished.h"
+
+#include <iostream>
 
 GameHolder::GameHolder(std::weak_ptr<StateMachine> machine, const std::string & fileName)
     : m_enabled(false)
@@ -38,6 +43,7 @@ GameHolder::GameHolder(std::weak_ptr<StateMachine> machine, const std::string & 
 
     m_map = std::make_shared<Map>();
     m_mapRender = std::make_shared<WorldRender>(m_map, 0, m->getWindow().getSize());
+
     m_listes = std::make_shared<ListHolder>();
 
     m_interface = std::make_shared<GameInterface>();
@@ -47,6 +53,12 @@ GameHolder::GameHolder(std::weak_ptr<StateMachine> machine, const std::string & 
     m_items = std::make_shared<ItemsList>();
 
     load(fileName);
+
+    auto p(m_player.lock());
+    if(!p)
+        return;
+    Event<EventPrePlayerChangeRoom>::send(EventPrePlayerChangeRoom(p->getID()));
+    Event<EventPlayerChangeRoom>::send(EventPlayerChangeRoom(p->getID()));
 }
 
 GameHolder::GameHolder(std::weak_ptr<StateMachine> machine, const GenerationEnvironement & e)
@@ -61,7 +73,7 @@ GameHolder::GameHolder(std::weak_ptr<StateMachine> machine, const GenerationEnvi
     m_light->setColors(sf::Color(0, 64, 64), sf::Color::Black);
 
     Generator g;
-    m_map = std::make_shared<Map>(g.generate(e));
+    m_map = g.generate(e);
     auto r(m_map->room(0));
     r->uncover();
 
@@ -90,6 +102,7 @@ void GameHolder::initEvents()
     connect<EventSetBossLifeBar>(std::bind(&onBossLifeBarSet, this, _1));
     connect<EventItemLoaded<Player>>(std::bind(&onPlayerLoaded, this, _1));
     connect<EventItemLoaded<ItemsList>>(std::bind(&onItemListLoaded, this, _1));
+    connect<EventLoadFinished>(std::bind(&onLoadFinish, this, _1));
 }
 
 GameHolder::~GameHolder()
@@ -216,4 +229,9 @@ void GameHolder::onPlayerLoaded(EventItemLoaded<Player> e)
 void GameHolder::onItemListLoaded(EventItemLoaded<ItemsList> e)
 {
     m_items = e.item;
+}
+
+void GameHolder::onLoadFinish(EventLoadFinished)
+{
+
 }
