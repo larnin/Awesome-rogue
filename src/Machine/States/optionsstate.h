@@ -27,8 +27,8 @@ public:
     virtual ~OptionsState() = default;
 
 
-    virtual void enable();
-    virtual void disable();
+    virtual void enable() override;
+    virtual void disable() override;
 
 private:
     void initPG1();

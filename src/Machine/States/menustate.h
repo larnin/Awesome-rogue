@@ -18,8 +18,8 @@ public:
     virtual ~MenuState();
 
 protected:
-    virtual void enable();
-    virtual void disable();
+    virtual void enable() override;
+    virtual void disable() override;
 
 private:
     void add(std::shared_ptr<Widget> w);

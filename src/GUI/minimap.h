@@ -17,7 +17,7 @@ public:
     Minimap(std::weak_ptr<Map> map);
     virtual ~Minimap() = default;
 
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const override;
 
 private:
     void onPlayerChangeRoom(EventPlayerChangeRoom);

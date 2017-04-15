@@ -26,7 +26,7 @@ public:
     SoundPlayer & operator=(SoundPlayer &&) = default;
     virtual ~SoundPlayer() = default;
 
-    virtual void update(const sf::Time &elapsedTime);
+    virtual void update(const sf::Time &elapsedTime) override;
 
     void playSound(const std::string & filename, const SoundData & data);
     void playMusic(const std::string &filename, const MusicData &data, float fadeout, float fadein, float delay);

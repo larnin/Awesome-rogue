@@ -26,11 +26,11 @@ public:
 
     void addItem(ItemType type, const Location & pos, const sf::Vector2f & originalSpeed);
 
-    virtual void update(const sf::Time & elapsedTime);
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
+    virtual void update(const sf::Time & elapsedTime) override;
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const override;
 
 protected:
-    virtual json serialize() const;
+    virtual json serialize() const override;
 
 private:
     struct ItemData

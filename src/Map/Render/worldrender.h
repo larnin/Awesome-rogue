@@ -21,7 +21,7 @@ class WorldRender : public sf::Drawable , public EventReceiver
 public:
     WorldRender(std::weak_ptr<Map> world, unsigned int centerRoom, const sf::Vector2u & screenSize);
     virtual ~WorldRender() = default;
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const override;
     void changeCenterRoom(unsigned int id);
     void changeScreenSize(const sf::Vector2u & size); //en nombre de blocks
 

@@ -14,7 +14,7 @@ class GameInterface : public sf::Drawable, public EventReceiver
 public:
     GameInterface();
     virtual ~GameInterface() = default;
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const override;
 
 private:
     void onExperienceChanged(EventExperienceChanged e);

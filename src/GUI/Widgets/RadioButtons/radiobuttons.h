@@ -14,9 +14,9 @@ public:
 
     virtual ~RadioButtons() = default;
 
-    virtual void control(CommandsValue & v);
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates states) const;
-    virtual void changeActiveState(ControlState state);
+    virtual void control(CommandsValue & v) override;
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates states) const override;
+    virtual void changeActiveState(ControlState state) override;
 
     void clear();
     void addButton(const std::string & label);

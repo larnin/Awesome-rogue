@@ -16,13 +16,13 @@ public:
     PunchBallMob & operator= (PunchBallMob &&) = default;
     virtual ~PunchBallMob() = default;
 
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const override;
 
 protected:
-    virtual void updateComportement(const sf::Time & elapsedTime);
-    virtual void onAwake();
-    virtual void onDisable();
-    virtual void onKill();
+    virtual void updateComportement(const sf::Time & elapsedTime) override;
+    virtual void onAwake() override;
+    virtual void onDisable() override;
+    virtual void onKill() override;
 
 private:
     void onPlayerChangeRoom(EventPlayerChangeRoom e);

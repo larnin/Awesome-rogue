@@ -12,8 +12,8 @@ public:
     ParalleleBulletLauncher & operator =(ParalleleBulletLauncher &&) = default;
     virtual ~ParalleleBulletLauncher() = default;
 
-    virtual void control(CommandsValue & v);
-    virtual void update(const sf::Time & elapsedTime);
+    virtual void control(CommandsValue & v) override;
+    virtual void update(const sf::Time & elapsedTime) override;
 
 private:
     float m_deltaBulletTime;

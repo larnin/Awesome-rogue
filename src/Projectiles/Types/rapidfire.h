@@ -12,11 +12,11 @@ public:
     RapidFire & operator =(RapidFire &&) = default;
     virtual ~RapidFire() = default;
 
-    virtual void update(const sf::Time & elapsedTime);
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
+    virtual void update(const sf::Time & elapsedTime) override;
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const override;
 
 private:
-    virtual HitBox getBox() const;
+    virtual HitBox getBox() const override;
     Texture m_texture;
     sf::Vector2f m_speed;
 };

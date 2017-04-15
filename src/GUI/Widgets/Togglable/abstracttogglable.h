@@ -11,7 +11,7 @@ public:
 
     virtual ~AbstractTogglable() = default;
 
-    virtual void control(CommandsValue & v);
+    virtual void control(CommandsValue & v) override;
 
     void connecToggledEvent(const std::function<void(bool)> & function);
     void disconnectToggledEvent();

@@ -11,7 +11,7 @@ public:
     BasicQuantifiedSlider(const AdaptableBounds & _bounds = AdaptableBounds());
     virtual ~BasicQuantifiedSlider() = default;
 
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const override;
 
 private:
     void updateLabels() const;

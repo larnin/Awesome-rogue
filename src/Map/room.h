@@ -50,7 +50,7 @@ public:
     bool modified;
 
 protected:
-    virtual json serialize() const;
+    virtual json serialize() const override;
 
 private:
     void drawDoor(sf::Vector2u pos);

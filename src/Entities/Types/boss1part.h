@@ -12,11 +12,11 @@ public:
     Boss1Part & operator =(Boss1Part &&) = default;
     virtual ~Boss1Part() = default;
 
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const override;
 
 protected:
-    virtual void updateComportement(const sf::Time & elapsedTime);
-    virtual void onKill();
+    virtual void updateComportement(const sf::Time & elapsedTime) override;
+    virtual void onKill() override;
 
 private:
     void throwRandomProjectile() const;

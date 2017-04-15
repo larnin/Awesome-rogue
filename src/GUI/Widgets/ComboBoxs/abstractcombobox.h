@@ -11,7 +11,7 @@ public:
     AbstractComboBox(const AdaptableBounds & _bounds = AdaptableBounds());
     virtual ~AbstractComboBox() = default;
 
-    virtual void control(CommandsValue & v);
+    virtual void control(CommandsValue & v) override;
 
     void connectItemSelectedEvent(const std::function<void(std::string)> & function);
     void disconnectItemSelectedEvent();

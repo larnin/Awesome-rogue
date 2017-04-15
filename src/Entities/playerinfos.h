@@ -17,7 +17,7 @@ public:
     virtual ~PlayerInfos() = default;
 
 protected:
-    virtual json serialize() const;
+    virtual json serialize() const override;
 
 private:
     void onPickItem(EventPickItem e);

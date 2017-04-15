@@ -12,7 +12,7 @@ public:
 
     virtual ~AbstractQuantifiedSlider() = default;
 
-    virtual void control(CommandsValue & v);
+    virtual void control(CommandsValue & v) override;
 
     void connectValueChangedEvent(const std::function<void(std::string)> & function);
     void disconnectValueChangedEvent();

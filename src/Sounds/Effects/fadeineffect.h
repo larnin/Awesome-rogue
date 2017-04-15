@@ -11,7 +11,7 @@ public:
     FadeinEffect & operator =(FadeinEffect &&) = default;
     virtual ~FadeinEffect() = default;
 
-    virtual void update(const sf::Time & elapsedTime);
+    virtual void update(const sf::Time & elapsedTime) override;
 
 private:
     float m_delay;

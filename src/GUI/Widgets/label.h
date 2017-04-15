@@ -10,7 +10,7 @@ public:
     Label(const AdaptableBounds & _bounds = AdaptableBounds());
     virtual ~Label() = default;
 
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const override;
 
     void setText(const std::string & text);
     std::string getText() const;

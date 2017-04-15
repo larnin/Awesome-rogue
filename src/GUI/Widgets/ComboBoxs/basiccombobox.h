@@ -11,7 +11,7 @@ public:
     BasicCombobox(const AdaptableBounds & _bounds = AdaptableBounds());
     ~BasicCombobox() = default;
 
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const override;
 
 private:
     void updateTexts() const;

@@ -20,8 +20,8 @@ public:
 
     void connect(CommandType type, std::weak_ptr<Widget> widget);
     void disconnect(CommandType type);
-    virtual void control(CommandsValue & v);
-    virtual void update(const sf::Time &);
+    virtual void control(CommandsValue & v) override;
+    virtual void update(const sf::Time &) override;
 
     AdaptableBounds bounds;
 

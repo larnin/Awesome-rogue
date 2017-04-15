@@ -11,7 +11,7 @@ public:
     BasicButton(const AdaptableBounds & _bounds = AdaptableBounds(), const std::string & text = std::string());
     virtual ~BasicButton() = default;
 
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const override;
 
 private:
     Texture m_texture;

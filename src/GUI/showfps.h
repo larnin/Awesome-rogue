@@ -11,8 +11,8 @@ class ShowFPS : public sf::Drawable, public Updatable
 {
 public:
     ShowFPS();
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
-    void update(const sf::Time & elapsedTime);
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const override;
+    void update(const sf::Time & elapsedTime) override;
 
 private:
     float m_time;

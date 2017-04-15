@@ -22,7 +22,7 @@ struct EventRemover
 template <typename T>
 struct TypedEventRemover : public EventRemover
 {
-    virtual void disconnect(EventReceiver* e)
+    virtual void disconnect(EventReceiver* e) override
     {
         Event<T>::disconnect(e);
     }

@@ -13,8 +13,8 @@ public:
     Boss1FinalLifeBar & operator =(Boss1FinalLifeBar &&) = default;
     virtual ~Boss1FinalLifeBar() = default;
 
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
-    virtual void update(const sf::Time & elapsedTime);
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const override;
+    virtual void update(const sf::Time & elapsedTime) override;
 
 private:
     Texture m_texture;

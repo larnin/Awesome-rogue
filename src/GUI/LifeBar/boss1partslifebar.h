@@ -15,8 +15,8 @@ public:
     Boss1PartsLifeBar & operator =(Boss1PartsLifeBar &&) = default;
     virtual ~Boss1PartsLifeBar() = default;
 
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
-    virtual void update(const sf::Time &);
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const override;
+    virtual void update(const sf::Time &) override;
 
 private:
     void onEndPart();

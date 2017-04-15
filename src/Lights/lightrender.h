@@ -25,7 +25,7 @@ public:
     void addLight(const std::weak_ptr<Light> & l);
     void delLight(const std::weak_ptr<Light> & l);
 
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const override;
 
 private:
     void onColorChange(EventChangeLightColor e);

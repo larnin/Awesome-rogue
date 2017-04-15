@@ -47,10 +47,10 @@ public:
 
     std::vector<ItemType> getDrops() const;
 
-    void update(const sf::Time & elapsedTime);
+    void update(const sf::Time & elapsedTime) override;
 
 protected:
-    virtual json serialize() const;
+    virtual json serialize() const override;
 
     virtual void updateComportement(const sf::Time & elapsedTime) = 0;
     virtual void onKill();

@@ -14,12 +14,12 @@ public:
     SquareMob & operator= (SquareMob &&) = default;
     virtual ~SquareMob() = default;
 
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const override;
 
 protected:
-    virtual void updateComportement(const sf::Time & elapsedTime);
-    virtual void onKill();
-    virtual json serialize() const;
+    virtual void updateComportement(const sf::Time & elapsedTime) override;
+    virtual void onKill() override;
+    virtual json serialize() const override;
 
 private:
     Texture m_texture;

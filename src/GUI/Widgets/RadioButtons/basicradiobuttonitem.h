@@ -13,7 +13,7 @@ public:
     BasicRadioButtonItem & operator=(BasicRadioButtonItem &&) = default;
     virtual ~BasicRadioButtonItem() = default;
 
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates, const sf::FloatRect & bounds) const;
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates, const sf::FloatRect & bounds) const override;
 
 private:
     Texture m_texture;

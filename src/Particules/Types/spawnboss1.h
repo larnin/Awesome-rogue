@@ -13,8 +13,8 @@ public:
     SpawnBoss1 & operator =(SpawnBoss1 &&) = default;
     virtual ~SpawnBoss1() = default;
 
-    virtual void update(const sf::Time & elapsedTime);
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
+    virtual void update(const sf::Time & elapsedTime) override;
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const override;
 
 private:
     void drawBossPart(const sf::Vector2f & pos, sf::VertexArray & array) const;

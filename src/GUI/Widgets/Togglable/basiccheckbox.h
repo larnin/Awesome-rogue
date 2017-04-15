@@ -12,7 +12,7 @@ public:
 
     ~BasicCheckbox() = default;
 
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const override;
 
 private:
     Texture m_texture;

@@ -12,8 +12,8 @@ public:
     DelayedPunch & operator=(DelayedPunch &&) = default;
     virtual ~DelayedPunch() = default;
 
-    virtual void update(const sf::Time & elapsedTime);
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
+    virtual void update(const sf::Time & elapsedTime) override;
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const override;
 
 private:
     void fire();

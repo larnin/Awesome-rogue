@@ -21,7 +21,7 @@ public:
     SmoothCamera(StateMachine & m);
     virtual ~SmoothCamera() = default;
 
-    virtual void update(const sf::Time & elapsedTime);
+    virtual void update(const sf::Time & elapsedTime) override;
     void changeDefaultZoom(float value);
 
 private:

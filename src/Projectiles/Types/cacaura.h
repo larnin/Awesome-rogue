@@ -11,8 +11,8 @@ public:
     CacAura & operator =(CacAura &&) = default;
     virtual ~CacAura() = default;
 
-    virtual void update(const sf::Time &);
-    virtual void draw(sf::RenderTarget &, sf::RenderStates) const;
+    virtual void update(const sf::Time &) override;
+    virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 
 private:
     float m_radius;

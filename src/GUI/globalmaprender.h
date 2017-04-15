@@ -17,9 +17,9 @@ class GlobalMapRender : public sf::Drawable, public Controlable, public Updatabl
 public:
     GlobalMapRender(std::weak_ptr<Map> map, bool canTp);
 
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
-    virtual void control(CommandsValue & v);
-    virtual void update(const sf::Time & elapsedTime);
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const override;
+    virtual void control(CommandsValue & v) override;
+    virtual void update(const sf::Time & elapsedTime) override;
     Location getCurrentPortal() const;
 
 private:

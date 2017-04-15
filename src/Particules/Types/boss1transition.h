@@ -13,8 +13,8 @@ public:
     Boss1Transition & operator =(Boss1Transition &&) = default;
     virtual ~Boss1Transition() = default;
 
-    virtual void update(const sf::Time & elapsedTime);
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
+    virtual void update(const sf::Time & elapsedTime) override;
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const override;
 
 protected:
     Texture m_texture;

@@ -15,7 +15,7 @@ public:
     ListHolder & operator =(ListHolder &&) = default;
     virtual ~ListHolder() = default;
 
-    virtual void update(const sf::Time &);
+    virtual void update(const sf::Time &) override;
 
     ProjectileList projectiles;
     EntityList entities;

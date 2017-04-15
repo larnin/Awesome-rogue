@@ -11,8 +11,8 @@ public:
 
     virtual ~AbstractSlider() = default;
 
-    virtual void control(CommandsValue & v);
-    virtual void update(const sf::Time & t);
+    virtual void control(CommandsValue & v) override;
+    virtual void update(const sf::Time & t) override;
 
     void connectValueChangedEvent(const std::function<void(float)> & function);
     void disconnectValueChangedEvent();

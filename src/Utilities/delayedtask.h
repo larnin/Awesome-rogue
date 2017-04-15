@@ -20,7 +20,7 @@ public:
     bool paused() const;
     void stop();
     void restart(float time, bool start = true);
-    virtual void update(const sf::Time & elapsedTime);
+    virtual void update(const sf::Time & elapsedTime) override;
 
 private:
     std::function<void()> m_function;

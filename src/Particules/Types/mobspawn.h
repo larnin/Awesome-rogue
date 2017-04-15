@@ -13,8 +13,8 @@ public:
     MobSpawn & operator =(MobSpawn &&) = default;
     virtual ~MobSpawn() = default;
 
-    virtual void update(const sf::Time & elapsedTime);
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
+    virtual void update(const sf::Time & elapsedTime) override;
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const override;
 
 private:
     void updateIncant(const sf::Time & elapsedTime);

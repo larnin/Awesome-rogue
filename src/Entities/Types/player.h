@@ -16,12 +16,12 @@ public:
     Player & operator= (Player &&) = default;
     virtual ~Player() = default;
 
-    virtual void control(CommandsValue & v);
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
+    virtual void control(CommandsValue & v) override;
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const override;
 
 protected:
-    virtual void updateComportement(const sf::Time & elapsedTime);
-    virtual void onKill();
+    virtual void updateComportement(const sf::Time & elapsedTime) override;
+    virtual void onKill() override;
 
 private:
     Texture m_texture;

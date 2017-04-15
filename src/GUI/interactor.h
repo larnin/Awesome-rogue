@@ -18,8 +18,8 @@ public:
     Interactor(Interactor &&) = default;
     Interactor & operator =(Interactor &&) = default;
 
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
-    virtual void control(CommandsValue & v);
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const override;
+    virtual void control(CommandsValue & v) override;
 
 private:
     std::pair<BlockInteractionType, Location> getInteractable() const;

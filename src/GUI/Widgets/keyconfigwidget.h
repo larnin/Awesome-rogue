@@ -14,9 +14,9 @@ public:
 
     virtual ~KeyConfigWidget() = default;
 
-    virtual void control(CommandsValue & v);
-    virtual void update(const sf::Time & t);
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
+    virtual void control(CommandsValue & v) override;
+    virtual void update(const sf::Time & t) override;
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const override;
 
     KeyInfo getKey() const {return m_key;}
     CommandType type() const {return m_type;}

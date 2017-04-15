@@ -17,7 +17,7 @@ public:
     BossLifeBar & operator =(BossLifeBar &&) = default;
     virtual ~BossLifeBar() = default;
 
-    virtual void update(const sf::Time &){}
+    virtual void update(const sf::Time &) override {}
 
 protected:
     std::vector<std::weak_ptr<Entity>> m_entities;

@@ -12,7 +12,7 @@ public:
     EffectTest & operator =(EffectTest &&) = default;
     virtual ~EffectTest() = default;
 
-    virtual void update(const sf::Time & elapsedTime);
+    virtual void update(const sf::Time & elapsedTime) override;
 
 private:
     std::default_random_engine m_engine;

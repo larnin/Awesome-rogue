@@ -43,7 +43,7 @@ struct Margin
         return *this;
     }
 
-    static sf::FloatRect applyMargin(const sf::FloatRect & rect, const Margin & m)
+    inline static sf::FloatRect applyMargin(const sf::FloatRect & rect, const Margin & m)
     {
         return sf::FloatRect(rect.left + m.left, rect.top + m.top, rect.width-m.left-m.right, rect.height-m.top-m.bottom);
     }

@@ -11,8 +11,8 @@ public:
     BasicTextBox(const AdaptableBounds & _bounds = AdaptableBounds());
     ~BasicTextBox() = default;
 
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
-    virtual void update(const sf::Time & t);
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const override;
+    virtual void update(const sf::Time & t) override;
 
 private:
     void updateTextTexture(const sf::Vector2f & size, bool drawCursor) const;

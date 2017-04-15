@@ -11,7 +11,7 @@ public:
 
     virtual ~AbstractTextBox() = default;
 
-    virtual void control(CommandsValue & v);
+    virtual void control(CommandsValue & v) override;
 
     void connecTextEntredEvent(const std::function<void(std::string)> & function);
     void disconnectTextEntredEvent();

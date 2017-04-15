@@ -13,8 +13,8 @@ public:
     CircleColoredLight & operator=(CircleColoredLight &&) = default;
     virtual ~CircleColoredLight() = default;
 
-    virtual void drawBase(sf::RenderTarget & target) const;
-    virtual void drawSaturation(sf::RenderTarget & target) const;
+    virtual void drawBase(sf::RenderTarget & target) const override;
+    virtual void drawSaturation(sf::RenderTarget & target) const override;
 
 private:
     Texture m_texture;

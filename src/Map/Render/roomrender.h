@@ -18,8 +18,8 @@ public:
     virtual ~RoomRender() = default;
     void redraw(bool current) const;
     std::weak_ptr<Room> getRoom() const;
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
-    virtual void update(const sf::Time & elapsedTime);
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const override;
+    virtual void update(const sf::Time & elapsedTime) override;
 
 private:
     struct BlockAnimationState

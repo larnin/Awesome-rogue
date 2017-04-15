@@ -17,7 +17,7 @@ public:
 
     void set(CommandType controle, std::function<void()> function);
 
-    virtual void control(CommandsValue & v);
+    virtual void control(CommandsValue & v) override;
 
 private:
     std::vector<std::pair<CommandType, std::function<void()>>> m_functions;

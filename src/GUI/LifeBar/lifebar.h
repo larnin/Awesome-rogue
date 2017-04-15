@@ -17,7 +17,7 @@ public:
     LifeBar & operator=(LifeBar &&) = default;
     virtual ~LifeBar() = default;
 
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const override;
 
     inline void setEntity(std::weak_ptr<Entity> e) { m_entity = e; }
 

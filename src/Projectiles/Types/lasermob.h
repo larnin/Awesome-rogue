@@ -12,8 +12,8 @@ public:
     LaserMob & operator=(LaserMob &&) = default;
     virtual ~LaserMob() = default;
 
-    virtual void update(const sf::Time & elapsedTime);
-    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const;
+    virtual void update(const sf::Time & elapsedTime) override;
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates) const override;
 
 private:
     float maxDistInRect(const sf::Vector2u & size) const;
