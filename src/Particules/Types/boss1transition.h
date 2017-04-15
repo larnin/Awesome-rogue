@@ -3,7 +3,7 @@
 
 #include "particule.h"
 #include "Utilities/ressource.h"
-#include "Utilities/animation.h"
+#include "Utilities/Animations/animation.h"
 
 class Boss1Transition : public Particule
 {

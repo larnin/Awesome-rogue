@@ -3,7 +3,7 @@
 
 #include "bosslifebar.h"
 #include "Utilities/ressource.h"
-#include "Utilities/animation.h"
+#include "Utilities/Animations/animation.h"
 
 class Boss1FinalLifeBar : public BossLifeBar
 {

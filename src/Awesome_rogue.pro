@@ -100,7 +100,6 @@ SOURCES += main.cpp \
     GUI/LifeBar/boss1partslifebar.cpp \
     Entities/Types/boss1end.cpp \
     Particules/Types/boss1transition.cpp \
-    Utilities/animation.cpp \
     GUI/LifeBar/boss1finallifebar.cpp \
     GUI/showfps.cpp \
     Machine/States/pausestate.cpp \
@@ -127,7 +126,23 @@ SOURCES += main.cpp \
     Lights/Types/circlecoloredlight.cpp \
     Map/Render/renderdata.cpp \
     Utilities/tr.cpp \
-    Machine/States/loadsavestate.cpp
+    Machine/States/loadsavestate.cpp \
+    Utilities/Animations/animator.cpp \
+    Utilities/Animations/animation.cpp \
+    Utilities/Animations/transition.cpp \
+    Utilities/Animations/Conditions/condition.cpp \
+    Utilities/Animations/Conditions/propertyequalcondition.cpp \
+    Utilities/Animations/Conditions/propertysuperiorcondition.cpp \
+    Utilities/Animations/Conditions/propertyinferiorcondition.cpp \
+    Utilities/Animations/Conditions/andcondition.cpp \
+    Utilities/Animations/Conditions/orcondition.cpp \
+    Utilities/Animations/Conditions/notcondition.cpp \
+    Utilities/Animations/Conditions/animationfinishedcondition.cpp \
+    Utilities/Animations/Conditions/waitcondition.cpp \
+    Utilities/Animations/Conditions/waitafteractivecondition.cpp \
+    Utilities/Animations/Conditions/propertynotequalcondition.cpp \
+    Utilities/Animations/Conditions/propertyinferiororequalcondition.cpp \
+    Utilities/Animations/Conditions/propertysuperiororequalcondition.cpp
 
 HEADERS  += \
     Controles/commands.h \
@@ -255,7 +270,6 @@ HEADERS  += \
     GUI/LifeBar/boss1partslifebar.h \
     Entities/Types/boss1end.h \
     Particules/Types/boss1transition.h \
-    Utilities/animation.h \
     GUI/LifeBar/boss1finallifebar.h \
     GUI/showfps.h \
     Machine/States/pausestate.h \
@@ -296,7 +310,23 @@ HEADERS  += \
     Map/Render/blockanimation.h \
     Utilities/tr.h \
     Events/Datas/eventloadfinished.h \
-    Machine/States/loadsavestate.h
+    Machine/States/loadsavestate.h \
+    Utilities/Animations/animator.h \
+    Utilities/Animations/animation.h \
+    Utilities/Animations/transition.h \
+    Utilities/Animations/Conditions/condition.h \
+    Utilities/Animations/Conditions/propertyequalcondition.h \
+    Utilities/Animations/Conditions/propertysuperiorcondition.h \
+    Utilities/Animations/Conditions/propertyinferiorcondition.h \
+    Utilities/Animations/Conditions/andcondition.h \
+    Utilities/Animations/Conditions/orcondition.h \
+    Utilities/Animations/Conditions/notcondition.h \
+    Utilities/Animations/Conditions/animationfinishedcondition.h \
+    Utilities/Animations/Conditions/waitcondition.h \
+    Utilities/Animations/Conditions/waitafteractivecondition.h \
+    Utilities/Animations/Conditions/propertynotequalcondition.h \
+    Utilities/Animations/Conditions/propertyinferiororequalcondition.h \
+    Utilities/Animations/Conditions/propertysuperiororequalcondition.h
 
 CONFIG += c++14
 #QMAKE_CXXFLAGS += -Wsign-conversion

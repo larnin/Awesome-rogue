@@ -1,5 +1,6 @@
 #include "animation.h"
 #include <cassert>
+#include <fstream>
 
 Animation::Animation(bool singleShoot)
     : m_singleShoot(singleShoot)
@@ -8,6 +9,39 @@ Animation::Animation(bool singleShoot)
     , m_totalTime(0)
 {
 
+}
+
+Animation::Animation(const json & j)
+{
+    load(j);
+}
+
+Animation::Animation(const std::string & filename)
+{
+    std::ifstream file(filename);
+    if(!file.is_open())
+        return;
+    json j(json::parse(file));
+    file.close();
+    load(j);
+}
+
+void Animation::load(const json & j)
+{
+    m_singleShoot = j["singleShoot"];
+    m_totalTime = j["time"];
+    m_currentTime = 0;
+    m_finished = false;
+    auto itFrames(j.find("frames"));
+    if(itFrames != j.end() && itFrames->is_array())
+    {
+        for(auto & jsonFrame : *itFrames)
+        {
+            addFrame(Frame(jsonFrame["time"]
+                         , sf::FloatRect(jsonFrame["texX"], jsonFrame["texY"], jsonFrame["texW"], jsonFrame["texH"])
+                         , sf::Vector2f(jsonFrame["offsetX"], jsonFrame["offsety"])));
+        }
+    }
 }
 
 void Animation::addFrame(const Frame & f)

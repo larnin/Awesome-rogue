@@ -1,16 +1,20 @@
 #ifndef ANIMATION_H
 #define ANIMATION_H
 
+#include "Libs/json.hpp"
 #include <SFML/Graphics/Rect.hpp>
 #include <vector>
+#include <string>
+
+using json = nlohmann::json;
 
 struct Frame
 {
-    Frame()
+    inline Frame()
         : time(0)
     {}
 
-    Frame(float _time, const sf::FloatRect & _texRect, const sf::Vector2f & _offset)
+    inline Frame(float _time, const sf::FloatRect & _texRect, const sf::Vector2f & _offset)
         : time(_time), texRect(_texRect), offset(_offset)
     {}
 
@@ -23,6 +27,8 @@ class Animation
 {
 public:
     Animation(bool singleShoot = false);
+    Animation(const json & j);
+    Animation(const std::string & filename);
 
     void addFrame(const Frame & f);
 
@@ -40,6 +46,8 @@ public:
     float getAnimationTime() const;
 
 private:
+    void load(const json & j);
+
     std::vector<Frame> m_frames;
     bool m_singleShoot;
     bool m_finished;
