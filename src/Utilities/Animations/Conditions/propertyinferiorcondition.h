@@ -8,7 +8,7 @@ class PropertyInferiorCondition : public Condition
 {
 public:
     PropertyInferiorCondition(const std::string & property, int value);
-    ~PropertyInferiorCondition() = default;
+    virtual ~PropertyInferiorCondition() = default;
 
     virtual bool check(const Animator & animator, const sf::Time &) override;
 

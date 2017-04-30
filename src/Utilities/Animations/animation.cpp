@@ -29,7 +29,7 @@ Animation::Animation(const std::string & filename)
 void Animation::load(const json & j)
 {
     m_singleShoot = j["singleShoot"];
-    m_totalTime = j["time"];
+    m_totalTime = 0;
     m_currentTime = 0;
     m_finished = false;
     auto itFrames(j.find("frames"));

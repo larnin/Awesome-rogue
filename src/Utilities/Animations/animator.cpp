@@ -11,6 +11,7 @@ Animator::Animator(const std::string & filename)
     file.close();
 
     m_texture = Texture(j["texture"].get<std::string>());
+    m_currentAnimationID = j["start"];
 
     auto itAnims(j.find("animations"));
     if(itAnims == j.end() || !itAnims->is_array())

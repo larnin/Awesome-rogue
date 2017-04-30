@@ -7,6 +7,7 @@
 class NotCondition : public Condition
 {
 public:
+	virtual ~NotCondition() = default;
     NotCondition(std::unique_ptr<Condition> & condition);
     NotCondition(std::unique_ptr<Condition> && condition);
     virtual bool check(const Animator & animator, const sf::Time &time) override;

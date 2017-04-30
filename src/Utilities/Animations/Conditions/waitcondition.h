@@ -7,6 +7,7 @@ class WaitCondition : public Condition
 {
 public:
     WaitCondition(float time);
+    virtual ~WaitCondition() = default;
     virtual bool check(const Animator &, const sf::Time & elapsedTime) override;
     virtual void reset() override;
 

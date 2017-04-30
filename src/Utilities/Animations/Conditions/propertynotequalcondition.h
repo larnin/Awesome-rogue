@@ -8,7 +8,7 @@ class PropertyNotEqualCondition: public Condition
 {
 public:
     PropertyNotEqualCondition(const std::string & property, int value);
-    ~PropertyNotEqualCondition() = default;
+    virtual ~PropertyNotEqualCondition() = default;
 
     virtual bool check(const Animator & animator, const sf::Time &) override;
 

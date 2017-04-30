@@ -8,7 +8,7 @@ class PropertySuperiorOrEqualCondition : public Condition
 {
 public:
     PropertySuperiorOrEqualCondition(const std::string & property, int value);
-    ~PropertySuperiorOrEqualCondition() = default;
+    virtual ~PropertySuperiorOrEqualCondition() = default;
 
     virtual bool check(const Animator & animator, const sf::Time &) override;
 
