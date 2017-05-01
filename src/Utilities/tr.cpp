@@ -17,18 +17,18 @@
 #include <windows.h>
 #endif
 
+using json = nlohmann::json;
+
 std::vector<std::pair<std::string, std::string>> Tr::m_texts;
 std::string Tr::m_filename;
 const std::string Tr::langDir("res/lang/");
-
-using json = nlohmann::json;
 
 void Tr::load()
 {
     std::string filename(Tr::fileNameFromLang(Configs::c.lang));
     if(filename.empty())
     {
-        filename = Tr::fileNameFromLang(Tr::defaultLang());
+        filename = Tr::fileNameFromLang(Tr::systemLang());
         if(!filename.empty())
             Configs::c.lang = Tr::defaultLang();
     }
@@ -79,7 +79,6 @@ std::string Tr::tr(const std::string & str)
 
 std::string Tr::addKey(const std::string & newKey)
 {
-    //const std::string newKeyText("## Unimplemented text ##");
     std::cout << "New key : '" << newKey << "'" << std::endl;
     m_texts.emplace_back(newKey, newKey);
     return newKey;
@@ -118,6 +117,8 @@ std::vector<std::string> Tr::availableLangs()
     return files;
 }
 
+namespace
+{
 std::string extractFilename(std::string & f)
 {
     auto pos(f.find_last_of(("/\\")));
@@ -127,6 +128,7 @@ std::string extractFilename(std::string & f)
     if(pos != std::string::npos)
         f = f.substr(0, pos);
     return f;
+}
 }
 
 std::string Tr::langPartOf(std::string lang)
@@ -169,8 +171,27 @@ std::string Tr::fileNameFromName(const std::string & name)
     return "";
 }
 
-std::string tr(const std::string & s)
+std::string Tr::combine(const std::string & s, unsigned int)
 {
-    return Tr::tr(s);
+    return s;
 }
+
+std::string tr(const std::string & str)
+{
+    return Tr::tr(str);
+}
+
+std::string Tr::findAndReplace(const std::string & s, const std::string & key, const std::string & value)
+{
+    auto index = s.find(key);
+        if(index == std::string::npos)
+            return s;
+        return findAndReplace(s.substr(0, index) + value + s.substr(index+key.size()), key, value);
+}
+
+std::string Tr::str(const std::string & v)
+{
+    return v;
+}
+
 

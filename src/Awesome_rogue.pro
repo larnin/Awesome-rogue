@@ -125,7 +125,6 @@ SOURCES += main.cpp \
     Lights/lightrender.cpp \
     Lights/Types/circlecoloredlight.cpp \
     Map/Render/renderdata.cpp \
-    Utilities/tr.cpp \
     Machine/States/loadsavestate.cpp \
     Utilities/Animations/animator.cpp \
     Utilities/Animations/animation.cpp \
@@ -142,7 +141,8 @@ SOURCES += main.cpp \
     Utilities/Animations/Conditions/waitafteractivecondition.cpp \
     Utilities/Animations/Conditions/propertynotequalcondition.cpp \
     Utilities/Animations/Conditions/propertyinferiororequalcondition.cpp \
-    Utilities/Animations/Conditions/propertysuperiororequalcondition.cpp
+    Utilities/Animations/Conditions/propertysuperiororequalcondition.cpp \
+    Utilities/tr.cpp
 
 HEADERS  += \
     Controles/commands.h \
@@ -308,7 +308,6 @@ HEADERS  += \
     Lights/Types/circlecoloredlight.h \
     Map/Render/renderdata.h \
     Map/Render/blockanimation.h \
-    Utilities/tr.h \
     Events/Datas/eventloadfinished.h \
     Machine/States/loadsavestate.h \
     Utilities/Animations/animator.h \
@@ -326,7 +325,8 @@ HEADERS  += \
     Utilities/Animations/Conditions/waitafteractivecondition.h \
     Utilities/Animations/Conditions/propertynotequalcondition.h \
     Utilities/Animations/Conditions/propertyinferiororequalcondition.h \
-    Utilities/Animations/Conditions/propertysuperiororequalcondition.h
+    Utilities/Animations/Conditions/propertysuperiororequalcondition.h \
+    Utilities/tr.h
 
 CONFIG += c++14
 #QMAKE_CXXFLAGS += -Wsign-conversion
