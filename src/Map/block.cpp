@@ -11,16 +11,24 @@ Block::Block()
 }
 
 Block::Block(unsigned int _groundID, unsigned char _groundOrientation)
-    : Block(_groundID, _groundOrientation, 0, 0, 0)
+    : Block(_groundID, _groundOrientation, 0, 0, 0, 0, 0)
 {
 
 }
 
 Block::Block(unsigned int _groundID, unsigned char _groundOrientation, unsigned int _wallID, unsigned char _wallOrientation, unsigned char _boxCaracts)
+    : Block(_groundID, _groundOrientation, _wallID, _wallOrientation, _boxCaracts, 0, 0)
+{
+
+}
+
+Block::Block(unsigned int _groundID, unsigned char _groundOrientation, unsigned int _wallID, unsigned char _wallOrientation, unsigned char _boxCaracts, unsigned int _topID, unsigned char _topOrientation)
     : groundID(_groundID)
     , groundOrientation(_groundOrientation)
     , wallID(_wallID)
     , wallOrientation(_wallOrientation)
+    , topID(_topID)
+    , topOrientation(_topOrientation)
     , boxCaracts(_boxCaracts)
 {
 

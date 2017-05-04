@@ -14,6 +14,7 @@
 #include <cassert>
 
 const unsigned int height(0);
+const unsigned int topHeight(5);
 
 WorldRender::WorldRender(std::weak_ptr<Map> world, unsigned int centerRoom, const sf::Vector2u & screenSize)
     : m_map(world)
@@ -36,12 +37,22 @@ void WorldRender::enable()
         DrawableList::add(r, height);
         Updatable::add(r);
     }
+    for(const auto & r : m_topRenders)
+    {
+        DrawableList::add(r, topHeight);
+        Updatable::add(r);
+    }
 }
 
 void WorldRender::disable()
 {
     m_enabled = false;
     for(const auto & r : m_renders)
+    {
+        DrawableList::del(r);
+        Updatable::del(r);
+    }
+    for(const auto & r : m_topRenders)
     {
         DrawableList::del(r);
         Updatable::del(r);
@@ -142,6 +153,7 @@ void WorldRender::regenBorder()
 void WorldRender::redrawRooms()
 {
     m_renders.clear();
+    m_topRenders.clear();
 
     std::shared_ptr<Map> m(m_map.lock());
     if(!m)
@@ -160,10 +172,15 @@ void WorldRender::redrawRooms()
         if(rect.intersects(rectRoom))
         {
             bool actual(room == centerRoom);
-            m_renders.push_back(std::make_shared<RoomRender>(room, actual));
+            m_renders.push_back(std::make_shared<RoomRender>(room, actual, true, true, false));
+            m_topRenders.push_back(std::make_shared<RoomRender>(room, actual, false, false, true));
             if(m_enabled)
+            {
                 DrawableList::add(m_renders.back(), height);
                 Updatable::add(m_renders.back());
+                DrawableList::add(m_topRenders.back(), topHeight);
+                Updatable::add(m_topRenders.back());
+            }
         }
     }
 

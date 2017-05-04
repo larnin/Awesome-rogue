@@ -19,7 +19,9 @@ Room::Room(const json & j)
                 const json & block((*blocks)[i+j*m_blocks.getSize().x]);
                 if(!block.is_array() || block.size() < 5)
                     m_blocks(sf::Vector2u(i, j)) = Block();
-                else m_blocks(sf::Vector2u(i, j)) = Block(block[0], block[1], block[2], block[3], block[4]);
+                else if(block.size() < 7)
+                    m_blocks(sf::Vector2u(i, j)) = Block(block[0], block[1], block[2], block[3], block[4]);
+                else m_blocks(sf::Vector2u(i, j)) = Block(block[0], block[1], block[2], block[3], block[4], block[5], block[6]);
             }
     }
 
@@ -294,7 +296,7 @@ json Room::serialize() const
     json jBlocks;
     for(const Block & b : m_blocks)
     {
-        json jb{b.groundID, b.groundOrientation, b.wallID, b.wallOrientation, b.boxCaracts};
+        json jb{b.groundID, b.groundOrientation, b.wallID, b.wallOrientation, b.boxCaracts, b.topID, b.topOrientation};
         jBlocks.push_back(jb);
     }
     j["blocks"] = jBlocks;

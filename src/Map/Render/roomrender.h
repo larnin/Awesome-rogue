@@ -14,7 +14,7 @@ class Block;
 class RoomRender : public sf::Drawable, public Updatable
 {
 public:
-    RoomRender(std::weak_ptr<Room> room, bool current);
+    RoomRender(std::weak_ptr<Room> room, bool current, bool drawGround, bool drawWall, bool drawTop);
     virtual ~RoomRender() = default;
     void redraw(bool current) const;
     std::weak_ptr<Room> getRoom() const;
@@ -41,6 +41,10 @@ private:
     mutable bool m_current;
     RenderData m_data;
     mutable std::vector<BlockAnimationState> m_animation;
+
+    bool m_drawGround;
+    bool m_drawWall;
+    bool m_drawTop;
 };
 
 #endif // ROOMRENDER_H

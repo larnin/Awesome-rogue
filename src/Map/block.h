@@ -21,12 +21,15 @@ struct Block
     Block();
     Block(unsigned int _groundID, unsigned char _groundOrientation);
     Block(unsigned int _groundID, unsigned char _groundOrientation, unsigned int _wallID, unsigned char _wallOrientation, unsigned char _boxCaracts);
+    Block(unsigned int _groundID, unsigned char _groundOrientation, unsigned int _wallID, unsigned char _wallOrientation, unsigned char _boxCaracts, unsigned int _topID, unsigned char _topOrientation);
     ~Block() = default;
 
     unsigned int groundID;
     unsigned char groundOrientation;
     unsigned int wallID;
     unsigned char wallOrientation;
+    unsigned int topID;
+    unsigned char topOrientation;
     unsigned char boxCaracts;
 };
 

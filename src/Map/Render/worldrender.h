@@ -36,6 +36,7 @@ private:
 
     std::weak_ptr<Map> m_map;
     std::vector<std::shared_ptr<RoomRender>> m_renders;
+    std::vector<std::shared_ptr<RoomRender>> m_topRenders;
     sf::VertexArray m_border;
     Texture m_borderTexture;
     sf::Vector2u m_screenSize;

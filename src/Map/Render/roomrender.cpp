@@ -5,7 +5,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 
-RoomRender::RoomRender(std::weak_ptr<Room> room, bool current)
+RoomRender::RoomRender(std::weak_ptr<Room> room, bool current, bool drawGround, bool drawWall, bool drawTop)
     : m_render(sf::Quads)
     , m_room(room)
     , m_data([room]() -> std::string
@@ -15,6 +15,9 @@ RoomRender::RoomRender(std::weak_ptr<Room> room, bool current)
             return "";
         return r->getRenderInfosName();
     }())
+    , m_drawGround(drawGround)
+    , m_drawWall(drawWall)
+    , m_drawTop(drawTop)
 {
     redraw(current);
 }
@@ -43,23 +46,33 @@ void RoomRender::redraw(bool current) const
             for(unsigned int j(0) ; j < r->getSize().y ; j++)
             {
                 Block b(r->get(sf::Vector2u(i, j)));
-                if(m_data.hasAnimation(b.groundID))
+                int offset(0);
+                if(m_data.hasAnimation(b.groundID) && m_drawGround)
                 {
                     m_animation.push_back(BlockAnimationState(index*4, b.groundID, b.groundOrientation, sf::Vector2u(i, j)));
                     BlockFrame f(m_data.frameOf(b.groundID));
                     b.groundID = f.id;
                     b.groundOrientation = transformData(b.groundOrientation, f.rot, f.flipX, f.flipY);
+                    offset++;
                 }
-                if(m_data.hasAnimation(b.wallID))
+                if(m_data.hasAnimation(b.wallID) && m_drawWall)
                 {
-                    m_animation.push_back(BlockAnimationState(index*4+(b.groundID != 0 ? 4: 0), b.wallID, b.wallOrientation, sf::Vector2u(i, j)));
+                    m_animation.push_back(BlockAnimationState((index+offset)*4, b.wallID, b.wallOrientation, sf::Vector2u(i, j)));
                     BlockFrame f(m_data.frameOf(b.wallID));
                     b.wallID = f.id;
                     b.wallOrientation = transformData(b.wallOrientation, f.rot, f.flipX, f.flipY);
+                    offset++;
+                }
+                if(m_data.hasAnimation(b.topID) && m_drawTop)
+                {
+                    m_animation.push_back(BlockAnimationState((index+offset)*4, b.topID, b.topOrientation, sf::Vector2u(i, j)));
+                    BlockFrame f(m_data.frameOf(b.topID));
+                    b.topID = f.id;
+                    b.topOrientation = transformData(b.topOrientation, f.rot, f.flipX, f.flipY);
                 }
                 index += drawBlock(&m_render[index*4], b, sf::Vector2i(i, j)+r->getPos());
             }
-        if(!current)
+        if(!current && m_drawTop)
         {
             const unsigned int startIndex(m_render.getVertexCount()-4);
             sf::Vector2f texPos(flatWhiteID%BlockType::nbTile*BlockType::tileSize, flatWhiteID/BlockType::nbTile*BlockType::tileSize);
@@ -72,7 +85,7 @@ void RoomRender::redraw(bool current) const
             m_render[startIndex+3].texCoords = sf::Vector2f(texPos.x+BlockType::tileSize, texPos.y);
         }
     }
-    else
+    else if(m_drawGround)
     {
         m_render.resize(8);
         sf::Vector2f texPos(flatWhiteID%BlockType::nbTile*BlockType::tileSize, flatWhiteID/BlockType::nbTile*BlockType::tileSize);
@@ -90,6 +103,7 @@ void RoomRender::redraw(bool current) const
             m_render[4*i+3].texCoords = sf::Vector2f(texPos.x+BlockType::tileSize, texPos.y);
         }
     }
+    else m_render.resize(0);
 }
 
 void RoomRender::draw(sf::RenderTarget & target, sf::RenderStates) const
@@ -115,9 +129,11 @@ unsigned int RoomRender::getNbSurfaces() const
         for(unsigned int j(0) ; j < r->getSize().y ; j++)
         {
             Block b(r->get(sf::Vector2u(i, j)));
-            if(b.groundID != 0)
+            if(b.groundID != 0 && m_drawGround)
                 nbDrawable++;
-            if(b.wallID != 0)
+            if(b.wallID != 0 && m_drawWall)
+                nbDrawable++;
+            if(b.topID != 0 && m_drawTop)
                 nbDrawable++;
         }
     return nbDrawable;
@@ -127,7 +143,7 @@ unsigned int RoomRender::drawBlock(sf::Vertex* quads, const Block & b, const sf:
 {
     unsigned int offset(0);
 
-    if(b.groundID != 0)
+    if(b.groundID != 0 && m_drawGround)
     {
         sf::Vector2f texPos(b.groundID%BlockType::nbTile, b.groundID/BlockType::nbTile);
         drawQuad(quads, sf::FloatRect(sf::Vector2f(globalPos)*float(BlockType::tileSize)
@@ -136,13 +152,23 @@ unsigned int RoomRender::drawBlock(sf::Vertex* quads, const Block & b, const sf:
                  , getXFlip(b.groundOrientation), getYFlip(b.groundOrientation), getRotation(b.groundOrientation));
         offset++;
     }
-    if(b.wallID != 0)
+    if(b.wallID != 0 && m_drawWall)
     {
         sf::Vector2f texPos(b.wallID%BlockType::nbTile, b.wallID/BlockType::nbTile);
         drawQuad(quads+4*offset, sf::FloatRect(sf::Vector2f(globalPos)*float(BlockType::tileSize)
                                     -sf::Vector2f(BlockType::tileSize, BlockType::tileSize)/2.0f, sf::Vector2f(BlockType::tileSize, BlockType::tileSize))
                  , sf::FloatRect(texPos*float(BlockType::tileSize), sf::Vector2f(BlockType::tileSize, BlockType::tileSize))
                  , getXFlip(b.wallOrientation), getYFlip(b.wallOrientation), getRotation(b.wallOrientation));
+        offset++;
+    }
+
+    if(b.topID != 0 && m_drawTop)
+    {
+        sf::Vector2f texPos(b.topID%BlockType::nbTile, b.topID/BlockType::nbTile);
+        drawQuad(quads+4*offset, sf::FloatRect(sf::Vector2f(globalPos)*float(BlockType::tileSize)
+                                    -sf::Vector2f(BlockType::tileSize, BlockType::tileSize)/2.0f, sf::Vector2f(BlockType::tileSize, BlockType::tileSize))
+                 , sf::FloatRect(texPos*float(BlockType::tileSize), sf::Vector2f(BlockType::tileSize, BlockType::tileSize))
+                 , getXFlip(b.topOrientation), getYFlip(b.topOrientation), getRotation(b.topOrientation));
         offset++;
     }
 
