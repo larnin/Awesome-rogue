@@ -28,7 +28,7 @@ MapState::MapState(std::weak_ptr<StateMachine> machine, bool tp)
 
 void MapState::enable()
 {
-    DrawableList::add(m_mapRender, 0);
+    DrawableList::add(m_mapRender, DrawableList::DrawHeight::BACK);
     Controlable::add(m_mapRender);
     Updatable::add(m_mapRender);
 

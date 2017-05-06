@@ -115,7 +115,7 @@ void GameHolder::enable()
 {
     m_enabled = true;
 
-    DrawableList::add(m_mapRender, 0);
+    DrawableList::add(m_mapRender, DrawableList::DrawHeight::MAP_BACK-1);
     m_mapRender->enable();
 
     std::shared_ptr<Player> p(m_player.lock());
@@ -133,25 +133,25 @@ void GameHolder::enable()
     Updatable::add(m_projectilesLauncher);
     Controlable::add(m_projectilesLauncher);
 
-    DrawableList::add(m_interface, 8);
-    DrawableList::add(m_minimap, 7);
-    DrawableList::add(m_lifeBar, 9);
+    DrawableList::add(m_interface, DrawableList::DrawHeight::INTERFACE);
+    DrawableList::add(m_minimap, DrawableList::DrawHeight::INTERFACE-1);
+    DrawableList::add(m_lifeBar, DrawableList::DrawHeight::INTERFACE+1);
 
     m_populator.enable();
 
-    DrawableList::add(m_interactor, 4);
+    DrawableList::add(m_interactor, DrawableList::DrawHeight::BLOCK_INTERACTION);
     Controlable::add(m_interactor);
 
     if(m_bossLifeBar)
     {
-        DrawableList::add(m_bossLifeBar, 8);
+        DrawableList::add(m_bossLifeBar, DrawableList::DrawHeight::INTERFACE);
         Updatable::add(m_bossLifeBar);
     }
 
-    DrawableList::add(m_items, 1);
+    DrawableList::add(m_items, DrawableList::DrawHeight::ITEM);
     Updatable::add(m_items);
 
-    DrawableList::add(m_light, 6);
+    DrawableList::add(m_light, DrawableList::DrawHeight::LIGHT);
 }
 
 void GameHolder::disable()
@@ -215,7 +215,7 @@ void GameHolder::onBossLifeBarSet(EventSetBossLifeBar e)
     if(m_bossLifeBar && m_enabled)
     {
 
-        DrawableList::add(m_bossLifeBar, 6);
+        DrawableList::add(m_bossLifeBar, DrawableList::DrawHeight::INTERFACE);
         Updatable::add(m_bossLifeBar);
     }
 }

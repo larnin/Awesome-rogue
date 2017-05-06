@@ -13,9 +13,6 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <cassert>
 
-const unsigned int height(0);
-const unsigned int topHeight(5);
-
 WorldRender::WorldRender(std::weak_ptr<Map> world, unsigned int centerRoom, const sf::Vector2u & screenSize)
     : m_map(world)
     , m_border(sf::Quads)
@@ -34,12 +31,12 @@ void WorldRender::enable()
     m_enabled = true;
     for(const auto & r : m_renders)
     {
-        DrawableList::add(r, height);
+        DrawableList::add(r, DrawableList::DrawHeight::MAP_BACK);
         Updatable::add(r);
     }
     for(const auto & r : m_topRenders)
     {
-        DrawableList::add(r, topHeight);
+        DrawableList::add(r, DrawableList::DrawHeight::MAP_TOP);
         Updatable::add(r);
     }
 }
@@ -176,9 +173,9 @@ void WorldRender::redrawRooms()
             m_topRenders.push_back(std::make_shared<RoomRender>(room, actual, false, false, true));
             if(m_enabled)
             {
-                DrawableList::add(m_renders.back(), height);
+                DrawableList::add(m_renders.back(), DrawableList::DrawHeight::MAP_BACK);
                 Updatable::add(m_renders.back());
-                DrawableList::add(m_topRenders.back(), topHeight);
+                DrawableList::add(m_topRenders.back(), DrawableList::DrawHeight::MAP_TOP);
                 Updatable::add(m_topRenders.back());
             }
         }

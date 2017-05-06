@@ -158,11 +158,11 @@ void OptionsState::initPG2()
 
 void OptionsState::enable()
 {
-    DrawableList::add(m_stateName, 1);
-    DrawableList::add(m_validButton, 2);
+    DrawableList::add(m_stateName, DrawableList::DrawHeight::MENU);
+    DrawableList::add(m_validButton, DrawableList::DrawHeight::MENU + 1);
     Updatable::add(m_validButton);
     Controlable::add(m_validButton);
-    DrawableList::add(m_annuleButton, 2);
+    DrawableList::add(m_annuleButton, DrawableList::DrawHeight::MENU + 1);
     Updatable::add(m_annuleButton);
     Controlable::add(m_annuleButton);
     Controlable::add(m_pageControler);
@@ -191,10 +191,10 @@ void OptionsState::jumpToPG1()
     disablePages();
 
     for(const auto & l : m_keysLabels)
-        DrawableList::add(l, 0);
+        DrawableList::add(l, DrawableList::DrawHeight::MENU);
     for(const auto & k : m_keys)
     {
-        DrawableList::add(k, 0);
+        DrawableList::add(k, DrawableList::DrawHeight::MENU);
         Updatable::add(k);
         Controlable::add(k);
     }
@@ -212,25 +212,25 @@ void OptionsState::jumpTOPG2()
     disablePages();
 
     for(const auto & l : m_othersLabels)
-        DrawableList::add(l, 0);
+        DrawableList::add(l, DrawableList::DrawHeight::MENU);
 
-    DrawableList::add(m_windowZoom, 0);
+    DrawableList::add(m_windowZoom, DrawableList::DrawHeight::MENU);
     Updatable::add(m_windowZoom);
     Controlable::add(m_windowZoom);
 
-    DrawableList::add(m_fullScreen, 0);
+    DrawableList::add(m_fullScreen, DrawableList::DrawHeight::MENU);
     Updatable::add(m_fullScreen);
     Controlable::add(m_fullScreen);
 
-    DrawableList::add(m_musicVolume, 0);
+    DrawableList::add(m_musicVolume, DrawableList::DrawHeight::MENU);
     Updatable::add(m_musicVolume);
     Controlable::add(m_musicVolume);
 
-    DrawableList::add(m_soundsVolume, 0);
+    DrawableList::add(m_soundsVolume, DrawableList::DrawHeight::MENU);
     Updatable::add(m_soundsVolume);
     Controlable::add(m_soundsVolume);
 
-    DrawableList::add(m_lang, 0);
+    DrawableList::add(m_lang, DrawableList::DrawHeight::MENU);
     Updatable::add(m_lang);
     Controlable::add(m_lang);
 

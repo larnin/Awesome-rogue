@@ -8,8 +8,6 @@
 #include "Events/Datas/eventpreplayerchangeroom.h"
 #include <algorithm>
 
-const unsigned int projectileHeight(1);
-
 bool ProjectileList::m_instanced(false);
 
 ProjectileList::ProjectileList()
@@ -38,7 +36,7 @@ void ProjectileList::enable()
 
     for(const auto & p : m_projectiles)
     {
-        DrawableList::add(p, projectileHeight);
+        DrawableList::add(p, DrawableList::DrawHeight::PROJECTILE);
         Updatable::add(p);
     }
 }
@@ -70,7 +68,7 @@ void ProjectileList::addProjectile(std::shared_ptr<Projectile> p)
 
     if(m_enabled)
     {
-        DrawableList::add(p, projectileHeight);
+        DrawableList::add(p, DrawableList::DrawHeight::PROJECTILE);
         Updatable::add(p);
     }
 }

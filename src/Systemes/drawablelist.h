@@ -13,10 +13,16 @@ public:
     enum DrawHeight
     {
         BACK = 0,
-        GAME_MAP = 40,
-        GAME_ENTITY = 50,
-        GAME_INTERFACE = 60,
-        POPUP_WIDGET = 100
+        MAP_BACK = 100,
+        PROJECTILE = 200,
+        ITEM = 300,
+        ENTITY = 400,
+        PARTICLE = 500,
+        MAP_TOP = 600,
+        LIGHT = 700,
+        BLOCK_INTERACTION = 800,
+        INTERFACE = 900,
+        MENU = 1000
     };
 
     static void add(std::weak_ptr<sf::Drawable> object, unsigned int height);

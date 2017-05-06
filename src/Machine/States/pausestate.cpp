@@ -63,11 +63,11 @@ void PauseState::enable()
 
     Event<EventInstantCenterOfViewChanged>::send(EventInstantCenterOfViewChanged(sf::Vector2f(0, 0)));
 
-    DrawableList::add(m_title, 1);
+    DrawableList::add(m_title, DrawableList::DrawHeight::MENU);
 
     for(auto & w : m_buttons)
     {
-        DrawableList::add(w, 1);
+        DrawableList::add(w, DrawableList::DrawHeight::MENU);
         Controlable::add(w);
         Updatable::add(w);
     }

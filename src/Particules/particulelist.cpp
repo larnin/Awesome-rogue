@@ -10,7 +10,6 @@
 #include <algorithm>
 #include <cassert>
 
-const unsigned int particuleHeight(5);
 
 bool ParticuleList::m_instanced(false);
 
@@ -38,7 +37,7 @@ void ParticuleList::enable()
 
     for(const auto & p : m_particules)
     {
-        DrawableList::add(p, particuleHeight);
+        DrawableList::add(p, DrawableList::DrawHeight::PARTICLE);
         Updatable::add(p);
     }
 }
@@ -70,7 +69,7 @@ void ParticuleList::addParticule(std::shared_ptr<Particule> p)
 
     if(m_enabled)
     {
-        DrawableList::add(p, particuleHeight);
+        DrawableList::add(p, DrawableList::DrawHeight::PARTICLE);
         Updatable::add(p);
     }
 }

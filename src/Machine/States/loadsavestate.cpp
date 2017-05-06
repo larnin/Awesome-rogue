@@ -145,35 +145,35 @@ void LoadSaveState::enable()
 
     Event<EventInstantCenterOfViewChanged>::send(EventInstantCenterOfViewChanged(sf::Vector2f(0, 0)));
 
-    DrawableList::add(m_title, 3);
+    DrawableList::add(m_title, DrawableList::DrawHeight::MENU + 2);
 
-    DrawableList::add(m_returnButton, 1);
+    DrawableList::add(m_returnButton, DrawableList::DrawHeight::MENU);
     Updatable::add(m_returnButton);
     Controlable::add(m_returnButton);
 
     for(const auto & item : m_items)
     {
-        DrawableList::add(item.frame, 1);
-        DrawableList::add(item.saveName, 2);
+        DrawableList::add(item.frame, DrawableList::DrawHeight::MENU);
+        DrawableList::add(item.saveName, DrawableList::DrawHeight::MENU + 1);
 
-        DrawableList::add(item.playButton, 2);
+        DrawableList::add(item.playButton, DrawableList::DrawHeight::MENU + 1);
         Updatable::add(item.playButton);
         Controlable::add(item.playButton);
 
-        DrawableList::add(item.removeButton, 2);
+        DrawableList::add(item.removeButton, DrawableList::DrawHeight::MENU + 1);
         Updatable::add(item.removeButton);
         Controlable::add(item.removeButton);
     }
 
     if(m_newSave.useSave)
     {
-        DrawableList::add(m_newSave.frame, 1);
+        DrawableList::add(m_newSave.frame, DrawableList::DrawHeight::MENU);
 
-        DrawableList::add(m_newSave.saveName, 2);
+        DrawableList::add(m_newSave.saveName, DrawableList::DrawHeight::MENU + 1);
         Updatable::add(m_newSave.saveName);
         Controlable::add(m_newSave.saveName);
 
-        DrawableList::add(m_newSave.saveButton, 2);
+        DrawableList::add(m_newSave.saveButton, DrawableList::DrawHeight::MENU + 1);
         Updatable::add(m_newSave.saveButton);
         Controlable::add(m_newSave.saveButton);
     }

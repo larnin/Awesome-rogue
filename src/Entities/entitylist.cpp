@@ -14,8 +14,6 @@
 
 bool EntityList::m_instanced(false);
 
-unsigned int entityHeight(2);
-
 EntityList::EntityList()
     : m_currentRoom(0)
     , m_enabled(false)
@@ -45,7 +43,7 @@ void EntityList::enable()
     m_enabled = true;
     const auto & list(entitiesOn(m_currentRoom));
     for(const auto & e : list)
-        DrawableList::add(e, entityHeight);
+        DrawableList::add(e, DrawableList::DrawHeight::ENTITY);
 
     for(const auto & e : m_activeEntities)
         Updatable::add(e);
@@ -78,7 +76,7 @@ void EntityList::addEntity(std::shared_ptr<Entity> entity)
         return;
         activeEntity(entity);
     if(m_enabled)
-        DrawableList::add(entity, entityHeight);
+        DrawableList::add(entity, DrawableList::DrawHeight::ENTITY);
 }
 
 void EntityList::removeEntity(std::shared_ptr<Entity> entity)
@@ -185,7 +183,7 @@ void EntityList::onPlayerChangeRoom(EventPrePlayerChangeRoom e)
     {
         activeEntity(entity);
         if(m_enabled)
-            DrawableList::add(entity, entityHeight);
+            DrawableList::add(entity, DrawableList::DrawHeight::ENTITY);
     }
 
     do
@@ -230,7 +228,7 @@ void EntityList::onEntityChangeRoom(EventEntityChangeRoom e)
     if(r->getID() == m_currentRoom)
     {
         if(m_enabled)
-            DrawableList::add(eLock, entityHeight);
+            DrawableList::add(eLock, DrawableList::DrawHeight::ENTITY);
     }
     else DrawableList::del(eLock);
 }
