@@ -1,18 +1,24 @@
 #ifndef EVENTADDLIGHT_H
 #define EVENTADDLIGHT_H
 
-#include "Lights/Types/light.h"
 #include <memory>
 
+namespace
+{
+template <typename T>
 struct EventAddLight
 {
-    EventAddLight(const std::weak_ptr<Light> & l)
+    EventAddLight(const std::weak_ptr<T> & l)
         : light(l)
     {
 
     }
 
-    std::weak_ptr<Light> light;
+    std::weak_ptr<T> light;
 };
+}
+
+#include "Lights/Types/pointlight.h"
+using EventAddPointLight = EventAddLight<PointLight>;
 
 #endif // EVENTADDLIGHT_H

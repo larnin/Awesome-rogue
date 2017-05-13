@@ -122,8 +122,6 @@ SOURCES += main.cpp \
     File/serializer.cpp \
     Sounds/Effects/fadeineffect.cpp \
     Sounds/Effects/fadeouteffect.cpp \
-    Lights/lightrender.cpp \
-    Lights/Types/circlecoloredlight.cpp \
     Map/Render/renderdata.cpp \
     Machine/States/loadsavestate.cpp \
     Utilities/Animations/animator.cpp \
@@ -142,7 +140,10 @@ SOURCES += main.cpp \
     Utilities/Animations/Conditions/propertynotequalcondition.cpp \
     Utilities/Animations/Conditions/propertyinferiororequalcondition.cpp \
     Utilities/Animations/Conditions/propertysuperiororequalcondition.cpp \
-    Utilities/tr.cpp
+    Utilities/tr.cpp \
+    Lights/phongshader.cpp \
+    Lights/lightholder.cpp \
+    Lights/material.cpp
 
 HEADERS  += \
     Controles/commands.h \
@@ -300,12 +301,9 @@ HEADERS  += \
     Sounds/Effects/soundeffect.h \
     Sounds/Effects/fadeineffect.h \
     Sounds/Effects/fadeouteffect.h \
-    Lights/lightrender.h \
-    Lights/Types/light.h \
     Events/Datas/eventchangelightcolor.h \
     Events/Datas/eventaddlight.h \
     Events/Datas/eventdellight.h \
-    Lights/Types/circlecoloredlight.h \
     Map/Render/renderdata.h \
     Map/Render/blockanimation.h \
     Events/Datas/eventloadfinished.h \
@@ -326,7 +324,12 @@ HEADERS  += \
     Utilities/Animations/Conditions/propertynotequalcondition.h \
     Utilities/Animations/Conditions/propertyinferiororequalcondition.h \
     Utilities/Animations/Conditions/propertysuperiororequalcondition.h \
-    Utilities/tr.h
+    Utilities/tr.h \
+    Lights/phongshader.h \
+    Lights/material.h \
+    Lights/Types/pointlight.h \
+    Lights/lightholder.h \
+    Events/Datas/eventsetambiantcolor.h
 
 CONFIG += c++14
 #QMAKE_CXXFLAGS += -Wsign-conversion

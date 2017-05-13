@@ -24,7 +24,6 @@
 #include "Events/Datas/eventplayerchangeroom.h"
 #include "Map/blocktype.h"
 #include "Items/itemslist.h"
-#include "Lights/lightrender.h"
 #include "File/serializer.h"
 #include "Events/Datas/eventloadfinished.h"
 
@@ -37,9 +36,6 @@ GameHolder::GameHolder(std::weak_ptr<StateMachine> machine, const std::string & 
 
     auto m(machine.lock());
     assert(m);
-
-    m_light = std::make_shared<LightRender>();
-    m_light->setColors(sf::Color(64, 64, 64), sf::Color::Black);
 
     m_map = std::make_shared<Map>();
     m_mapRender = std::make_shared<WorldRender>(m_map, 0, m->getWindow().getSize());
@@ -68,9 +64,6 @@ GameHolder::GameHolder(std::weak_ptr<StateMachine> machine, const GenerationEnvi
 
     auto m(machine.lock());
     assert(m);
-
-    m_light = std::make_shared<LightRender>();
-    m_light->setColors(sf::Color(0, 64, 64), sf::Color::Black);
 
     Generator g;
     m_map = g.generate(e);
@@ -150,8 +143,6 @@ void GameHolder::enable()
 
     DrawableList::add(m_items, DrawableList::DrawHeight::ITEM);
     Updatable::add(m_items);
-
-    DrawableList::add(m_light, DrawableList::DrawHeight::LIGHT);
 }
 
 void GameHolder::disable()
@@ -190,8 +181,6 @@ void GameHolder::disable()
 
     DrawableList::del(m_items);
     Updatable::del(m_items);
-
-    DrawableList::del(m_light);
 }
 
 std::shared_ptr<Player> GameHolder::getPlayer()

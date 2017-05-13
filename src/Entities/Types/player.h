@@ -5,8 +5,6 @@
 #include "Systemes/controlable.h"
 #include "Utilities/ressource.h"
 
-class CircleColoredLight;
-
 class Player : public Entity, public Controlable
 {
 public:
@@ -26,7 +24,6 @@ protected:
 private:
     Texture m_texture;
     sf::Vector2f m_controleDirection;
-    std::shared_ptr<CircleColoredLight> m_light;
 };
 
 #endif // PLAYER_H
