@@ -3,8 +3,6 @@
 
 #include <memory>
 
-namespace
-{
 template <typename T>
 struct EventAddLight
 {
@@ -16,7 +14,6 @@ struct EventAddLight
 
     std::weak_ptr<T> light;
 };
-}
 
 #include "Lights/Types/pointlight.h"
 using EventAddPointLight = EventAddLight<PointLight>;

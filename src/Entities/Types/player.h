@@ -4,6 +4,7 @@
 #include "entity.h"
 #include "Systemes/controlable.h"
 #include "Utilities/ressource.h"
+#include "Lights/Types/pointlight.h"
 
 class Player : public Entity, public Controlable
 {
@@ -24,6 +25,7 @@ protected:
 private:
     Texture m_texture;
     sf::Vector2f m_controleDirection;
+    std::shared_ptr<PointLight> m_light;
 };
 
 #endif // PLAYER_H

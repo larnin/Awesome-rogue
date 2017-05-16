@@ -38,15 +38,9 @@ void main()
 
         diffuseColor += max(0.0, dot(normal, normalize(delta))) * material.y * lightColor[i] * l;
         specularColor += max(0.0, pow(dot(R, V), material.w)) * material.z * lightColor[i] * l;
-        /*vec4 diffuse = max(0.0, dot(normal, normalize(delta))) * material.y * lightColor[i] * l;
-        vec4 specular = max(0.0, pow(dot(R, V), material.w)) * material.z * lightColor[i] * l;
-        color.r = max(max(color.r, diffuse.r), specular.r);
-        color.g = max(max(color.g, diffuse.g), specular.g);
-        color.b = max(max(color.b, diffuse.b), specular.b);
-        color.a = max(max(color.a, diffuse.a), specular.a);*/
     }
 
-    specularColor = vec4(specularColor.xyz, pixel.w);
+    specularColor = vec4(specularColor.xyz, 0);
 
-    gl_FragColor = gl_Color * pixel * (ambiantColor * material.x + diffuseColor) + specularColor;
+    gl_FragColor = gl_Color * (pixel * (ambiantColor * material.x + diffuseColor) + specularColor);
 }

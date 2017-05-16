@@ -21,6 +21,10 @@ WorldRender::WorldRender(std::weak_ptr<Map> world, unsigned int centerRoom, cons
     , m_centerRoom(centerRoom)
     , m_enabled(false)
 {
+    Material m(1, 1, 1, 20);
+    m.primaryTexture = m_borderTexture;
+    m_shader.setMaterial(m);
+
     connect<EventPrePlayerChangeRoom>(std::bind(&WorldRender::onPlayerChangeRoom, this, _1));
     connect<EventSizeViewChanged>(std::bind(&WorldRender::onScreenChangeSize, this, _1));
     redrawRooms();
@@ -58,7 +62,9 @@ void WorldRender::disable()
 
 void WorldRender::draw(sf::RenderTarget & target, sf::RenderStates) const
 {
-    target.draw(m_border, sf::RenderStates(m_borderTexture()));
+    sf::RenderStates state(m_borderTexture());
+    state.shader = &m_shader.get();
+    target.draw(m_border, state);
 }
 
 void WorldRender::regenBorder()

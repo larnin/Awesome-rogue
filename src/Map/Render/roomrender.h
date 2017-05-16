@@ -4,6 +4,7 @@
 #include "Utilities/ressource.h"
 #include "Systemes/updatable.h"
 #include "renderdata.h"
+#include "Lights/phongshader.h"
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
 #include <memory>
@@ -45,6 +46,8 @@ private:
     bool m_drawGround;
     bool m_drawWall;
     bool m_drawTop;
+
+    PhongShader m_shader;
 };
 
 #endif // ROOMRENDER_H

@@ -1,5 +1,7 @@
 #include "phongshader.h"
 
+#include <iostream>
+
 sf::Shader PhongShader::m_shader;
 const unsigned int PhongShader::maxLight(100);
 
@@ -8,13 +10,13 @@ PhongShader::PhongShader()
 
 }
 
-const sf::Shader & PhongShader::get()
+const sf::Shader & PhongShader::get() const
 {
     applyMaterial();
     return m_shader;
 }
 
-void PhongShader::applyMaterial()
+void PhongShader::applyMaterial() const
 {
     m_shader.setUniform("primaryTexture", *m_material.primaryTexture);
     m_shader.setUniform("secondaryTexture", *m_material.secondaryTexture);
@@ -24,7 +26,7 @@ void PhongShader::applyMaterial()
 void PhongShader::setPointLights(const std::vector<sf::Glsl::Vec3> & positions, const std::vector<sf::Glsl::Vec4> & colors, const std::vector<float> & radius)
 {
     unsigned int size(std::min(std::min(maxLight, positions.size()), std::min(colors.size(), radius.size())));
-    m_shader.setUniformArray("lights", positions.data(), size);
+    m_shader.setUniformArray("light", positions.data(), size);
     m_shader.setUniformArray("lightColor", colors.data(), size);
     m_shader.setUniformArray("lightRadius", radius.data(), size);
     m_shader.setUniform("lightCount", (int)size);
@@ -39,5 +41,5 @@ void PhongShader::initialize()
 
 void PhongShader::setAmbiant(const sf::Color & c)
 {
-    m_shader.setUniform("ambiantColor", sf::Glsl::Vec4(c.r, c.g, c.b, c.a));
+    m_shader.setUniform("ambiantColor", sf::Glsl::Vec4(c));
 }

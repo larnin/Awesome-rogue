@@ -7,6 +7,8 @@ LightHolder::LightHolder()
 {
     setAmbiant(sf::Color::White);
     connect<EventSetAmbiantColor>(std::bind(&onAmbiantChange, this, _1));
+    connect<EventAddPointLight>(std::bind(&onAddPointLight, this, _1));
+    connect<EventDelPointLight>(std::bind(&onDelPointLight, this, _1));
 }
 
 void LightHolder::setAmbiant(const sf::Color & ambiant)

@@ -3,6 +3,7 @@
 
 #include "Utilities/ressource.h"
 #include "Events/eventreceiver.h"
+#include "Lights/phongshader.h"
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
@@ -59,6 +60,7 @@ private:
     };
 
     bool m_enabled;
+    PhongShader m_shader;
 };
 
 #endif // WORLDRENDER_H

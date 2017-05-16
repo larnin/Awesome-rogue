@@ -26,6 +26,7 @@
 #include "Items/itemslist.h"
 #include "File/serializer.h"
 #include "Events/Datas/eventloadfinished.h"
+#include "Lights/lightholder.h"
 
 #include <iostream>
 
@@ -37,6 +38,10 @@ GameHolder::GameHolder(std::weak_ptr<StateMachine> machine, const std::string & 
     auto m(machine.lock());
     assert(m);
 
+    m_items = std::make_shared<ItemsList>();
+
+    m_lightHolder = std::make_shared<LightHolder>();
+
     m_map = std::make_shared<Map>();
     m_mapRender = std::make_shared<WorldRender>(m_map, 0, m->getWindow().getSize());
 
@@ -45,8 +50,6 @@ GameHolder::GameHolder(std::weak_ptr<StateMachine> machine, const std::string & 
     m_interface = std::make_shared<GameInterface>();
     m_minimap = std::make_shared<Minimap>(m_map);
     m_lifeBar = std::make_shared<LifeBar>();
-
-    m_items = std::make_shared<ItemsList>();
 
     load(fileName);
 
@@ -69,6 +72,9 @@ GameHolder::GameHolder(std::weak_ptr<StateMachine> machine, const GenerationEnvi
     m_map = g.generate(e);
     auto r(m_map->room(0));
     r->uncover();
+    m_items = std::make_shared<ItemsList>();
+
+    m_lightHolder = std::make_shared<LightHolder>();
 
     m_mapRender = std::make_shared<WorldRender>(m_map, 0, m->getWindow().getSize());
 
@@ -76,6 +82,7 @@ GameHolder::GameHolder(std::weak_ptr<StateMachine> machine, const GenerationEnvi
     std::shared_ptr<Player> p(std::make_shared<Player>(Player(Location(r->getSize()/2u, r))));
     m_player = p;
     m_listes->entities.addEntity(p);
+    m_interactor = std::make_shared<Interactor>(p);
 
     m_projectilesLauncher = std::make_shared<ParalleleBulletLauncher>(p, 2, 0.15f);
 
@@ -83,9 +90,6 @@ GameHolder::GameHolder(std::weak_ptr<StateMachine> machine, const GenerationEnvi
     m_minimap = std::make_shared<Minimap>(m_map);
     m_lifeBar = std::make_shared<LifeBar>(p);
 
-    m_interactor = std::make_shared<Interactor>(p);
-
-    m_items = std::make_shared<ItemsList>();
 }
 
 void GameHolder::initEvents()
@@ -143,6 +147,7 @@ void GameHolder::enable()
 
     DrawableList::add(m_items, DrawableList::DrawHeight::ITEM);
     Updatable::add(m_items);
+    Updatable::add(m_lightHolder);
 }
 
 void GameHolder::disable()
@@ -181,6 +186,7 @@ void GameHolder::disable()
 
     DrawableList::del(m_items);
     Updatable::del(m_items);
+    Updatable::del(m_lightHolder);
 }
 
 std::shared_ptr<Player> GameHolder::getPlayer()

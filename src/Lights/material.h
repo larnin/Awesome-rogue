@@ -33,9 +33,9 @@ struct Material
     float specularCoefficient;
     float specularMultiplier;
 
+    static Texture defaultNormalTexture;
 
 private:
-    static Texture defaultNormalTexture;
     static Texture generateDefaultNormalTexture();
 };
 

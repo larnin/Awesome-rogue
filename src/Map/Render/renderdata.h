@@ -16,6 +16,7 @@ public:
     BlockFrame frameOf(unsigned int id) const;
 
     Texture texture;
+    Texture secondaryTexture;
 
 private:
     void initAnimation();

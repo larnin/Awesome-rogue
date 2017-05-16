@@ -337,9 +337,9 @@ CONFIG += c++14
 # SFML
 DEFINES += SFML_STATIC
 #   --- HOME
-LIBS += -LC:/Users/Nicolas/Programation/c++/SFML/DW2_2.4_(Qt)/lib
-INCLUDEPATH += C:/Users/Nicolas/Programation/c++/SFML/DW2_2.4_(Qt)/include
-DEPENDPATH += C:/Users/Nicolas/Programation/c++/SFML/DW2_2.4_(Qt)/include
+LIBS += -LC:/Users/Nicolas/Programation/c++/SFML/DW2_2.4.2_(Qt)/lib
+INCLUDEPATH += C:/Users/Nicolas/Programation/c++/SFML/DW2_2.4.2_(Qt)/include
+DEPENDPATH += C:/Users/Nicolas/Programation/c++/SFML/DW2_2.4.2_(Qt)/include
 
 #   --- RUBIKA
 #LIBS += -LC:/Users/n.laurent/Desktop/perso/SFML/SFML-2.4.0-SW2/lib
