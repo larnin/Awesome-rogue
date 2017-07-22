@@ -5,8 +5,8 @@
 #include "Events/eventreceiver.h"
 #include "Types/pointlight.h"
 #include "Utilities/noncopiable.h"
-#include "Events/Datas/eventaddlight.h"
-#include "Events/Datas/eventdellight.h"
+#include "Events/Datas/Light/eventaddlight.h"
+#include "Events/Datas/Light/eventdellight.h"
 #include <SFML/Graphics/Color.hpp>
 #include <memory>
 #include <vector>
@@ -30,8 +30,8 @@ public:
 private:
     void updatePointLights();
     void onAmbiantChange(EventSetAmbiantColor e);
-    void onAddPointLight(EventAddPointLight e);
-    void onDelPointLight(EventDelPointLight e);
+    //void onAddPointLight(EventAddPointLight e);
+    //void onDelPointLight(EventDelPointLight e);
 
     sf::Color m_ambiantColor;
     std::vector<std::weak_ptr<PointLight>> m_pointLights;

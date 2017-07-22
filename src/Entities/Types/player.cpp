@@ -3,18 +3,18 @@
 #include "Collisions/collisions.h"
 #include "Utilities/quadrender.h"
 #include "Map/blocktype.h"
-#include "Events/Datas/eventcenterofviewchanged.h"
-#include "Events/Datas/eventplayerchangeroom.h"
-#include "Events/Datas/eventpreplayerchangeroom.h"
+#include "Events/Datas/Camera/eventcenterofviewchanged.h"
+#include "Events/Datas/Entity/eventplayerchangeroom.h"
+#include "Events/Datas/Entity/eventpreplayerchangeroom.h"
 #include "Events/event.h"
 #include "Particules/particulefactory.h"
 #include "Particules/Types/mobdeath.h"
 #include "Controles/commandsvalue.h"
-#include "events/Datas/eventaddlight.h"
+#include "events/Datas/Light/eventaddlight.h"
+#include "Events/Datas/Light/eventsetambiantcolor.h"
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 
-#include <Events/Datas/eventsetambiantcolor.h>
 
 const float PI(3.14159f);
 
@@ -23,7 +23,6 @@ Player::Player(const Location & pos)
     , Controlable(ControlState::ACTIVE)
     , m_texture("res/img/player.png")
     , m_controleDirection(0, 0)
-    , m_light(std::make_shared<PointLight>())
 {
     m_originalBox.addLine(Line(sf::Vector2f(-0.5f, 0), sf::Vector2f(-0.19f, -0.31f)));
     m_originalBox.addLine(Line(sf::Vector2f(-0.19f, -0.31f), sf::Vector2f(0.5f, 0)));
@@ -41,7 +40,6 @@ Player::Player(const Location & pos)
     m_activeDistance = 1.0f;
     m_canPassDoor = true;
     m_invincibleTime = 0.2f;
-    Event<EventAddPointLight>::send(EventAddPointLight(m_light));
     Event<EventSetAmbiantColor>::send(EventSetAmbiantColor(sf::Color::Blue));
 }
 
@@ -50,9 +48,7 @@ Player::Player(const json & j)
     , Controlable(ControlState::ACTIVE)
     , m_texture("res/img/player.png")
     , m_controleDirection(0, 0)
-    , m_light(std::make_shared<PointLight>())
 {
-    Event<EventAddPointLight>::send(EventAddPointLight(m_light));
 }
 
 void Player::control(CommandsValue & v)
@@ -94,8 +90,6 @@ void Player::updateComportement(const sf::Time & elapsedTime)
     if(std::abs(m_controleDirection.x) > mincontroleRot || std::abs(m_controleDirection.y) > mincontroleRot)
         newAngle = angle(m_controleDirection);
     execRotate(newAngle);
-
-    m_light->pos = sf::Vector3f(m_pos.toGlobalPos().x*float(BlockType::tileSize), m_pos.toGlobalPos().y*float(BlockType::tileSize), 50);
 }
 
 void Player::draw(sf::RenderTarget & target, sf::RenderStates) const

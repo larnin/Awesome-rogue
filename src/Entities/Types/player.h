@@ -25,7 +25,6 @@ protected:
 private:
     Texture m_texture;
     sf::Vector2f m_controleDirection;
-    std::shared_ptr<PointLight> m_light;
 };
 
 #endif // PLAYER_H

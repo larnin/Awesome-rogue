@@ -6,7 +6,7 @@
 #include "Particules/Types/boss1transition.h"
 #include "Events/event.h"
 #include "Events/Datas/eventinteraction.h"
-#include "Events/Datas/eventremoveentity.h"
+#include "Events/Datas/Entity/eventremoveentity.h"
 #include "cassert"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/VertexArray.hpp>

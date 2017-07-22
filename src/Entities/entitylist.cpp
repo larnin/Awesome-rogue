@@ -5,11 +5,11 @@
 #include "Collisions/pathfinder.h"
 #include "Events/eventgetter.h"
 #include "Systemes/drawablelist.h"
-#include "Events/Datas/evententitycreated.h"
-#include "Events/Datas/eventremoveentity.h"
-#include "Events/Datas/eventpreplayerchangeroom.h"
-#include "Events/Datas/evententitychangeroom.h"
-#include "Events/Datas/eventitemloaded.h"
+#include "Events/Datas/Entity/evententitycreated.h"
+#include "Events/Datas/Entity/eventremoveentity.h"
+#include "Events/Datas/Entity/eventpreplayerchangeroom.h"
+#include "Events/Datas/Entity/evententitychangeroom.h"
+#include "Events/Datas/File/eventitemloaded.h"
 #include <algorithm>
 
 bool EntityList::m_instanced(false);

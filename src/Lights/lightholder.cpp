@@ -1,14 +1,14 @@
 #include "lightholder.h"
 #include "phongshader.h"
-#include "Events/Datas/eventsetambiantcolor.h"
+#include "Events/Datas/Light/eventsetambiantcolor.h"
 #include <algorithm>
 
 LightHolder::LightHolder()
 {
     setAmbiant(sf::Color::White);
     connect<EventSetAmbiantColor>(std::bind(&onAmbiantChange, this, _1));
-    connect<EventAddPointLight>(std::bind(&onAddPointLight, this, _1));
-    connect<EventDelPointLight>(std::bind(&onDelPointLight, this, _1));
+    //connect<EventAddPointLight>(std::bind(&onAddPointLight, this, _1));
+    //connect<EventDelPointLight>(std::bind(&onDelPointLight, this, _1));
 }
 
 void LightHolder::setAmbiant(const sf::Color & ambiant)
@@ -70,7 +70,7 @@ void LightHolder::onAmbiantChange(EventSetAmbiantColor e)
     setAmbiant(e.color);
 }
 
-void LightHolder::onAddPointLight(EventAddPointLight e)
+/*void LightHolder::onAddPointLight(EventAddPointLight e)
 {
     addPointLight(e.light);
 }
@@ -78,4 +78,4 @@ void LightHolder::onAddPointLight(EventAddPointLight e)
 void LightHolder::onDelPointLight(EventDelPointLight e)
 {
     delPointLight(e.light);
-}
+}*/

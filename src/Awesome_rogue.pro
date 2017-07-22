@@ -188,9 +188,6 @@ HEADERS  += \
     Entities/Types/circlemob.h \
     Entities/entityfactory.h \
     Entities/entitytype.h \
-    Events/Datas/evententitycreated.h \
-    Events/Datas/eventcenterofviewchanged.h \
-    Events/Datas/eventsizeviewchanged.h \
     GUI/gameinterface.h \
     GUI/minimap.h \
     GUI/Widgets/Buttons/abstractbutton.h \
@@ -220,20 +217,14 @@ HEADERS  += \
     Events/Datas/eventprojectilecreated.h \
     Projectiles/projectilefactory.h \
     Events/eventgetter.h \
-    Events/Datas/eventpreplayerchangeroom.h \
-    Events/Datas/eventplayerchangeroom.h \
-    Events/Datas/evententitychangeroom.h \
     Projectiles/Types/delayedpunch.h \
     Projectiles/Types/smallball.h \
     Projectiles/Types/rapidfire.h \
     Projectiles/Types/lasermob.h \
     Projectiles/Types/cacaura.h \
     Machine/smoothcamera.h \
-    Events/Datas/eventinstantcenterofviewchanged.h \
-    Events/Datas/eventplaycameraeffect.h \
     Machine/CameraEffects/cameraeffect.h \
     Machine/CameraEffects/effecttest.h \
-    Events/Datas/eventclearcameraeffects.h \
     Particules/Types/particule.h \
     Particules/particulelist.h \
     Events/Datas/eventparticulecreated.h \
@@ -266,8 +257,6 @@ HEADERS  += \
     Machine/gameholder.h \
     Libs/json.hpp \
     Particules/Types/spawnboss1.h \
-    Events/Datas/eventsetbosslifebar.h \
-    Events/Datas/eventremoveentity.h \
     GUI/LifeBar/boss1partslifebar.h \
     Entities/Types/boss1end.h \
     Particules/Types/boss1transition.h \
@@ -282,31 +271,22 @@ HEADERS  += \
     Utilities/configs.h \
     Machine/States/mapstate.h \
     GUI/globalmaprender.h \
-    Events/Datas/eventplaysound.h \
-    Events/Datas/eventplaymusic.h \
     Sounds/soundplayer.h \
     Sounds/sounddata.h \
-    Events/Datas/eventstopmusic.h \
     Items/itemslist.h \
     Items/itemtype.h \
     Events/Datas/eventpickitem.h \
     Events/Datas/eventdropitem.h \
     Entities/playerinfos.h \
     Events/Datas/eventexperiencechanged.h \
-    Events/Datas/eventbosskilled.h \
     File/serializable.h \
     File/serializabletype.h \
     File/serializer.h \
-    Events/Datas/eventitemloaded.h \
     Sounds/Effects/soundeffect.h \
     Sounds/Effects/fadeineffect.h \
     Sounds/Effects/fadeouteffect.h \
-    Events/Datas/eventchangelightcolor.h \
-    Events/Datas/eventaddlight.h \
-    Events/Datas/eventdellight.h \
     Map/Render/renderdata.h \
     Map/Render/blockanimation.h \
-    Events/Datas/eventloadfinished.h \
     Machine/States/loadsavestate.h \
     Utilities/Animations/animator.h \
     Utilities/Animations/animation.h \
@@ -329,7 +309,28 @@ HEADERS  += \
     Lights/material.h \
     Lights/Types/pointlight.h \
     Lights/lightholder.h \
-    Events/Datas/eventsetambiantcolor.h
+    Lights/lightdata.h \
+    Events/Datas/Light/eventaddlight.h \
+    Events/Datas/Light/eventdellight.h \
+    Events/Datas/Light/eventchangelightcolor.h \
+    Events/Datas/Sound/eventstopmusic.h \
+    Events/Datas/Light/eventsetambiantcolor.h \
+    Events/Datas/Sound/eventplaysound.h \
+    Events/Datas/Sound/eventplaymusic.h \
+    Events/Datas/Camera/eventcenterofviewchanged.h \
+    Events/Datas/Camera/eventclearcameraeffects.h \
+    Events/Datas/Camera/eventinstantcenterofviewchanged.h \
+    Events/Datas/Camera/eventplaycameraeffect.h \
+    Events/Datas/Camera/eventsizeviewchanged.h \
+    Events/Datas/Entity/eventbosskilled.h \
+    Events/Datas/Entity/evententitychangeroom.h \
+    Events/Datas/Entity/evententitycreated.h \
+    Events/Datas/Entity/eventplayerchangeroom.h \
+    Events/Datas/Entity/eventpreplayerchangeroom.h \
+    Events/Datas/Entity/eventremoveentity.h \
+    Events/Datas/Entity/eventsetbosslifebar.h \
+    Events/Datas/File/eventitemloaded.h \
+    Events/Datas/File/eventloadfinished.h
 
 CONFIG += c++14
 #QMAKE_CXXFLAGS += -Wsign-conversion
