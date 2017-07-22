@@ -1,7 +1,7 @@
 #include "pausestate.h"
 #include "Machine/statemachine.h"
 #include "Events/event.h"
-#include "Events/Datas/eventinstantcenterofviewchanged.h"
+#include "Events/Datas/Camera/eventinstantcenterofviewchanged.h"
 #include "GUI/Widgets/Buttons/basicbutton.h"
 #include "Systemes/drawablelist.h"
 #include "menustate.h"

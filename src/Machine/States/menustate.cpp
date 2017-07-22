@@ -1,7 +1,7 @@
 #include "menustate.h"
 #include "Events/event.h"
-#include "Events/Datas/eventinstantcenterofviewchanged.h"
-#include "Events/Datas/eventplaycameraeffect.h"
+#include "Events/Datas/Camera/eventinstantcenterofviewchanged.h"
+#include "Events/Datas/Camera/eventplaycameraeffect.h"
 #include "Systemes/drawablelist.h"
 #include "Machine/statemachine.h"
 #include "GUI/Widgets/Buttons/basicbutton.h"
@@ -11,8 +11,6 @@
 #include "GUI/Widgets/widget.h"
 #include "Utilities/tr.h"
 #include "Map/Generator/generator.h"
-
-#include "Events/Datas/eventplaymusic.h"
 
 MenuState::MenuState(std::weak_ptr<StateMachine> machine)
     : State(machine)

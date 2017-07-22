@@ -4,7 +4,6 @@
 #include "Lights/lightdata.h"
 #include <memory>
 
-template <typename T>
 struct EventDelLight
 {
     EventDelLight(const std::weak_ptr<LightData> & l)

@@ -14,7 +14,10 @@ public:
     const sf::Shader & get() const;
 
     static void initialize();
-    static void setPointLights(const std::vector<sf::Glsl::Vec3> & positions, const std::vector<sf::Glsl::Vec4> & colors, const std::vector<float> & radius);
+    static void setLights(const std::vector<sf::Glsl::Vec4> & lightsColor
+                          , const std::vector<sf::Glsl::Vec3> & lightsPos
+                          , const std::vector<float> & lightsType
+                          , const std::vector<sf::Glsl::Vec4> & lightsParams);
     static void setAmbiant(const sf::Color & c);
 
 private:

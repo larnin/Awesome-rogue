@@ -23,12 +23,16 @@ void PhongShader::applyMaterial() const
     m_shader.setUniform("material", sf::Glsl::Vec4(m_material.ambiantCoeficient, m_material.diffuseCoefficient, m_material.specularCoefficient, m_material.specularMultiplier));
 }
 
-void PhongShader::setPointLights(const std::vector<sf::Glsl::Vec3> & positions, const std::vector<sf::Glsl::Vec4> & colors, const std::vector<float> & radius)
+void PhongShader::setLights(const std::vector<sf::Glsl::Vec4> & lightsColor
+                            , const std::vector<sf::Glsl::Vec3> & lightsPos
+                            , const std::vector<float> & lightsType
+                            , const std::vector<sf::Glsl::Vec4> & lightsParams)
 {
-    unsigned int size(std::min(std::min(maxLight, positions.size()), std::min(colors.size(), radius.size())));
-    m_shader.setUniformArray("light", positions.data(), size);
-    m_shader.setUniformArray("lightColor", colors.data(), size);
-    m_shader.setUniformArray("lightRadius", radius.data(), size);
+    unsigned int size(std::min({lightsColor.size(), lightsPos.size(), lightsType.size(), lightsParams.size()}));
+    m_shader.setUniformArray("light", lightsPos.data(), lightsPos.size());
+    m_shader.setUniformArray("lightColor", lightsColor.data(), lightsColor.size());
+    m_shader.setUniformArray("lightType", lightsType.data(), lightsType.size());
+    m_shader.setUniformArray("lightParams", lightsParams.data(), lightsParams.size());
     m_shader.setUniform("lightCount", (int)size);
 }
 
@@ -36,7 +40,7 @@ void PhongShader::initialize()
 {
     m_shader.loadFromFile("res/shader/phong/2dmultilight.vert", "res/shader/phong/2dmultilight.frag");
     m_shader.setUniform("lightCount", 0);
-    m_shader.setUniform("ambiantColor", sf::Glsl::Vec4(1.0f, 1.0f, 1.0f, 1.0f));
+    setAmbiant(sf::Color::White);
 }
 
 void PhongShader::setAmbiant(const sf::Color & c)

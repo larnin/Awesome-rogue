@@ -8,7 +8,7 @@
 #include "Types/boss1part.h"
 #include "Types/boss1end.h"
 #include "Events/event.h"
-#include "Events/Datas/evententitycreated.h"
+#include "Events/Datas/Entity/evententitycreated.h"
 #include "Map/location.h"
 #include <cassert>
 

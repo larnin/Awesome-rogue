@@ -1,7 +1,7 @@
 #include "minimap.h"
 #include "Map/blocktype.h"
 #include "Utilities/quadrender.h"
-#include "Events/Datas/eventplayerchangeroom.h"
+#include "Events/Datas/Entity/eventplayerchangeroom.h"
 #include "Map/map.h"
 #include "Map/room.h"
 #include <SFML/Graphics/RenderTarget.hpp>

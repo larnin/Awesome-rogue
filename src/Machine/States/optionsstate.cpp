@@ -4,7 +4,7 @@
 #include "GUI/Widgets/Buttons/basicbutton.h"
 #include "Machine/statemachine.h"
 #include "Events/event.h"
-#include "Events/Datas/eventinstantcenterofviewchanged.h"
+#include "Events/Datas/Camera/eventinstantcenterofviewchanged.h"
 #include "GUI/Widgets/Buttons/basicbutton.h"
 #include "GUI/Widgets/RadioButtons/radiobuttons.h"
 #include "GUI/Widgets/RadioButtons/basicradiobuttonitem.h"

@@ -3,7 +3,7 @@
 #include "Systemes/controlable.h"
 #include "Systemes/drawablelist.h"
 #include "Systemes/updatable.h"
-#include "Events/Datas/eventsizeviewchanged.h"
+#include "Events/Datas/Camera/eventsizeviewchanged.h"
 #include "smoothcamera.h"
 #include "Utilities/configs.h"
 #include <SFML/Window/VideoMode.hpp>

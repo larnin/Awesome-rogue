@@ -2,6 +2,7 @@
 #define LIGHTDATA_H
 
 #include <SFML/System/Vector3.hpp>
+#include <SFML/Graphics/Color.hpp>
 
 enum LightType
 {
@@ -12,16 +13,25 @@ enum LightType
 
 struct LightData
 {
-    inline LightData();
+    inline LightData(LightType _type)
+        : type(_type)
+        , pos(0, 0, 0)
+        , color(sf::Color::White)
+        , radius(100)
+        , yaw(0)
+        , pitch(0)
+        , intensity(1)
+    {
 
-    float time;
+    }
+
+    LightType type;
     sf::Vector3f pos;
     sf::Color color;
     float radius;
     float yaw;
     float pitch; //or angle for spot type
     float intensity;
-    LightType type;
 };
 
 #endif // LIGHTDATA_H

@@ -40,7 +40,6 @@ Player::Player(const Location & pos)
     m_activeDistance = 1.0f;
     m_canPassDoor = true;
     m_invincibleTime = 0.2f;
-    Event<EventSetAmbiantColor>::send(EventSetAmbiantColor(sf::Color::Blue));
 }
 
 Player::Player(const json & j)
