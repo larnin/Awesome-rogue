@@ -143,8 +143,9 @@ std::vector<Patern> Patern::load(const std::string & fileName)
                 else p(sf::Vector2u(i, j)) = Block(block[0], block[1], block[2], block[3], block[4]);
             }
 
-        for(const auto & l : *lights)
-            p.m_lights.emplace_back(l);
+        if(lights != patern.end())
+            for(const auto & l : *lights)
+                p.m_lights.emplace_back(l);
 
         p.type = RoomType(rType->get<unsigned int>());
         p.name = *rName;
