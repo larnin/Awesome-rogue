@@ -4,11 +4,12 @@
 #include "Map/blocktype.h"
 #include "Entities/entitylist.h"
 #include "Events/eventgetter.h"
-#include "Events/Datas/eventpreplayerchangeroom.h"
-#include "Events/Datas/eventsizeviewchanged.h"
+#include "Events/Datas/Entity/eventpreplayerchangeroom.h"
+#include "Events/Datas/Camera/eventsizeviewchanged.h"
 #include "Entities/Types/entity.h"
 #include "Map/map.h"
 #include "roomrender.h"
+#include "lightsrender.h"
 #include "Map/room.h"
 #include <SFML/Graphics/Rect.hpp>
 #include <cassert>
@@ -20,7 +21,12 @@ WorldRender::WorldRender(std::weak_ptr<Map> world, unsigned int centerRoom, cons
     , m_screenSize(screenSize / BlockType::tileSize)
     , m_centerRoom(centerRoom)
     , m_enabled(false)
+    , m_lightRender(std::make_shared<LightsRender>())
 {
+    Material m(1, 1, 1, 20);
+    m.primaryTexture = m_borderTexture;
+    m_shader.setMaterial(m);
+
     connect<EventPrePlayerChangeRoom>(std::bind(&WorldRender::onPlayerChangeRoom, this, _1));
     connect<EventSizeViewChanged>(std::bind(&WorldRender::onScreenChangeSize, this, _1));
     redrawRooms();
@@ -39,6 +45,7 @@ void WorldRender::enable()
         DrawableList::add(r, DrawableList::DrawHeight::MAP_TOP);
         Updatable::add(r);
     }
+    Updatable::add(m_lightRender);
 }
 
 void WorldRender::disable()
@@ -54,11 +61,14 @@ void WorldRender::disable()
         DrawableList::del(r);
         Updatable::del(r);
     }
+    Updatable::del(m_lightRender);
 }
 
 void WorldRender::draw(sf::RenderTarget & target, sf::RenderStates) const
 {
-    target.draw(m_border, sf::RenderStates(m_borderTexture()));
+    sf::RenderStates state(m_borderTexture());
+    state.shader = &m_shader.get();
+    target.draw(m_border, state);
 }
 
 void WorldRender::regenBorder()
@@ -180,6 +190,11 @@ void WorldRender::redrawRooms()
             }
         }
     }
+
+    std::vector<std::weak_ptr<Room>> rooms;
+    for(auto & r : m_renders)
+        rooms.push_back(r->getRoom());
+    m_lightRender->setRooms(rooms);
 
     regenBorder();
 }

@@ -5,8 +5,8 @@
 #include "Machine/statemachine.h"
 #include "GUI/simplecontroler.h"
 #include "Events/event.h"
-#include "Events/Datas/eventpreplayerchangeroom.h"
-#include "Events/Datas/eventplayerchangeroom.h"
+#include "Events/Datas/Entity/eventpreplayerchangeroom.h"
+#include "Events/Datas/Entity/eventplayerchangeroom.h"
 #include "Entities/Types/player.h"
 
 MapState::MapState(std::weak_ptr<StateMachine> machine, bool tp)

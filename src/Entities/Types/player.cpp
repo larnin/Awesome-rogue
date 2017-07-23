@@ -3,17 +3,18 @@
 #include "Collisions/collisions.h"
 #include "Utilities/quadrender.h"
 #include "Map/blocktype.h"
-#include "Events/Datas/eventcenterofviewchanged.h"
-#include "Events/Datas/eventplayerchangeroom.h"
-#include "Events/Datas/eventpreplayerchangeroom.h"
+#include "Events/Datas/Camera/eventcenterofviewchanged.h"
+#include "Events/Datas/Entity/eventplayerchangeroom.h"
+#include "Events/Datas/Entity/eventpreplayerchangeroom.h"
 #include "Events/event.h"
 #include "Particules/particulefactory.h"
 #include "Particules/Types/mobdeath.h"
 #include "Controles/commandsvalue.h"
-#include "events/Datas/eventaddlight.h"
-#include "Lights/Types/circlecoloredlight.h"
+#include "events/Datas/Light/eventaddlight.h"
+#include "Events/Datas/Light/eventsetambiantcolor.h"
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+
 
 const float PI(3.14159f);
 
@@ -39,10 +40,6 @@ Player::Player(const Location & pos)
     m_activeDistance = 1.0f;
     m_canPassDoor = true;
     m_invincibleTime = 0.2f;
-
-    m_light = std::make_shared<CircleColoredLight>(m_pos.toGlobalPos()*float(BlockType::tileSize)
-                                                   , sf::Color::White, 250, sf::Color(50, 0, 0), 50);
-    Event<EventAddLight>::send(EventAddLight(m_light));
 }
 
 Player::Player(const json & j)
@@ -51,9 +48,6 @@ Player::Player(const json & j)
     , m_texture("res/img/player.png")
     , m_controleDirection(0, 0)
 {
-    m_light = std::make_shared<CircleColoredLight>(m_pos.toGlobalPos()*float(BlockType::tileSize)
-                                                   , sf::Color::White, 250, sf::Color(50, 0, 0), 50);
-    Event<EventAddLight>::send(EventAddLight(m_light));
 }
 
 void Player::control(CommandsValue & v)
@@ -95,8 +89,6 @@ void Player::updateComportement(const sf::Time & elapsedTime)
     if(std::abs(m_controleDirection.x) > mincontroleRot || std::abs(m_controleDirection.y) > mincontroleRot)
         newAngle = angle(m_controleDirection);
     execRotate(newAngle);
-
-    m_light->setPos(m_pos.toGlobalPos()*float(BlockType::tileSize));
 }
 
 void Player::draw(sf::RenderTarget & target, sf::RenderStates) const

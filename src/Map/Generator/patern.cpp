@@ -63,6 +63,36 @@ Patern Patern::transform(Rotation rot, bool flipX, bool flipY)
                 b.boxCaracts = transformData(b.boxCaracts, rot, flipX, flipY);
                 newPatern(newPos) = b;
             }
+
+    for(const auto & l : m_lights)
+    {
+        AnimatedLightData newL(l.type());
+        for(const auto & f : l)
+        {
+            LightFrame newF(f.time);
+            newF.radius = f.radius;
+            newF.color = f.color;
+            newF.intensity = f.intensity;
+            newF.pitch = f.pitch;
+            sf::Vector2f p(transformPos(sf::Vector2f(f.pos.x, f.pos.y), transform, newSize));
+            newF.pos = sf::Vector3f(p.x, p.y, f.pos.z);
+            newF.yaw = f.yaw;
+            if(flipY)
+                newF.yaw = -newF.yaw;
+            if(flipX)
+                newF.yaw = M_PI - newF.yaw;
+            if(rot == Rotation::ROT_90)
+                newF.yaw += M_PI_2;
+            else if(rot == Rotation::ROT_180)
+                newF.yaw += M_PI;
+            else if(rot == Rotation::ROT_270)
+                newF.yaw += 3*M_PI_2;
+
+            newL.add(newF);
+        }
+        newPatern.m_lights.push_back(newL);
+    }
+
     return newPatern;
 }
 
@@ -90,6 +120,7 @@ std::vector<Patern> Patern::load(const std::string & fileName)
         auto rType(patern.find("type"));
         auto rName(patern.find("name"));
         auto rRarity(patern.find("rarity"));
+        auto lights(patern.find("lights"));
 
         if(sizeX == patern.end() || sizeY == patern.end() || blocks == patern.end()
            || rType == patern.end() || rName == patern.end() || rRarity == patern.end())
@@ -111,6 +142,10 @@ std::vector<Patern> Patern::load(const std::string & fileName)
                     p(sf::Vector2u(i, j)) = Block();
                 else p(sf::Vector2u(i, j)) = Block(block[0], block[1], block[2], block[3], block[4]);
             }
+
+        if(lights != patern.end())
+            for(const auto & l : *lights)
+                p.m_lights.emplace_back(l);
 
         p.type = RoomType(rType->get<unsigned int>());
         p.name = *rName;
@@ -145,6 +180,11 @@ void Patern::save(const std::string & fileName, const std::vector<Patern> & pate
         }
         j["blocks"] = jBlocks;
 
+        json jLights;
+        for(const auto & l : p.m_lights)
+            jLights.push_back(l.toJson());
+        j["lights"] = jLights;
+
         datas.push_back(j);
     }
 
@@ -158,6 +198,17 @@ void Patern::save(const std::string & fileName, const std::vector<Patern> & pate
 sf::Vector2i Patern::transformPos(const sf::Vector2u & pos, const std::array<int,4> & transform, const sf::Vector2i & newSize)
 {
     sf::Vector2i transformedPos(transform[0]*pos.x+transform[1]*pos.y, transform[2]*pos.x+transform[3]*pos.y);
+
+    if(newSize.x < 0)
+        transformedPos.x -= newSize.x+1;
+    if(newSize.y < 0)
+        transformedPos.y -= newSize.y+1;
+    return transformedPos;
+}
+
+sf::Vector2f Patern::transformPos(const sf::Vector2f & pos, const std::array<int,4> & transform, const sf::Vector2i & newSize)
+{
+    sf::Vector2f transformedPos(transform[0]*pos.x+transform[1]*pos.y, transform[2]*pos.x+transform[3]*pos.y);
 
     if(newSize.x < 0)
         transformedPos.x -= newSize.x+1;

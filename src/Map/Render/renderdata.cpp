@@ -1,5 +1,6 @@
 #include "renderdata.h"
 #include "Libs/json.hpp"
+#include "Lights/material.h"
 #include <algorithm>
 #include <numeric>
 #include <fstream>
@@ -21,6 +22,9 @@ RenderData::RenderData(const std::string & filename)
         return;
 
     texture.load(dir+j["texture"].get<std::string>());
+    if(j.find("secondaryTexture") == j.end())
+        secondaryTexture = Material::defaultNormalTexture;
+    else secondaryTexture.load(dir+j["secondaryTexture"].get<std::string>());
 
     json jBlocks(j["blocks"]);
     for(const json & jB : jBlocks)

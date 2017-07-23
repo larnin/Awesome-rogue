@@ -5,8 +5,8 @@
 #include "Events/eventgetter.h"
 #include "Entities/Types/player.h"
 #include "Events/event.h"
-#include "Events/Datas/eventinstantcenterofviewchanged.h"
-#include "Events/Datas/eventcenterofviewchanged.h"
+#include "Events/Datas/Camera/eventinstantcenterofviewchanged.h"
+#include "Events/Datas/Camera/eventcenterofviewchanged.h"
 #include "Controles/commandsvalue.h"
 #include "Utilities/vect2convert.h"
 #include <SFML/Graphics/RenderTarget.hpp>

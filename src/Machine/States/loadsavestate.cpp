@@ -2,7 +2,7 @@
 #include "Utilities/tr.h"
 #include "Systemes/drawablelist.h"
 #include "Machine/statemachine.h"
-#include "Events/Datas/eventinstantcenterofviewchanged.h"
+#include "Events/Datas/Camera/eventinstantcenterofviewchanged.h"
 #include "GUI/Widgets/Buttons/basicbutton.h"
 #include "GUI/Widgets/TextBoxs/basictextbox.h"
 #include "GUI/Widgets/label.h"

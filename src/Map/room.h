@@ -8,6 +8,7 @@
 #include "Entities/entitytype.h"
 #include "roomtype.h"
 #include "File/serializable.h"
+#include "animatedlightdata.h"
 #include <vector>
 
 class Patern;
@@ -46,6 +47,9 @@ public:
     void closeDoors();
     void openDoors();
 
+    const AnimatedLightData & light(unsigned int id) const;
+    unsigned int lightCount() const;
+
     std::string getRenderInfosName() const;
     bool modified;
 
@@ -64,6 +68,7 @@ private:
     std::vector<EntityType> m_population;
     RoomType m_type;
     std::string m_renderInfosName;
+    std::vector<AnimatedLightData> m_lights;
 };
 
 #endif // ROOM_H

@@ -3,6 +3,7 @@
 
 #include "Utilities/ressource.h"
 #include "Events/eventreceiver.h"
+#include "Lights/phongshader.h"
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
@@ -15,6 +16,7 @@ class EventSizeViewChanged;
 class Map;
 class RoomRender;
 class Block;
+class LightsRender;
 
 class WorldRender : public sf::Drawable , public EventReceiver
 {
@@ -59,6 +61,8 @@ private:
     };
 
     bool m_enabled;
+    PhongShader m_shader;
+    std::shared_ptr<LightsRender> m_lightRender;
 };
 
 #endif // WORLDRENDER_H

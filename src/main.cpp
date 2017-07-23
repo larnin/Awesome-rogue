@@ -4,10 +4,13 @@
 #include "GUI/showfps.h"
 #include "Systemes/drawablelist.h"
 #include "Utilities/tr.h"
+#include "Lights/phongshader.h"
 
 int main()
 {
     Tr::load();
+
+    PhongShader::initialize();
 
     std::shared_ptr<ShowFPS> s(std::make_shared<ShowFPS>());
     DrawableList::add(s, -1);

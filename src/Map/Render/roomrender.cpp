@@ -19,6 +19,11 @@ RoomRender::RoomRender(std::weak_ptr<Room> room, bool current, bool drawGround, 
     , m_drawWall(drawWall)
     , m_drawTop(drawTop)
 {
+    Material m(1, 1, 1, 20);
+    m.primaryTexture = m_data.texture;
+    m.secondaryTexture = m_data.secondaryTexture;
+    m_shader.setMaterial(m);
+
     redraw(current);
 }
 
@@ -114,8 +119,11 @@ void RoomRender::draw(sf::RenderTarget & target, sf::RenderStates) const
     if(r->modified)
         redraw(m_current);
 
+    sf::RenderStates states(m_data.texture());
+    states.shader = &m_shader.get();
+
     if(m_data.texture.isValid())
-        target.draw(m_render, sf::RenderStates(m_data.texture()));
+        target.draw(m_render, states/*sf::RenderStates(m_data.texture())*/);
 }
 
 unsigned int RoomRender::getNbSurfaces() const
