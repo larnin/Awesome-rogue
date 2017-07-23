@@ -4,7 +4,6 @@
 #include "entity.h"
 #include "Systemes/controlable.h"
 #include "Utilities/ressource.h"
-#include "Lights/Types/pointlight.h"
 
 class Player : public Entity, public Controlable
 {

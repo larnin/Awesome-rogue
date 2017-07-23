@@ -4,6 +4,7 @@
 #include "Utilities/matrix.h"
 #include "Map/block.h"
 #include "Map/roomtype.h"
+#include "Map/animatedlightdata.h"
 #include <vector>
 #include <array>
 
@@ -31,10 +32,12 @@ private:
     void generate();
 
     static sf::Vector2i transformPos(const sf::Vector2u & pos, const std::array<int,4> & transform, const sf::Vector2i & newSize);
+    static sf::Vector2f transformPos(const sf::Vector2f & pos, const std::array<int,4> & transform, const sf::Vector2i & newSize);
     static std::array<int,4> multiplyMatrice(const std::array<int,4> & left, const std::array<int,4> & right);
 
     Matrix<Block> m_blocks;
     std::string m_renderInfosName;
+    std::vector<AnimatedLightData> m_lights;
 };
 
 #endif // PATERN_H

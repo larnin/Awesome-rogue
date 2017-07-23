@@ -41,6 +41,13 @@ Room::Room(const json & j)
         for(const json jPop : *pop)
             m_population.push_back(EntityType(jPop.get<int>()));
     }
+
+    auto lights(j.find("lights"));
+    if(lights->is_array())
+    {
+        for(const auto & l : *lights)
+            m_lights.emplace_back(l);
+    }
 }
 
 Room::Room(const Patern & p, sf::Vector2i pos, unsigned int id)
@@ -51,6 +58,7 @@ Room::Room(const Patern & p, sf::Vector2i pos, unsigned int id)
     , m_discovered(false)
     , m_type(p.type)
     , m_renderInfosName(p.m_renderInfosName)
+    , m_lights(p.m_lights)
 {
     for(unsigned int i(0) ; i < p.getSize().x ; i++)
         for(unsigned int j(0) ; j < p.getSize().y ; j++)
@@ -326,10 +334,26 @@ json Room::serialize() const
     }
     j["pop"] = jPop;
 
+    json jLights;
+    for(const auto & l : m_lights)
+        jLights.push_back(l.toJson());
+    j["lights"] = jLights;
+
     return j;
 }
 
 std::string Room::getRenderInfosName() const
 {
     return m_renderInfosName;
+}
+
+const AnimatedLightData & Room::light(unsigned int id) const
+{
+    assert(id < m_lights.size());
+    return m_lights[id];
+}
+
+unsigned int Room::lightCount() const
+{
+    return m_lights.size();
 }

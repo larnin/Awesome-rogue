@@ -1,15 +1,9 @@
 #ifndef LIGHTDATA_H
 #define LIGHTDATA_H
 
+#include "lighttype.h"
 #include <SFML/System/Vector3.hpp>
 #include <SFML/Graphics/Color.hpp>
-
-enum LightType
-{
-    POINT = 0,
-    SPOT = 1,
-    DIRECTIONNAL = 2,
-};
 
 struct LightData
 {

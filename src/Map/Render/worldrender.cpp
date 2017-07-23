@@ -9,6 +9,7 @@
 #include "Entities/Types/entity.h"
 #include "Map/map.h"
 #include "roomrender.h"
+#include "lightsrender.h"
 #include "Map/room.h"
 #include <SFML/Graphics/Rect.hpp>
 #include <cassert>
@@ -20,6 +21,7 @@ WorldRender::WorldRender(std::weak_ptr<Map> world, unsigned int centerRoom, cons
     , m_screenSize(screenSize / BlockType::tileSize)
     , m_centerRoom(centerRoom)
     , m_enabled(false)
+    , m_lightRender(std::make_shared<LightsRender>())
 {
     Material m(1, 1, 1, 20);
     m.primaryTexture = m_borderTexture;
@@ -43,6 +45,7 @@ void WorldRender::enable()
         DrawableList::add(r, DrawableList::DrawHeight::MAP_TOP);
         Updatable::add(r);
     }
+    Updatable::add(m_lightRender);
 }
 
 void WorldRender::disable()
@@ -58,6 +61,7 @@ void WorldRender::disable()
         DrawableList::del(r);
         Updatable::del(r);
     }
+    Updatable::del(m_lightRender);
 }
 
 void WorldRender::draw(sf::RenderTarget & target, sf::RenderStates) const
@@ -186,6 +190,11 @@ void WorldRender::redrawRooms()
             }
         }
     }
+
+    std::vector<std::weak_ptr<Room>> rooms;
+    for(auto & r : m_renders)
+        rooms.push_back(r->getRoom());
+    m_lightRender->setRooms(rooms);
 
     regenBorder();
 }

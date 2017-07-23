@@ -143,7 +143,9 @@ SOURCES += main.cpp \
     Utilities/tr.cpp \
     Lights/phongshader.cpp \
     Lights/lightholder.cpp \
-    Lights/material.cpp
+    Lights/material.cpp \
+    Map/animatedlightdata.cpp \
+    Map/Render/lightsrender.cpp
 
 HEADERS  += \
     Controles/commands.h \
@@ -307,7 +309,6 @@ HEADERS  += \
     Utilities/tr.h \
     Lights/phongshader.h \
     Lights/material.h \
-    Lights/Types/pointlight.h \
     Lights/lightholder.h \
     Lights/lightdata.h \
     Events/Datas/Light/eventaddlight.h \
@@ -330,7 +331,10 @@ HEADERS  += \
     Events/Datas/Entity/eventremoveentity.h \
     Events/Datas/Entity/eventsetbosslifebar.h \
     Events/Datas/File/eventitemloaded.h \
-    Events/Datas/File/eventloadfinished.h
+    Events/Datas/File/eventloadfinished.h \
+    Lights/lighttype.h \
+    Map/animatedlightdata.h \
+    Map/Render/lightsrender.h
 
 CONFIG += c++14
 #QMAKE_CXXFLAGS += -Wsign-conversion
