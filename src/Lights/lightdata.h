@@ -3,6 +3,7 @@
 
 #include "lighttype.h"
 #include <SFML/System/Vector3.hpp>
+#include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/Color.hpp>
 
 struct LightData
@@ -26,6 +27,11 @@ struct LightData
     float yaw;
     float pitch; //or angle for spot type
     float intensity;
+
+    inline float & height() {return pos.z;}
+    inline float const & height() const {return pos.z;}
+    inline sf::Vector2f getPos() const {return sf::Vector2f(pos.x, pos.y);}
+    inline void setPos(const sf::Vector2f & p) { pos.x = p.x; pos.y = p.y;}
 };
 
 #endif // LIGHTDATA_H

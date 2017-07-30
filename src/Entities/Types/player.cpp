@@ -15,7 +15,6 @@
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 
-
 const float PI(3.14159f);
 
 Player::Player(const Location & pos)
@@ -40,6 +39,8 @@ Player::Player(const Location & pos)
     m_activeDistance = 1.0f;
     m_canPassDoor = true;
     m_invincibleTime = 0.2f;
+
+    initLights();
 }
 
 Player::Player(const json & j)
@@ -48,6 +49,23 @@ Player::Player(const json & j)
     , m_texture("res/img/player.png")
     , m_controleDirection(0, 0)
 {
+    initLights();
+}
+
+void Player::initLights()
+{
+    m_lightCenter = std::make_shared<LightData>(LightType::DIRECTIONNAL);
+    m_lightCenter->pitch = -1.2f;
+    m_lightCenter->height() = 100;
+    //m_lightCenter->color = sf::Color(255, 100, 100);
+    m_lightCenter->radius = 200;
+    m_lightCenter->intensity = 1.0f;
+    m_lightSpot = std::make_shared<LightData>(LightType::SPOT);
+    m_lightSpot->height() = 100;
+    m_lightSpot->pitch = 0.5f;
+    m_lightSpot->radius = 150;
+    Event<EventAddLight>::send(EventAddLight(m_lightCenter));
+    Event<EventAddLight>::send(EventAddLight(m_lightSpot));
 }
 
 void Player::control(CommandsValue & v)
@@ -89,6 +107,11 @@ void Player::updateComportement(const sf::Time & elapsedTime)
     if(std::abs(m_controleDirection.x) > mincontroleRot || std::abs(m_controleDirection.y) > mincontroleRot)
         newAngle = angle(m_controleDirection);
     execRotate(newAngle);
+
+    m_lightCenter->setPos(getPos().toGlobalPos()*float(BlockType::tileSize));
+    m_lightSpot->setPos(getPos().toGlobalPos()*float(BlockType::tileSize));
+    m_lightSpot->yaw = newAngle;
+    m_lightCenter->yaw += 6.5f * elapsedTime.asSeconds();
 }
 
 void Player::draw(sf::RenderTarget & target, sf::RenderStates) const

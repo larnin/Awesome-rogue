@@ -4,6 +4,7 @@
 #include "entity.h"
 #include "Systemes/controlable.h"
 #include "Utilities/ressource.h"
+#include "Lights/lightdata.h"
 
 class Player : public Entity, public Controlable
 {
@@ -22,8 +23,12 @@ protected:
     virtual void onKill() override;
 
 private:
+    void initLights();
+
     Texture m_texture;
     sf::Vector2f m_controleDirection;
+    std::shared_ptr<LightData> m_lightCenter;
+    std::shared_ptr<LightData> m_lightSpot;
 };
 
 #endif // PLAYER_H

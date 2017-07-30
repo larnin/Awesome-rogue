@@ -93,8 +93,8 @@ void main()
         specularTempColor = vec4(0, 0, 0, 0);
     }
 
-    specularColor = vec4(specularColor.xyz, 0);
+    specularColor.w = 0;
 
-    gl_FragColor = gl_Color * (pixel * (ambiantColor * material.x + diffuseColor)) + specularColor;
+    gl_FragColor = gl_Color * pixel * (ambiantColor * material.x + diffuseColor) + specularColor;
     gl_FragColor.w = pixel.w;
 }

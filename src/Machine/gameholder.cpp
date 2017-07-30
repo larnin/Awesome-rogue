@@ -22,6 +22,7 @@
 #include "Events/Datas/File/eventitemloaded.h"
 #include "Events/Datas/Entity/eventpreplayerchangeroom.h"
 #include "Events/Datas/Entity/eventplayerchangeroom.h"
+#include "Events/Datas/Light/eventsetambiantcolor.h"
 #include "Map/blocktype.h"
 #include "Items/itemslist.h"
 #include "File/serializer.h"
@@ -58,6 +59,7 @@ GameHolder::GameHolder(std::weak_ptr<StateMachine> machine, const std::string & 
         return;
     Event<EventPrePlayerChangeRoom>::send(EventPrePlayerChangeRoom(p->getID()));
     Event<EventPlayerChangeRoom>::send(EventPlayerChangeRoom(p->getID()));
+    Event<EventSetAmbiantColor>::send(EventSetAmbiantColor(sf::Color(50, 50, 50)));
 }
 
 GameHolder::GameHolder(std::weak_ptr<StateMachine> machine, const GenerationEnvironement & e)
@@ -89,6 +91,8 @@ GameHolder::GameHolder(std::weak_ptr<StateMachine> machine, const GenerationEnvi
     m_interface = std::make_shared<GameInterface>();
     m_minimap = std::make_shared<Minimap>(m_map);
     m_lifeBar = std::make_shared<LifeBar>(p);
+
+    Event<EventSetAmbiantColor>::send(EventSetAmbiantColor(sf::Color(50, 50, 50)));
 
 }
 

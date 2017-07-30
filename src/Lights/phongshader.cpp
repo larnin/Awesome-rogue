@@ -42,7 +42,7 @@ void PhongShader::initialize()
     m_shader.setUniform("lightCount", 0);
     setAmbiant(sf::Color::White);
 }
-
+#include <iostream>
 void PhongShader::setAmbiant(const sf::Color & c)
 {
     m_shader.setUniform("ambiantColor", sf::Glsl::Vec4(c));
